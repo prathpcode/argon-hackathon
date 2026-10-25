@@ -535,12 +535,21 @@ function Scores({ run }: { run: RunState }) {
   const scored = run.rounds.filter((r) => r.fun !== undefined);
   if (!scored.length) return null;
   const latest = scored.at(-1)!;
+  const v = [...run.rounds].reverse().find((r) => r.verify)?.verify;
   return (
     <section className="panel scores">
       <h2>How it plays</h2>
       <div className="report-scores">
         <Score label="Fun" value={latest.fun} />
-        <Score label="Faithful" value={latest.faithful} />
+        {v ? (
+          <div className="score faithful" title="Footage rules that match the original, checked rule by rule">
+            <span>Matches footage</span>
+            <b>{v.matched}/{v.total}</b>
+            <div className="blocks" aria-hidden>{Array.from({ length: 10 }, (_, i) => <i key={i} className={i < Math.round((v.matched / v.total) * 10) ? "on" : ""} />)}</div>
+          </div>
+        ) : (
+          <Score label="Faithful" value={latest.faithful} />
+        )}
       </div>
       {scored.length > 1 && (
         <div className="trend">

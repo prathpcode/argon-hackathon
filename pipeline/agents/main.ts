@@ -9,7 +9,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { execFile } from "node:child_process";
+import { execFile, spawnSync } from "node:child_process";
 import { promisify } from "node:util";
 import { Type } from "typebox";
 import type { ToolDefinition } from "@earendil-works/pi-coding-agent";
@@ -44,10 +44,29 @@ async function verifyRound(run: Run, round: number, game: string): Promise<Verif
   }
 }
 
-/** Optional (ARGON_SQUAD=1): Managed Agents play the round's snapshot together over the internet through a
- *  temporary tunnel (pipeline/squad/run.py). Their findings join the round's issues. */
+/** Managed Agents can play when the agent is set up for this API key (pipeline/squad/setup.py) and cloudflared
+ *  is installed. ARGON_SQUAD=0 turns them off. */
+function squadReady(): boolean {
+  if (process.env.ARGON_SQUAD === "0" || !fs.existsSync(path.join(ROOT, "pipeline", "squad", "agent.json"))) return false;
+  try {
+    return spawnSync("cloudflared", ["--version"], { stdio: "ignore" }).status === 0;
+  } catch {
+    return false;
+  }
+}
+
+/** Who playtests a round. Faithfulness is the footage check's job (rule by rule against the original, not opinion);
+ *  multiplayer is the Managed Agent squad's, playing over the real internet. The local multiplayer tester only
+ *  stands in when the squad can't run on this machine. The fun tester always plays. */
+function roundTesters() {
+  const squad = squadReady();
+  return TESTERS.filter((t) => t.key === "fun" || (t.key === "together" && !squad));
+}
+
+/** Managed Agents play the round's snapshot together over the internet through a temporary tunnel
+ *  (pipeline/squad/run.py). Their findings join the round's issues. */
 async function squadRound(run: Run, round: number, game: string): Promise<Issue[]> {
-  if (process.env.ARGON_SQUAD !== "1") return [];
+  if (!squadReady()) return [];
   try {
     await exec(PYTHON, [path.join(ROOT, "pipeline", "squad", "run.py"), run.dir, String(round), game],
       { cwd: path.join(ROOT, "pipeline"), timeout: 30 * 60_000, maxBuffer: 16 << 20 });
@@ -239,7 +258,7 @@ async function playtest(run: Run) {
       run.emit("round", { round: r, status: "testing" });
       const footage = verifyRound(run, r, path.join(rdir, "game"));
       const squad = squadRound(run, r, path.join(rdir, "game"));
-      const reports = (await Promise.all(TESTERS.map((t) => playtester(run, r, t, path.join(rdir, "game"))))).filter((x): x is Report => !!x);
+      const reports = (await Promise.all(roundTesters().map((t) => playtester(run, r, t, path.join(rdir, "game"))))).filter((x): x is Report => !!x);
       if (!reports.length) throw new Error(`Every playtester in round ${r} failed.`);
       const verify = await footage;
       const others = [...reports.flatMap((x) => x.issues), ...(await squad)].sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3));
