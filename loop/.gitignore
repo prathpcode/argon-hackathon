@@ -1,0 +1,3 @@
+runs/**/*.mp4
+runs/**/*.webm
+__pycache__/

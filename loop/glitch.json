@@ -1,0 +1,13 @@
+{
+  "name": "giants-reverie",
+  "game_dir": "../glitch-example/giants-reverie",
+  "files": ["public/index.html", "server.js"],
+  "server": "server.js",
+  "port": 8095,
+  "page": "/",
+  "spec": "../glitch-example/spec.json",
+  "sources": {
+    "A": "https://www.youtube.com/watch?v=VfzE_fIxEVg",
+    "B": "https://www.youtube.com/watch?v=ecoYEgVAWmE"
+  }
+}
