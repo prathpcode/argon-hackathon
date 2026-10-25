@@ -213,9 +213,9 @@ h1, h2, h3, p { margin: 0; }
 
 .tag-badge { position: absolute; left: 0; top: 0; display: inline-flex; align-items: center; gap: 1ch; height: 24px; padding: 0 1ch; font-family: var(--tt); font-size: 13px; background: var(--black); color: var(--white); }
 .tag-badge.running { background: var(--magenta); color: var(--black); }
-.tag-badge.done { background: var(--green); color: var(--black); }
+.tag-badge.done, .tag-badge.stopped { background: var(--green); color: var(--black); }
 .tag-badge.error { background: var(--red); color: var(--black); }
-.tag-badge.stopped, .tag-badge.queued { background: var(--blue); color: var(--white); }
+.tag-badge.queued { background: var(--blue); color: var(--white); }
 .score-badge { position: absolute; right: 0; bottom: 0; display: inline-flex; align-items: center; height: 24px; padding: 0 1ch; font-family: var(--tt); font-size: 13px; background: var(--black); color: var(--yellow); }
 
 /* ------------------------------------------------------------ archive */

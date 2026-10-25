@@ -6,7 +6,7 @@ const STAGE_LABEL = { find: "Finding footage", watch: "Watching", build: "Remaki
 
 export function RunCard({ run }: { run: RunSummary }) {
   const yt = run.footage ? youtubeId(run.footage) : null;
-  const label = run.status === "running" ? (run.stage ? STAGE_LABEL[run.stage] : "Starting") : run.status === "done" ? "Done" : run.status === "error" ? "Needs attention" : run.status === "stopped" ? "Paused" : "Queued";
+  const label = run.status === "running" ? (run.stage ? STAGE_LABEL[run.stage] : "Starting") : run.status === "done" || run.status === "stopped" ? "Done" : run.status === "error" ? "Needs attention" : "Queued";
   return (
     <Link href={`/revivals/${run.id}`} className="card">
       <div className="thumb">
