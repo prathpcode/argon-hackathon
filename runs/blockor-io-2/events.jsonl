@@ -1044,3 +1044,9 @@
 {"t":1792966651.82,"type":"act","agent":"test:1:fun","call":"call_903752","kind":"tool","tool":"input","label":"click, KeyD 0.9s, KeyW, KeyW…","status":"running"}
 {"t":1792966655.17,"type":"act","agent":"test:1:together","call":"call_719499","kind":"tool","tool":"inspect","status":"done","detail":"(() => {\n  const canvas = document.getElementById(\"gameCanv…"}
 {"t":1792966672.87,"type":"act","agent":"test:1:fun","call":"call_903752","kind":"tool","tool":"input","status":"done","img":"shots/test_1_fun/014.jpg"}
+{"t":1792966678.77,"type":"agent","id":"test:1:together","tokens_in":290813,"tokens_out":16206}
+{"t":1792966678.79,"type":"act","agent":"test:1:together","call":"call_626637","kind":"tool","tool":"inspect","label":"Reading the game state","status":"running"}
+{"t":1792966682.6,"type":"agent","id":"test:1:fun","tokens_in":209588,"tokens_out":25090}
+{"t":1792966682.6,"type":"act","agent":"test:1:fun","call":"call_1166651","kind":"tool","tool":"inspect","label":"Reading the game state","status":"running"}
+{"t":1792966682.69,"type":"act","agent":"test:1:fun","call":"call_1166651","kind":"tool","tool":"inspect","status":"done","detail":"window.__rebuildLog"}
+{"t":1792966684.18,"type":"act","agent":"test:1:together","call":"call_626637","kind":"tool","tool":"inspect","status":"done","detail":"(() => {\n  // Let's hook requestAnimationFrame to measure J…"}

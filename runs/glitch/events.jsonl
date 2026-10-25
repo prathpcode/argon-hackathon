@@ -961,3 +961,5 @@
 {"t":1792966673.03,"type":"act","agent":"test:1:faithful","call":"call_562363","kind":"tool","tool":"input","status":"done","img":"shots/test_1_faithful/038.jpg"}
 {"t":1792966674.2,"type":"agent","id":"test:1:fun","tokens_in":273446,"tokens_out":22850}
 {"t":1792966674.2,"type":"act","agent":"test:1:fun","call":"call_1378284","kind":"tool","tool":"input","label":"KeyE, → 0.7s, KeyE…","status":"running"}
+{"t":1792966683.43,"type":"agent","id":"test:1:faithful","tokens_in":235921,"tokens_out":27221}
+{"t":1792966683.44,"type":"act","agent":"test:1:faithful","call":"call_995056","kind":"tool","tool":"input","label":"click, ← 1.1s, ↑ 0.9s, ← 1.1s","status":"running"}
