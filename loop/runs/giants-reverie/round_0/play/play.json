@@ -1,0 +1,2047 @@
+{
+ "smoke": {
+  "errors": [],
+  "events": [
+   {
+    "t": 39,
+    "type": "player_join",
+    "id": "p_064d6031-b205-4357-a8c1-7d41411bb443",
+    "street": "beau_home",
+    "online": true
+   }
+  ]
+ },
+ "results": [
+  {
+   "id": "avatar_wardrobe_vanity_customization",
+   "rule_index": 0,
+   "videos": [
+    "avatar_wardrobe_vanity_customization_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Avatar equipped the Imperial Caterpillar Mask",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Avatar equipped the Red Top Hat",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 92,
+      "type": "player_join",
+      "id": "p_ecb8c0c6-1d83-4cc2-9389-e8649ba64aa0",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "avatar_animations_and_thriller_dance",
+   "rule_index": 1,
+   "videos": [
+    "avatar_animations_and_thriller_dance_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Avatar starts in idle animation",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Drinking Pumpkin Ale triggers synchronized group Thriller zombie-dance animation",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 83,
+      "type": "player_join",
+      "id": "p_619c0458-dae4-4658-b509-abdf8a527a5a",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 4633,
+      "type": "item_use",
+      "item": "pumpkin_ale",
+      "verb": "Drink",
+      "street": "beau_home"
+     },
+     {
+      "t": 4826,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 469,
+      "img": 25990,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "jumping_multi_tiered_house_roofs",
+   "rule_index": 2,
+   "videos": [
+    "jumping_multi_tiered_house_roofs_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Player jumped onto the elevated house roof ledges",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 68,
+      "type": "player_join",
+      "id": "p_1b0f6f31-ca55-41dd-be33-c2364effb0ba",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 5860,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25996,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "avatar_scale_shrink_and_embiggen",
+   "rule_index": 3,
+   "videos": [
+    "avatar_scale_shrink_and_embiggen_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Avatar shrunk to miniature scale",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Avatar embiggened to giant scale",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 68,
+      "type": "player_join",
+      "id": "p_d3afaf23-58e0-4574-b68d-788b19e4e70e",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3215,
+      "type": "item_use",
+      "item": "essence_purple",
+      "verb": "Sip (Shrink)",
+      "street": "beau_home"
+     },
+     {
+      "t": 4598,
+      "type": "item_use",
+      "item": "essence_purple",
+      "verb": "Drink (Embiggen)",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "camera_tracking_and_parallax_scrolling",
+   "rule_index": 4,
+   "videos": [
+    "camera_tracking_and_parallax_scrolling_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Camera horizontally tracks the player across the street",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 52,
+      "type": "player_join",
+      "id": "p_0a125bbc-d8af-46c6-ab93-176587e9035e",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "minimap_strip_and_world_map_button",
+   "rule_index": 5,
+   "videos": [
+    "minimap_strip_and_world_map_button_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Clicking the minimap strip opens the World Map modal",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 51,
+      "type": "player_join",
+      "id": "p_962316c8-ed25-4b2d-b72e-a4ef56829f07",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "world_regions_and_interconnected_streets",
+   "rule_index": 6,
+   "videos": [
+    "world_regions_and_interconnected_streets_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "World Map displays regions Kalavana and Andra and their interconnected streets",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 46,
+      "type": "player_join",
+      "id": "p_e0f5ad25-c9a6-4f4f-bc22-26e50112449c",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "signpost_street_boundary_transition",
+   "rule_index": 7,
+   "videos": [
+    "signpost_street_boundary_transition_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Walking past the wooden signpost triggers the loading screen and transitions into Chego Chase",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 44,
+      "type": "player_join",
+      "id": "p_5bba7920-013f-4875-82ae-62ac8990feb4",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3851,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 3852,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3871,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3882,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3899,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3916,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3933,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3950,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3968,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3983,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3999,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4015,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4032,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4049,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4066,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4082,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4098,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4115,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4132,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4149,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4165,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4182,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4199,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4217,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4235,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4251,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4268,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "building_door_interior_transition",
+   "rule_index": 8,
+   "videos": [
+    "building_door_interior_transition_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Clicking the Ministry of Departments door transitions the player into Andra Bureaucratic Hall",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 58,
+      "type": "player_join",
+      "id": "p_d0c0a857-6109-4544-9bf0-d94d41dcb231",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3083,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 3084,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 4091,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25994,
+      "currants": 1441
+     },
+     {
+      "t": 4091,
+      "type": "street_change",
+      "street": "andra_hall",
+      "name": "Andra Bureaucratic Hall"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "first_street_visit_xp_bonus",
+   "rule_index": 9,
+   "videos": [
+    "first_street_visit_xp_bonus_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Visiting Goli Grabs for the first time awards XP and logs the visit in the activity feed",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 46,
+      "type": "player_join",
+      "id": "p_f87bd08d-a5dd-4ea5-b46a-48a883f5a124",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3849,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 3850,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3865,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3883,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3899,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3915,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3932,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3949,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3966,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3981,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 3998,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4015,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4032,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4049,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4066,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4082,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4099,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4116,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4133,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4149,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4166,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4183,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4199,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4216,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4233,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4249,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 4266,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "world_map_teleport_and_go_home",
+   "rule_index": 10,
+   "videos": [
+    "world_map_teleport_and_go_home_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Teleported to another street via World Map",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Returned to Home Street via top-left Go Home menu item",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 60,
+      "type": "player_join",
+      "id": "p_ac875548-b1cd-4899-89bc-c645d191b608",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3165,
+      "type": "meter_change",
+      "energy": 425,
+      "mood": 440,
+      "img": 25990,
+      "currants": 1441
+     },
+     {
+      "t": 3586,
+      "type": "meter_change",
+      "energy": 425,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 3587,
+      "type": "street_change",
+      "street": "goli_grabs",
+      "name": "Goli Grabs in Kalavana"
+     },
+     {
+      "t": 5017,
+      "type": "street_change",
+      "street": "beau_home",
+      "name": "Beau's Home Street"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "home_street_butler_npc_menu",
+   "rule_index": 11,
+   "videos": [
+    "home_street_butler_npc_menu_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Clicking Butler Roy opens popup menu with Who visited?",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Butler Roy reports recent visitors in the chat log",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 58,
+      "type": "player_join",
+      "id": "p_ba1f29a5-f44f-4de8-895b-f28537228e46",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "magic_rock_change_street_style",
+   "rule_index": 12,
+   "videos": [
+    "magic_rock_change_street_style_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Magic Rock changed Home Street style to Vorn Road for 190 iMG",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 65,
+      "type": "player_join",
+      "id": "p_107d9250-6556-4567-a4e5-38247651fe3d",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 4087,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25762,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "street_spirit_vendor_shop_buy",
+   "rule_index": 13,
+   "videos": [
+    "street_spirit_vendor_shop_buy_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Opened Street Spirit Animal Goods Vendor shop interface",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Purchased Butterfly Lotion from Street Spirit vendor for 45 currants",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 58,
+      "type": "player_join",
+      "id": "p_8b3028af-2027-4341-9996-133879bba3f8",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2881,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2882,
+      "type": "street_change",
+      "street": "bongul_beat",
+      "name": "Bongul Beat in Andra"
+     },
+     {
+      "t": 4395,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1396
+     }
+    ]
+   ]
+  },
+  {
+   "id": "street_animals_chicken_and_piggy",
+   "rule_index": 14,
+   "videos": [
+    "street_animals_chicken_and_piggy_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Squeezing the Chicken granted +1 mood",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Petting the Piggy granted mood and progressed Porcine Pleaser",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 48,
+      "type": "player_join",
+      "id": "p_acc37b4d-afcf-476b-bf20-8b81ed7f1187",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2682,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2682,
+      "type": "street_change",
+      "street": "bongul_beat",
+      "name": "Bongul Beat in Andra"
+     },
+     {
+      "t": 3858,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 441,
+      "img": 25994,
+      "currants": 1441
+     },
+     {
+      "t": 5297,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 445,
+      "img": 26000,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "cubimals_windup_race_in_planks",
+   "rule_index": 15,
+   "videos": [
+    "cubimals_windup_race_in_planks_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Chick Cubimal Lv1.1 races along the ground and logs distance in planks",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 48,
+      "type": "player_join",
+      "id": "p_bae2f26a-7940-4aee-beae-f67ca8340fbd",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3132,
+      "type": "item_use",
+      "item": "chick_cubimal",
+      "verb": "Set out",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "bureaucrat_waiting_room_qualification",
+   "rule_index": 16,
+   "videos": [
+    "bureaucrat_waiting_room_qualification_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 11 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Player is placed in the WAITING AREA with the 15-second countdown banner active",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Purchased Card-Carrying Qualification for 50c from Magister Piksnikson after waiting",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 46,
+      "type": "player_join",
+      "id": "p_b92ca1d2-fb2e-45c1-8c07-382709795169",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3032,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 3032,
+      "type": "street_change",
+      "street": "andra_hall",
+      "name": "Andra Bureaucratic Hall"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "giant_shrines_and_visage_overlay",
+   "rule_index": 17,
+   "videos": [
+    "giant_shrines_and_visage_overlay_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Giant visage overlay appears full-screen with announcement text",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 52,
+      "type": "player_join",
+      "id": "p_ae541944-8df8-40ab-90e2-b81df6ed0b5c",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2680,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2680,
+      "type": "street_change",
+      "street": "chego_chase",
+      "name": "Chego Chase in Andra"
+     },
+     {
+      "t": 3883,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 445,
+      "img": 26016,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "trees_and_plants_watering_harvesting",
+   "rule_index": 18,
+   "videos": [
+    "trees_and_plants_watering_harvesting_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 3 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Watered and harvested the Wood Tree on Beau's Home Street",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 56,
+      "type": "player_join",
+      "id": "p_f5438044-9cdc-4f53-b16f-01193d7f093c",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 6830,
+      "type": "meter_change",
+      "energy": 432,
+      "mood": 440,
+      "img": 26000,
+      "currants": 1441
+     },
+     {
+      "t": 6830,
+      "type": "harvest",
+      "target": "wood_1",
+      "item": "wood_plank",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "beryl_rock_mining_and_coop_bonus",
+   "rule_index": 19,
+   "videos": [
+    "beryl_rock_mining_and_coop_bonus_p0.mp4",
+    "beryl_rock_mining_and_coop_bonus_p1.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 3 click_text: Locator.click: Timeout 3000ms exceeded.",
+    "step 7 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Co-mining Beryl Rock consumed 7 Energy, yielded +10 iMG and +8 Chunks of Beryl, plus +1 co-op bonus chunk",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 50,
+      "type": "player_join",
+      "id": "p_7f19e32d-046a-4947-8aba-ed9c3eda481c",
+      "street": "beau_home",
+      "online": true
+     }
+    ],
+    [
+     {
+      "t": 51,
+      "type": "player_join",
+      "id": "p_4aaf6daa-ebf5-45fc-97b5-d10d0616f1a9",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "dirt_pile_shovel_digging",
+   "rule_index": 20,
+   "videos": [
+    "dirt_pile_shovel_digging_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Dug Dirt Pile with a shovel to obtain Lumps of Earth and progress Can You Dig It?",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 50,
+      "type": "player_join",
+      "id": "p_d60e5f58-17e0-4644-bee5-a5aa9f456793",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2680,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2681,
+      "type": "street_change",
+      "street": "bongul_beat",
+      "name": "Bongul Beat in Andra"
+     },
+     {
+      "t": 4122,
+      "type": "meter_change",
+      "energy": 430,
+      "mood": 440,
+      "img": 26000,
+      "currants": 1441
+     },
+     {
+      "t": 4122,
+      "type": "harvest",
+      "target": "dirt_bb_1",
+      "action": "dig",
+      "street": "bongul_beat"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "floating_quoins_jump_collection",
+   "rule_index": 21,
+   "videos": [
+    "floating_quoins_jump_collection_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Jumping through floating Quoins collected them and granted stat rewards",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 43,
+      "type": "player_join",
+      "id": "p_250c4710-4270-496b-9f58-fb1baa136d14",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2759,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2760,
+      "type": "street_change",
+      "street": "bongul_beat",
+      "name": "Bongul Beat in Andra"
+     },
+     {
+      "t": 3454,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 441,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 4642,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 441,
+      "img": 25992,
+      "currants": 1442
+     }
+    ]
+   ]
+  },
+  {
+   "id": "inventory_16_slots_bag_and_search",
+   "rule_index": 22,
+   "videos": [
+    "inventory_16_slots_bag_and_search_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Generic Green Bag expanded into sub-slots row above the 16-slot inventory bar",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Inventory search filter highlights matching items and dims non-matching slots",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 45,
+      "type": "player_join",
+      "id": "p_c36d3b40-e20d-4cd5-ab6a-4e56111b319b",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3782,
+      "type": "item_use",
+      "item": "green_bag",
+      "verb": "Open/Close Bag",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "inventory_item_context_menu_verbs",
+   "rule_index": 23,
+   "videos": [
+    "inventory_item_context_menu_verbs_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Executed Roll on 12-sided Die and Bestow on Random Kindness via item context menus",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 73,
+      "type": "player_join",
+      "id": "p_05243287-d63b-47bd-9505-6d81e619d4a5",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 4430,
+      "type": "item_use",
+      "item": "die_12",
+      "verb": "Roll",
+      "street": "beau_home"
+     },
+     {
+      "t": 5295,
+      "type": "item_use",
+      "item": "random_kindness",
+      "verb": "Bestow",
+      "street": "beau_home"
+     },
+     {
+      "t": 5299,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 458,
+      "img": 26002,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "stack_limits_and_bag_full_warning",
+   "rule_index": 24,
+   "videos": [
+    "stack_limits_and_bag_full_warning_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Dispensing water when all 16 slots are full triggers Your bag is full! warning",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "After freeing a slot, dispensing water grants Cup of Water with stack limit 1 modal",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 43,
+      "type": "player_join",
+      "id": "p_af3312ce-f112-41d5-be30-b627f836d862",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 2672,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 2673,
+      "type": "street_change",
+      "street": "andra_hall",
+      "name": "Andra Bureaucratic Hall"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "three_currencies_currants_img_credits",
+   "rule_index": 25,
+   "videos": [
+    "three_currencies_currants_img_credits_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "HUD and Wardrobe display Currants, iMG, and Credits",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 55,
+      "type": "player_join",
+      "id": "p_b8f1c954-6ca2-43ae-9636-b8e237f6a3ea",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 1215,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 458,
+      "img": 25990,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "mood_energy_img_meters_and_restoration",
+   "rule_index": 26,
+   "videos": [
+    "mood_energy_img_meters_and_restoration_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Eating Cherries restored Energy and Mood in the top-left HUD",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 45,
+      "type": "player_join",
+      "id": "p_13e43d0f-5884-4c31-ba5d-28aa52580573",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 1205,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 458,
+      "img": 25990,
+      "currants": 1441
+     },
+     {
+      "t": 3045,
+      "type": "item_use",
+      "item": "green_bag",
+      "verb": "Open/Close Bag",
+      "street": "beau_home"
+     },
+     {
+      "t": 3861,
+      "type": "item_use",
+      "item": "cherry",
+      "verb": "Eat",
+      "street": "beau_home"
+     },
+     {
+      "t": 3862,
+      "type": "meter_change",
+      "energy": 447,
+      "mood": 460,
+      "img": 25990,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "real_time_skill_learning_and_brain_capacity",
+   "rule_index": 27,
+   "videos": [
+    "real_time_skill_learning_and_brain_capacity_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Skills modal shows active real-time skill countdown and Brain Capacity penalty",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Switched active real-time skill learning to Master Gardener",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 42,
+      "type": "player_join",
+      "id": "p_05168bc7-9bb7-4428-b72d-cac06012ac7f",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "skill_categories_and_emblem_of_friendly",
+   "rule_index": 28,
+   "videos": [
+    "skill_categories_and_emblem_of_friendly_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Spending an Emblem of Friendly awarded +34 iMG and reduced active skill learning time",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 42,
+      "type": "player_join",
+      "id": "p_781c5b2b-8908-44a4-9292-b1a98c5f934b",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3131,
+      "type": "item_use",
+      "item": "emblem_friendly",
+      "verb": "Spend",
+      "street": "beau_home"
+     },
+     {
+      "t": 3131,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 26031,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "quest_log_objectives_and_completion",
+   "rule_index": 29,
+   "videos": [
+    "quest_log_objectives_and_completion_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Watering the 5th tree completed Give some H2O love and awarded currants, iMG, energy, and Giant favor",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 54,
+      "type": "player_join",
+      "id": "p_3f6b128c-6511-4f21-acc5-25844a5aed27",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3035,
+      "type": "meter_change",
+      "energy": 433,
+      "mood": 442,
+      "img": 25997,
+      "currants": 1441
+     },
+     {
+      "t": 3035,
+      "type": "meter_change",
+      "energy": 458,
+      "mood": 457,
+      "img": 26177,
+      "currants": 1541
+     },
+     {
+      "t": 3036,
+      "type": "harvest",
+      "target": "wood_1",
+      "action": "water",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "harvesting_tools_pickaxe_and_watering_can",
+   "rule_index": 30,
+   "videos": [
+    "harvesting_tools_pickaxe_and_watering_can_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Using Pickaxe triggers mining tool animation and harvests Beryl chunks",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Using Watering Can triggers watering tool animation",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 55,
+      "type": "player_join",
+      "id": "p_8d4c406a-e9bd-460c-8d84-9c55e8eae2f1",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3036,
+      "type": "meter_change",
+      "energy": 428,
+      "mood": 440,
+      "img": 26002,
+      "currants": 1441
+     },
+     {
+      "t": 3038,
+      "type": "harvest",
+      "target": "beryl_1",
+      "action": "mine",
+      "coOp": true,
+      "street": "beau_home"
+     },
+     {
+      "t": 4279,
+      "type": "meter_change",
+      "energy": 426,
+      "mood": 442,
+      "img": 26009,
+      "currants": 1441
+     },
+     {
+      "t": 4279,
+      "type": "meter_change",
+      "energy": 451,
+      "mood": 457,
+      "img": 26189,
+      "currants": 1541
+     },
+     {
+      "t": 4279,
+      "type": "harvest",
+      "target": "wood_1",
+      "action": "water",
+      "street": "beau_home"
+     }
+    ]
+   ]
+  },
+  {
+   "id": "tower_construction_project_contribution",
+   "rule_index": 31,
+   "videos": [
+    "tower_construction_project_contribution_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Contributing a Plank and labor to the Tower project increased its completion percentage",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 42,
+      "type": "player_join",
+      "id": "p_15045732-4e3e-4f0e-8e12-cc5d8ddde5b1",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3551,
+      "type": "meter_change",
+      "energy": 429,
+      "mood": 444,
+      "img": 26008,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "public_home_street_and_house_interior",
+   "rule_index": 32,
+   "videos": [
+    "public_home_street_and_house_interior_p0.mp4",
+    "public_home_street_and_house_interior_p1.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Public Home Street has exterior house, Butler, Magic Rock, trees, and visiting players",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Clicking the house door transitions into the interior room",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 44,
+      "type": "player_join",
+      "id": "p_56d10283-2089-4773-b1e6-9cfac2175c87",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 5758,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 440,
+      "img": 25992,
+      "currants": 1441
+     },
+     {
+      "t": 5758,
+      "type": "street_change",
+      "street": "andra_hall",
+      "name": "Andra Bureaucratic Hall"
+     }
+    ],
+    [
+     {
+      "t": 49,
+      "type": "player_join",
+      "id": "p_eedcebb7-bc62-44a8-813d-5cb7bd020a91",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "butler_visitor_log_recording",
+   "rule_index": 33,
+   "videos": [
+    "butler_visitor_log_recording_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Butler Roy records and reports Home Street visitor traffic",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 95,
+      "type": "player_join",
+      "id": "p_991c7861-5397-4182-903c-6ef922daf71a",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "right_panel_chat_tabs_and_activity_feed",
+   "rule_index": 34,
+   "videos": [
+    "right_panel_chat_tabs_and_activity_feed_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Right-hand panel has Local/Global/Party tabs, online players list, and activity log",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 39,
+      "type": "player_join",
+      "id": "p_f00a7922-2338-4900-9aca-1a7dcc75be18",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "local_chat_log_and_speech_bubble",
+   "rule_index": 35,
+   "videos": [
+    "local_chat_log_and_speech_bubble_p0.mp4",
+    "local_chat_log_and_speech_bubble_p1.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Local chat message appears in the right-hand log and as a speech bubble above the avatar",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 63,
+      "type": "player_join",
+      "id": "p_4fd17bdc-106c-4224-9a40-b6d2f7fdd4a2",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 4858,
+      "type": "chat",
+      "sender": "Beau",
+      "text": "Hello Glitchen!",
+      "street": "beau_home"
+     }
+    ],
+    [
+     {
+      "t": 69,
+      "type": "player_join",
+      "id": "p_599e9f31-3b4d-4dc2-aa90-286dee6f5733",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "player_social_interaction_menu",
+   "rule_index": 36,
+   "videos": [
+    "player_social_interaction_menu_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 4 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Clicking another player opens the social context menu with High five, Hug, Follow, Profile",
+     "ok": false,
+     "value": false
+    },
+    {
+     "expect": "Executing High five from the social menu awards +30 Mood",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 56,
+      "type": "player_join",
+      "id": "p_be99d394-608e-4f75-9beb-0164cb0cbe86",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "conga_line_follow_leader",
+   "rule_index": 37,
+   "videos": [
+    "conga_line_follow_leader_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 3 click_text: Locator.click: Timeout 3000ms exceeded.",
+    "step 7 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Followers automatically walk in a conga line formation behind the leader",
+     "ok": false,
+     "value": false
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 57,
+      "type": "player_join",
+      "id": "p_35e1b875-ae50-4ab1-9ee1-b2c68d5a3b2f",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "daily_hi_sign_match_bonus",
+   "rule_index": 38,
+   "videos": [
+    "daily_hi_sign_match_bonus_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Greeting with matching daily hi sign ('bye') awards 2x +10 mood bonus",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 47,
+      "type": "player_join",
+      "id": "p_95fef7cc-57c1-41e3-83ba-ff5f319f4ad4",
+      "street": "beau_home",
+      "online": true
+     },
+     {
+      "t": 3084,
+      "type": "emote",
+      "verb": "Greeting Sign ('hi'/'bye')",
+      "target": "stormoffara",
+      "street": "beau_home"
+     },
+     {
+      "t": 3088,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 450,
+      "img": 25990,
+      "currants": 1441
+     }
+    ]
+   ]
+  },
+  {
+   "id": "top_left_avatar_portrait_navigation_menu",
+   "rule_index": 39,
+   "videos": [
+    "top_left_avatar_portrait_navigation_menu_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [],
+   "expects": [
+    {
+     "expect": "Clicking top-left avatar portrait opens vertical navigation menu",
+     "ok": true,
+     "value": true
+    },
+    {
+     "expect": "Clicking Profile in the navigation menu opens the player's Profile view",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 51,
+      "type": "player_join",
+      "id": "p_f53b3fd0-7bcb-42dd-a9ad-63b732c4ff76",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  },
+  {
+   "id": "musicblock_gng_playback_and_mute_toggle",
+   "rule_index": 40,
+   "videos": [
+    "musicblock_gng_playback_and_mute_toggle_p0.mp4"
+   ],
+   "errors": [],
+   "step_errors": [
+    "step 3 click_text: Locator.click: Timeout 3000ms exceeded."
+   ],
+   "expects": [
+    {
+     "expect": "Playing Musicblock GNG displays floating speaker icon, plays tune, and grants +10 iMG +2 Mood -2 Energy",
+     "ok": false,
+     "value": false
+    },
+    {
+     "expect": "Top-right speaker button toggles audio mute",
+     "ok": true,
+     "value": true
+    }
+   ],
+   "events": [
+    [
+     {
+      "t": 43,
+      "type": "player_join",
+      "id": "p_91603134-a443-447e-9e9c-cf8f19c65ed7",
+      "street": "beau_home",
+      "online": true
+     }
+    ]
+   ]
+  }
+ ]
+}

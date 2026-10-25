@@ -1,0 +1,99 @@
+play:
+smoke: 0 console errors
+  avatar_wardrobe_vanity_customization     expects 2/2  step_err 0  console_err 0
+  avatar_scale_shrink_and_embiggen         expects 2/2  step_err 0  console_err 0
+  avatar_animations_and_thriller_dance     expects 2/2  step_err 0  console_err 0
+  jumping_multi_tiered_house_roofs         expects 1/1  step_err 0  console_err 0
+  minimap_strip_and_world_map_button       expects 1/1  step_err 0  console_err 0
+  world_regions_and_interconnected_streets expects 1/1  step_err 0  console_err 0
+  signpost_street_boundary_transition      expects 1/1  step_err 0  console_err 0
+  camera_tracking_and_parallax_scrolling   expects 1/1  step_err 0  console_err 0
+  building_door_interior_transition        expects 1/1  step_err 0  console_err 0
+  first_street_visit_xp_bonus              expects 1/1  step_err 0  console_err 0
+  home_street_butler_npc_menu              expects 2/2  step_err 0  console_err 0
+  world_map_teleport_and_go_home           expects 2/2  step_err 0  console_err 0
+  magic_rock_change_street_style           expects 0/1  step_err 0  console_err 0
+  street_spirit_vendor_shop_buy            expects 2/2  step_err 0  console_err 0
+  cubimals_windup_race_in_planks           expects 1/1  step_err 0  console_err 0
+  street_animals_chicken_and_piggy         expects 2/2  step_err 0  console_err 0
+  giant_shrines_and_visage_overlay         expects 1/1  step_err 0  console_err 0
+  bureaucrat_waiting_room_qualification    expects 1/2  step_err 1  console_err 0
+  trees_and_plants_watering_harvesting     expects 0/1  step_err 1  console_err 0
+  dirt_pile_shovel_digging                 expects 1/1  step_err 0  console_err 0
+  beryl_rock_mining_and_coop_bonus         expects 0/1  step_err 2  console_err 0
+  floating_quoins_jump_collection          expects 1/1  step_err 0  console_err 0
+  inventory_16_slots_bag_and_search        expects 2/2  step_err 0  console_err 0
+  inventory_item_context_menu_verbs        expects 1/1  step_err 0  console_err 0
+  three_currencies_currants_img_credits    expects 1/1  step_err 0  console_err 0
+  stack_limits_and_bag_full_warning        expects 1/2  step_err 0  console_err 0
+  mood_energy_img_meters_and_restoration   expects 1/1  step_err 0  console_err 0
+  real_time_skill_learning_and_brain_capacity expects 2/2  step_err 0  console_err 0
+  skill_categories_and_emblem_of_friendly  expects 1/1  step_err 0  console_err 0
+  quest_log_objectives_and_completion      expects 1/1  step_err 0  console_err 0
+  harvesting_tools_pickaxe_and_watering_can expects 2/2  step_err 0  console_err 0
+  tower_construction_project_contribution  expects 1/1  step_err 0  console_err 0
+  right_panel_chat_tabs_and_activity_feed  expects 1/1  step_err 0  console_err 0
+  butler_visitor_log_recording             expects 1/1  step_err 0  console_err 0
+  public_home_street_and_house_interior    expects 2/2  step_err 0  console_err 0
+  local_chat_log_and_speech_bubble         expects 1/1  step_err 0  console_err 0
+  daily_hi_sign_match_bonus                expects 1/1  step_err 0  console_err 0
+  player_social_interaction_menu           expects 0/2  step_err 1  console_err 0
+  top_left_avatar_portrait_navigation_menu expects 2/2  step_err 0  console_err 0
+  conga_line_follow_leader                 expects 0/1  step_err 2  console_err 0
+  musicblock_gng_playback_and_mute_toggle  expects 1/2  step_err 1  console_err 0
+compare:
+  avatar_animations_and_thriller_dance     match     expects_ok=True  PASS
+  avatar_scale_shrink_and_embiggen         match     expects_ok=True  PASS
+  camera_tracking_and_parallax_scrolling   match     expects_ok=True  PASS
+  jumping_multi_tiered_house_roofs         match     expects_ok=True  PASS
+  world_regions_and_interconnected_streets mismatch  expects_ok=True  
+  avatar_wardrobe_vanity_customization     mismatch  expects_ok=True  
+  minimap_strip_and_world_map_button       mismatch  expects_ok=True  
+  building_door_interior_transition        match     expects_ok=True  PASS
+  signpost_street_boundary_transition      mismatch  expects_ok=True  
+  world_map_teleport_and_go_home           mismatch  expects_ok=True  
+  first_street_visit_xp_bonus              mismatch  expects_ok=True  
+  street_animals_chicken_and_piggy         match     expects_ok=True  PASS
+  magic_rock_change_street_style           mismatch  expects_ok=False  
+  home_street_butler_npc_menu              mismatch  expects_ok=True  
+  street_spirit_vendor_shop_buy            mismatch  expects_ok=True  
+  cubimals_windup_race_in_planks           mismatch  expects_ok=True  
+  giant_shrines_and_visage_overlay         match     expects_ok=True  PASS
+  trees_and_plants_watering_harvesting     match     expects_ok=False  
+  bureaucrat_waiting_room_qualification    mismatch  expects_ok=False  
+  beryl_rock_mining_and_coop_bonus         unclear   expects_ok=False  
+  floating_quoins_jump_collection          mismatch  expects_ok=True  
+  dirt_pile_shovel_digging                 mismatch  expects_ok=True  
+  stack_limits_and_bag_full_warning        mismatch  expects_ok=False  
+  inventory_16_slots_bag_and_search        mismatch  expects_ok=True  
+  three_currencies_currants_img_credits    mismatch  expects_ok=True  
+  skill_categories_and_emblem_of_friendly  mismatch  expects_ok=True  
+  mood_energy_img_meters_and_restoration   mismatch  expects_ok=True  
+  quest_log_objectives_and_completion      mismatch  expects_ok=True  
+  harvesting_tools_pickaxe_and_watering_can match     expects_ok=True  PASS
+  tower_construction_project_contribution  match     expects_ok=True  PASS
+  real_time_skill_learning_and_brain_capacity mismatch  expects_ok=True  
+  public_home_street_and_house_interior    mismatch  expects_ok=True  
+  butler_visitor_log_recording             mismatch  expects_ok=True  
+  local_chat_log_and_speech_bubble         match     expects_ok=True  PASS
+  player_social_interaction_menu           mismatch  expects_ok=False  
+  inventory_item_context_menu_verbs        mismatch  expects_ok=True  
+  daily_hi_sign_match_bonus                match     expects_ok=True  PASS
+  top_left_avatar_portrait_navigation_menu mismatch  expects_ok=True    musicblock_gng_playback_and_mute_toggle  mismatch  expects_ok=False  
+
+  conga_line_follow_leader                 mismatch  expects_ok=False  
+  right_panel_chat_tabs_and_activity_feed  mismatch  expects_ok=True  
+ROUND 0: 11/41 rules match
+ROUND 1: asking for fixes (30 failing)
+Traceback (most recent call last):
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/loop/loop.py", line 136, in <module>
+    main()
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/loop/loop.py", line 86, in main
+    proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/loop/fix.py", line 55, in propose
+    it, secs = wait(c, it, "fix")
+               ^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/loop/common.py", line 59, in wait
+    raise RuntimeError(f"{label} {interaction.status}: {getattr(interaction, 'error', None)}")
+RuntimeError: fix incomplete: None
