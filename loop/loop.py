@@ -106,7 +106,7 @@ def main():
                     "secs": round(time.time() - t0)})
     print(f"ROUND 0: {score(verdicts)}/{len(verdicts)} rules match", flush=True)
 
-    regressions, stale = None, 0
+    regressions, stale, owed = None, 0, []
     for k in range(1, a.rounds + 1):
         t0 = time.time()
         rk = run / f"round_{k}"
@@ -122,7 +122,7 @@ def main():
             shutil.copytree(best["dir"] / "game", rk / "game")
             print(f"ROUND {k}: asking for fixes ({len(best['verdicts']) - score(best['verdicts'])} failing)", flush=True)
             proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions,
-                                   limit=a.batch, raw_path=rk / "proposal_raw.txt")
+                                   limit=a.batch, raw_path=rk / "proposal_raw.txt", priority=owed)
             (rk / "proposal.json").write_text(json.dumps(proposal, indent=1))
             edits = proposal.get("edits", [])
             if a.approve:
@@ -144,7 +144,8 @@ def main():
         was = {v["id"] for v in best["verdicts"] if v["pass"]}
         now = {v["id"] for v in verdicts if v["pass"]}
         lost = sorted(was - now)
-        accepted = not lost and score(verdicts) >= score(best["verdicts"])
+        # Keep a round when its net score improves; anything it broke is owed and fixed first next round.
+        accepted = score(verdicts) > score(best["verdicts"])
         history.append({"round": k, "score": score(verdicts), "total": len(verdicts), "accepted": accepted,
                         "regressions": lost, "newly_passing": sorted(now - was), "edits_applied": len(applied),
                         "edits_failed": len(failed), "fix_usage": proposal.get("_usage"),
@@ -154,7 +155,9 @@ def main():
         if accepted:
             stale = 0 if score(verdicts) > score(best["verdicts"]) else stale + 1
             best = {"round": k, "dir": rk, "verdicts": verdicts, "smoke": smoke}
-            regressions = None
+            owed = lost
+            regressions = [f"{i}: passed before your last edit and fails now -> " +
+                           next((v.get("difference", "") for v in verdicts if v["id"] == i), "") for i in lost] or None
         else:
             stale += 1
             regressions = [f"{i}: passed before, failed after your edit -> " +

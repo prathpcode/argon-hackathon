@@ -32,10 +32,12 @@ CODE:
 {code}"""
 
 
-def propose(cfg, game_dir, verdicts, smoke, plan, regressions=None, limit=8, raw_path=None):
+def propose(cfg, game_dir, verdicts, smoke, plan, regressions=None, limit=8, raw_path=None, priority=()):
     # Fix a few rules per round: smaller edits, faster rounds, fewer edits fighting each other.
+    # Rules the previous round broke ("owed") always go first.
     order = {"mismatch": 0, "unclear": 1, "match": 2}
-    failing = sorted((v for v in verdicts if not v["pass"]), key=lambda v: order.get(v["verdict"], 3))[:limit]
+    failing = sorted((v for v in verdicts if not v["pass"]),
+                     key=lambda v: (v["id"] not in priority, order.get(v["verdict"], 3)))[:limit]
     passing = [v["id"] for v in verdicts if v["pass"]]
     by_id = {s["id"]: s for s in plan["scenarios"]}
     fail_txt = "\n".join(

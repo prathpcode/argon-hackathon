@@ -69,10 +69,11 @@
     <div class="panel" id="detail"><h2>Rule detail</h2><p class="muted">Click a rule to compare the original footage with the rebuild.</p></div>
     <div class="panel"><h2>Fixes proposed</h2><div id="edits" class="muted">No fix round yet.</div></div>
     <div class="panel">
-      <h2>Agent squad</h2>
-      <p class="muted" style="margin:0">Not running yet. Today the scenarios are played by scripted bots (up to 3 players per
-      scenario on one server). Next: Managed Agents join the same server, play freely with personas, and their recordings
-      feed this same compare → fix loop.</p>
+      <h2>Agent squad (Managed Agents)</h2>
+      <div id="squad" class="muted">No squad run yet.</div>
+      <details style="margin-top:10px"><summary class="muted" style="cursor:pointer">Live spectator view (same server the agents play on)</summary>
+        <iframe id="spectate" style="width:100%;aspect-ratio:16/9;border:0;border-radius:6px;margin-top:8px"></iframe>
+      </details>
     </div>
     <div class="panel"><h2>Log</h2><pre id="log"></pre></div>
   </div>
@@ -184,7 +185,38 @@ function renderDetail(cfg, plan, scored) {
   document.querySelectorAll("#detail .tabs button").forEach(b => b.onclick = () => { selRound = +b.dataset.k; renderDetail(cfg, plan, scored); });
 }
 
-async function tick() { window.__state = await load(); render(window.__state); }
+async function loadSquad() {
+  const id = (await t("../squad/runs/latest.txt")).trim();
+  if (!id) return null;
+  const st = await j(`../squad/runs/${id}/state.json`);
+  return st;
+}
+
+function renderSquad(st) {
+  const el = document.getElementById("squad");
+  if (!st) { el.textContent = "No squad run yet."; return; }
+  const now = Date.now() / 1000;
+  const until = Math.round(st.start_at - now);
+  const head = `<div style="margin-bottom:8px">Run ${esc(st.run)} · ${until > 0 ? `match starts in ${until}s` :
+      st.finished ? `finished in ${Math.round(st.finished - st.started)}s` : `playing ${Math.min(st.seconds, -until)}s / ${st.seconds}s`}</div>`;
+  const cards = Object.values(st.agents).map(a => `
+    <div style="border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:8px;color:var(--ink)">
+      <div><b>${esc(a.name)}</b> <span class="stage on" style="font-size:11px">${esc(a.phase || a.status || "starting")}</span>
+        <span class="muted" style="font-size:12px">${a.elapsed ? a.elapsed + "s" : ""}</span></div>
+      <div class="muted" style="font-size:12px;margin:4px 0">${esc(a.persona)}</div>
+      ${a.latest_shot ? `<img src="../squad/${esc(a.latest_shot)}?t=${Date.now()}" style="width:100%;border-radius:6px">` : ""}
+      ${(a.findings || []).map(f => `<div class="edit"><b>${esc(f.severity || "")}</b> ${esc(f.finding)}<br><span class="muted">${esc(f.repro || "")}</span></div>`).join("")}
+      ${a.summary ? `<div class="muted" style="font-size:12px">${esc(a.summary)}</div>` : ""}
+    </div>`).join("");
+  el.innerHTML = head + cards;
+  const fr = document.getElementById("spectate");
+  if (!fr.src) fr.src = "http://localhost:8090/?name=Spectator";
+}
+
+async function tick() {
+  window.__state = await load(); render(window.__state);
+  renderSquad(await loadSquad());
+}
 tick(); setInterval(tick, 5000);
 </script>
 </body>
