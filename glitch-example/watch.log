@@ -1,0 +1,25 @@
+id: v1_ChdjRnZlYXR6NER2V3VzT0lQczhQUjRRVRIXY0Z2ZWF0ejREdld1c09JUHM4UFI0UVU
+     12s in_progress
+     23s in_progress
+     33s in_progress
+     44s in_progress
+     55s in_progress
+     66s in_progress
+     76s in_progress
+     87s in_progress
+     97s in_progress
+    108s in_progress
+    119s in_progress
+    130s in_progress
+    140s in_progress
+    151s in_progress
+    161s in_progress
+    172s in_progress
+    182s in_progress
+    193s in_progress
+    204s in_progress
+    215s completed
+status: completed  TOTAL: 215s  id: v1_ChdjRnZlYXR6NER2V3VzT0lQczhQUjRRVRIXY0Z2ZWF0ejREdld1c09JUHM4UFI0UVU
+input tokens: 435700 (cached 0)  output: 9310  thought: 5822
+input by modality: [ModalityTokens(modality='text', tokens=17028), ModalityTokens(modality='video', tokens=418672)]
+index segments: 34  rules: 41  streets: 5  unknowns: 4

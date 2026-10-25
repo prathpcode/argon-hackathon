@@ -1,0 +1,148 @@
+{
+ "candidates": [
+  {
+   "game": "Glitch",
+   "year_lost": "2012",
+   "why_unplayable": "Official MMO servers were shut down in December 2012 and the browser-based Adobe Flash client was retired (Tiny Speck later dedicated the art assets and code to the public domain CC0 before pivoting to become Slack).",
+   "genre": "2D Side-Scrolling Social MMORPG",
+   "multiplayer": true,
+   "ip_owner": "Public Domain (CC0, originally Tiny Speck / Slack Technologies / Salesforce)",
+   "content": "Over 1,000 interconnected surreal streets inside the minds of 11 imaginative Giants, dozens of non-combat skill trees (alchemy, mining, gardening, cooking, animal husbandry), housing and tower construction, quirky NPCs, cooperative street projects, and defensive encounters against The Rook.",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=b6O5QXj6n18",
+     "title": "Glitch Alpha Trailer",
+     "approx_minutes": 2,
+     "verified": "Glitch Alpha Trailer \u2014 GlitchVideos3000"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=vuDYhczbqEQ",
+     "title": "Glitch: Game of Giant Imagination",
+     "approx_minutes": 3,
+     "verified": "Glitch: Game of Giant Imagination \u2014 GlitchVideos3000"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=PTGpRhJe5E0",
+     "title": "17 Fun Things To Do in Glitch in 124 Seconds",
+     "approx_minutes": 2,
+     "verified": "17 Fun Things To Do in Glitch in 124 Seconds \u2014 GlitchVideos3000"
+    }
+   ]
+  },
+  {
+   "game": "City of Steam (and City of Steam: Arkadia)",
+   "year_lost": "2016",
+   "why_unplayable": "Official servers were shut down by Mechanist Games and publisher R2Games, and the Unity Web Player browser plugin it relied upon was deprecated across modern browsers.",
+   "genre": "Industrial Fantasy / Steampunk 3D Browser MMORPG",
+   "multiplayer": true,
+   "ip_owner": "Mechanist Games",
+   "content": "Set on the clockwork World Machine featuring 9 playable races (including humans, dwarves, goblins, andorc-like skins) and 4 customizable classes (Arcanist, Gunner, Warder, Channeler), hub cities like Nexus, instanced mechanical dungeons, steam-powered vehicles, gear crafting, and boss raids.",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=aRR6ENSr780",
+     "title": "City of Steam Gameplay Overview",
+     "approx_minutes": 15,
+     "verified": "City of Steam Alpha Gameplay Trailer \u2014 Mechanist Games"
+    }
+   ]
+  },
+  {
+   "game": "WildStar",
+   "year_lost": "2018",
+   "why_unplayable": "Carbine Studios was closed and publisher NCSoft permanently shut down the live MMORPG servers in November 2018.",
+   "genre": "Sci-Fi Fantasy Action MMORPG",
+   "multiplayer": true,
+   "ip_owner": "NCSoft",
+   "content": "The massive alien planet Nexus divided between two factions (The Dominion and The Exiles), 8 playable races, 6 combat classes (Warrior, Esper, SpellSlinger, Stalker, Medic, Engineer), 4 distinct player Paths (Soldier, Scientist, Explorer, Settler), telegraph-based action combat, deep skyplot housing, dungeons, and 20-to-40-player raids.",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=IZlZ96jEuV4",
+     "title": "WildStar Walkthrough Part 1 No Commentary",
+     "approx_minutes": 35,
+     "verified": "WildStar Walkthrough Part 1 No Commentary \u2014 Noire Blue"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=DJGE53hzWvI",
+     "title": "Wildstar Facecam Walkthrough Part 1 Gameplay Let's Play Playthrough Review 1080p HD",
+     "approx_minutes": 28,
+     "verified": "Wildstar Facecam Walkthrough Part 1 Gameplay Let's Play Playthrough Review 1080p HD \u2014 NukemDukem"
+    }
+   ]
+  },
+  {
+   "game": "Darkspore",
+   "year_lost": "2016",
+   "why_unplayable": "Electronic Arts permanently decommissioned the authentication and master servers in March 2016; because the game required an always-online connection for inventory and campaign progression, even single-player is unplayable.",
+   "genre": "Sci-Fi Action RPG / Hack-and-Slash Dungeon Crawler",
+   "multiplayer": true,
+   "ip_owner": "Electronic Arts (Maxis)",
+   "content": "100 unique playable genetic heroes ('Living Weapons') across 5 genesis types (Bio, Cyber, Plasma, Necro, Quantum) and 3 classes, a 3-hero squad switching mechanic, Spore-like procedural part-attachment gear customization, 4-player co-op campaign across multiple alien planets, enemy hordes, and multi-phase boss battles.",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=ccJNeqTqVeM",
+     "title": "Darkspore: Complete Story Playthrough - Part 1-1: Floating Islands",
+     "approx_minutes": 20,
+     "verified": "Darkspore: Complete Story Playthrough - Part 1-1: Floating Islands \u2014 Letande"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=ym_WnrTFZe0",
+     "title": "Darkspore: Complete Story Playthrough - Part 2-4: Chaos Fields / Polaris (Boss)",
+     "approx_minutes": 25,
+     "verified": "Darkspore: Complete Story Playthrough - Part 2-4: Chaos Fields / Polaris (Boss) \u2014 Letande"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=UqrmjBhW7xA",
+     "title": "Darkspore - Beta gameplay (Tutorial + First Level) (Part 2)",
+     "approx_minutes": 14,
+     "verified": "Darkspore - Beta gameplay (Tutorial + First Level) (Part 2) \u2014 redcubeinc"
+    }
+   ]
+  },
+  {
+   "game": "Battleborn",
+   "year_lost": "2021",
+   "why_unplayable": "2K Games delisted the title and shut down all game servers in January 2021; due to its strict always-online architecture, all solo and co-op story missions as well as PvP modes were rendered inaccessible.",
+   "genre": "First-Person Hero Shooter / Co-op Action Campaign / MOBA",
+   "multiplayer": true,
+   "ip_owner": "Take-Two Interactive (2K Games / Gearbox Software)",
+   "content": "30 distinct playable heroes across 5 cosmic factions, an 8-chapter + prologue narrative story campaign playable solo or in 5-player co-op, in-match Helix skill tree progression, persistent loot gear loadouts, and 3 competitive 5v5 multiplayer modes (Incursion, Meltdown, Capture).",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=O60428gJPrE",
+     "title": "Battleborn Walkthrough Part 1 - First Hour! (Let's Play Commentary)",
+     "approx_minutes": 58,
+     "verified": "Battleborn Walkthrough Part 1 - First Hour! (Let's Play Commentary) \u2014 TetraNinja"
+    }
+   ]
+  },
+  {
+   "game": "LawBreakers",
+   "year_lost": "2018",
+   "why_unplayable": "Boss Key Productions shut down and publisher Nexon terminated all official game servers in September 2018, leaving the online-only arena shooter completely unplayable.",
+   "genre": "Gravity-Defying First-Person Hero Arena Shooter",
+   "multiplayer": true,
+   "ip_owner": "Nexon",
+   "content": "9 symmetrical character classes split across Law and Breakers factions (Vanguard, Enforcer, Titan, Assassin, Wraith, Juggernaut, Battle Medic, Harrier, Gunslinger), dynamic low-gravity and zero-G pocket combat mechanics, blind-firing propulsion, 8 futuristic maps, and 5 objective-based multiplayer modes including Overcharge, Blitzball, and Turf War.",
+   "videos": [
+    {
+     "url": "https://www.youtube.com/watch?v=0vOlm4NoUqE",
+     "title": "LAWBREAKERS - Gameplay - ALL CHARACTERS (Ultrawide) PC | CenterStrain01",
+     "approx_minutes": 42,
+     "verified": "LAWBREAKERS - Gameplay - ALL CHARACTERS (Ultrawide) PC | CenterStrain01 \u2014 Centerstrain01"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=wtZb-vDN0ec",
+     "title": "LawBreakers Gameplay Video Assassin & Vanguard",
+     "approx_minutes": 12,
+     "verified": "LawBreakers Gameplay Video Assassin & Vanguard \u2014 BagoGames"
+    },
+    {
+     "url": "https://www.youtube.com/watch?v=VL7Uq45IC1k",
+     "title": "Lawbreakers Gameplay Video Enforcer & Titan",
+     "approx_minutes": 11,
+     "verified": "Lawbreakers Gameplay Video Enforcer & Titan \u2014 BagoGames"
+    }
+   ]
+  }
+ ]
+}
