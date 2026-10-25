@@ -1,0 +1,109 @@
+{
+ "round": 1,
+ "agents": {
+  "Explorer": {
+   "summary": "Explored the arena, gathered block pickups, and navigated across quadrants. Movement, collisions, block mergers, and respawns functioned normally, but HUD overlays lack opaque backdrops leading to nametag and world entity overlap with the leaderboard and energy meter.",
+   "findings": [
+    {
+     "t": 75.7,
+     "severity": "medium",
+     "finding": "Player nametag and body blocks render directly underneath the transparent leaderboard HUD in the upper-right corner, causing severe text overlap with rankings #7 and #8.",
+     "repro": "Move near the upper-right quadrant of the arena or have large opponent entities position near (x: ~600-800, y: -300) under the leaderboard overlay."
+    },
+    {
+     "t": 10.7,
+     "severity": "low",
+     "finding": "Collectible world items and arena blocks clip directly under and through the energy meter HUD in the lower-left corner without a solid backdrop or clipping boundary.",
+     "repro": "Move near the bottom-left edge of the viewport where stray blocks and pickups intersect the energy gauge."
+    }
+   ],
+   "shots": [],
+   "persona": "Go everywhere: every area, edge, exit and platform.",
+   "secs": 445
+  },
+  "Griefer": {
+   "summary": "Completed 75-second playtest as Griefer at ~38.2 FPS. Observed multiple z-index and HUD layering bugs where in-world blocks, giant gems, and other players render directly on top of or through the leaderboard, minimap, and bottom control hints. Also identified leaderboard rank gap skipping #11 on respawn and spiky visual rendering artifacts behind player names in the leaderboard.",
+   "findings": [
+    {
+     "t": 10.2,
+     "severity": "low",
+     "finding": "Black jagged spike artifacts render directly behind multiple player names on the leaderboard, obscuring text readability.",
+     "repro": "Observe the top-right leaderboard during match play when players with active streaks or effects are listed."
+    },
+    {
+     "t": 22.2,
+     "severity": "medium",
+     "finding": "Game entities render inconsistently behind or across HUD elements, with large players clipping behind the top-left minimap and into the bottom-left energy meter.",
+     "repro": "Position viewport near other players and boundary areas so that entities align with the minimap or energy bar."
+    },
+    {
+     "t": 44.9,
+     "severity": "medium",
+     "finding": "World items, player blocks, and large gems render directly over the leaderboard UI in the top-right corner, obscuring ranks and score values.",
+     "repro": "Move near high-density block zones or large gem spawns located near the top-right corner of the camera viewport."
+    },
+    {
+     "t": 56.3,
+     "severity": "medium",
+     "finding": "A giant pink gem renders on top of the leaderboard, completely covering rank #10 and adjacent score text.",
+     "repro": "Navigate or allow camera scrolling near large gem spawns in the upper-right section of the screen."
+    },
+    {
+     "t": 67.6,
+     "severity": "low",
+     "finding": "World gem renders on top of bottom keybind instruction text '[A/D] Rotate & Boost', clipping the UI footer.",
+     "repro": "Allow camera to scroll so that world food gems touch the bottom screen margin where control instructions are fixed."
+    },
+    {
+     "t": 67.6,
+     "severity": "low",
+     "finding": "Leaderboard rank list skips rank #10 to #12 directly (missing rank #11) when local player is placed below the top 10.",
+     "repro": "Respawn after dying so that local score resets to 1 and player rank falls below top 10; observe leaderboard numbering."
+    }
+   ],
+   "shots": [
+    "shots/squad_1_Griefer/001.png"
+   ],
+   "persona": "Try to break it: spam, edges, exploits, desync.",
+   "secs": 510
+  },
+  "Socialite": {
+   "summary": "Completed a 75-second playtest as Socialite in room squad1 alongside Explorer and Griefer. While remote player clusters and leaderboard rankings render at 60 fps, multiplayer interaction is severely limited: player-to-player collision and combat are completely absent, incoming chat messages float above the local player instead of the sender, name tags and sprites clip without separation when grouped together, and world entities (stray blocks, food gems, bots) lack network synchronization.",
+   "findings": [
+    {
+     "t": 20.9,
+     "severity": "medium",
+     "finding": "Chat messages sent by remote players display as floating text directly over the local player rather than over the message sender.",
+     "repro": "Have another squad member (e.g., Explorer) send a chat message; observe that the yellow floating text renders centered directly on Socialite's local player cluster instead of above Explorer."
+    },
+    {
+     "t": 57.0,
+     "severity": "low",
+     "finding": "Player clusters and name tags overlap directly without collision separation or label offsetting, obscuring player identities when clustered together.",
+     "repro": "Move close to or stand on top of another squad member (e.g., Griefer); the gem blocks clip through each other and player name labels overlap directly."
+    },
+    {
+     "t": 57.0,
+     "severity": "high",
+     "finding": "Multiplayer block collision and combat are non-functional between human players; clusters pass through each other without collision physics, damage, or block shatter.",
+     "repro": "Directly ram into or intercept another player's cluster (Explorer or Griefer); players pass straight through each other without collision bounce, damage, or combat events."
+    },
+    {
+     "t": 57.6,
+     "severity": "low",
+     "finding": "No cooperative trading or block transfer mechanics exist; ejecting blocks merely drops standard stray blocks with no squad sharing mechanism.",
+     "repro": "Approach a teammate and press Space to eject a block to attempt trading; the ejected block scatters as a generic unlinked stray block without trade prompt or squad transfer."
+    },
+    {
+     "t": 62.1,
+     "severity": "high",
+     "finding": "Game world entities including stray blocks, food gems, and AI bots are simulated entirely client-side without network synchronization.",
+     "repro": "Inspect multiplayer shared world state; net.set is never dispatched for world entities, resulting in completely desynchronized item spawns across clients."
+    }
+   ],
+   "shots": [],
+   "persona": "Play with the others: everything players do together.",
+   "secs": 1020
+  }
+ }
+}
