@@ -71,12 +71,17 @@ def run_stage(run):
     for attempt in range(2):
         if attempt or len(given) < MIN_VIDEOS:
             exclude = "\nAlready found, find OTHER videos: " + "; ".join(v["url"] for v in videos) if videos else ""
-            _, text = call(run, "find" if not attempt else "find-more", stage="find", role="researcher", name="Researcher",
-                           brief=f"Searching the web for long gameplay videos of {rev['name']}." if not attempt
-                           else f"Only {len(videos)} videos played. Searching for more.",
-                           input=PROMPT.format(game=rev["name"], about=f" ({about})" if about else "", exclude=exclude),
-                           stream=True, notes=field("title"), tools=[{"type": "google_search"}],
-                           generation_config={"thinking_level": "medium", "thinking_summaries": "auto"})
+            try:
+                _, text = call(run, "find" if not attempt else "find-more", stage="find", role="researcher", name="Researcher",
+                               brief=f"Searching the web for long gameplay videos of {rev['name']}." if not attempt
+                               else f"Only {len(videos)} videos played. Searching for more.",
+                               input=PROMPT.format(game=rev["name"], about=f" ({about})" if about else "", exclude=exclude),
+                               stream=True, notes=field("title"), tools=[{"type": "google_search"}],
+                               generation_config={"thinking_level": "medium", "thinking_summaries": "auto"})
+            except Exception:
+                if attempt and videos:  # the follow-up search failed: carry on with what already plays
+                    break
+                raise
             todo = todo + parse_json(text).get("videos", [])
         for v in todo:
             if v["url"] in seen:
