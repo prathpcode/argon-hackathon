@@ -9,6 +9,8 @@
  */
 import fs from "node:fs";
 import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import { Type } from "typebox";
 import type { ToolDefinition } from "@earendil-works/pi-coding-agent";
 import { Run } from "./run";
@@ -23,6 +25,56 @@ const DOCS = new Set(["SPEC.md", "KIT.md", "PLAYTEST.md"]);
 
 type Issue = { severity: "high" | "medium" | "low"; kind: string; title: string; detail: string; evidence?: string; by?: string };
 type Report = { tester: string; fun: number; faithful: number; summary: string; issues: Issue[]; best: string[] };
+type Verify = { round: number; matched: number; total: number; lost: string[]; rules: { id: string; rule: string; pass: boolean; original: { video: string; start: number; end: number }; original_url: string; original_shows: string; rebuild_shows: string; difference: string; fix: string }[] };
+
+const ROOT = path.resolve(import.meta.dirname, "..", "..");
+const PYTHON = path.join(ROOT, "pipeline", ".venv", "bin", "python");
+const exec = promisify(execFile);
+
+/** The footage check (pipeline/verify.py): every footage rule played and judged against its moment in the
+ *  original. Runs beside the playtesters on the same snapshot; a failure here never fails the round. */
+async function verifyRound(run: Run, round: number, game: string): Promise<Verify | null> {
+  try {
+    await exec(PYTHON, [path.join(ROOT, "pipeline", "verify.py"), run.dir, String(round), game],
+      { cwd: path.join(ROOT, "pipeline"), timeout: 40 * 60_000, maxBuffer: 16 << 20 });
+    return run.readJson("rounds", String(round), "verify.json");
+  } catch (e: any) {
+    run.emit("error", { stage: "playtest", message: clip(`Footage check, round ${round}: ${String(e?.message ?? e)}`, 300) });
+    return null;
+  }
+}
+
+/** Optional (ARGON_SQUAD=1): Managed Agents play the round's snapshot together over the internet through a
+ *  temporary tunnel (pipeline/squad/run.py). Their findings join the round's issues. */
+async function squadRound(run: Run, round: number, game: string): Promise<Issue[]> {
+  if (process.env.ARGON_SQUAD !== "1") return [];
+  try {
+    await exec(PYTHON, [path.join(ROOT, "pipeline", "squad", "run.py"), run.dir, String(round), game],
+      { cwd: path.join(ROOT, "pipeline"), timeout: 30 * 60_000, maxBuffer: 16 << 20 });
+    const sq = run.readJson("rounds", String(round), "squad.json");
+    return Object.entries(sq?.agents ?? {}).flatMap(([name, a]: [string, any]) => (a.findings ?? []).map((f: any) => ({
+      severity: (["high", "medium", "low"].includes(f.severity) ? f.severity : "medium") as Issue["severity"],
+      kind: "squad", title: clip(String(f.finding ?? ""), 110), detail: `${f.finding} Repro: ${f.repro ?? ""}`,
+      evidence: `${name}, Managed Agent, ${f.t ?? "?"}s into the match`, by: "squad",
+    })));
+  } catch (e: any) {
+    run.emit("error", { stage: "playtest", message: clip(`Managed Agent squad, round ${round}: ${String(e?.message ?? e)}`, 300) });
+    return [];
+  }
+}
+
+/** Rules the footage check failed become the most important issues for the builder, regressions first. */
+function footageIssues(v: Verify | null): Issue[] {
+  if (!v) return [];
+  return v.rules.filter((r) => !r.pass).map((r) => ({
+    severity: "high" as const,
+    kind: v.lost.includes(r.id) ? "regression" : "faithful",
+    title: `${v.lost.includes(r.id) ? "Regression: " : ""}${clip(r.rule, 110)}`,
+    detail: `Original (${r.original.video} ${r.original.start}-${r.original.end}s): ${r.original_shows} | Rebuild: ${r.rebuild_shows} | ${r.difference}${r.fix ? ` | Fix: ${r.fix}` : ""}`,
+    evidence: r.original_url,
+    by: "footage",
+  })).sort((a, b) => (a.kind === "regression" ? 0 : 1) - (b.kind === "regression" ? 0 : 1));
+}
 
 const ARROWS: Record<string, string> = { ArrowRight: "→", ArrowLeft: "←", ArrowUp: "↑", ArrowDown: "↓", " ": "Space", Space: "Space" };
 const clip = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
@@ -155,14 +207,21 @@ async function playtester(run: Run, round: number, t: (typeof TESTERS)[number], 
 const mean = (xs: number[]) => (xs.length ? Math.round((xs.reduce((a, b) => a + b, 0) / xs.length) * 10) / 10 : 0);
 const ORDER = { high: 0, medium: 1, low: 2 } as Record<string, number>;
 
-function playtestMarkdown(round: number, reports: Report[]) {
+function playtestMarkdown(round: number, reports: Report[], verify: Verify | null = null, extra: Issue[] = []) {
   const lines = [`# Playtest round ${round}`, ""];
+  if (verify) {
+    lines.push(`## Footage check: ${verify.matched}/${verify.total} rules match the original`, "",
+      "Each rule was played in your game and compared with its moment in the original footage. Fix these first,",
+      "regressions (rules that matched last round) before anything else. Use ask_footage with the clip to see the original.", "");
+    footageIssues(verify).forEach((i, n) => lines.push(`${n + 1}. [${i.kind}] ${i.title}: ${i.detail} (${i.evidence})`));
+    lines.push("");
+  }
   for (const r of reports) {
     lines.push(`## ${TESTERS.find((t) => t.key === r.tester)?.name}: fun ${r.fun}/10, faithful ${r.faithful}/10`, "", r.summary, "");
     if (r.best.length) lines.push("Keep:", ...r.best.map((b) => `- ${b}`), "");
   }
   lines.push("## Issues, most severe first", "");
-  reports.flatMap((r) => r.issues).sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3)).forEach((i, n) => {
+  [...reports.flatMap((r) => r.issues), ...extra].sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3)).forEach((i, n) => {
     lines.push(`${n + 1}. [${i.severity}, ${i.kind}] ${i.title}: ${i.detail}${i.evidence ? ` (evidence: ${i.evidence})` : ""}`);
   });
   return lines.join("\n");
@@ -178,13 +237,19 @@ async function playtest(run: Run) {
       fs.mkdirSync(rdir, { recursive: true });
       fs.cpSync(game, path.join(rdir, "game"), { recursive: true });
       run.emit("round", { round: r, status: "testing" });
+      const footage = verifyRound(run, r, path.join(rdir, "game"));
+      const squad = squadRound(run, r, path.join(rdir, "game"));
       const reports = (await Promise.all(TESTERS.map((t) => playtester(run, r, t, path.join(rdir, "game"))))).filter((x): x is Report => !!x);
       if (!reports.length) throw new Error(`Every playtester in round ${r} failed.`);
-      const issues = reports.flatMap((x) => x.issues).sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3));
-      const result = { round: r, fun: mean(reports.map((x) => x.fun)), faithful: mean(reports.map((x) => x.faithful)), reports, issues };
+      const verify = await footage;
+      const others = [...reports.flatMap((x) => x.issues), ...(await squad)].sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3));
+      const issues = [...footageIssues(verify), ...others];
+      const result = { round: r, fun: mean(reports.map((x) => x.fun)), faithful: mean(reports.map((x) => x.faithful)), reports, issues,
+        verify: verify ? { matched: verify.matched, total: verify.total, lost: verify.lost.length } : null };
       run.writeJson(result, "rounds", String(r), "report.json");
-      fs.writeFileSync(path.join(rdir, "PLAYTEST.md"), playtestMarkdown(r, reports));
-      run.emit("round", { round: r, status: "tested", fun: result.fun, faithful: result.faithful, issues: issues.length, high: issues.filter((i) => i.severity === "high").length });
+      fs.writeFileSync(path.join(rdir, "PLAYTEST.md"), playtestMarkdown(r, reports, verify, others.filter((i) => i.by === "squad")));
+      run.emit("round", { round: r, status: "tested", fun: result.fun, faithful: result.faithful, issues: issues.length, high: issues.filter((i) => i.severity === "high").length,
+        ...(verify ? { matched: verify.matched, total: verify.total } : {}) });
       pickBest(run);
     }
     const report = run.readJson("rounds", String(r), "report.json");
@@ -212,14 +277,16 @@ async function playtest(run: Run) {
   return summary;
 }
 
-/** The round whose snapshot scored best (fun counts a little more than faithfulness) is the one people play. */
+/** The round people play: footage rules matched count most (checked against the original, not opinion), then fun.
+ *  Without a footage check it falls back to the playtesters' faithfulness score. */
 function pickBest(run: Run) {
   const dir = run.path("rounds");
   let best: { r: string; score: number } | null = null;
   for (const r of fs.readdirSync(dir)) {
     if (!run.exists("rounds", r, "report.json")) continue;
     const rep = run.readJson("rounds", r, "report.json");
-    const score = rep.fun * 1.2 + rep.faithful - rep.issues.filter((i: Issue) => i.severity === "high").length * 0.3;
+    const faithful = rep.verify?.total ? (rep.verify.matched / rep.verify.total) * 20 : rep.faithful;
+    const score = faithful + rep.fun * 1.2 - rep.issues.filter((i: Issue) => i.severity === "high" && i.by !== "footage").length * 0.3;
     if (!best || score > best.score) best = { r, score };
   }
   if (best) fs.writeFileSync(path.join(dir, "BEST"), best.r);

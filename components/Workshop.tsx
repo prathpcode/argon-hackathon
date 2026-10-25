@@ -30,7 +30,7 @@ const FOCUS_ICON = { fun: Sparkles, faithful: Scale, together: Users } as const;
 
 function agentIcon(a: Agent): LucideIcon {
   if (a.role === "tester") return FOCUS_ICON[a.focus ?? "fun"] ?? Gamepad2;
-  return { researcher: Globe, watcher: Eye, builder: Hammer, fixer: Wrench }[a.role] ?? Hammer;
+  return { researcher: Globe, watcher: Eye, builder: Hammer, fixer: Wrench, verifier: Film, squad: Gamepad2 }[a.role] ?? Hammer;
 }
 
 const file = (run: RunState, p: string) => `/api/revivals/${run.id}/file?p=${encodeURIComponent(p)}`;
@@ -192,6 +192,8 @@ export function Workshop({ initial }: { initial: RunState }) {
         </div>
         <aside className="ws-side">
           <Roster run={run} focus={focus?.id ?? null} now={clockAt} onPick={pick} />
+          <FootageCheck run={run} />
+          <SquadPanel run={run} />
           <Scores run={run} />
           <Issues run={run} />
           <FootageList run={run} />
@@ -553,6 +555,71 @@ function Scores({ run }: { run: RunState }) {
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+/** Every footage rule, played in the rebuild and judged against its moment in the original footage. */
+function FootageCheck({ run }: { run: RunState }) {
+  const checked = run.rounds.filter((r) => r.verify);
+  if (!checked.length) return null;
+  const v = checked.at(-1)!.verify!;
+  const rules = [...v.rules].sort((a, b) => Number(b.pass) - Number(a.pass));
+  return (
+    <section className="panel footage-check">
+      <h2>Footage check<span>{v.matched} of {v.total} rules match the original</span></h2>
+      <p className="muted small">Each rule was played in the rebuild and compared with its moment in the original footage.</p>
+      {checked.length > 1 && (
+        <p className="fc-trend">
+          {checked.map((r, n) => (
+            <span key={r.round}>{n ? " → " : ""}<b>R{r.round}</b> {r.verify!.matched}</span>
+          ))}
+        </p>
+      )}
+      <ul>
+        {rules.map((r) => (
+          <li key={r.id}>
+            <details>
+              <summary>
+                <i className={r.pass ? "fc-ok" : "fc-no"} aria-label={r.pass ? "matches" : "differs"}>{r.pass ? "✓" : "✗"}</i>
+                <span>{r.rule}</span>
+                <a href={r.original_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                  {r.original.video} {clock(r.original.start)}
+                </a>
+              </summary>
+              <p><b>Original:</b> {r.original_shows}</p>
+              <p><b>Rebuild:</b> {r.rebuild_shows}</p>
+              {!r.pass && r.difference && <p><b>Difference:</b> {r.difference}</p>}
+              {r.video && <video src={file(run, r.video)} controls muted playsInline preload="none" />}
+            </details>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+/** Managed Agents (each in its own Google-hosted sandbox) that played the round together over the internet. */
+function SquadPanel({ run }: { run: RunState }) {
+  const round = run.rounds.filter((r) => r.squad && Object.keys(r.squad.agents).length).at(-1);
+  if (!round) return null;
+  const agents = Object.entries(round.squad!.agents);
+  const total = agents.reduce((n, [, a]) => n + a.findings.length, 0);
+  return (
+    <section className="panel squad">
+      <h2>Managed Agents<span>{agents.length} played round {round.round} together · {total} found</span></h2>
+      <p className="muted small">Gemini Managed Agents, each in its own cloud sandbox, joined one match over the internet.</p>
+      {agents.map(([name, a]) => (
+        <details key={name} open={agents.length < 4}>
+          <summary><b>{name}</b> <span className="muted small">{a.findings.length} found{a.secs ? ` · ${Math.round(a.secs / 60)} min` : ""}</span></summary>
+          {a.shots?.length ? <img src={file(run, a.shots.at(-1)!)} alt={`${name} playing`} /> : null}
+          <ul>
+            {[...a.findings].sort((x, y) => (SEV_ORDER[x.severity as keyof typeof SEV_ORDER] ?? 3) - (SEV_ORDER[y.severity as keyof typeof SEV_ORDER] ?? 3)).map((f, n) => (
+              <li key={n}><i className={`sev ${f.severity}`} aria-label={f.severity} /> {f.finding}</li>
+            ))}
+          </ul>
+        </details>
+      ))}
     </section>
   );
 }
