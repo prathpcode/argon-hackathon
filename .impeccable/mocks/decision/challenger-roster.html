@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Argon Archive Roster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#2a2f5a;--ink2:#5b6088;--ink3:#62678e;--pink:#ff6ba7;--pink2:#c82a69;--lilac:#ede4ff;--mint:#e6f7ef;--butter:#fff0b8;--line:#eee9fb;--grey:#f1f1f5}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden}
+body{background:#fff;color:var(--ink);font:600 15px/1.4 Nunito,sans-serif;-webkit-font-smoothing:antialiased;display:grid;grid-template:68px 1fr/232px 1fr}
+.top{grid-column:1/3;display:flex;align-items:center;gap:20px;padding:0 28px;border-bottom:2px solid var(--line)}
+.brand{width:184px;font:800 28px/1 "Baloo 2";letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand i{width:12px;height:12px;border-radius:50%;background:var(--pink);box-shadow:5px -7px 0 -3px var(--ink)}
+.search{display:flex;align-items:center;gap:10px;width:400px;height:42px;padding:0 18px;border-radius:21px;background:#f7f3ff;color:var(--ink3);font-weight:600}
+.search::before{content:"";width:12px;height:12px;border:2.5px solid var(--ink3);border-radius:50%}
+.user{margin-left:auto;display:flex;align-items:center;gap:10px;height:42px;padding:0 16px 0 5px;border-radius:21px;background:var(--lilac);font-weight:800;font-size:14px}
+.user b{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--pink);color:var(--ink);font:800 13px "Baloo 2"}
+.user span{font-weight:600;color:var(--ink2);font-size:12px}
+.rail{padding:24px 16px;border-right:2px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.rail a{display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;border-radius:16px;color:var(--ink2);text-decoration:none;font-weight:700}
+.rail a i{width:14px;height:14px;border-radius:5px;background:var(--line)}
+.rail a:nth-child(2) i{background:var(--mint);box-shadow:inset 0 0 0 2px #9fdcbf}
+.rail a:nth-child(3) i{background:var(--butter);box-shadow:inset 0 0 0 2px #f0d670}
+.rail a:nth-child(4) i{background:#f3f3f7;box-shadow:inset 0 0 0 2px #cfd1e0}
+.rail a.on{background:var(--lilac);color:var(--ink)}
+.rail a.on i{background:var(--pink)}
+.rail a em{margin-left:auto;font-style:normal;font:700 13px "Baloo 2";color:var(--ink2)}
+main{padding:28px 36px 0;min-width:0}
+.head{display:flex;align-items:flex-end;justify-content:space-between}
+h1{font:800 42px/1.05 "Baloo 2";letter-spacing:-.015em}
+.head p{margin-top:6px;color:var(--ink2);font-size:16px}
+.add{height:40px;padding:0 18px;border-radius:20px;border:2px solid var(--pink);background:#fff;color:var(--pink2);font:800 14px Nunito}
+.bar{display:flex;align-items:center;gap:8px;margin:22px 0 20px}
+.pill{height:36px;padding:0 16px;border-radius:18px;background:#f7f5fc;color:var(--ink2);font:700 14px/36px Nunito}
+.pill.on{background:var(--ink);color:#fff}
+.legend{margin-left:auto;display:flex;gap:16px;font-size:13px;color:var(--ink2)}
+.legend span{display:flex;align-items:center;gap:7px}
+.legend i{width:16px;height:16px;border-radius:5px;background:linear-gradient(135deg,#ffd400,#ff6ba7 50%,#47b9ff)}
+.legend .g i{filter:grayscale(1)}
+.legend .h i{background:linear-gradient(90deg,#999 0 60%,#ff6ba7 60%)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{border-radius:24px;background:#fff;border:2px solid var(--line);box-shadow:0 3px 0 var(--line);padding:8px}
+.pt{position:relative;height:176px}
+.art{position:absolute;inset:0;border-radius:18px;overflow:hidden}
+.art i{position:absolute;display:block}
+.lost .art{filter:grayscale(1) contrast(.92) brightness(1.04)}
+.most .art::after,.mem .art::after{content:"";position:absolute;inset:0 32% 0 0;backdrop-filter:grayscale(1);border-right:2px dashed rgba(255,255,255,.85)}
+.mem .art::after{inset:0 0 50% 0;border-right:0;border-bottom:2px dashed rgba(255,255,255,.85)}
+.rank{position:absolute;left:14px;top:-2px;width:32px;height:40px;padding-top:5px;text-align:center;background:var(--pink);color:var(--ink);font:800 17px/1.3 "Baloo 2";clip-path:polygon(0 0,100% 0,100% 100%,50% 82%,0 100%)}
+.dates{position:absolute;right:10px;top:10px;padding:2px 10px;border-radius:10px;background:var(--butter);font:700 13px/1.5 "Baloo 2"}
+.plate{position:absolute;left:10px;bottom:10px;padding:3px 12px 1px;border-radius:12px;background:#fff;font:700 17px/1.4 "Baloo 2";box-shadow:0 2px 0 rgba(42,47,90,.14)}
+.chip{position:absolute;right:10px;bottom:12px;padding:2px 10px;border-radius:10px;background:var(--pink);color:var(--ink);font:800 12px/1.5 Nunito}
+.body{padding:10px 8px 6px}
+.meta{font-size:12.5px;color:var(--ink3);font-weight:700}
+.note{margin-top:2px;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ft{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.tag{padding:3px 10px;border-radius:9px;background:var(--grey);color:var(--ink2);font-size:12px;font-weight:800}
+.fan .tag{background:var(--mint);color:#24784f}
+.most .tag{background:var(--lilac);color:#5a43a8}
+.rv{height:34px;padding:0 18px;border:0;border-radius:17px;background:var(--pink);color:var(--ink);font:800 14px Nunito;box-shadow:0 2px 0 #e24c8a}
+.prog{display:flex;align-items:center;gap:4px;font-size:12.5px;font-weight:800;color:var(--pink2)}
+.prog i{width:20px;height:8px;border-radius:4px;background:var(--lilac)}
+.prog i.on{background:var(--pink)}
+.prog span{margin-left:6px}
+/* scenes */
+.s-pac{background:linear-gradient(#06071c,#06071c) 0 50%/30% 20% no-repeat,linear-gradient(#2340ff,#2340ff) 0 18%/100% 5% no-repeat,linear-gradient(#2340ff,#2340ff) 0 82%/100% 5% no-repeat,radial-gradient(circle,#ffcfa0 0 2px,transparent 2.5px) 0 50%/18px 18px repeat-x,#06071c}
+.s-pac .p{left:20%;top:50%;width:18%;aspect-ratio:1;translate:0 -50%;border-radius:50%;background:conic-gradient(from 120deg,#ffd400 0 300deg,transparent 0)}
+.s-pac .g{left:64%;top:50%;width:14%;aspect-ratio:.9;translate:0 -50%;border-radius:50% 50% 14% 14%;background:radial-gradient(circle at 34% 40%,#2340ff 0 6%,#fff 7% 15%,transparent 16%),radial-gradient(circle at 66% 40%,#2340ff 0 6%,#fff 7% 15%,transparent 16%),#ff5fa8}
+.s-cp{background:radial-gradient(ellipse 80% 34% at 50% 100%,#fff 98%,transparent),radial-gradient(ellipse 40% 22% at 12% 92%,#e4f3ff 98%,transparent),linear-gradient(#69bdf5,#d6f0ff)}
+.s-cp .p{left:40%;bottom:14%;width:21%;aspect-ratio:.78;border-radius:50% 50% 46% 46%/60% 60% 40% 40%;background:radial-gradient(circle at 40% 26%,#111 0 3%,#fff 4% 8%,transparent 9%),radial-gradient(circle at 60% 26%,#111 0 3%,#fff 4% 8%,transparent 9%),radial-gradient(ellipse 13% 7% at 50% 38%,#ff9a1f 98%,transparent),radial-gradient(ellipse 34% 38% at 50% 68%,#fff 98%,transparent),#18307a}
+.s-cp .q{right:9%;bottom:22%;width:28%;aspect-ratio:2;border-radius:50% 50% 0 0/100% 100% 0 0;background:repeating-linear-gradient(#fff 0 7px,#cfe6f7 7px 8px)}
+.s-tt{background:radial-gradient(circle at 84% 22%,#fff27a 0 7%,transparent 7.5%),radial-gradient(ellipse 70% 42% at 18% 104%,#5dd14b 98%,transparent),radial-gradient(ellipse 60% 36% at 88% 104%,#36b03a 98%,transparent),linear-gradient(#7fcfff,#d2f2ff)}
+.s-tt .b{left:50%;bottom:20%;width:20%;height:38%;border-radius:4px 4px 0 0;background:linear-gradient(#ffe066,#ffe066) 50% 100%/32% 42% no-repeat,#ff5a3c}
+.s-tt .r{left:47%;bottom:57.5%;width:26%;height:22%;background:#7a3cff;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.s-hh{background:repeating-linear-gradient(26.5deg,transparent 0 16px,rgba(255,255,255,.4) 16px 17px) 0 100%/100% 62% no-repeat,repeating-linear-gradient(-26.5deg,transparent 0 16px,rgba(255,255,255,.4) 16px 17px) 0 100%/100% 62% no-repeat,linear-gradient(#f39ac0 0 38%,#4aa9a3 38%)}
+.s-hh .p{left:40%;bottom:30%;width:7%;height:32%;border-radius:40% 40% 2px 2px/20% 20% 2px 2px;background:linear-gradient(#ffd2a6 0 28%,#ffcc00 28% 64%,#30304a 64%)}
+.s-hh .s{left:60%;bottom:24%;width:22%;height:13%;border-radius:4px;background:#8a3ffc;box-shadow:0 -9px 0 -2px #a96bff}
+.s-fb{background:linear-gradient(#ded895,#ded895) 0 100%/100% 12% no-repeat,linear-gradient(#2f8a1e,#2f8a1e) 71% 34%/18% 7% no-repeat,linear-gradient(#5ec639,#5ec639) 72% 0/14% 36% no-repeat,linear-gradient(#2f8a1e,#2f8a1e) 71% 64%/18% 7% no-repeat,linear-gradient(#5ec639,#5ec639) 72% 100%/14% 40% no-repeat,linear-gradient(#4ec0ca,#a6e4ea)}
+.s-fb .p{left:26%;top:42%;width:12%;aspect-ratio:1.25;border-radius:50%;background:radial-gradient(circle at 70% 35%,#222 0 6%,#fff 7% 16%,transparent 17%),radial-gradient(ellipse 30% 18% at 90% 64%,#f45b1f 98%,transparent),#f7cf1f}
+.s-mh{background:radial-gradient(ellipse 70% 60% at 50% 110%,#ff4a2f,transparent 70%),radial-gradient(circle at 50% 0,#6b2cc4,transparent 60%),#160a22}
+.s-mh .p{left:33%;bottom:0;width:34%;height:80%;background:#0b0610;clip-path:polygon(44% 0,56% 0,60% 14%,78% 22%,100% 100%,0 100%,22% 22%,40% 14%)}
+.s-mh .e{left:47%;top:46%;width:6%;aspect-ratio:1;background:#ffd84a;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.s-pt{background:radial-gradient(circle at 22% 30%,#fff3c4 0 7%,transparent 7.5%),radial-gradient(ellipse 28% 20% at 52% 74%,#3faa4a 98%,transparent),radial-gradient(ellipse 40% 16% at 52% 80%,#f2d08a 98%,transparent),linear-gradient(transparent 72%,#1f86c6 72%),linear-gradient(#ff9f5a,#ffe0a3)}
+.s-pt .p{left:56%;bottom:34%;width:2.2%;height:26%;background:#7a4a24;rotate:8deg}
+.s-pt .l{left:51%;bottom:57%;width:15%;height:10%;border-radius:50% 50% 10% 10%;background:#2f8f3a}
+.s-ib{background:linear-gradient(transparent 80%,#120c1e 80%),linear-gradient(#120c1e,#120c1e) 26% 100%/9% 52% no-repeat,linear-gradient(#120c1e,#120c1e) 46% 100%/20% 40% no-repeat,linear-gradient(#120c1e,#120c1e) 66% 100%/7% 64% no-repeat,radial-gradient(circle at 80% 30%,#ffe2a0 0 6%,transparent 6.5%),linear-gradient(#2b2360,#a6506b 64%,#f2a35e)}
+.s-ib .t{left:61.4%;top:22%;width:7%;height:14.5%;background:#120c1e;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.s-ib .u{left:23.7%;top:36%;width:9%;height:12.5%;background:#120c1e;clip-path:polygon(50% 0,100% 100%,0 100%)}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand"><i></i>Argon</div>
+<div class="search">Search lost games</div>
+<div class="user"><b>NF</b>NovaFox4821<span>Guest</span></div>
+</header>
+<nav class="rail">
+<a class="on" href="#"><i></i>Archive<em>142</em></a>
+<a href="#"><i></i>Revived</a>
+<a href="#"><i></i>My revivals</a>
+<a href="#"><i></i>Controls</a>
+</nav>
+<main>
+<div class="head">
+<div><h1>Lost games, played again.</h1><p>142 games that shut down. Pick one, and Argon rebuilds it from its footage.</p></div>
+<button class="add">+ Add a lost game</button>
+</div>
+<div class="bar">
+<span class="pill on">All 142</span><span class="pill">Lost</span><span class="pill">Mostly lost</span><span class="pill">Revived by fans</span><span class="pill">Remembering</span>
+<div class="legend"><span class="g"><i></i>Lost</span><span class="h"><i></i>Mostly lost</span><span><i></i>Revived by fans</span></div>
+</div>
+<section class="grid">
+<article class="card lost"><div class="pt"><div class="art s-pac"><i class="p"></i><i class="g"></i></div><span class="rank">1</span><span class="dates">2021–2023</span><span class="plate">Pac-Man 99</span></div><div class="body"><p class="meta">Arika / Bandai Namco · Switch</p><p class="note">99-player battle royale maze arcade</p><div class="ft"><span class="tag">Lost</span><button class="rv">Revive</button></div></div></article>
+<article class="card fan"><div class="pt"><div class="art s-cp"><i class="q"></i><i class="p"></i></div><span class="rank">2</span><span class="dates">2005–2017</span><span class="plate">Club Penguin</span></div><div class="body"><p class="meta">Disney · Web</p><p class="note">Snowy island of igloos, parties and mini-games</p><div class="ft"><span class="tag">Revived by fans</span><button class="rv">Revive</button></div></div></article>
+<article class="card fan"><div class="pt"><div class="art s-tt"><i class="b"></i><i class="r"></i></div><span class="rank">3</span><span class="dates">2003–2013</span><span class="plate">Toontown Online</span></div><div class="body"><p class="meta">Disney · PC</p><p class="note">Cartoon MMO where toons beat Cogs with gags</p><div class="ft"><span class="tag">Revived by fans</span><button class="rv">Revive</button></div></div></article>
+<article class="card most"><div class="pt"><div class="art s-hh"><i class="p"></i><i class="s"></i></div><span class="rank">4</span><span class="dates">2001–2020</span><span class="plate">Habbo Hotel</span></div><div class="body"><p class="meta">Sulake · Web · Flash</p><p class="note">Pixel hotel of rooms you furnish and chat in</p><div class="ft"><span class="tag">Mostly lost</span><button class="rv">Revive</button></div></div></article>
+<article class="card lost"><div class="pt"><div class="art s-fb"><i class="p"></i></div><span class="rank">5</span><span class="dates">2013–2014</span><span class="plate">Flappy Bird</span></div><div class="body"><p class="meta">.GEARS · Mobile</p><p class="note">Tap to flap through endless green pipes</p><div class="ft"><span class="tag">Lost</span><button class="rv">Revive</button></div></div></article>
+<article class="card lost"><div class="pt"><div class="art s-mh"><i class="p"></i><i class="e"></i></div><span class="rank">6</span><span class="dates">2013–2017</span><span class="plate">Marvel Heroes</span></div><div class="body"><p class="meta">Gazillion · PC</p><p class="note">Isometric action RPG across the Marvel roster</p><div class="ft"><span class="tag">Lost</span><button class="rv">Revive</button></div></div></article>
+<article class="card most"><div class="pt"><div class="art s-pt"><i class="p"></i><i class="l"></i></div><span class="rank">7</span><span class="dates">2007–2020</span><span class="plate">Poptropica Islands</span></div><div class="body"><p class="meta">Pearson · Web · Flash</p><p class="note">Story islands to explore, quest by quest</p><div class="ft"><span class="tag">Mostly lost</span><button class="rv">Revive</button></div></div></article>
+<article class="card mem"><div class="pt"><div class="art s-ib"><i class="t"></i><i class="u"></i></div><span class="rank">8</span><span class="dates">2010–2018</span><span class="plate">Infinity Blade</span><span class="chip">Remembering…</span></div><div class="body"><p class="meta">Chair · iOS</p><p class="note">Swipe-to-fight sword duels in a fallen castle</p><div class="ft prog"><i class="on"></i><i class="on"></i><i></i><i></i><span>Watching footage 2 of 4</span></div></div></article>
+</section>
+</main>
+</body>
+</html>

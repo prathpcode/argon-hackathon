@@ -1,0 +1,569 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-25T06:32:17.717428+00:00",
+  "title": "Design System: Argon",
+  "extensions": {
+    "colorMeta": {
+      "argon-violet": {
+        "role": "primary",
+        "displayName": "Argon Violet",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "argon-violet-deep": {
+        "role": "primary",
+        "displayName": "Argon Violet Deep",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "violet-mist": {
+        "role": "primary",
+        "displayName": "Violet Mist",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "violet-edge": {
+        "role": "primary",
+        "displayName": "Violet Edge",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "gem-light": {
+        "role": "primary",
+        "displayName": "Gem Light",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "gem-pale": {
+        "role": "primary",
+        "displayName": "Gem Pale",
+        "tonalRamp": [
+          "oklch(15% 0.2 293)",
+          "oklch(26% 0.2 293)",
+          "oklch(38% 0.2 293)",
+          "oklch(50% 0.2 293)",
+          "oklch(62% 0.2 293)",
+          "oklch(74% 0.2 293)",
+          "oklch(85% 0.2 293)",
+          "oklch(95% 0.2 293)"
+        ]
+      },
+      "live-green": {
+        "role": "secondary",
+        "displayName": "Live Green",
+        "tonalRamp": [
+          "oklch(15% 0.17 150)",
+          "oklch(26% 0.17 150)",
+          "oklch(38% 0.17 150)",
+          "oklch(50% 0.17 150)",
+          "oklch(62% 0.17 150)",
+          "oklch(74% 0.17 150)",
+          "oklch(85% 0.17 150)",
+          "oklch(95% 0.17 150)"
+        ]
+      },
+      "danger-red": {
+        "role": "secondary",
+        "displayName": "Danger Red",
+        "tonalRamp": [
+          "oklch(15% 0.2 27)",
+          "oklch(26% 0.2 27)",
+          "oklch(38% 0.2 27)",
+          "oklch(50% 0.2 27)",
+          "oklch(62% 0.2 27)",
+          "oklch(74% 0.2 27)",
+          "oklch(85% 0.2 27)",
+          "oklch(95% 0.2 27)"
+        ]
+      },
+      "danger-mist": {
+        "role": "secondary",
+        "displayName": "Danger Mist",
+        "tonalRamp": [
+          "oklch(15% 0.2 27)",
+          "oklch(26% 0.2 27)",
+          "oklch(38% 0.2 27)",
+          "oklch(50% 0.2 27)",
+          "oklch(62% 0.2 27)",
+          "oklch(74% 0.2 27)",
+          "oklch(85% 0.2 27)",
+          "oklch(95% 0.2 27)"
+        ]
+      },
+      "ground-white": {
+        "role": "neutral",
+        "displayName": "Ground White",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "surface-white": {
+        "role": "neutral",
+        "displayName": "Surface White",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "muted-fill": {
+        "role": "neutral",
+        "displayName": "Muted Fill",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "hover-fill": {
+        "role": "neutral",
+        "displayName": "Hover Fill",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "active-fill": {
+        "role": "neutral",
+        "displayName": "Active Fill",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "hairline-strong": {
+        "role": "neutral",
+        "displayName": "Hairline Strong",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Ink Soft",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "ink-quiet": {
+        "role": "neutral",
+        "displayName": "Ink Quiet",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "black-pill": {
+        "role": "neutral",
+        "displayName": "Black Pill",
+        "tonalRamp": [
+          "oklch(15% 0.012 300)",
+          "oklch(26% 0.012 300)",
+          "oklch(38% 0.012 300)",
+          "oklch(50% 0.012 300)",
+          "oklch(62% 0.012 300)",
+          "oklch(74% 0.012 300)",
+          "oklch(85% 0.012 300)",
+          "oklch(95% 0.012 300)"
+        ]
+      },
+      "play-void": {
+        "role": "neutral",
+        "displayName": "Play Void",
+        "tonalRamp": [
+          "oklch(15% 0.03 295)",
+          "oklch(26% 0.03 295)",
+          "oklch(38% 0.03 295)",
+          "oklch(50% 0.03 295)",
+          "oklch(62% 0.03 295)",
+          "oklch(74% 0.03 295)",
+          "oklch(85% 0.03 295)",
+          "oklch(95% 0.03 295)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Game page title; page titles at 32px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Card titles (two-line clamp) and chat head."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Rail items, top links, see-all, prompt text."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text, chat, docs."
+      },
+      "body-long": {
+        "displayName": "Body Long",
+        "purpose": "About prose, 72ch max, ink-soft."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels, chips, badges."
+      },
+      "stat": {
+        "displayName": "Stat",
+        "purpose": "Card ratings and visits, tabular numerals."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Docs code only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "card-lift",
+        "value": "0 14px 28px -12px rgb(31 29 36 / 0.35), 0 4px 10px -6px rgb(31 29 36 / 0.2)",
+        "purpose": "Under a hovered, raised thumbnail."
+      },
+      {
+        "name": "violet-glow",
+        "value": "0 8px 20px -8px rgb(124 58 237 / 0.7)",
+        "purpose": "Under an enabled violet button on hover."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 4px #f1eafe",
+        "purpose": "Around the focused prompt box and composer."
+      },
+      {
+        "name": "pop",
+        "value": "0 8px 28px rgb(31 29 36 / 0.14), 0 2px 6px rgb(31 29 36 / 0.08)",
+        "purpose": "Floating toasts."
+      },
+      {
+        "name": "pulse-ring",
+        "value": "0 0 0 0 rgb(34 197 94 / 0.6) -> 0 0 0 6px rgb(34 197 94 / 0)",
+        "purpose": "Animated ring on live and notification dots."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Every transform: hover, press, lift, rise."
+      },
+      {
+        "name": "ease-exit",
+        "value": "cubic-bezier(0.4, 0, 1, 1)",
+        "purpose": "Page content exit."
+      },
+      {
+        "name": "ease-morph",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Shared thumbnail morph."
+      },
+      {
+        "name": "page-exit",
+        "value": "160ms, fade + translateY(-6px)",
+        "purpose": "Outgoing page content on navigation; shell holds still."
+      },
+      {
+        "name": "page-enter",
+        "value": "380ms after 80ms, fade + rise from 12px",
+        "purpose": "Incoming page content on navigation."
+      },
+      {
+        "name": "thumb-morph",
+        "value": "550ms, 12px corners",
+        "purpose": "Card to game hero to full-screen play backdrop."
+      },
+      {
+        "name": "rise",
+        "value": "600ms, from translateY(12px)",
+        "purpose": "First-load section and card entrances; cards stagger 35ms per index (max 14) after 100ms. Disabled after first navigation."
+      },
+      {
+        "name": "card-lift",
+        "value": "400ms translateY(-4px); image 700ms scale(1.05); press 120ms",
+        "purpose": "Card hover and press."
+      },
+      {
+        "name": "game-frame-in",
+        "value": "opacity 600ms, scale 1.015 -> 1 over 900ms",
+        "purpose": "Game frame when the game reports ready."
+      },
+      {
+        "name": "press",
+        "value": "scale(0.95-0.98)",
+        "purpose": "Every pressable element."
+      },
+      {
+        "name": "pulse",
+        "value": "1.8s live / 2.4s online, ease-out infinite",
+        "purpose": "Live dots."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "durations 0.01ms; entrances and all view transitions removed",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "grid-5",
+        "value": "1700px"
+      },
+      {
+        "name": "grid-4",
+        "value": "1440px"
+      },
+      {
+        "name": "icon-rail",
+        "value": "1180px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Build Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Violet pill that starts a build; sits inside the prompt box.",
+      "html": "<button class=\"ds-btn-violet\">Build <svg class=\"ds-arrow\" width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-violet { display:inline-flex; align-items:center; gap:8px; height:46px; padding:0 22px; border-radius:999px; border:0; background:var(--violet,#7c3aed); color:#fff; font-family:var(--font); font-size:18px; font-weight:900; cursor:pointer; transition:background .2s, transform .18s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1); } .ds-btn-violet:hover { background:var(--violet-ink,#6a2bd9); box-shadow:0 8px 20px -8px rgb(124 58 237 / .7); } .ds-btn-violet .ds-arrow { transition:transform .3s cubic-bezier(.16,1,.3,1); } .ds-btn-violet:hover .ds-arrow { transform:translateX(4px); } .ds-btn-violet:active { transform:scale(.97); } .ds-btn-violet:focus-visible { outline:2.5px solid var(--violet,#7c3aed); outline-offset:2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action with a strong hairline.",
+      "html": "<button class=\"ds-btn-ghost\">Edit game</button>",
+      "css": ".ds-btn-ghost { display:inline-flex; align-items:center; gap:8px; height:42px; padding:0 16px; border-radius:10px; border:1.5px solid var(--line-strong,#d3d3d9); background:#fff; color:var(--ink,#1f1d24); font-family:var(--font); font-size:16px; font-weight:800; cursor:pointer; transition:background .2s, transform .15s cubic-bezier(.16,1,.3,1); } .ds-btn-ghost:hover { background:var(--hover-bg,#f4f4f6); } .ds-btn-ghost:active { transform:scale(.96); } .ds-btn-ghost:focus-visible { outline:2.5px solid var(--violet,#7c3aed); outline-offset:2px; }"
+    },
+    {
+      "name": "Prompt Box",
+      "kind": "input",
+      "refersTo": "prompt-box",
+      "description": "The home Build bar: pill input with the Build button inside; violet border and mist halo on focus.",
+      "html": "<form class=\"ds-prompt\"><input placeholder=\"Describe a game… an obby over a volcano with checkpoints\" aria-label=\"Describe a game\"><button type=\"button\" class=\"ds-prompt-go\">Build</button></form>",
+      "css": ".ds-prompt { display:flex; align-items:center; gap:8px; height:62px; padding:0 8px 0 22px; border-radius:999px; border:1.5px solid var(--line-strong,#d3d3d9); background:#fff; max-width:640px; transition:border-color .2s, box-shadow .35s cubic-bezier(.16,1,.3,1); } .ds-prompt:focus-within { border-color:var(--violet,#7c3aed); box-shadow:0 0 0 4px var(--violet-soft,#f1eafe); } .ds-prompt input { flex:1; min-width:0; height:100%; border:0; outline:none; background:none; font-family:var(--font); font-size:19px; font-weight:600; color:var(--ink,#1f1d24); caret-color:var(--violet,#7c3aed); } .ds-prompt input::placeholder { color:var(--ink-3,#6e6a78); } .ds-prompt-go { height:46px; padding:0 22px; border-radius:999px; border:0; background:var(--violet,#7c3aed); color:#fff; font-family:var(--font); font-size:18px; font-weight:900; cursor:pointer; transition:background .2s; } .ds-prompt-go:hover { background:var(--violet-ink,#6a2bd9); }"
+    },
+    {
+      "name": "Idea Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Hairline pill that tints violet on hover.",
+      "html": "<button class=\"ds-chip\">Volcano obby</button>",
+      "css": ".ds-chip { height:34px; padding:0 14px; border-radius:999px; border:1.5px solid var(--line,#e4e4e8); background:#fff; color:var(--ink-2,#3d3a44); font-family:var(--font); font-size:15px; font-weight:700; cursor:pointer; transition:background .2s, border-color .2s, color .2s, transform .15s cubic-bezier(.16,1,.3,1); } .ds-chip:hover { border-color:var(--violet-line,#d9c8fb); background:var(--violet-soft,#f1eafe); color:var(--violet-ink,#6a2bd9); } .ds-chip:active { transform:scale(.96); } .ds-chip:focus-visible { outline:2.5px solid var(--violet,#7c3aed); outline-offset:2px; }"
+    },
+    {
+      "name": "Nav Rail",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Left rail rows; current page on active fill with a violet icon.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" aria-current=\"page\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10l9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z\"/></svg>Home</a><a href=\"#\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.9\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z\"/></svg>Create</a></nav>",
+      "css": ".ds-nav { display:flex; flex-direction:column; gap:2px; padding:6px 8px; width:260px; } .ds-nav a { display:flex; align-items:center; gap:18px; height:56px; padding:0 16px; border-radius:10px; font-family:var(--font); font-size:19px; font-weight:700; color:var(--ink,#1f1d24); text-decoration:none; transition:background-color .2s; } .ds-nav a svg { transition:transform .35s cubic-bezier(.16,1,.3,1); } .ds-nav a:hover { background:var(--hover-bg,#f4f4f6); } .ds-nav a:hover svg { transform:scale(1.1); } .ds-nav a:active { transform:scale(.98); } .ds-nav a[aria-current=page] { background:var(--active-bg,#ebebee); } .ds-nav a[aria-current=page] svg { color:var(--violet,#7c3aed); } .ds-nav a:focus-visible { outline:2.5px solid var(--violet,#7c3aed); outline-offset:2px; }"
+    },
+    {
+      "name": "Game Card",
+      "kind": "card",
+      "refersTo": "game-card-thumb",
+      "description": "Frameless card: 10px thumbnail with live badge, two-line title, tabular stats. Lifts on hover.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-thumb\"><span class=\"ds-tag\">Starter</span><span class=\"ds-live\"><i></i> 12</span></div><div class=\"ds-card-title\">Volcano Obby</div><div class=\"ds-stats\"><span>94%</span><span>1.2K</span></div></a>",
+      "css": ".ds-card { display:block; width:261px; text-decoration:none; color:var(--ink,#1f1d24); font-family:var(--font); } .ds-thumb { position:relative; aspect-ratio:261/147; border-radius:10px; overflow:hidden; background:linear-gradient(135deg,#a78bfa,#7c3aed 60%,#2a1a52); transition:transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s cubic-bezier(.16,1,.3,1); } .ds-card:hover .ds-thumb { transform:translateY(-4px); box-shadow:0 14px 28px -12px rgb(31 29 36 / .35), 0 4px 10px -6px rgb(31 29 36 / .2); } .ds-card:active .ds-thumb { transform:translateY(-1px) scale(.985); transition-duration:.12s; } .ds-card:focus-visible { outline:none; } .ds-card:focus-visible .ds-thumb { outline:3px solid var(--violet,#7c3aed); outline-offset:3px; } .ds-tag { position:absolute; left:8px; top:8px; height:24px; padding:0 9px; display:inline-flex; align-items:center; border-radius:7px; background:rgb(255 255 255 / .92); font-size:13px; font-weight:900; } .ds-live { position:absolute; left:8px; bottom:8px; display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 9px; border-radius:8px; background:rgb(17 14 24 / .72); color:#fff; font-size:15px; font-weight:800; font-variant-numeric:tabular-nums; } .ds-live i { width:9px; height:9px; border-radius:50%; background:#22c55e; animation:ds-pulse 1.8s ease-out infinite; } @keyframes ds-pulse { 0% { box-shadow:0 0 0 0 rgb(34 197 94 / .6); } 80%,100% { box-shadow:0 0 0 6px rgb(34 197 94 / 0); } } .ds-card-title { margin:12px 0 6px; font-size:20px; font-weight:800; line-height:1.25; transition:color .2s; } .ds-card:hover .ds-card-title { color:var(--violet-ink,#6a2bd9); } .ds-stats { display:flex; gap:18px; font-size:18px; font-weight:700; color:var(--ink-2,#3d3a44); font-variant-numeric:tabular-nums; }"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "status-chip-building",
+      "description": "Builder status: building (violet), ready (green), error (red).",
+      "html": "<span class=\"ds-status\">Building</span> <span class=\"ds-status ds-ready\">Ready</span>",
+      "css": ".ds-status { display:inline-flex; align-items:center; height:28px; padding:0 10px; border-radius:8px; font-family:var(--font); font-size:14px; font-weight:800; background:var(--violet-soft,#f1eafe); color:var(--violet-ink,#6a2bd9); transition:background .3s, color .3s; } .ds-ready { background:#e8f8ee; color:#15803d; }"
+    },
+    {
+      "name": "Glass Control",
+      "kind": "custom",
+      "refersTo": "",
+      "description": "Dark translucent control over the running game; pressed turns violet.",
+      "html": "<div class=\"ds-void\"><button class=\"ds-glass\">Invite friends</button> <button class=\"ds-glass\" aria-pressed=\"true\">Like</button></div>",
+      "css": ".ds-void { padding:20px; background:#0d0b14; border-radius:12px; display:flex; gap:8px; } .ds-glass { display:inline-flex; align-items:center; gap:8px; height:42px; padding:0 14px; border-radius:12px; border:0; background:rgb(17 14 24 / .68); color:#fff; font-family:var(--font); font-size:16px; font-weight:800; cursor:pointer; transition:background .2s, transform .15s cubic-bezier(.16,1,.3,1); } .ds-glass:hover { background:rgb(17 14 24 / .85); } .ds-glass:active { transform:scale(.95); } .ds-glass[aria-pressed=true] { background:#7c3aed; } .ds-glass:focus-visible { outline:2.5px solid #7c3aed; outline-offset:2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Lit Arcade Shelf",
+    "overview": "Argon is a bright, white game shelf: a fixed top bar and left rail frame a main column where big thumbnails carry all the color and the chrome stays quiet. The one accent, argon violet, glows only where something can be started (Build, Play, the prompt focus ring, the active nav icon), like the discharge tube it is named for. Everything else is white surface, hairline dividers, and near-black ink set in heavy, rounded Nunito.\n\nDensity is generous and toy-friendly rather than dense: 19px navigation, 56px nav rows, 46-64px buttons, 22px gutters. Corners are soft at every scale and pills are reserved for the things you type into or press to start. Depth is almost absent at rest; motion carries the polish instead. The shell holds still while page content trades places, content rises into place once on first load, cards lift on hover, a game's thumbnail morphs from card to hero to the play screen, and live things breathe with a soft pulse ring.\n\nThe surfaces stay uncluttered: every element on the home page is either the Build bar or a game. The play page inverts the world to a near-black void with dark glass controls, so the game owns the screen.",
+    "keyCharacteristics": [
+      "Pure white ground and surfaces, separated by 1px hairlines, never by tint or shadow.",
+      "One accent (argon violet) reserved for start actions, focus, and \"in progress\" states.",
+      "Nunito at 600 for body and 800/900 for anything named; tabular numerals on every stat.",
+      "Thumbnails are the color: big 261:147 frames with 10px corners.",
+      "Motion on every surface, a still shell during navigation, one easing curve, all of it switched off under reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The One Glow Rule",
+        "body": "Violet marks what starts, focuses, or is in progress. It never decorates a heading, divider, or background panel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Same White Rule",
+        "body": "Ground and surfaces are both #ffffff. Separate regions with a 1px hairline, not a tinted ground or a shadow.",
+        "section": "colors"
+      },
+      {
+        "name": "The Weight Ladder Rule",
+        "body": "Hierarchy steps by weight first (600 body, 700 nav, 800 titles, 900 headings), size second. Never below 600 in the shell.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Count Rule",
+        "body": "Every live count, rating, vote and fact uses tabular numerals so numbers never jitter as they update.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "If it is not hovered, focused, pressed, or floating, it has no shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep ground and surfaces pure white (#ffffff) and divide regions with 1px hairlines.",
+      "**Do** reserve argon violet for Build, Play, focus, the current nav icon and in-progress states.",
+      "**Do** set body at 600 and anything named at 800-900 in Nunito, with tabular numerals on every count.",
+      "**Do** give every interactive element a hover, a press (scale 0.95-0.98) and an entrance, all on the single ease-out curve.",
+      "**Do** honor reduced motion by removing entrances and view transitions, not just shortening them.",
+      "**Do** let thumbnails carry the color at 10px corners, and morph the same thumbnail from card to hero to play backdrop.",
+      "**Do** keep the top bar and sidebar still on navigation; only page content exits (160ms) and enters (380ms)."
+    ],
+    "donts": [
+      "**Don't** animate placeholder text with a typewriter effect; it was removed at the user's request, and placeholders are static examples.",
+      "**Don't** spin dashed rings; the spinning ring was removed at the user's request, and the build tile's dashed ring only changes color.",
+      "**Don't** re-run CSS entrance staggers after the first navigation; view transitions own entrance motion from then on.",
+      "**Don't** add shadows to resting surfaces; shadows answer hover, focus, press or floating.",
+      "**Don't** introduce a second accent hue in the chrome; green and red are signals only.",
+      "**Don't** add elements to the home page that are neither the Build bar nor games."
+    ]
+  }
+}

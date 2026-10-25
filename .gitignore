@@ -1,0 +1,10 @@
+node_modules
+.next
+.env
+data
+public/vendor
+next-env.d.ts
+*.tsbuildinfo
+runs
+pipeline/.venv
+__pycache__

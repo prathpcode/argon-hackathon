@@ -1,0 +1,56 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/canon.html"
+        ],
+        "createdAt": "2026-10-25T20:06:11.712Z",
+        "reason": "caller brief: decision mocks deliberately explore alternate type systems per world"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-flap.html"
+        ],
+        "createdAt": "2026-10-25T20:06:11.729Z",
+        "reason": "caller brief: decision mocks deliberately explore alternate type systems per world"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-mono.html"
+        ],
+        "createdAt": "2026-10-25T20:06:11.749Z",
+        "reason": "caller brief: decision mocks deliberately explore alternate type systems per world"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/challenger-roster.html"
+        ],
+        "createdAt": "2026-10-25T20:06:11.767Z",
+        "reason": "caller brief: decision mocks deliberately explore alternate type systems per world"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "bedstead",
+        "createdAt": "2026-10-25T21:04:33.560Z",
+        "reason": "user asked to bring back the retro teletext look (2026-10-25); DESIGN.md is stale white-shelf doc"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "atkinson mono",
+        "createdAt": "2026-10-25T21:04:33.579Z",
+        "reason": "teletext reading face, user asked for the retro look back (2026-10-25)"
+      }
+    ]
+  }
+}

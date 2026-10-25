@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Argon Archive Mono</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafafa;--fg:#0a0a0a;--g1:#f2f2f2;--g2:#e5e5e5;--g3:#d4d4d4;--muted:#6b6b6b;--violet:#7c3aed}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden}
+body{background:var(--bg);color:var(--fg);font:400 14px/1.45 Geist,sans-serif;-webkit-font-smoothing:antialiased;display:grid;grid-template:60px 1fr/240px 1fr;font-feature-settings:"tnum"}
+.top{grid-column:1/3;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--g2);background:#fff}
+.brand{width:200px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.brand i{width:18px;height:18px;border-radius:5px;background:var(--fg);box-shadow:inset 0 0 0 5px var(--fg),inset 0 0 0 9px #fff}
+.search{display:flex;align-items:center;gap:10px;width:360px;height:34px;padding:0 8px 0 12px;border:1px solid var(--g2);border-radius:8px;background:var(--bg);color:var(--muted)}
+.search::before{content:"";width:10px;height:10px;border:1.5px solid var(--muted);border-radius:50%}
+.search kbd{margin-left:auto;font:400 12px Geist;border:1px solid var(--g2);border-radius:5px;padding:1px 6px;background:#fff}
+.user{margin-left:auto;display:flex;align-items:center;gap:10px;font-weight:600}
+.user b{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--g1);border:1px solid var(--g2);font-size:11px}
+.user span{font-weight:400;color:var(--muted);font-size:12px;border:1px solid var(--g2);border-radius:999px;padding:1px 8px}
+.rail{padding:20px 12px;border-right:1px solid var(--g2);display:flex;flex-direction:column;gap:2px}
+.rail a{display:flex;align-items:center;height:36px;padding:0 12px;border-radius:7px;color:var(--muted);text-decoration:none;position:relative}
+.rail a.on{background:var(--g1);color:var(--fg);font-weight:600}
+.rail a.on::before{content:"";position:absolute;left:-12px;top:9px;bottom:9px;width:2px;border-radius:2px;background:var(--violet)}
+.rail a em{margin-left:auto;font-style:normal;font-weight:400;color:var(--muted);font-size:12px}
+main{padding:36px 40px 0;min-width:0}
+.head{display:flex;align-items:flex-end;justify-content:space-between}
+h1{font-weight:600;font-size:32px;line-height:1.15;letter-spacing:-.025em}
+.head p{margin-top:6px;color:var(--muted);font-size:15px}
+.ghost{height:34px;padding:0 14px;border:1px solid var(--g3);border-radius:8px;background:transparent;color:var(--fg);font:600 13px Geist}
+.ghost.sm{height:30px;padding:0 12px;border-color:var(--g2);font-size:12.5px}
+.bar{display:flex;align-items:center;gap:24px;margin:28px 0 24px;border-bottom:1px solid var(--g2)}
+.bar a{padding:0 0 11px;color:var(--muted);text-decoration:none;position:relative}
+.bar a.on{color:var(--fg);font-weight:600}
+.bar a.on::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--fg)}
+.bar a em{font-style:normal;color:var(--muted);font-weight:400;margin-left:6px}
+.bar .sel{margin-left:auto;margin-bottom:8px;display:flex;align-items:center;gap:8px;height:30px;padding:0 10px 0 12px;border:1px solid var(--g2);border-radius:8px;background:#fff;font-size:13px;color:var(--muted)}
+.bar .sel b{font-weight:600;color:var(--fg)}
+.bar .sel::after{content:"";width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);rotate:45deg;translate:0 -2px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px 24px}
+.card{min-width:0}
+.art{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.07)}
+.art i{position:absolute;display:block}
+.row1{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px}
+.row1 b{font-weight:600;font-size:15px;letter-spacing:-.01em}
+.row1 span,.meta{color:var(--muted);font-size:13px}
+.meta{margin-top:1px}
+.ft{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.st{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted)}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--g3)}
+.fan .st::before{background:var(--fg)}
+.most .st::before{background:linear-gradient(90deg,var(--fg) 50%,var(--g3) 50%)}
+.primary{height:30px;padding:0 14px;border:0;border-radius:8px;background:var(--violet);color:#fff;font:600 12.5px Geist}
+.mem .art::after{content:"";position:absolute;inset:0;background:rgba(250,250,250,.88);backdrop-filter:blur(2px) grayscale(1)}
+.ov{position:absolute;inset:auto 14px 14px;z-index:1}
+.ov b{display:block;font-weight:600;font-size:13px}
+.ov span{display:block;color:#3d3d3d;font-size:12px;margin-bottom:8px}
+.track{height:3px;border-radius:2px;background:var(--g2)}
+.track i{position:static;width:50%;height:100%;border-radius:2px;background:var(--violet)}
+/* scenes */
+.s-pac{background:linear-gradient(#06071c,#06071c) 0 50%/30% 20% no-repeat,linear-gradient(#2340ff,#2340ff) 0 18%/100% 5% no-repeat,linear-gradient(#2340ff,#2340ff) 0 82%/100% 5% no-repeat,radial-gradient(circle,#ffcfa0 0 2px,transparent 2.5px) 0 50%/18px 18px repeat-x,#06071c}
+.s-pac .p{left:20%;top:50%;width:18%;aspect-ratio:1;translate:0 -50%;border-radius:50%;background:conic-gradient(from 120deg,#ffd400 0 300deg,transparent 0)}
+.s-pac .g{left:64%;top:50%;width:14%;aspect-ratio:.9;translate:0 -50%;border-radius:50% 50% 14% 14%;background:radial-gradient(circle at 34% 40%,#2340ff 0 6%,#fff 7% 15%,transparent 16%),radial-gradient(circle at 66% 40%,#2340ff 0 6%,#fff 7% 15%,transparent 16%),#ff5fa8}
+.s-cp{background:radial-gradient(ellipse 80% 34% at 50% 100%,#fff 98%,transparent),radial-gradient(ellipse 40% 22% at 12% 92%,#e4f3ff 98%,transparent),linear-gradient(#69bdf5,#d6f0ff)}
+.s-cp .p{left:40%;bottom:14%;width:17%;aspect-ratio:.78;border-radius:50% 50% 46% 46%/60% 60% 40% 40%;background:radial-gradient(circle at 40% 26%,#111 0 3%,#fff 4% 8%,transparent 9%),radial-gradient(circle at 60% 26%,#111 0 3%,#fff 4% 8%,transparent 9%),radial-gradient(ellipse 13% 7% at 50% 38%,#ff9a1f 98%,transparent),radial-gradient(ellipse 34% 38% at 50% 68%,#fff 98%,transparent),#18307a}
+.s-cp .q{right:9%;bottom:22%;width:26%;aspect-ratio:2;border-radius:50% 50% 0 0/100% 100% 0 0;background:repeating-linear-gradient(#fff 0 7px,#cfe6f7 7px 8px)}
+.s-tt{background:radial-gradient(circle at 84% 22%,#fff27a 0 7%,transparent 7.5%),radial-gradient(ellipse 70% 42% at 18% 104%,#5dd14b 98%,transparent),radial-gradient(ellipse 60% 36% at 88% 104%,#36b03a 98%,transparent),linear-gradient(#7fcfff,#d2f2ff)}
+.s-tt .b{left:50%;bottom:20%;width:17%;height:38%;border-radius:4px 4px 0 0;background:linear-gradient(#ffe066,#ffe066) 50% 100%/32% 42% no-repeat,#ff5a3c}
+.s-tt .r{left:47.5%;bottom:57.5%;width:22%;height:22%;background:#7a3cff;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.s-hh{background:repeating-linear-gradient(26.5deg,transparent 0 16px,rgba(255,255,255,.4) 16px 17px) 0 100%/100% 62% no-repeat,repeating-linear-gradient(-26.5deg,transparent 0 16px,rgba(255,255,255,.4) 16px 17px) 0 100%/100% 62% no-repeat,linear-gradient(#f39ac0 0 38%,#4aa9a3 38%)}
+.s-hh .p{left:40%;bottom:30%;width:6%;height:32%;border-radius:40% 40% 2px 2px/20% 20% 2px 2px;background:linear-gradient(#ffd2a6 0 28%,#ffcc00 28% 64%,#30304a 64%)}
+.s-hh .s{left:60%;bottom:24%;width:20%;height:13%;border-radius:4px;background:#8a3ffc;box-shadow:0 -9px 0 -2px #a96bff}
+.s-fb{background:linear-gradient(#ded895,#ded895) 0 100%/100% 12% no-repeat,linear-gradient(#2f8a1e,#2f8a1e) 71% 34%/15% 7% no-repeat,linear-gradient(#5ec639,#5ec639) 72% 0/11% 36% no-repeat,linear-gradient(#2f8a1e,#2f8a1e) 71% 64%/15% 7% no-repeat,linear-gradient(#5ec639,#5ec639) 72% 100%/11% 40% no-repeat,linear-gradient(#4ec0ca,#a6e4ea)}
+.s-fb .p{left:26%;top:42%;width:10%;aspect-ratio:1.25;border-radius:50%;background:radial-gradient(circle at 70% 35%,#222 0 6%,#fff 7% 16%,transparent 17%),radial-gradient(ellipse 30% 18% at 90% 64%,#f45b1f 98%,transparent),#f7cf1f}
+.s-mh{background:radial-gradient(ellipse 70% 60% at 50% 110%,#ff4a2f,transparent 70%),radial-gradient(circle at 50% 0,#6b2cc4,transparent 60%),#160a22}
+.s-mh .p{left:36%;bottom:0;width:28%;height:80%;background:#0b0610;clip-path:polygon(44% 0,56% 0,60% 14%,78% 22%,100% 100%,0 100%,22% 22%,40% 14%)}
+.s-mh .e{left:47.5%;top:46%;width:5%;aspect-ratio:1;background:#ffd84a;clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.s-pt{background:radial-gradient(circle at 22% 30%,#fff3c4 0 7%,transparent 7.5%),radial-gradient(ellipse 28% 20% at 52% 74%,#3faa4a 98%,transparent),radial-gradient(ellipse 40% 16% at 52% 80%,#f2d08a 98%,transparent),linear-gradient(transparent 72%,#1f86c6 72%),linear-gradient(#ff9f5a,#ffe0a3)}
+.s-pt .p{left:56%;bottom:34%;width:1.8%;height:26%;background:#7a4a24;rotate:8deg}
+.s-pt .l{left:52%;bottom:57%;width:12%;height:10%;border-radius:50% 50% 10% 10%;background:#2f8f3a}
+.s-ib{background:linear-gradient(transparent 80%,#120c1e 80%),linear-gradient(#120c1e,#120c1e) 26% 100%/9% 52% no-repeat,linear-gradient(#120c1e,#120c1e) 46% 100%/20% 40% no-repeat,linear-gradient(#120c1e,#120c1e) 66% 100%/7% 64% no-repeat,radial-gradient(circle at 80% 30%,#ffe2a0 0 6%,transparent 6.5%),linear-gradient(#2b2360,#a6506b 64%,#f2a35e)}
+.s-ib .t{left:61.4%;top:22%;width:7%;height:14.5%;background:#120c1e;clip-path:polygon(50% 0,100% 100%,0 100%)}
+.s-ib .u{left:23.7%;top:36%;width:9%;height:12.5%;background:#120c1e;clip-path:polygon(50% 0,100% 100%,0 100%)}
+</style>
+</head>
+<body>
+<header class="top">
+<div class="brand"><i></i>Argon</div>
+<div class="search">Search lost games<kbd>⌘K</kbd></div>
+<div class="user"><b>NF</b>NovaFox4821<span>Guest</span></div>
+</header>
+<nav class="rail">
+<a class="on" href="#">Archive<em>142</em></a>
+<a href="#">Revived</a>
+<a href="#">My revivals</a>
+<a href="#">Controls</a>
+</nav>
+<main>
+<div class="head">
+<div><h1>Lost games, played again.</h1><p>142 games that shut down. Pick one, and Argon rebuilds it from its footage.</p></div>
+<button class="ghost">Add a lost game</button>
+</div>
+<div class="bar"><a class="on" href="#">All<em>142</em></a><a href="#">Lost</a><a href="#">Mostly lost</a><a href="#">Revived by fans</a><a href="#">Remembering</a><span class="sel">Platform <b>All</b></span></div>
+<section class="grid">
+<article class="card lost"><div class="art s-pac"><i class="p"></i><i class="g"></i></div><div class="row1"><b>Pac-Man 99</b><span>2021–2023</span></div><p class="meta">Arika / Bandai Namco · Switch</p><div class="ft"><span class="st">Lost</span><button class="primary">Revive</button></div></article>
+<article class="card fan"><div class="art s-cp"><i class="q"></i><i class="p"></i></div><div class="row1"><b>Club Penguin</b><span>2005–2017</span></div><p class="meta">Disney · Web</p><div class="ft"><span class="st">Revived by fans</span><button class="ghost sm">Revive</button></div></article>
+<article class="card fan"><div class="art s-tt"><i class="b"></i><i class="r"></i></div><div class="row1"><b>Toontown Online</b><span>2003–2013</span></div><p class="meta">Disney · PC</p><div class="ft"><span class="st">Revived by fans</span><button class="ghost sm">Revive</button></div></article>
+<article class="card most"><div class="art s-hh"><i class="p"></i><i class="s"></i></div><div class="row1"><b>Habbo Hotel</b><span>2001–2020</span></div><p class="meta">Sulake · Web · Flash</p><div class="ft"><span class="st">Mostly lost</span><button class="ghost sm">Revive</button></div></article>
+<article class="card lost"><div class="art s-fb"><i class="p"></i></div><div class="row1"><b>Flappy Bird</b><span>2013–2014</span></div><p class="meta">.GEARS · Mobile</p><div class="ft"><span class="st">Lost</span><button class="ghost sm">Revive</button></div></article>
+<article class="card lost"><div class="art s-mh"><i class="p"></i><i class="e"></i></div><div class="row1"><b>Marvel Heroes</b><span>2013–2017</span></div><p class="meta">Gazillion · PC</p><div class="ft"><span class="st">Lost</span><button class="ghost sm">Revive</button></div></article>
+<article class="card most"><div class="art s-pt"><i class="p"></i><i class="l"></i></div><div class="row1"><b>Poptropica Islands</b><span>2007–2020</span></div><p class="meta">Pearson · Web · Flash</p><div class="ft"><span class="st">Mostly lost</span><button class="ghost sm">Revive</button></div></article>
+<article class="card mem"><div class="art s-ib"><i class="t"></i><i class="u"></i><div class="ov"><b>Remembering…</b><span>Watching footage 2 of 4</span><div class="track"><i></i></div></div></div><div class="row1"><b>Infinity Blade</b><span>2010–2018</span></div><p class="meta">Chair · iOS</p><div class="ft"><span class="st">In progress</span><button class="ghost sm" disabled style="color:var(--muted)">Revive</button></div></article>
+</section>
+</main>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>Argon Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Fragment+Mono&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--rail:#121110;--lt:#f4efe6;--lt2:#e8e2d4;--or:#f05a28;--ink:#2b2a27;--ink2:#6b665c;--line:#d9d1c1;--mute:#8c867b}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1440px;height:900px;overflow:hidden;background:var(--rail)}
+body{display:grid;grid-template:56px 844px/216px 1224px;color:var(--ink);font:400 14px/1.4 Barlow,sans-serif;-webkit-font-smoothing:antialiased}
+
+/* frame: top bar + rail */
+.top{grid-column:1/3;display:flex;align-items:center;color:var(--lt2)}
+.logo{width:216px;padding-left:24px;display:flex;align-items:center;gap:10px;font:600 26px/1 "Barlow Condensed",sans-serif;color:var(--lt);letter-spacing:.01em}
+.logo i{width:16px;height:16px;border:2.5px solid var(--or);border-radius:55% 45% 50% 50%/50% 55% 45% 50%;transform:rotate(-14deg)}
+.search{margin-left:40px;width:440px;height:34px;border-radius:6px;background:#1f1d1b;box-shadow:inset 0 0 0 1px #34312d;display:flex;align-items:center;gap:10px;padding:0 12px;color:var(--mute)}
+.search i{position:relative;width:12px;height:12px;border:1.5px solid currentColor;border-radius:50%}
+.search i::after{content:"";position:absolute;width:5px;height:1.5px;background:currentColor;right:-5px;bottom:-2px;transform:rotate(45deg)}
+.search kbd{margin-left:auto;font:400 10px/1 "Fragment Mono",monospace;border:1px solid #3a3631;border-radius:4px;padding:3px 6px}
+.user{margin-left:auto;margin-right:24px;display:flex;align-items:center;gap:10px;font-weight:500;color:var(--lt)}
+.user i{width:28px;height:28px;border-radius:50%;background:var(--lt2);color:var(--ink);font:600 12px/28px "Barlow Condensed",sans-serif;font-style:normal;text-align:center}
+.user small{font:400 10px/1 "Fragment Mono",monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+nav{padding:20px 12px}
+nav a{position:relative;display:flex;align-items:center;height:38px;padding:0 14px;border-radius:6px;color:#a39d91;font-size:15px;font-weight:500;text-decoration:none}
+nav a.on{color:var(--lt);background:#1d1b19}
+nav a.on::before{content:"";position:absolute;left:3px;top:11px;width:3px;height:16px;border-radius:2px;background:var(--or);transform:rotate(6deg)}
+
+/* light table */
+main{background:radial-gradient(120% 90% at 50% 20%,#faf7f1 0,var(--lt) 55%,#ebe4d6 100%);border-top-left-radius:10px;padding:32px 40px 0;overflow:hidden}
+h1{font:600 48px/1 "Barlow Condensed",sans-serif;letter-spacing:-.005em}
+.sub{margin-top:8px;font-size:16px;color:var(--ink2)}
+.bar{display:flex;align-items:flex-end;gap:28px;height:38px;margin-top:20px;border-bottom:1px solid var(--line)}
+.tab{position:relative;padding-bottom:10px;font-size:15px;font-weight:500;color:var(--ink2)}
+.tab.on{color:var(--ink)}
+.tab.on::after{content:"";position:absolute;left:-3px;right:-3px;bottom:-2px;height:3px;border-radius:3px;background:var(--or);transform:rotate(-1.2deg)}
+.tab b{margin-left:5px;font:400 11px "Fragment Mono",monospace;color:var(--ink2)}
+.add{margin:0 0 6px auto;display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border:1px solid var(--ink);border-radius:5px;font-size:14px;font-weight:500}
+.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:40px;row-gap:22px;margin-top:26px;counter-reset:fr}
+.it{display:grid;grid-template-columns:376px 1fr;column-gap:20px}
+
+/* film strip */
+.strip{position:relative;background:var(--rail);padding:22px 10px 34px;border-radius:2px;box-shadow:0 10px 18px -12px rgba(43,42,39,.55)}
+.strip::before,.strip::after{content:"";position:absolute;left:8px;right:8px;height:6px;background:repeating-linear-gradient(90deg,#fbf8f2 0 7px,transparent 7px 13px)}
+.strip::before{top:3px}.strip::after{bottom:3px}
+.frames{display:flex;gap:6px}
+.f{--x:0px;--p:var(--x) 0/352px 76px;position:relative;width:112px;height:76px;border-radius:2px}
+.f:nth-child(2){--x:-120px}.f:nth-child(3){--x:-240px}
+.f::before{counter-increment:fr;content:counter(fr,decimal-leading-zero) " \25B8";position:absolute;left:1px;top:-11px;font:400 8px/1 "Fragment Mono",monospace;color:#d7c9a6;letter-spacing:.1em}
+.f::after{content:"";position:absolute;inset:0;border-radius:2px;box-shadow:inset 0 0 14px rgba(0,0,0,.35)}
+.edge{position:absolute;left:12px;right:12px;bottom:12px;display:flex;align-items:baseline;gap:10px;color:var(--lt)}
+.edge b{font:600 16px/1 "Barlow Condensed",sans-serif;letter-spacing:.02em}
+.edge span{font:400 9px/1 "Fragment Mono",monospace;color:#a39d91;letter-spacing:.08em}
+.edge span:last-child{margin-left:auto}
+
+/* scenes: one 352px-wide moment per game, each frame a later slice */
+.g1 .f{background:radial-gradient(circle at 56px 42px,#ffd21a 0 8px,transparent 8.5px) var(--p),radial-gradient(circle at 164px 30px,#ff7ac0 0 7px,transparent 7.5px) var(--p),radial-gradient(circle at 204px 54px,#ff3b30 0 7px,transparent 7.5px) var(--p),radial-gradient(circle at 300px 34px,#ffd21a 0 8px,transparent 8.5px) var(--p),radial-gradient(circle at 270px 18px,#5ef2ff 0 6px,transparent 6.5px) var(--p),radial-gradient(circle,#ffe6a8 0 1.3px,transparent 1.8px) var(--x) 6px/12px 12px,repeating-linear-gradient(90deg,transparent 0 22px,#3550ff 22px 24px,transparent 24px 44px) var(--p),repeating-linear-gradient(transparent 0 16px,#3550ff 16px 18px,transparent 18px 25px) var(--p),#0b1030}
+.g2 .f{background:radial-gradient(4px 2px at 74px 33px,#ffb000 0 90%,transparent) var(--p),radial-gradient(5px 9px at 70px 47px,#fff 0 90%,transparent) var(--p),radial-gradient(9px 15px at 70px 44px,#16307a 0 92%,transparent) var(--p),radial-gradient(4px 2px at 186px 35px,#ffb000 0 90%,transparent) var(--p),radial-gradient(5px 9px at 190px 49px,#fff 0 90%,transparent) var(--p),radial-gradient(9px 15px at 190px 46px,#cf2638 0 92%,transparent) var(--p),radial-gradient(5px 9px at 236px 51px,#fff 0 90%,transparent) var(--p),radial-gradient(8px 13px at 236px 49px,#2e9e4a 0 92%,transparent) var(--p),radial-gradient(38px 26px at 310px 62px,#fdfefe 0 92%,#b7d0e0 96%,transparent) var(--p),radial-gradient(70px 16px at 130px 36px,#e4f1f8 0 90%,transparent) var(--p),linear-gradient(#7cc6f0,#cbe8f8 46%,#f6fafc 47%,#dfeaf1) var(--p)}
+.g3 .f{background:linear-gradient(#fff6c2 0 0) calc(var(--x) + 28px) 26px/6px 8px no-repeat,linear-gradient(#fff6c2 0 0) calc(var(--x) + 42px) 26px/6px 8px no-repeat,linear-gradient(#5b2a86 0 0) calc(var(--x) + 34px) 40px/10px 16px no-repeat,radial-gradient(30px 10px at 38px 16px,#f6c445 0 92%,transparent) var(--p),linear-gradient(#e2468f 0 0) calc(var(--x) + 20px) 16px/36px 40px no-repeat,radial-gradient(18px 22px at 120px 34px,#2f9e44 0 92%,transparent) var(--p),linear-gradient(#7a4a2a 0 0) calc(var(--x) + 118px) 44px/5px 14px no-repeat,linear-gradient(#ff8a3d 0 0) calc(var(--x) + 156px) 18px/34px 38px no-repeat,radial-gradient(24px 9px at 173px 18px,#7b3fe4 0 92%,transparent) var(--p),linear-gradient(#3fb7c9 0 0) calc(var(--x) + 254px) 12px/42px 44px no-repeat,radial-gradient(28px 10px at 275px 12px,#e63946 0 92%,transparent) var(--p),linear-gradient(#f2d48a 0 0) var(--x) 56px/352px 6px repeat-x,linear-gradient(#7fd2ff,#cdeeff 70%,#62b84a 71%,#3d8f35) var(--p)}
+.g4 .f{background:radial-gradient(4px 4px at 92px 30px,#f2c9a0 0 90%,transparent) var(--p),linear-gradient(#2b6fd6 0 0) calc(var(--x) + 88px) 34px/8px 12px no-repeat,linear-gradient(#222 0 0) calc(var(--x) + 88px) 46px/8px 8px no-repeat,radial-gradient(4px 4px at 150px 34px,#e8b48a 0 90%,transparent) var(--p),linear-gradient(#e0457b 0 0) calc(var(--x) + 146px) 38px/8px 12px no-repeat,linear-gradient(#fff 0 0) calc(var(--x) + 132px) 14px/40px 10px no-repeat,linear-gradient(#9c1450 0 0) calc(var(--x) + 196px) 30px/48px 10px no-repeat,linear-gradient(#c2185b 0 0) calc(var(--x) + 196px) 40px/48px 12px no-repeat,linear-gradient(#9fe3ff 0 0) calc(var(--x) + 290px) 8px/30px 20px no-repeat,linear-gradient(#f5d76e 0 0) calc(var(--x) + 40px) 50px/36px 10px no-repeat,repeating-linear-gradient(26deg,#c98d5f 0 8px,#b37a50 8px 16px) var(--x) 30px/352px 46px no-repeat,linear-gradient(#3e4d82,#2c375f) var(--p)}
+.g5 .f{background:radial-gradient(2px 2px at 104px 33px,#fff 0 80%,transparent) var(--p),radial-gradient(3px 2px at 109px 38px,#f06d2f 0 90%,transparent) var(--p),radial-gradient(8px 6px at 100px 36px,#f7d51d 0 90%,transparent) var(--p),radial-gradient(2px 2px at 218px 43px,#fff 0 80%,transparent) var(--p),radial-gradient(8px 6px at 214px 46px,#f7d51d 0 90%,transparent) var(--p),linear-gradient(#3f7d1c 0 0) calc(var(--x) + 36px) 20px/30px 6px no-repeat,linear-gradient(#3f7d1c 0 0) calc(var(--x) + 36px) 46px/30px 6px no-repeat,linear-gradient(90deg,#5aa02c,#8fd14f 40%,#5aa02c) calc(var(--x) + 40px) 0/22px 24px no-repeat,linear-gradient(90deg,#5aa02c,#8fd14f 40%,#5aa02c) calc(var(--x) + 40px) 50px/22px 16px no-repeat,linear-gradient(#3f7d1c 0 0) calc(var(--x) + 156px) 10px/30px 6px no-repeat,linear-gradient(#3f7d1c 0 0) calc(var(--x) + 156px) 38px/30px 6px no-repeat,linear-gradient(90deg,#5aa02c,#8fd14f 40%,#5aa02c) calc(var(--x) + 160px) 0/22px 14px no-repeat,linear-gradient(90deg,#5aa02c,#8fd14f 40%,#5aa02c) calc(var(--x) + 160px) 42px/22px 24px no-repeat,linear-gradient(#ded895 0 0) var(--x) 66px/352px 10px repeat-x,linear-gradient(#7bc043 0 0) var(--x) 64px/352px 3px repeat-x,radial-gradient(60px 12px at 120px 62px,#e9fbff 0 90%,transparent) var(--p),linear-gradient(#4ec0ca,#8ad8de) var(--p)}
+.g6 .f{background:radial-gradient(5px 5px at 128px 28px,#f2c9a0 0 90%,transparent) var(--p),radial-gradient(9px 9px at 140px 44px,#e8eef5 0 40%,#1e4fa8 45% 90%,transparent) var(--p),radial-gradient(8px 14px at 128px 44px,#c8102e 0 90%,transparent) var(--p),radial-gradient(6px 10px at 200px 36px,#0d0b0c 0 90%,transparent) var(--p),radial-gradient(6px 10px at 222px 50px,#0d0b0c 0 90%,transparent) var(--p),radial-gradient(7px 12px at 70px 40px,#141014 0 90%,transparent) var(--p),radial-gradient(circle at 300px 42px,#d8ff9a 0 4px,#5fd34a 8px,rgba(95,211,74,.35) 16px,transparent 26px) var(--p),radial-gradient(circle at 60px 52px,rgba(255,138,46,.9) 0,rgba(255,90,30,.45) 18px,transparent 36px) var(--p),repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 14px) var(--p),repeating-linear-gradient(-45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 14px) var(--p),radial-gradient(120% 120% at 50% 60%,#3b302a,#151114) var(--p)}
+.g7 .f{background:radial-gradient(10px 5px at 172px 22px,#6b3b1f 0 90%,transparent) var(--p),radial-gradient(9px 9px at 172px 30px,#f6d2b0 0 90%,transparent) var(--p),linear-gradient(#e63946 0 0) calc(var(--x) + 168px) 38px/8px 12px no-repeat,radial-gradient(circle at 320px 14px,#ffe066 0 8px,rgba(255,224,102,.35) 12px,transparent 20px) var(--p),radial-gradient(16px 5px at 84px 18px,#2f9e44 0 90%,transparent) var(--p),linear-gradient(#8a5a2b 0 0) calc(var(--x) + 82px) 18px/4px 22px no-repeat,radial-gradient(48px 12px at 84px 46px,#4caf50 0 80%,#f1d18a 84% 92%,transparent) var(--p),radial-gradient(40px 10px at 262px 50px,#4caf50 0 80%,#f1d18a 84% 92%,transparent) var(--p),linear-gradient(#fff 0 0) calc(var(--x) + 226px) 58px/16px 4px no-repeat,linear-gradient(#2c7fc9,#1d5f9e) var(--x) 44px/352px 32px repeat-x,linear-gradient(#8ad7ff,#d3f1ff) var(--p)}
+.g8 .f{background:linear-gradient(118deg,transparent 47%,#fff6d0 48.5% 50%,transparent 51.5%) calc(var(--x) + 76px) 4px/34px 46px no-repeat,radial-gradient(5px 5px at 88px 26px,#2a2d35 0 90%,transparent) var(--p),radial-gradient(7px 18px at 88px 46px,#1a1c22 0 90%,transparent) var(--p),radial-gradient(circle at 206px 22px,#ff3b2f 0 2px,transparent 3px) var(--p),radial-gradient(22px 32px at 204px 38px,#2b211d 0 90%,transparent) var(--p),radial-gradient(circle at 320px 30px,rgba(255,170,60,.9) 0 3px,rgba(255,140,40,.3) 10px,transparent 20px) var(--p),linear-gradient(90deg,transparent 0 10px,#7d6a58 10px 26px,transparent 26px) var(--x) 0/60px 44px repeat-x,linear-gradient(#7f93b8,#d9c7ae 56%,#6b5848 57%,#2f2621) var(--p)}
+.f.un{background:linear-gradient(115deg,#2a2724,#1c1a18 50%,#3b2b22)}
+.f.un::after{box-shadow:none;border:1px dashed #4a4540}
+
+/* grease pencil: what Argon noted */
+.gp{position:absolute;z-index:2;border:2.5px solid var(--or);border-radius:58% 42% 52% 48%/48% 56% 44% 52%;transform:rotate(-10deg)}
+.gp::after{content:"";position:absolute;inset:-4px 3px 2px -3px;border-radius:inherit;border:2px solid transparent;border-top-color:var(--or);transform:rotate(22deg)}
+.ts{position:absolute;z-index:2;font:700 18px/1 Caveat,cursive;color:var(--or);transform:rotate(-6deg);text-shadow:0 0 2px rgba(0,0,0,.25)}
+
+/* notes beside each strip */
+.nt{display:flex;flex-direction:column;gap:4px;height:132px;padding-top:2px}
+.dev{font-size:14px;font-weight:600;line-height:1.25}
+.desc{font-size:13px;line-height:1.3;color:var(--ink2)}
+.st{display:flex;align-items:center;gap:7px;margin-top:2px;font-size:13px;font-weight:500}
+.st i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink);flex:none}
+.st.most i{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%)}
+.st.rev i{background:var(--ink)}
+.st.mem i{border:2px solid var(--or);border-radius:55% 45% 50% 50%}
+.btn{margin-top:auto;display:flex;align-items:center;justify-content:center;width:104px;height:32px;border-radius:5px;background:var(--or);color:#1a1310;font:700 15px/1 "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.wf{margin-top:auto;font:400 10px/1.3 "Fragment Mono",monospace;color:var(--ink2);letter-spacing:.04em}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;width:104px;margin:6px 0 4px}
+.meter i{height:4px;border-radius:2px;background:var(--line)}.meter i.on{background:var(--or)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><i></i>Argon</div>
+  <div class="search"><i></i><span>Search 142 lost games</span><kbd>/</kbd></div>
+  <div class="user"><i>NF</i>NovaFox4821<small>Guest</small></div>
+</header>
+<nav>
+  <a class="on" href="#">Archive</a><a href="#">Revived</a><a href="#">My revivals</a><a href="#">Controls</a>
+</nav>
+<main>
+  <h1>Lost games, played again.</h1>
+  <p class="sub">142 games that shut down. Pick one, and Argon rebuilds it from its footage.</p>
+  <div class="bar">
+    <span class="tab on">All<b>142</b></span><span class="tab">Web</span><span class="tab">PC</span><span class="tab">Mobile &amp; console</span>
+    <span class="add">+ Add a lost game</span>
+  </div>
+  <div class="grid">
+    <div class="it g1"><div class="strip"><div class="frames"><i class="f"><s class="gp" style="left:38px;top:24px;width:36px;height:34px"></s><em class="ts" style="left:76px;top:5px">00:46</em></i><i class="f"></i><i class="f"></i></div><div class="edge"><b>Pac-Man 99</b><span>2021–2023</span><span>SWITCH</span></div></div>
+      <div class="nt"><p class="dev">Arika / Bandai Namco</p><p class="desc">99-player battle royale maze arcade</p><p class="st"><i></i>Lost</p><span class="btn">Revive</span></div></div>
+    <div class="it g2"><div class="strip"><div class="frames"><i class="f"></i><i class="f"></i><i class="f"></i></div><div class="edge"><b>Club Penguin</b><span>2005–2017</span><span>WEB</span></div></div>
+      <div class="nt"><p class="dev">Disney</p><p class="st rev"><i></i>Revived by fans</p><span class="btn">Revive</span></div></div>
+    <div class="it g3"><div class="strip"><div class="frames"><i class="f"></i><i class="f"></i><i class="f"></i></div><div class="edge"><b>Toontown Online</b><span>2003–2013</span><span>PC</span></div></div>
+      <div class="nt"><p class="dev">Disney</p><p class="st rev"><i></i>Revived by fans</p><span class="btn">Revive</span></div></div>
+    <div class="it g4"><div class="strip"><div class="frames"><i class="f"></i><i class="f"><s class="gp" style="left:12px;top:8px;width:38px;height:50px"></s><em class="ts" style="left:56px;top:54px">02:13</em></i><i class="f"></i></div><div class="edge"><b>Habbo Hotel (Flash)</b><span>2001–2020</span><span>WEB</span></div></div>
+      <div class="nt"><p class="dev">Sulake</p><p class="st most"><i></i>Mostly lost</p><span class="btn">Revive</span></div></div>
+    <div class="it g5"><div class="strip"><div class="frames"><i class="f"><s class="gp" style="left:32px;top:20px;width:40px;height:32px"></s><em class="ts" style="left:6px;top:5px">00:08</em></i><i class="f"><s class="gp" style="left:80px;top:33px;width:28px;height:26px"></s><em class="ts" style="left:44px;top:5px">00:31</em></i><i class="f un"></i></div><div class="edge"><b>Flappy Bird</b><span>2013–2014</span><span>MOBILE</span></div></div>
+      <div class="nt"><p class="dev">.GEARS</p><p class="st mem"><i></i>Remembering</p><p class="wf">Watching footage 2 of 4</p><span class="meter"><i class="on"></i><i class="on"></i><i></i><i></i></span></div></div>
+    <div class="it g6"><div class="strip"><div class="frames"><i class="f"></i><i class="f"></i><i class="f"><s class="gp" style="left:42px;top:24px;width:38px;height:36px"></s><em class="ts" style="left:6px;top:6px">14:02</em></i></div><div class="edge"><b>Marvel Heroes</b><span>2013–2017</span><span>PC</span></div></div>
+      <div class="nt"><p class="dev">Gazillion</p><p class="st"><i></i>Lost</p><span class="btn">Revive</span></div></div>
+    <div class="it g7"><div class="strip"><div class="frames"><i class="f"></i><i class="f"></i><i class="f"></i></div><div class="edge"><b>Poptropica Islands (Flash)</b><span>2007–2020</span><span>WEB</span></div></div>
+      <div class="nt"><p class="dev">Pearson</p><p class="st most"><i></i>Mostly lost</p><span class="btn">Revive</span></div></div>
+    <div class="it g8"><div class="strip"><div class="frames"><i class="f"></i><i class="f"><s class="gp" style="left:62px;top:6px;width:44px;height:54px"></s><em class="ts" style="left:8px;top:52px">03:27</em></i><i class="f"></i></div><div class="edge"><b>Infinity Blade</b><span>2010–2018</span><span>IOS</span></div></div>
+      <div class="nt"><p class="dev">Chair</p><p class="st"><i></i>Lost</p><span class="btn">Revive</span></div></div>
+  </div>
+</main>
+</body>
+</html>
