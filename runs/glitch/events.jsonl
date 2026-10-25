@@ -948,3 +948,16 @@
 {"t":1792966636.43,"type":"agent","id":"test:1:together","tokens_in":197310,"tokens_out":15225}
 {"t":1792966636.43,"type":"act","agent":"test:1:together","call":"call_1675013","kind":"tool","tool":"read","label":"Reading public/js/game.js","status":"running"}
 {"t":1792966636.47,"type":"act","agent":"test:1:together","call":"call_1675013","kind":"tool","tool":"read","status":"done"}
+{"t":1792966646.82,"type":"agent","id":"test:1:fun","tokens_in":270301,"tokens_out":22553}
+{"t":1792966646.83,"type":"act","agent":"test:1:fun","call":"call_1262845","kind":"tool","tool":"input","label":"→ 0.3s, KeyE","status":"running"}
+{"t":1792966648.07,"type":"agent","id":"test:1:together","tokens_in":200009,"tokens_out":15709}
+{"t":1792966648.07,"type":"act","agent":"test:1:together","call":"call_705535","kind":"tool","tool":"input","label":"click","status":"running"}
+{"t":1792966654.69,"type":"act","agent":"test:1:fun","call":"call_1262845","kind":"tool","tool":"input","status":"done","img":"shots/test_1_fun/034.jpg"}
+{"t":1792966655.74,"type":"agent","id":"test:1:faithful","tokens_in":232841,"tokens_out":26924}
+{"t":1792966655.74,"type":"act","agent":"test:1:faithful","call":"call_562363","kind":"tool","tool":"input","label":"click, KeyE, KeyE","status":"running"}
+{"t":1792966657.55,"type":"act","agent":"test:1:together","call":"call_705535","kind":"tool","tool":"input","status":"done","img":"shots/test_1_together/032.jpg"}
+{"t":1792966665.92,"type":"agent","id":"test:1:together","tokens_in":202500,"tokens_out":15917}
+{"t":1792966665.95,"type":"act","agent":"test:1:together","call":"call_1631531","kind":"tool","tool":"input","label":"click, click…","status":"running"}
+{"t":1792966673.03,"type":"act","agent":"test:1:faithful","call":"call_562363","kind":"tool","tool":"input","status":"done","img":"shots/test_1_faithful/038.jpg"}
+{"t":1792966674.2,"type":"agent","id":"test:1:fun","tokens_in":273446,"tokens_out":22850}
+{"t":1792966674.2,"type":"act","agent":"test:1:fun","call":"call_1378284","kind":"tool","tool":"input","label":"KeyE, → 0.7s, KeyE…","status":"running"}
