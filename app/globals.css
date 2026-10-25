@@ -600,3 +600,10 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .footage-check .fc-ok { color: var(--green); font-style: normal; }
 .footage-check .fc-no { color: var(--red); font-style: normal; }
 .fc-trend { font-family: var(--tt); color: var(--yellow); margin: 6px 0; }
+
+/* Managed Agent squad */
+.squad details { margin-top: 10px; }
+.squad summary { cursor: pointer; }
+.squad img { display: block; width: 100%; margin: 6px 0; outline: 2px solid var(--blue-line); }
+.squad ul { list-style: none; margin: 4px 0 0; padding: 0; font-size: 14px; }
+.squad li { margin: 3px 0; }

@@ -113,8 +113,10 @@ def agent(run, rnd, name, url, room, squad, findings, lock):
         found = rep.get("findings", [])
         for f in found:
             run.act(aid, "note", text=f"{f.get('severity', '')}: {f.get('finding', '')}"[:240])
+        shots = sorted(str(f.relative_to(run.dir)) for f in run.path(f"shots/squad_{rnd}_{name}").glob("*.png"))
         with lock:
-            findings[name] = {"summary": rep.get("summary", ""), "findings": found}
+            findings[name] = {"summary": rep.get("summary", ""), "findings": found, "shots": shots,
+                              "secs": round(time.time() - t0), "persona": PERSONAS[name]}
         u = it.usage
         run.agent(aid, status="done" if it.status == "completed" else "error", secs=round(time.time() - t0),
                   **({"tokens_in": u.total_input_tokens or 0, "tokens_out": u.total_output_tokens or 0} if u else {}))

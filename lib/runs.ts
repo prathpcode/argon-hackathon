@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import net from "node:net";
 import { spawn, type ChildProcess } from "node:child_process";
-import type { Act, Agent, Footage, Revival, Round, RunState, RunSummary, StageId, StageState, Verify } from "./run-types";
+import type { Act, Agent, Footage, Revival, Round, RunState, RunSummary, Squad, StageId, StageState, Verify } from "./run-types";
 
 /**
  * Revivals are run folders: pipeline/revive.py finds and watches the footage, then pi agents
@@ -151,7 +151,8 @@ export function getRun(id: string): RunState | null {
   const rounds: Round[] = [...f.rounds.entries()].sort(([a], [b]) => a - b).map(([round, r]) => {
     const rep = read<Pick<Round, "reports" | "issues" | "fun" | "faithful">>(id, "rounds", String(round), "report.json");
     const verify = read<Verify>(id, "rounds", String(round), "verify.json");
-    return { round, status: r.status, fun: rep?.fun ?? r.fun, faithful: rep?.faithful ?? r.faithful, reports: rep?.reports ?? [], issues: rep?.issues ?? [], verify };
+    const squad = read<Squad>(id, "rounds", String(round), "squad.json");
+    return { round, status: r.status, fun: rep?.fun ?? r.fun, faithful: rep?.faithful ?? r.faithful, reports: rep?.reports ?? [], issues: rep?.issues ?? [], verify, squad };
   });
   return {
     ...s,

@@ -191,6 +191,7 @@ export function Workshop({ initial }: { initial: RunState }) {
         <aside className="ws-side">
           <Roster run={run} focus={focus?.id ?? null} now={now} onPick={pick} />
           <FootageCheck run={run} />
+          <SquadPanel run={run} />
           <Scores run={run} />
           <Issues run={run} />
           <FootageList run={run} />
@@ -592,6 +593,31 @@ function FootageCheck({ run }: { run: RunState }) {
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+/** Managed Agents (each in its own Google-hosted sandbox) that played the round together over the internet. */
+function SquadPanel({ run }: { run: RunState }) {
+  const round = run.rounds.filter((r) => r.squad && Object.keys(r.squad.agents).length).at(-1);
+  if (!round) return null;
+  const agents = Object.entries(round.squad!.agents);
+  const total = agents.reduce((n, [, a]) => n + a.findings.length, 0);
+  return (
+    <section className="panel squad">
+      <h2>Managed Agents<span>{agents.length} played round {round.round} together · {total} found</span></h2>
+      <p className="muted small">Gemini Managed Agents, each in its own cloud sandbox, joined one match over the internet.</p>
+      {agents.map(([name, a]) => (
+        <details key={name} open={agents.length < 4}>
+          <summary><b>{name}</b> <span className="muted small">{a.findings.length} found{a.secs ? ` · ${Math.round(a.secs / 60)} min` : ""}</span></summary>
+          {a.shots?.length ? <img src={file(run, a.shots.at(-1)!)} alt={`${name} playing`} /> : null}
+          <ul>
+            {[...a.findings].sort((x, y) => (SEV_ORDER[x.severity as keyof typeof SEV_ORDER] ?? 3) - (SEV_ORDER[y.severity as keyof typeof SEV_ORDER] ?? 3)).map((f, n) => (
+              <li key={n}><i className={`sev ${f.severity}`} aria-label={f.severity} /> {f.finding}</li>
+            ))}
+          </ul>
+        </details>
+      ))}
     </section>
   );
 }

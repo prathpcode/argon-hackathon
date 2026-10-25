@@ -72,6 +72,11 @@ export type VerifyRule = {
 
 export type Verify = { round: number; matched: number; total: number; lost: string[]; rules: VerifyRule[] };
 
+/** Managed Agents that played the round together over the internet (pipeline/squad/run.py). */
+export type SquadAgent = { summary: string; persona?: string; secs?: number; shots?: string[];
+  findings: { t?: number; severity: string; finding: string; repro?: string }[] };
+export type Squad = { round: number; agents: Record<string, SquadAgent> };
+
 export type Round = {
   round: number;
   status: "testing" | "tested" | "fixing" | "fixed";
@@ -80,6 +85,7 @@ export type Round = {
   reports: TesterReport[];
   issues: Issue[];
   verify?: Verify | null;
+  squad?: Squad | null;
 };
 
 export type RunSummary = {
