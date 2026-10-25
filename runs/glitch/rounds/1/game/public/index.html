@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whim — A World of Eleven Giants</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app-shell">
+    <!-- 1. Top Header Bar -->
+    <header id="top-header">
+      <div class="header-left">
+        <div class="brand-logo">Whim</div>
+
+        <!-- Mood Circular Gauge (Rule 27) -->
+        <div class="stat-group">
+          <span class="stat-label">Mood</span>
+          <div id="hud-mood-badge" title="100 of 100 Mood">
+            <span id="hud-mood-val">100</span>
+          </div>
+        </div>
+
+        <!-- Energy Pill Bar (Rule 27) -->
+        <div class="stat-group">
+          <span class="stat-label">Energy</span>
+          <div class="pill-bar" title="Energy">
+            <div id="hud-energy-fill" class="pill-fill energy" style="width:92%;"></div>
+            <div id="hud-energy-val" class="pill-text">112/120</div>
+          </div>
+        </div>
+
+        <!-- iMG / XP Progress Bar & Level -->
+        <div class="stat-group">
+          <span class="stat-label">iMG</span>
+          <div class="pill-bar" title="Imagination / Experience">
+            <div id="hud-xp-fill" class="pill-fill xp" style="width:80%;"></div>
+            <div id="hud-xp-val" class="pill-text">120 iMG</div>
+          </div>
+        </div>
+
+        <div class="level-badge">
+          <span class="stat-label">Level</span>
+          <span id="hud-level-val">3</span>
+        </div>
+      </div>
+
+      <!-- Center Magic Rock & Quick Navigation -->
+      <div class="header-center">
+        <button id="btn-magic-rock" title="Open Quests & Giant Favor">
+          <svg width="16" height="16" viewBox="0 0 18 18"><rect x="2" y="4" width="14" height="12" rx="4" fill="#8C9AA3"/><circle cx="6.5" cy="9.5" r="2.2" fill="#FFF"/><circle cx="11.5" cy="9.5" r="2.2" fill="#FFF"/><circle cx="6.8" cy="9.5" r="1" fill="#1A1E21"/><circle cx="11.8" cy="9.5" r="1" fill="#1A1E21"/></svg>
+          <span>Quests</span>
+          <span class="rock-notif">4</span>
+        </button>
+        <button id="btn-skills-top" class="top-pill-btn" title="Open Real-Time Skills (K)">
+          <span id="hud-skill-active">Skills</span>
+        </button>
+        <button id="btn-world-map" class="top-pill-btn" title="Open World Map (M)">World Map</button>
+        <button id="btn-go-home" class="top-pill-btn" title="Visit Beau's Home Street">Go Home</button>
+      </div>
+
+      <!-- Right Audio, Clock & Avatar Dropdown Menu (Rules 40 & 41) -->
+      <div class="header-right">
+        <button id="btn-sfx-toggle" class="icon-btn" title="Toggle Sound Effects">
+          <svg width="14" height="14" viewBox="0 0 16 16"><polygon points="2,6 6,6 10,2 10,14 6,10 2,10" fill="#2C4A5E"/><path d="M12,5 Q15,8 12,11" stroke="#2C4A5E" stroke-width="1.6" fill="none"/></svg>
+        </button>
+        <button id="btn-music-toggle" class="icon-btn" title="Toggle Street Music">
+          <svg width="14" height="14" viewBox="0 0 16 16"><path d="M6,12 L6,4 L13,2.5 L13,10.5" stroke="#2C4A5E" stroke-width="1.8" fill="none"/><circle cx="4.5" cy="12" r="2.2" fill="#2C4A5E"/><circle cx="11.5" cy="10.5" r="2.2" fill="#2C4A5E"/></svg>
+        </button>
+
+        <div class="clock-box">
+          <div class="clock-time">4:52 pm</div>
+          <div class="clock-date">Primday, 23rd of Recurse</div>
+        </div>
+
+        <div class="avatar-menu-wrap">
+          <button id="avatar-menu-btn">
+            <div class="portrait-circle">
+              <svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="12" r="6" fill="#F6B2B8"/><rect x="5" y="4" width="10" height="5" rx="1" fill="#1E2226"/><rect x="3" y="8" width="14" height="2" rx="1" fill="#1E2226"/><rect x="5" y="7" width="10" height="1.5" fill="#D63838"/></svg>
+            </div>
+            <span id="hud-player-name">Traveler</span>
+            <span>▾</span>
+          </button>
+          <div id="avatar-dropdown-menu" class="hidden">
+            <button class="nav-item" onclick="window.UI.openModal('wardrobe')">Vanity &amp; Wardrobe</button>
+            <button class="nav-item" onclick="window.UI.openModal('skills')">Skills &amp; Brain Capacity</button>
+            <button class="nav-item" onclick="window.UI.openModal('quests')">Quest Log &amp; Favor</button>
+            <button class="nav-item" onclick="window.UI.openModal('map')">World &amp; Region Map</button>
+            <button class="nav-item" onclick="window.Game.transitionToStreet('beaus_home', 980)">Go Home (Home Street)</button>
+            <button class="nav-item" onclick="window.UI.openModal('magic_rock')">Home Street Style</button>
+            <button class="nav-item" onclick="window.UI.openModal('butler')">Butler Visitor Log</button>
+            <button class="nav-item" onclick="window.Game.sendChatMessage('o/', 'local')">Daily Sign Greeting (o/)</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Middle Area: Street Viewport (72%) + Right Chat/Activity Sidebar (28%) -->
+    <div id="middle-row">
+      <div id="viewport-container">
+        <canvas id="street-canvas" width="920" height="560"></canvas>
+
+        <!-- Mini-Map Strip in Top-Right of Viewport (Rule 6) -->
+        <div id="minimap-box" title="Click to open World & Region Map">
+          <canvas id="minimap-canvas" width="154" height="36"></canvas>
+          <div class="minimap-footer">
+            <span class="minimap-expand">⤢ World</span>
+            <span id="minimap-street-name">Chego Chase</span>
+          </div>
+        </div>
+
+        <!-- 15-Second Bureaucratic Waiting Timer (Rule 17) -->
+        <div id="waiting-timer-box" class="hidden" title="Do not move, just wait. 0 min, 15 sec">
+          <div id="waiting-timer-label">Please Wait (15s)</div>
+          <div class="waiting-bar-bg">
+            <div id="waiting-timer-fill"></div>
+          </div>
+          <div class="waiting-sub">Do not move, just wait.</div>
+        </div>
+
+        <!-- Qurazy Quoin Top Notification Banner (Rule 22) -->
+        <div id="qurazy-banner" class="hidden">
+          OMG! There's a Qurazy [1] on this street for you!
+        </div>
+
+        <!-- Bottom Toast Banner -->
+        <div id="bottom-toast-banner" class="hidden"></div>
+      </div>
+
+      <!-- Right-Hand Collapsible Chat / Activity Panel (Rules 35 & 36) -->
+      <aside id="right-sidebar">
+        <div class="chat-tabs-col">
+          <button class="chat-tab-btn active" data-channel="local" title="Local Chat / Activity">L</button>
+          <button class="chat-tab-btn" data-channel="global" title="Global & Help Channel">G</button>
+          <button class="chat-tab-btn" data-channel="party" title="Party & Neighbor IM (Tab)">P</button>
+        </div>
+        <div class="chat-panel-main">
+          <div id="chat-panel-header">
+            <span id="chat-panel-title">Local Chat / Activity</span>
+            <button class="btn-link" onclick="window.Game.sendChatMessage('o/', 'local')" title="Greet neighbors for 2x Mood bonus">Say o/</button>
+          </div>
+          <div id="chat-messages"></div>
+          <form id="chat-form">
+            <input id="chat-input" type="text" placeholder="Chat locally or type o/ to greet (Tab switches channel)..." autocomplete="off" />
+          </form>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 3. Bottom Bar: Currants Counter + 16-Slot Inventory + Furniture/Search (Rules 23-26) -->
+    <footer id="bottom-bar">
+      <div id="currants-box" title="Currants (In-game coin currency)">
+        <div class="coin-circle">c</div>
+        <div>
+          <div id="hud-currants-val">1,447</div>
+          <div class="currants-sub">currants</div>
+        </div>
+      </div>
+
+      <div id="inventory-wrap">
+        <!-- Expandable 6 Bag Sub-Slots when Generic Green Bag is clicked -->
+        <div id="bag-subslots" class="hidden"></div>
+        <!-- 16 Primary Inventory Slots -->
+        <div id="inventory-slots"></div>
+      </div>
+
+      <div id="inv-controls">
+        <div class="inv-tabs">
+          <button id="tab-inv-mode" class="inv-tab-btn active">Inventory</button>
+          <button id="tab-furn-mode" class="inv-tab-btn">Furniture</button>
+        </div>
+        <input id="inv-search" type="text" placeholder="Filter items..." />
+      </div>
+    </footer>
+  </div>
+
+  <!-- Floating Item Context Menu -->
+  <div id="item-context-menu" class="hidden"></div>
+
+  <!-- Floating World Object Action Menu -->
+  <div id="world-action-menu" class="hidden"></div>
+
+  <!-- Modal Window (World Map, Skills, Quests, Vendor, Wardrobe, Magic Rock, Butler) -->
+  <div id="modal-backdrop" class="hidden">
+    <div class="modal-window">
+      <div class="modal-header">
+        <span id="modal-title">Modal</span>
+        <button id="modal-close-btn">✕</button>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Giant Full-Screen Visage Blessing Overlay (Rule 18) -->
+  <div id="giant-visage-overlay" class="hidden">
+    <div class="giant-card">
+      <div id="giant-visage-orb"></div>
+      <div id="giant-visage-name">Grendaline</div>
+      <div id="giant-visage-text">Blessings of the Eleven Giants!</div>
+    </div>
+  </div>
+
+  <!-- Street Transition Loading Screen (Rule 8) -->
+  <div id="street-loading-overlay" class="hidden">
+    <div class="loading-box">
+      <div class="loading-entering">Entering</div>
+      <div id="loading-street-title">Chego Chase in Andra</div>
+      <div id="loading-first-badge" class="hidden">First time here! +2 iMG</div>
+      <div class="loading-splines">reticulating splines... 99%</div>
+    </div>
+  </div>
+
+  <!-- Single-Click/Key Title Splash Overlay -->
+  <div id="title-splash-overlay">
+    <div class="splash-card">
+      <div class="splash-title">Whim</div>
+      <div class="splash-sub">Explore the interconnected streets of Andra, Kalavana, and Beau's Home Street inside the minds of the Eleven Giants.</div>
+      <div class="splash-cta">Press Any Key or Click to Play</div>
+    </div>
+  </div>
+
+  <script src="net.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/avatar.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GEMBLOX.IO — Multiplayer Block Merge Arena</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #171920;
+      font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
+    }
+    #gameCanvas {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      cursor: crosshair;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    /* Main Menu Overlay (Purple 3D gem theme matching original footage) */
+    #menuOverlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 38%, rgba(68, 28, 122, 0.92), rgba(22, 9, 46, 0.96));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      color: #ffffff;
+    }
+    #menuBgCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    #menuOverlay > *:not(#menuBgCanvas) {
+      z-index: 1;
+    }
+
+    /* Top-right Party Create / Join panel */
+    .party-panel {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      background: rgba(20, 10, 42, 0.78);
+      border: 2px solid rgba(135, 92, 230, 0.55);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .party-panel p {
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      color: #e4d9ff;
+    }
+    .party-btns {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+    .party-btn {
+      background: #1cc5e8;
+      color: #ffffff;
+      border: 2px solid #09596e;
+      border-radius: 5px;
+      padding: 5px 14px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .party-btn:hover {
+      filter: brightness(1.1);
+    }
+    #partyCodeBadge {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #70ff4d;
+      font-weight: 800;
+    }
+
+    /* Left Changelog & Coming Soon panel */
+    .changelog-panel {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(20, 10, 42, 0.68);
+      border-left: 4px solid #f5b800;
+      padding: 10px 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e8e0ff;
+      max-width: 230px;
+    }
+    .changelog-panel h4 {
+      margin: 0 0 4px 0;
+      color: #ffe033;
+      font-size: 13px;
+    }
+
+    /* Isometric 3D Blocky Logo */
+    .logo-title {
+      font-size: 62px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin: 0 0 22px 0;
+      background: linear-gradient(180deg, #a6ff4d 0%, #ffe033 48%, #ff6a1a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 5px 0 #2a0d47) drop-shadow(0 9px 18px rgba(255, 210, 50, 0.45));
+      text-transform: uppercase;
+    }
+
+    .menu-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 360px;
+    }
+
+    #nameInput {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 18px;
+      font-weight: 800;
+      text-align: center;
+      background: #f5b818;
+      color: #1c1300;
+      border: 3px solid #6e4e00;
+      border-radius: 6px;
+      outline: none;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    #nameInput::placeholder {
+      color: rgba(28, 19, 0, 0.55);
+    }
+
+    .action-row {
+      display: flex;
+      width: 100%;
+      gap: 8px;
+      height: 48px;
+    }
+
+    #skinBtn {
+      flex: 0 0 84px;
+      background: #f25c22;
+      color: #ffffff;
+      border: 3px solid #6b1f04;
+      border-radius: 6px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    #gearBtn {
+      flex: 0 0 48px;
+      background: #30c742;
+      color: #ffffff;
+      border: 3px solid #0d5917;
+      border-radius: 6px;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #playBtn {
+      flex: 1;
+      background: linear-gradient(180deg, #29d6f5 0%, #129ec2 100%);
+      color: #ffffff;
+      border: 3px solid #074759;
+      border-radius: 6px;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+    }
+    #skinBtn:hover, #gearBtn:hover, #playBtn:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Settings Gear Dropdown (Dark Background toggle & Region selector) */
+    #settingsDropdown {
+      width: 100%;
+      background: rgba(22, 12, 46, 0.92);
+      border: 2px solid rgba(155, 118, 240, 0.55);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .setting-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    #regionSelect {
+      width: 100%;
+      padding: 6px 8px;
+      border-radius: 4px;
+      border: 2px solid #29a3cc;
+      background: #ffffff;
+      color: #122033;
+      font-weight: 700;
+    }
+
+    .controls-guide {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #ebe3ff;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+    }
+
+    /* Skin Selector Screen (Overlay over diamond grid with left/right arrows & SAVE) */
+    #skinOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(242, 244, 248, 0.88);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 25;
+    }
+    .skin-picker-row {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .arrow-btn {
+      width: 48px;
+      height: 48px;
+      background: #22b8e6;
+      color: #ffffff;
+      border: 3px solid #09526b;
+      border-radius: 8px;
+      font-size: 24px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    .arrow-btn:hover {
+      filter: brightness(1.1);
+    }
+    #skinPreviewCanvas {
+      background: #ffffff;
+      border: 3px solid #2b303c;
+      border-radius: 6px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    }
+    #skinNameLabel {
+      margin: 12px 0 10px 0;
+      font-size: 18px;
+      font-weight: 900;
+      color: #1c222e;
+    }
+    #skinSaveBtn {
+      background: #29b8e8;
+      color: #ffffff;
+      border: 3px solid #0b5873;
+      border-radius: 6px;
+      padding: 10px 36px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+    #skinSaveBtn:hover {
+      filter: brightness(1.08);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- Main Menu Overlay (Accessible anytime via [M] or [Esc]) -->
+  <div id="menuOverlay" class="hidden">
+    <canvas id="menuBgCanvas"></canvas>
+    <div class="changelog-panel">
+      <h4>Arena Update :</h4>
+      <div>• Giant Neutral Food Gems</div>
+      <div>• Heart Core &amp; Classic Modes</div>
+      <div>• 12 Custom Creator &amp; Gem Skins</div>
+    </div>
+
+    <div class="party-panel">
+      <p>Play with your friends in the same map!</p>
+      <div class="party-btns">
+        <button id="partyCreateBtn" class="party-btn">CREATE</button>
+        <button id="partyJoinBtn" class="party-btn">JOIN</button>
+      </div>
+      <div id="partyCodeBadge" class="hidden"></div>
+    </div>
+
+    <h1 class="logo-title">GEMBLOX.IO</h1>
+
+    <div class="menu-card">
+      <input id="nameInput" type="text" maxlength="18" placeholder="NICKNAME" />
+      <div class="action-row">
+        <button id="skinBtn">SKIN</button>
+        <button id="gearBtn" title="Settings">⚙</button>
+        <button id="playBtn">▶ PLAY GAME</button>
+      </div>
+
+      <div id="settingsDropdown" class="hidden">
+        <label class="setting-item">
+          <span>Dark Background (Key T)</span>
+          <input id="darkThemeCheckbox" type="checkbox" />
+        </label>
+        <label class="setting-item">
+          <span>Heart Core Mode</span>
+          <input id="heartModeCheckbox" type="checkbox" />
+        </label>
+        <select id="regionSelect">
+          <option value="eu">Europe (Frankfurt) (24 players)</option>
+          <option value="na">N. America (East) (19 players)</option>
+          <option value="asia">Asia (Tokyo) (14 players)</option>
+        </select>
+      </div>
+
+      <div class="controls-guide">
+        <div>Move your mouse to control your blocks.</div>
+        <div>Press <b>A / D</b> (or <b>Left / Right</b>) to rotate &amp; boost.</div>
+        <div>Press <b>W</b> (or <b>Space</b>) to eject blocks.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skin Selector Overlay -->
+  <div id="skinOverlay" class="hidden">
+    <div class="skin-picker-row">
+      <button id="skinPrevBtn" class="arrow-btn">←</button>
+      <canvas id="skinPreviewCanvas" width="160" height="160"></canvas>
+      <button id="skinNextBtn" class="arrow-btn">→</button>
+    </div>
+    <div id="skinNameLabel">Cyan Crystal</div>
+    <button id="skinSaveBtn">SAVE</button>
+  </div>
+
+  <script src="net.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/skins.js"></script>
+  <script src="js/cluster.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/hud.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

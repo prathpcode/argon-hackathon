@@ -1,0 +1,1220 @@
+/* Exact Glitch UI Chrome & Layout Styling (#EBF2F5 outer frame, #5C9E31 Mood, #4E8B27 Energy, #DFE8EC Inventory) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #EBF2F5;
+  font-family: "Trebuchet MS", "Lucida Grande", sans-serif;
+  color: #233845;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* App Shell */
+#app-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 6px 10px 8px 10px;
+  gap: 6px;
+}
+
+/* 1. Top Header Bar (~8% height) */
+#top-header {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background: #EBF2F5;
+}
+
+.header-left, .header-center, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  font-size: 26px;
+  font-weight: 900;
+  color: #2C4A5E;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 0 #FFFFFF;
+  margin-right: 4px;
+}
+
+/* Mood Circular Green Badge */
+.stat-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #5E7380;
+  text-transform: uppercase;
+}
+
+#hud-mood-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #5C9E31;
+  border: 3px solid #9BD468;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.14);
+}
+
+/* Energy Pill Progress Bar */
+.pill-bar {
+  position: relative;
+  width: 108px;
+  height: 24px;
+  background: #CFDCE2;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #FFFFFF;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.pill-fill {
+  height: 100%;
+  transition: width 0.2s ease;
+}
+
+.pill-fill.energy {
+  background: linear-gradient(180deg, #6BB53E 0%, #4E8B27 100%);
+}
+
+.pill-fill.xp {
+  background: linear-gradient(180deg, #9ECFDF 0%, #71A8BF 100%);
+}
+
+.pill-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+}
+
+.level-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+#hud-level-val {
+  font-size: 20px;
+  font-weight: 900;
+  color: #2C4A5E;
+}
+
+/* Center Magic Rock & Quick Nav */
+#btn-magic-rock {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #DCE8EC;
+  border: 2px solid #FFFFFF;
+  border-radius: 18px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12px;
+  color: #2C4A5E;
+  transition: transform 0.12s;
+}
+#btn-magic-rock:hover {
+  transform: scale(1.04);
+  background: #CFE2E8;
+}
+
+.rock-notif {
+  background: #D93838;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 50%;
+  width: 17px;
+  height: 17px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-pill-btn {
+  background: #FFFFFF;
+  border: 1px solid #B8CBD4;
+  border-radius: 14px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #2C4A5E;
+  cursor: pointer;
+}
+.top-pill-btn:hover {
+  background: #E2F0CB;
+  border-color: #8EA858;
+}
+
+/* Header Right: Audio, Clock, Avatar Dropdown */
+.icon-btn {
+  background: #FFFFFF;
+  border: 1px solid #C5D5DC;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.icon-btn.muted {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+.clock-box {
+  text-align: right;
+  line-height: 1.15;
+}
+.clock-time {
+  font-size: 12px;
+  font-weight: 800;
+  color: #2C4A5E;
+}
+.clock-date {
+  font-size: 10px;
+  color: #5E7380;
+}
+
+.avatar-menu-wrap {
+  position: relative;
+}
+
+#avatar-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #FFFFFF;
+  border: 1px solid #B8CBD4;
+  border-radius: 20px;
+  padding: 3px 10px 3px 5px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  color: #2C4A5E;
+}
+
+.portrait-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #F6B2B8;
+  border: 2px solid #2C4A5E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+#avatar-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 175px;
+  background: #233845;
+  color: #FFFFFF;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 90;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.28);
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  color: #EBF2F5;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav-item:hover {
+  background: #5C9E31;
+  color: #FFFFFF;
+}
+
+/* 2. Middle Area: Street Viewport (72%) + Right Sidebar (28%) */
+#middle-row {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  min-height: 0;
+}
+
+#viewport-container {
+  position: relative;
+  flex: 0 0 72%;
+  height: 100%;
+  background: #1F2925;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border: 2px solid #FFFFFF;
+}
+
+#street-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Floating Mini-Map Strip in Top-Right of Viewport (Footage B 01:02) */
+#minimap-box {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 164px;
+  background: rgba(245, 238, 220, 0.94);
+  border: 2px solid #C7B89B;
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+#minimap-canvas {
+  width: 100%;
+  height: 36px;
+  border-radius: 4px;
+  display: block;
+}
+
+.minimap-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #3B2C1A;
+  padding: 0 3px;
+}
+
+.minimap-expand {
+  color: #5C9E31;
+  font-size: 10px;
+}
+
+/* 15-Second Bureaucratic Waiting Timer (Footage B 04:45) */
+#waiting-timer-box {
+  position: absolute;
+  top: 76px;
+  right: 12px;
+  width: 164px;
+  background: #FFFFFF;
+  border: 2px solid #5C9E31;
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+#waiting-timer-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #233845;
+  margin-bottom: 4px;
+}
+.waiting-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: #DFE8EC;
+  border-radius: 5px;
+  overflow: hidden;
+}
+#waiting-timer-fill {
+  width: 0%;
+  height: 100%;
+  background: #5C9E31;
+  transition: width 0.1s linear;
+}
+.waiting-sub {
+  font-size: 10px;
+  color: #687B87;
+  margin-top: 3px;
+}
+
+/* Qurazy Quoin Top Banner (Footage A 24:39) */
+#qurazy-banner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid #B47AEA;
+  border-radius: 18px;
+  padding: 5px 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #4A2574;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+
+/* Bottom Toast Banner (Cubimal results, bag full, quest hints) */
+#bottom-toast-banner {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(25, 36, 44, 0.92);
+  color: #FFFFFF;
+  border: 1.5px solid #9BD468;
+  border-radius: 18px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  z-index: 40;
+  pointer-events: none;
+}
+
+/* Right-Hand Chat / Activity Sidebar (28% width) */
+#right-sidebar {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.chat-tabs-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 10px;
+}
+
+.chat-tab-btn {
+  width: 28px;
+  height: 32px;
+  border: 1px solid #C5D5DC;
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: #DFE8EC;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chat-tab-btn.active {
+  background: #FFFFFF;
+  font-weight: 800;
+  width: 30px;
+}
+
+.chat-panel-main {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #CBD8E0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#chat-panel-header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #E3ECEF;
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C4A5E;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 12px;
+  user-select: text;
+}
+
+.chat-entry {
+  border-bottom: 1px solid #F0F4F7;
+  padding-bottom: 5px;
+  line-height: 1.35;
+}
+.chat-entry.system {
+  color: #607582;
+}
+.chat-entry.system strong {
+  color: #4A8B2C;
+}
+.chat-time {
+  float: right;
+  font-size: 10px;
+  color: #9AAAB4;
+  margin-left: 6px;
+}
+
+#chat-form {
+  padding: 7px;
+  border-top: 1px solid #E3ECEF;
+  background: #F7FAFC;
+  display: flex;
+  gap: 6px;
+}
+
+#chat-input {
+  flex: 1;
+  border: 1px solid #BFD0D9;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 12px;
+  outline: none;
+  user-select: text;
+}
+#chat-input:focus {
+  border-color: #5C9E31;
+}
+
+/* 3. Bottom Bar: Currants Counter + 16-Slot Inventory Bar */
+#bottom-bar {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+#currants-box {
+  min-width: 110px;
+  background: #FFFFFF;
+  border: 1px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coin-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #FFE875, #D99B26);
+  border: 2px solid #FFF5C0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #5E3A00;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.16);
+}
+
+#hud-currants-val {
+  font-size: 15px;
+  font-weight: 900;
+  color: #233845;
+}
+.currants-sub {
+  font-size: 10px;
+  color: #6B7F8C;
+}
+
+/* Inventory 16 Slots */
+#inventory-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#bag-subslots {
+  position: absolute;
+  bottom: 58px;
+  left: 12px;
+  background: rgba(255,255,255,0.96);
+  border: 2px solid #63C74D;
+  border-radius: 8px;
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  z-index: 30;
+}
+
+#inventory-slots {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  gap: 5px;
+  background: #FFFFFF;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #CBD8E0;
+}
+
+.inv-slot {
+  height: 44px;
+  background: #DFE8EC;
+  border: 1.5px solid #B8C8D1;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.12s, transform 0.1s;
+}
+.inv-slot:hover {
+  border-color: #5C9E31;
+  background: #EAF4E1;
+  transform: translateY(-2px);
+}
+.inv-slot.dimmed {
+  opacity: 0.28;
+}
+
+.inv-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.15);
+}
+
+.inv-qty {
+  position: absolute;
+  bottom: 1px;
+  right: 3px;
+  font-size: 10px;
+  font-weight: 800;
+  color: #233845;
+  background: rgba(255,255,255,0.78);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* Inventory / Furniture Toggle + Search */
+#inv-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 145px;
+}
+.inv-tabs {
+  display: flex;
+  gap: 3px;
+}
+.inv-tab-btn {
+  flex: 1;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 4px;
+  border: 1px solid #B8C8D1;
+  background: #DFE8EC;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #2C4A5E;
+}
+.inv-tab-btn.active {
+  background: #5C9E31;
+  color: #FFFFFF;
+  border-color: #4E8B27;
+}
+#inv-search {
+  width: 100%;
+  border: 1px solid #B8C8D1;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 11px;
+  user-select: text;
+}
+
+/* Item Context Menu (Footage B 03:55) */
+#item-context-menu {
+  position: fixed;
+  width: 175px;
+  background: #FFFFFF;
+  border: 2px solid #5C9E31;
+  border-radius: 10px;
+  padding: 8px;
+  z-index: 80;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+}
+.ctx-header {
+  font-size: 12px;
+  font-weight: 800;
+  color: #4E8B27;
+  margin-bottom: 3px;
+}
+.ctx-desc {
+  font-size: 10px;
+  color: #5E7380;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+.ctx-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ctx-btn {
+  text-align: left;
+  background: #F2F8EC;
+  border: 1px solid #C5E0B4;
+  border-radius: 5px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #2E5A1C;
+  cursor: pointer;
+}
+.ctx-btn:hover {
+  background: #5C9E31;
+  color: #FFFFFF;
+}
+
+/* World Object Click Action Menu (Footage A 08:25) */
+#world-action-menu {
+  position: fixed;
+  width: 215px;
+  background: #FFFFFF;
+  border: 2px solid #8EA858;
+  border-radius: 12px;
+  padding: 10px;
+  z-index: 75;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+}
+.wa-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: #233845;
+}
+.wa-sub {
+  font-size: 11px;
+  color: #5E7380;
+  margin-top: 2px;
+}
+.wa-lore {
+  font-size: 11px;
+  font-style: italic;
+  color: #4E8B27;
+  margin-top: 3px;
+}
+.wa-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 8px;
+}
+.wa-btn {
+  background: #B8D878;
+  border: 1.5px solid #8EA858;
+  border-radius: 14px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1F3314;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.wa-btn:hover {
+  background: #9CC84D;
+}
+.wa-btn.disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.wa-cost {
+  background: #FFF3C4;
+  color: #8C5800;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+/* Modals (Map, Skills, Quests, Vendor, Wardrobe) */
+#modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 30, 38, 0.58);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-window {
+  width: min(740px, 92vw);
+  max-height: 84vh;
+  background: #FFFFFF;
+  border: 3px solid #2C4A5E;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+}
+
+.modal-header {
+  padding: 12px 16px;
+  background: #233845;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#modal-title {
+  font-size: 16px;
+  font-weight: 900;
+}
+#modal-close-btn {
+  background: #D94E4E;
+  color: #FFFFFF;
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+#modal-body {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* Buttons inside Modals */
+.btn-green {
+  background: #5C9E31;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-green:disabled {
+  background: #B8C8D1;
+  cursor: default;
+}
+.btn-gold {
+  background: #E89C31;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-link {
+  background: none;
+  border: none;
+  color: #3B7EA1;
+  text-decoration: underline;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+/* World Map Modal Cards */
+.world-map-svg {
+  width: 100%;
+  height: auto;
+  margin-bottom: 12px;
+}
+.map-street-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.map-street-card {
+  border: 1.5px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F7FAFC;
+}
+.map-street-card.current {
+  border-color: #5C9E31;
+  background: #EDF7E6;
+}
+.msc-title {
+  font-weight: 800;
+  font-size: 13px;
+}
+.msc-region {
+  color: #5E7380;
+  font-size: 11px;
+}
+.msc-meta {
+  font-size: 11px;
+  color: #4E8B27;
+  margin-top: 2px;
+}
+
+/* Skills Grid */
+.skills-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #EBF2F5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.skill-card {
+  border: 1.5px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #F9FBFD;
+}
+.skill-card.learning {
+  border-color: #E89C31;
+  background: #FFF9EB;
+}
+.skill-card.learned {
+  border-color: #5C9E31;
+  background: #EFF8E8;
+}
+.sk-cat {
+  font-size: 10px;
+  font-weight: 800;
+  color: #3B7EA1;
+  text-transform: uppercase;
+}
+.sk-name {
+  font-size: 14px;
+  font-weight: 900;
+  margin: 2px 0;
+}
+.sk-desc {
+  font-size: 11px;
+  color: #5E7380;
+  margin-bottom: 8px;
+}
+.sk-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Quests List */
+.quests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quest-card {
+  border: 1.5px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #F9FBFD;
+}
+.quest-card.completed {
+  border-color: #5C9E31;
+  background: #EFF8E8;
+}
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 900;
+  font-size: 14px;
+}
+.q-badge {
+  font-size: 11px;
+  color: #4E8B27;
+}
+.q-desc {
+  font-size: 12px;
+  color: #4A5D68;
+  margin: 4px 0 6px 0;
+}
+.q-step {
+  font-size: 12px;
+  margin: 2px 0;
+}
+.q-step.done {
+  color: #4E8B27;
+  font-weight: 700;
+}
+.q-rewards {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #2C4A5E;
+}
+
+/* Vendor Grid */
+.vendor-balance {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.vendor-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #2C4A5E;
+  margin-bottom: 6px;
+}
+.vendor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.vendor-item-row {
+  border: 1px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 7px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vi-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.vi-info {
+  flex: 1;
+}
+.vi-name {
+  font-size: 12px;
+  font-weight: 800;
+}
+.vi-desc {
+  font-size: 10px;
+  color: #5E7380;
+}
+
+/* Wardrobe Customizer */
+.wardrobe-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #EBF2F5;
+}
+.wr-label {
+  font-size: 12px;
+  font-weight: 800;
+}
+.wr-opts {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.wr-btn {
+  min-width: 30px;
+  height: 26px;
+  padding: 0 8px;
+  border: 2px solid #CBD8E0;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #F4F8FA;
+}
+.wr-btn.active {
+  border-color: #233845;
+  box-shadow: 0 0 0 2px #5C9E31;
+}
+
+/* Magic Rock Cards */
+.magic-rock-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mr-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #CBD8E0;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+/* Giant Full-Screen Visage Blessing Overlay (Rule 18) */
+#giant-visage-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 24, 32, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 120;
+  pointer-events: none;
+}
+.giant-card {
+  background: linear-gradient(180deg, #233845 0%, #15222B 100%);
+  border: 3px solid #FFD154;
+  border-radius: 18px;
+  padding: 24px 36px;
+  text-align: center;
+  color: #FFFFFF;
+  max-width: 520px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+}
+#giant-visage-orb {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  margin: 0 auto 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  box-shadow: 0 0 28px #FFD154;
+}
+#giant-visage-name {
+  font-size: 22px;
+  font-weight: 900;
+  color: #FFD154;
+  margin-bottom: 6px;
+}
+#giant-visage-text {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Street Transition Loading Screen (Rule 8 & Footage A 24:36, B 05:41) */
+#street-loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58, 76, 48, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 130;
+}
+.loading-box {
+  background: #2C3B24;
+  border: 3px solid #B8D878;
+  border-radius: 14px;
+  padding: 24px 40px;
+  text-align: center;
+  color: #FFFFFF;
+}
+.loading-entering {
+  color: #DCE8B8;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+#loading-street-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 6px 0;
+}
+#loading-first-badge {
+  display: inline-block;
+  background: #5C9E31;
+  color: #FFFFFF;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.loading-splines {
+  font-size: 12px;
+  color: #B8D878;
+  font-style: italic;
+}
+
+/* Title Splash Overlay (Single key or click into play) */
+#title-splash-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(25, 42, 54, 0.76);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 150;
+  cursor: pointer;
+}
+.splash-card {
+  background: #FFFFFF;
+  border: 4px solid #5C9E31;
+  border-radius: 18px;
+  padding: 28px 42px;
+  text-align: center;
+  max-width: 480px;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.4);
+}
+.splash-title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #2C4A5E;
+}
+.splash-sub {
+  font-size: 14px;
+  color: #5E7380;
+  margin: 6px 0 18px 0;
+}
+.splash-cta {
+  display: inline-block;
+  background: #5C9E31;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 10px 28px;
+  border-radius: 24px;
+  box-shadow: 0 4px 12px rgba(92,158,49,0.4);
+}

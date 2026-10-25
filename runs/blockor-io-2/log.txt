@@ -1,0 +1,7 @@
+[find] running
+[find] done: 8 videos, 124 min
+[watch] running
+[watch] done: 27 rules, 49 scenes, 4 areas
+[build] running
+[build] done: Built “GEMBLOX.IO — Multiplayer Block Merge Arena”
+[playtest] running

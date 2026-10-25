@@ -1,0 +1,31 @@
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[rebuild] done: kept from the last run
+[plan] done: kept from the last run
+[test] running
+[test] running: Round 1: fixing 30 failing rules
+Traceback (most recent call last):
+  File "/Users/codergautam/argontest/pipeline/revive.py", line 37, in main
+    run.stage(name, "done", mod.run_stage(run))
+                            ^^^^^^^^^^^^^^^^^^
+  File "/Users/codergautam/argontest/pipeline/loop.py", line 83, in run_stage
+    proposal = fix.propose(run, k, rk / "game", best["verdicts"], best["smoke"], plan, regressions, limit=BATCH)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/codergautam/argontest/pipeline/fix.py", line 46, in propose
+    it, text = call(run, f"fix:{rnd}", stage="test", role="fixer", round=rnd, name="Fixer",
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/codergautam/argontest/pipeline/common.py", line 110, in call
+    it = c.interactions.create(model=MODEL, input=input, background=background, **create)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/codergautam/argontest/pipeline/.venv/lib/python3.12/site-packages/google/genai/_gaos/google_genai.py", line 290, in create
+    body = _normalize_create_body(body)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/codergautam/argontest/pipeline/.venv/lib/python3.12/site-packages/google/genai/_gaos/google_genai.py", line 1476, in _normalize_create_body
+    raise TypeError(
+TypeError: create() got unexpected keyword argument(s): round, targets. Use extra_body=... to send additional request body fields.
+[test] error: create() got unexpected keyword argument(s): round, targets. Use extra_body=... to send additional request body fields.
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] running
+[build] done: Built “Whim — A World of Eleven Giants”
+[playtest] running

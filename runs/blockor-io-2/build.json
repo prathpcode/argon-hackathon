@@ -1,0 +1,6 @@
+{
+ "by": "pi",
+ "title": "GEMBLOX.IO — Multiplayer Block Merge Arena",
+ "summary": "I built **GEMBLOX.IO**, a faithful multiplayer revival of *blockor.io* featuring a local rotating grid where collected 1×1 gem blocks snap onto your structure and automatically fuse into maximal $N \\times N$ glossy beveled squares, complete with `A`/`D` rotational speed-boost and spin detachment, `W` block ejection, destructible white obstacle mines, shatterable giant neutral food gems, and both Classic and Heart Core modes. It includes a procedural custom skin selector, light and dark diamond-grid arenas, a 4×4 sector minimap, a lime-green energy pill bar, a neon Top 10 leaderboard, active AI rivals alongside real-time WebSocket multiplayer, and synthesized WebAudio sound effects.",
+ "at": 1792964871056
+}
