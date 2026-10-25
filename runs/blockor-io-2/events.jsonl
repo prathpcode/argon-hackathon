@@ -1050,3 +1050,8 @@
 {"t":1792966682.6,"type":"act","agent":"test:1:fun","call":"call_1166651","kind":"tool","tool":"inspect","label":"Reading the game state","status":"running"}
 {"t":1792966682.69,"type":"act","agent":"test:1:fun","call":"call_1166651","kind":"tool","tool":"inspect","status":"done","detail":"window.__rebuildLog"}
 {"t":1792966684.18,"type":"act","agent":"test:1:together","call":"call_626637","kind":"tool","tool":"inspect","status":"done","detail":"(() => {\n  // Let's hook requestAnimationFrame to measure J…"}
+{"t":1792966689.13,"type":"agent","id":"test:1:together","tokens_in":293158,"tokens_out":16253}
+{"t":1792966689.13,"type":"act","agent":"test:1:together","call":"call_1455161","kind":"tool","tool":"inspect","label":"Reading the game state","status":"running"}
+{"t":1792966692.69,"type":"agent","id":"test:1:fun","tokens_in":211760,"tokens_out":25496}
+{"t":1792966692.71,"type":"act","agent":"test:1:fun","call":"call_694220","kind":"tool","tool":"input","label":"KeyT, KeyH, click, KeyW 0.8s…","status":"running"}
+{"t":1792966693.42,"type":"act","agent":"test:1:together","call":"call_1455161","kind":"tool","tool":"inspect","status":"done","detail":"window.__prof"}
