@@ -377,6 +377,8 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .footage-wall.active .fw-tile img { animation: develop 2.4s var(--ease) both; filter: none; }
 .fw-tile:hover img { filter: none; }
 .fw-tile span { position: absolute; left: 0; top: 0; padding: 2px 1ch; font-family: var(--tt); font-size: 13px; background: var(--red); color: var(--black); }
+.collect-view { padding-top: 2px; }
+.collect-view .empty-note { padding: 14px 2ch; }
 .fw-empty { display: grid; place-items: center; font-family: var(--tt); color: var(--cyan); }
 .fw-empty span { display: inline-flex; align-items: center; gap: 1ch; }
 

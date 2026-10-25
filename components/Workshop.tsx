@@ -142,8 +142,9 @@ export function Workshop({ initial }: { initial: RunState }) {
       <div className={`phases${check ? " with-parity" : ""}`} role="tablist" aria-label="Phases">
         {phases(run).map((p, i) => {
           const t = p.state.startedAt ? (p.state.endedAt && p.state.status !== "running" ? p.state.endedAt : clockAt) - p.state.startedAt : null;
-          const has = run.agents.some((a) => phaseOf(a) === p.key);
-          const selected = (focus ? phaseOf(focus) : null) === p.key;
+          // Collect can be done with no agent in the log (footage kept from an earlier run); its tab then shows the footage.
+          const has = run.agents.some((a) => phaseOf(a) === p.key) || (p.key === "collect" && run.footageList.length > 0);
+          const selected = (tab ?? (focus ? phaseOf(focus) : null)) === p.key;
           return (
             <button key={p.key} role="tab" aria-selected={selected} disabled={!has} className={`phase ${p.state.status}`}
               onClick={() => { setPinned(null); setTab(p.key); }}>
@@ -176,7 +177,7 @@ export function Workshop({ initial }: { initial: RunState }) {
 
       <div className="ws-grid">
         <div className="ws-main">
-          {tab === "parity" && check ? <ParityView key={check.round} run={run} check={check} /> : <>
+          {tab === "parity" && check ? <ParityView key={check.round} run={run} check={check} /> : tab === "collect" && !inTab.length ? <CollectView run={run} /> : <>
           {working.filter((a) => a.shot).length > 1 && (
             <div className="wall">
               {working.filter((a) => a.shot).map((a) => (
@@ -682,6 +683,25 @@ function ParityView({ run, check }: { run: RunState; check: Verify }) {
         </nav>
       </div>
     </section>
+  );
+}
+
+function CollectView({ run }: { run: RunState }) {
+  return (
+    <div className="desk done collect-view">
+      <div className="footage-wall active">
+        {run.footageList.map((f) => {
+          const id = youtubeId(f.url);
+          return (
+            <a key={f.key} href={f.url} target="_blank" rel="noreferrer" className="fw-tile" title={f.title}>
+              {id && <img src={`/api/yt/${id}?f=hqdefault`} alt="" />}
+              <span>{f.key}{f.seconds ? ` · ${clock(f.seconds)}` : ""}</span>
+            </a>
+          );
+        })}
+      </div>
+      {run.rules > 0 && <p className="empty-note">{run.rules} rules · {run.areas} areas from the footage</p>}
+    </div>
   );
 }
 
