@@ -8,32 +8,87 @@
  },
  {
   "round": 1,
-  "score": 15,
+  "score": 18,
   "total": 41,
-  "accepted": false,
+  "accepted": true,
   "regressions": [
    "building_door_interior_transition",
    "daily_hi_sign_match_bonus",
-   "giant_shrines_and_visage_overlay",
    "tower_construction_project_contribution"
   ],
   "newly_passing": [
+   "avatar_wardrobe_vanity_customization",
    "bureaucrat_waiting_room_qualification",
+   "butler_visitor_log_recording",
    "first_street_visit_xp_bonus",
    "floating_quoins_jump_collection",
-   "inventory_item_context_menu_verbs",
+   "home_street_butler_npc_menu",
+   "inventory_16_slots_bag_and_search",
    "magic_rock_change_street_style",
-   "minimap_strip_and_world_map_button",
-   "mood_energy_img_meters_and_restoration",
+   "real_time_skill_learning_and_brain_capacity",
    "world_map_teleport_and_go_home"
   ],
-  "edits_applied": 18,
+  "edits_applied": 20,
   "edits_failed": 0,
   "fix_usage": {
-   "in": 60746,
-   "out": 25134,
-   "secs": 323
+   "in": 61209,
+   "out": 28180,
+   "secs": 445
   },
-  "secs": 57
+  "secs": 67
+ },
+ {
+  "round": 2,
+  "score": 18,
+  "total": 41,
+  "accepted": false,
+  "regressions": [
+   "avatar_animations_and_thriller_dance",
+   "giant_shrines_and_visage_overlay",
+   "inventory_16_slots_bag_and_search",
+   "real_time_skill_learning_and_brain_capacity"
+  ],
+  "newly_passing": [
+   "building_door_interior_transition",
+   "cubimals_windup_race_in_planks",
+   "mood_energy_img_meters_and_restoration",
+   "tower_construction_project_contribution"
+  ],
+  "edits_applied": 22,
+  "edits_failed": 0,
+  "fix_usage": {
+   "in": 72148,
+   "out": 27480,
+   "secs": 460
+  },
+  "secs": 633
+ },
+ {
+  "round": 3,
+  "score": 20,
+  "total": 41,
+  "accepted": true,
+  "regressions": [
+   "avatar_animations_and_thriller_dance",
+   "bureaucrat_waiting_room_qualification",
+   "giant_shrines_and_visage_overlay",
+   "inventory_16_slots_bag_and_search"
+  ],
+  "newly_passing": [
+   "building_door_interior_transition",
+   "cubimals_windup_race_in_planks",
+   "daily_hi_sign_match_bonus",
+   "minimap_strip_and_world_map_button",
+   "street_spirit_vendor_shop_buy",
+   "tower_construction_project_contribution"
+  ],
+  "edits_applied": 21,
+  "edits_failed": 0,
+  "fix_usage": {
+   "in": 72500,
+   "out": 23992,
+   "secs": 328
+  },
+  "secs": 512
  }
 ]

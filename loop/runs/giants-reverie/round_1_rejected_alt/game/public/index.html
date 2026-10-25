@@ -1,0 +1,3847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giants' Reverie — A Game of Giant Imagination</title>
+<style>
+  :root {
+    --bg-dark: #1d2226;
+    --panel-bg: #f5f7f2;
+    --panel-border: #cfd8c4;
+    --accent-green: #6db33f;
+    --accent-teal: #2b8a9e;
+    --accent-gold: #e6a817;
+    --accent-purple: #8446b0;
+    --text-main: #2c3531;
+    --text-muted: #6c7a73;
+  }
+  * { box-sizing: border-box; user-select: none; }
+  body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
+    background: var(--bg-dark); color: var(--text-main);
+    overflow: hidden;
+  }
+  #app {
+    display: flex; flex-direction: column;
+    width: 100vw; height: 100vh;
+    background: #eef2e8;
+  }
+  /* Top Header Bar */
+  #top-bar {
+    height: 54px; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 12px; background: linear-gradient(180deg, #ffffff 0%, #e5ece0 100%);
+    border-bottom: 2px solid #c2ceb8; z-index: 20;
+  }
+  #hud-left {
+    display: flex; align-items: center; gap: 12px; position: relative;
+  }
+  #avatar-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #d8e6f0; border: 2px solid #7fa6c4;
+    cursor: pointer; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+  #avatar-btn:hover { border-color: var(--accent-teal); }
+  #mood-gauge {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #8de969, #4aa02c);
+    border: 2px solid #3b8022; color: #fff; font-weight: bold;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 13px; text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    box-shadow: inset 0 2px 4px rgba(255,255,255,0.4);
+  }
+  #mood-gauge small { font-size: 9px; font-weight: normal; opacity: 0.9; }
+  .stat-block {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  #energy-bar-wrap {
+    width: 120px; height: 16px; background: #d4dcd0;
+    border-radius: 8px; overflow: hidden; border: 1px solid #a9b7a2;
+    position: relative;
+  }
+  #energy-bar-fill {
+    height: 100%; background: linear-gradient(90deg, #4da6ff, #2673cf);
+    width: 85%; transition: width 0.2s;
+  }
+  #energy-text {
+    font-size: 11px; font-weight: bold; color: #2b4c6f; margin-top: 2px;
+  }
+  .metric-pill {
+    background: #fff; border: 1px solid #cdd6c6; border-radius: 12px;
+    padding: 4px 10px; font-size: 12px; font-weight: bold;
+    display: flex; align-items: center; gap: 5px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .metric-pill span.label { color: var(--text-muted); font-weight: normal; }
+  #magic-rock-top {
+    cursor: pointer; background: #e6f2f5; border: 1px solid #9ec4cf;
+    border-radius: 10px; padding: 4px 10px; font-size: 12px; font-weight: bold;
+    color: #246575; display: flex; align-items: center; gap: 6px;
+  }
+  #magic-rock-top:hover { background: #d0e8ef; }
+
+  #hud-center {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .top-action-btn {
+    background: #fff; border: 1px solid #b7c4b0; border-radius: 8px;
+    padding: 5px 10px; font-size: 12px; font-weight: bold; color: #3d4d42;
+    cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  }
+  .top-action-btn:hover { background: #f0f6ec; border-color: #7ea36b; }
+  #street-title-pill {
+    background: #252d30; color: #fff; padding: 4px 10px 4px 12px;
+    border-radius: 12px; font-size: 12px; font-weight: bold;
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid #49585e;
+  }
+  #minimap-canvas {
+    width: 136px; height: 28px; background: #2f3b40;
+    border-radius: 6px; border: 1px solid #758a94; cursor: pointer;
+  }
+  #world-map-btn {
+    background: linear-gradient(180deg, #4796b0 0%, #276980 100%);
+    color: #fff; border: 1px solid #8bd3e8; border-radius: 8px;
+    padding: 4px 10px; font-size: 12px; font-weight: bold;
+    cursor: pointer; display: flex; align-items: center; gap: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+  #world-map-btn:hover { filter: brightness(1.1); }
+
+  #hud-right {
+    display: flex; align-items: center; gap: 10px; font-size: 12px;
+  }
+  #clock-label { color: #4b5951; font-weight: bold; }
+  .icon-btn {
+    background: #fff; border: 1px solid #c2ceb8; border-radius: 6px;
+    padding: 4px 8px; cursor: pointer; font-size: 13px;
+  }
+
+  /* Avatar Left Dark Graphical Overlay Menu */
+  #left-menu {
+    position: absolute; top: 52px; left: 6px; width: 270px;
+    background: rgba(24, 30, 35, 0.96); border: 2px solid #597380; border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.55); padding: 10px;
+    display: none; z-index: 100; color: #eef5f9;
+  }
+  #left-menu.open { display: block; }
+  .left-menu-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;
+  }
+  .menu-item {
+    padding: 8px 10px; font-size: 12px; color: #e4f1f7; font-weight: bold;
+    cursor: pointer; display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; text-align: center;
+  }
+  .menu-item .mi-icon { font-size: 22px; line-height: 1; }
+  .menu-item:hover { background: rgba(77, 166, 255, 0.28); border-color: #70c4cf; }
+  .menu-home-banner {
+    width: 100%; padding: 8px 12px; border-radius: 10px;
+    background: linear-gradient(90deg, #22382c 0%, #355e47 100%);
+    border: 2px solid #6db33f; color: #fff; font-weight: bold;
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; margin-top: 4px;
+  }
+  .menu-home-banner:hover { filter: brightness(1.12); }
+  .menu-sep { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 0; }
+
+  /* Main Middle Area: Viewport + Chat */
+  #main-area {
+    flex: 1; display: flex; position: relative; overflow: hidden;
+  }
+  #viewport-wrap {
+    flex: 1; position: relative; background: #0e1113; overflow: hidden;
+  }
+  #game-canvas {
+    width: 100%; height: 100%; display: block;
+  }
+
+  /* Right Chat & Activity Panel */
+  #chat-panel {
+    width: 290px; background: #f8faf6; border-left: 2px solid #c7d1c0;
+    display: flex; flex-direction: column; z-index: 15;
+  }
+  #chat-tabs {
+    display: flex; background: #e3ebe0; border-bottom: 1px solid #c7d1c0;
+    padding: 4px 6px 0; gap: 4px; flex-wrap: wrap;
+  }
+  .chat-tab {
+    padding: 5px 9px; font-size: 11px; font-weight: bold;
+    background: #d2ddd0; border-radius: 6px 6px 0 0; cursor: pointer;
+    color: #49594f;
+  }
+  .chat-tab.active { background: #f8faf6; color: #1f2e25; border: 1px solid #c7d1c0; border-bottom: none; }
+  #online-bar {
+    padding: 6px 10px; background: #eef3ea; border-bottom: 1px solid #d8e2d2;
+    font-size: 11px; color: #3a5242; max-height: 75px; overflow-y: auto;
+  }
+  .player-chip {
+    display: inline-block; background: #fff; border: 1px solid #bed0b6;
+    border-radius: 10px; padding: 1px 7px; margin: 2px; cursor: pointer;
+    font-weight: bold; color: #2a6342;
+  }
+  .player-chip:hover { background: #e3f4ea; }
+  #chat-messages {
+    flex: 1; padding: 8px 10px; overflow-y: auto; font-size: 12px;
+    display: flex; flex-direction: column; gap: 5px; user-select: text;
+  }
+  .chat-msg { line-height: 1.35; word-wrap: break-word; }
+  .chat-msg.sys { color: #7b877e; font-style: italic; }
+  .chat-msg.god { background: #f3e6b3; border: 1px solid #d9b85b; padding: 4px 6px; border-radius: 6px; color: #593e00; font-weight: bold; }
+  .chat-msg.reward { color: #2e7d32; font-weight: bold; }
+  .chat-input-row {
+    display: flex; padding: 6px; border-top: 1px solid #ced8c8; background: #fff; gap: 4px;
+  }
+  #chat-input {
+    flex: 1; padding: 6px 8px; border: 1px solid #b5c4ae; border-radius: 6px;
+    font-size: 12px; outline: none;
+  }
+  #chat-input:focus { border-color: var(--accent-teal); }
+
+  /* Bottom Inventory Bar */
+  #bottom-bar {
+    background: linear-gradient(180deg, #e9efe4 0%, #d5dfd0 100%);
+    border-top: 2px solid #b8c6b0; padding: 6px 12px; z-index: 20;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  #bag-sub-bar {
+    display: none; align-items: center; gap: 6px;
+    background: #dce6d6; padding: 4px 8px; border-radius: 8px;
+    border: 1px solid #b4c4ac;
+  }
+  #bag-sub-bar.open { display: flex; }
+  #inv-controls {
+    display: flex; align-items: center; justify-content: space-between; font-size: 11px;
+  }
+  .inv-tabs { display: flex; gap: 6px; align-items: center; }
+  .inv-tab-btn {
+    padding: 2px 8px; border-radius: 6px; border: 1px solid #a7b89f;
+    background: #e1eadb; cursor: pointer; font-weight: bold; font-size: 11px;
+  }
+  .inv-tab-btn.active { background: #4a5950; color: #fff; border-color: #36423b; }
+  #inv-search-wrap {
+    display: flex; align-items: center; gap: 6px;
+  }
+  #inv-search {
+    padding: 2px 6px; font-size: 11px; border: 1px solid #a7b89f; border-radius: 6px;
+    width: 150px;
+  }
+  #inv-slots-row {
+    display: grid; grid-template-columns: repeat(16, 1fr); gap: 6px;
+  }
+  .inv-slot {
+    height: 52px; background: #ffffff; border: 2px solid #c2ceb8;
+    border-radius: 8px; position: relative; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: transform 0.08s, border-color 0.08s;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .inv-slot:hover { border-color: #5b9bd5; transform: translateY(-1px); }
+  .inv-slot.selected { border-color: #e69138; background: #fff9f0; }
+  .inv-slot.filtered-out { opacity: 0.22; pointer-events: none; }
+  .inv-slot canvas { width: 32px; height: 32px; pointer-events: none; }
+  .inv-slot .slot-count {
+    position: absolute; bottom: 2px; right: 4px; font-size: 10px;
+    font-weight: bold; color: #3c4a42; background: rgba(255,255,255,0.85);
+    padding: 0 3px; border-radius: 4px;
+  }
+  .inv-slot .slot-name {
+    position: absolute; top: -22px; background: rgba(25,32,36,0.92); color: #fff;
+    font-size: 10px; padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+    display: none; z-index: 40; pointer-events: none;
+  }
+  .inv-slot:hover .slot-name { display: block; }
+
+  /* Context Menu Popup (for items, NPCs, players) */
+  #context-menu {
+    position: fixed; background: #fffef9; border: 2px solid #8ea896;
+    border-radius: 10px; padding: 6px; min-width: 150px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.28); display: none; z-index: 200;
+  }
+  #context-menu .ctx-title {
+    font-size: 12px; font-weight: bold; color: #3d4f44;
+    padding: 4px 8px; border-bottom: 1px solid #e2e8de; margin-bottom: 4px;
+  }
+  .ctx-verb {
+    padding: 6px 10px; font-size: 12px; font-weight: bold; color: #236477;
+    border-radius: 6px; cursor: pointer; display: flex; justify-content: space-between;
+  }
+  .ctx-verb:hover { background: #e4f2f6; }
+
+  /* Modals (World Map, Skills, Quest Log, Wardrobe/Vanity, Shop, Street Style, Profile) */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(15, 22, 26, 0.62);
+    display: none; align-items: center; justify-content: center; z-index: 150;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal- card, .modal-box {
+    background: #fbfcf9; border: 3px solid #8fa893; border-radius: 14px;
+    width: 760px; max-width: 94vw; max-height: 86vh;
+    display: flex; flex-direction: column; overflow: hidden;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.45);
+  }
+  .modal-header {
+    padding: 12px 18px; background: #e5ede0; border-bottom: 1px solid #c5d1be;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .modal-header h2 { margin: 0; font-size: 18px; color: #2b3c32; }
+  .modal-close {
+    background: #d9534f; color: #fff; border: none; border-radius: 50%;
+    width: 26px; height: 26px; font-weight: bold; cursor: pointer;
+  }
+  .modal-body {
+    padding: 16px 18px; overflow-y: auto; flex: 1; font-size: 13px;
+  }
+
+  /* Giant Overlay */
+  #giant-overlay {
+    position: absolute; inset: 0; background: rgba(18, 16, 12, 0.72);
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 90; color: #fff; text-align: center; padding: 24px; cursor: pointer;
+  }
+  #giant-overlay.open { display: flex; }
+  #giant-overlay h1 { margin: 12px 0 8px; font-size: 28px; color: #ffdf80; }
+  #giant-overlay p { max-width: 480px; font-size: 16px; line-height: 1.5; }
+
+  /* Loading / Street Transition Overlay */
+  #loading-overlay {
+    position: absolute; inset: 0; background: linear-gradient(180deg, #cbe3d6 0%, #f4f7f0 100%);
+    display: none; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 120; color: #2b4238; text-align: center; padding: 24px;
+  }
+  #loading-overlay.open { display: flex; }
+  #loading-progress-wrap {
+    width: 320px; height: 14px; background: #d6e2d0; border-radius: 7px;
+    overflow: hidden; margin-top: 16px; border: 1px solid #9eb596;
+  }
+  #loading-progress-bar {
+    width: 0%; height: 100%; background: #6db33f; transition: width 0.15s;
+  }
+
+  /* Waiting Area Banner (Andra Bureaucratic Hall) */
+  #waiting-banner {
+    position: absolute; top: 14px; right: 14px;
+    background: #fff9db; border: 2px solid #d4b146; border-radius: 10px;
+    padding: 8px 14px; font-size: 12px; color: #544100; font-weight: bold;
+    display: none; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  #qurazy-banner {
+    position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(42, 34, 58, 0.9); color: #fff; border: 2px solid #b388ff;
+    border-radius: 20px; padding: 5px 16px; font-size: 13px; font-weight: bold;
+    display: none; z-index: 45;
+  }
+  #prompt-banner {
+    position: absolute; bottom: 16px; right: 16px;
+    background: #23333d; color: #fff; border: 2px solid #5899b8;
+    border-radius: 10px; padding: 10px 14px; font-size: 12px;
+    display: none; z-index: 80; box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  #prompt-banner button {
+    margin-left: 6px; padding: 3px 9px; border-radius: 5px; border: none;
+    cursor: pointer; font-weight: bold;
+  }
+  .grid-cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 12px;
+  }
+  .card-item {
+    background: #fff; border: 1px solid #ccd6c4; border-radius: 10px;
+    padding: 10px; display: flex; flex-direction: column; align-items: center;
+    text-align: center; gap: 6px;
+  }
+  .card-item button {
+    background: var(--accent-teal); color: #fff; border: none;
+    padding: 5px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px;
+  }
+  .card-item button:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- TOP HUD BAR -->
+  <div id="top-bar">
+    <div id="hud-left">
+      <div id="avatar-btn" title="Open Menu">
+        <canvas id="portrait-canvas" width="40" height="40"></canvas>
+      </div>
+      <div id="mood-gauge" title="Mood affects your iMG multiplier">
+        <span id="mood-pct">88%</span>
+        <small id="mood-num">440/500</small>
+      </div>
+      <div class="stat-block">
+        <div id="energy-bar-wrap" title="Energy is spent mining, digging, and harvesting">
+          <div id="energy-bar-fill"></div>
+        </div>
+        <div id="energy-text">435 / 495 Energy</div>
+      </div>
+      <div class="metric-pill" title="Imagination (XP) & Level">
+        <span class="label">Lv</span> <span id="level-val">19</span>
+        <span class="label">| iMG</span> <span id="img-val">25,990</span>
+      </div>
+      <div class="metric-pill" title="Currants (in-game currency)">
+        <span style="color:#d48817;">●</span> <span id="currants-val">1,441</span> <span class="label">c</span>
+      </div>
+      <div id="magic-rock-top" title="Skills & Quest Log">
+        <span>🪨</span> <span id="active-skill- top">Skills & Quests</span>
+      </div>
+
+      <!-- Left Avatar Graphical Overlay Menu -->
+      <div id="left-menu">
+        <div class="left-menu-grid">
+          <div class="menu-item" data-modal="skills"><span class="mi-icon">🧠</span><span>Skills</span></div>
+          <div class="menu-item" data-modal="quests"><span class="mi-icon">⚡</span><span>Upgrades & Quests</span></div>
+          <div class="menu-item" data-modal="wardrobe"><span class="mi-icon">🪞</span><span>Your looks</span></div>
+          <div class="menu-item" data-modal="map"><span class="mi-icon">🌐</span><span>Teleport</span></div>
+        </div>
+        <div style="display:flex; gap:6px; margin-bottom:6px;">
+          <div class="menu-item" data-modal="profile" style="flex:1; flex-direction:row; padding:5px 8px;"><span>👤 Profile</span></div>
+          <div class="menu-item" id="menu-giant-summon" style="flex:1; flex-direction:row; padding:5px 8px;"><span>✨ Giant</span></div>
+        </div>
+        <div class="menu-home-banner" id="menu-go-home">
+          <div>
+            <div style="font-size:14px;">🏠 Go home</div>
+            <small style="color:#b8e6c1; font-weight:normal;">Return to Beau's Home Street</small>
+          </div>
+          <div style="background:#14201c; border:1px solid #82c96e; border-radius:6px; padding:3px 7px; font-size:16px;">🌲🏡🌲</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hud-center">
+      <button class="top-action-btn" id="btn-cultivate" title="Change Home Street Style or Cultivate">Cultivate</button>
+      <div id="street-title-pill">
+        <div style="display:flex;flex-direction:column;line-height:1.1;">
+          <small style="font-size:9px;color:#9rb0b8;opacity:0.8;text-transform:uppercase;">Current location</small>
+          <span id="street-name-label">Beau's Home Street</span>
+        </div>
+        <canvas id="minimap-canvas" width="136" height="28" title="Mini-map strip — Click to open World Map"></canvas>
+        <button id="world-map-btn" title="Open World & Region Map">🌐 World</button>
+      </div>
+    </div>
+
+    <div id="hud-right">
+      <span id="clock-label">Candy 1, 12:35 pm</span>
+      <button class="icon-btn" id="btn-mute" title="Toggle Sound & Music">🔊</button>
+      <button class="icon-btn" id="btn-snap" title="Take Snapshot">📷</button>
+    </div>
+  </div>
+
+  <!-- MAIN VIEWPORT + RIGHT CHAT -->
+  <div id="main-area">
+    <div id="viewport-wrap">
+      <canvas id="game-canvas"></canvas>
+
+      <!-- Special Street Banners -->
+      <div id="qurazy-banner">OMG! There's a Qurazy ❗ on this street for you!</div>
+      <div id="waiting-banner">
+        <div>Please Wait — Do not move, just wait.</div>
+        <div id="waiting-timer-text">at max, 15 secs</div>
+      </div>
+      <div id="prompt-banner">
+        <span id="prompt-text">Player would like to follow you.</span>
+        <button id="prompt-yes" style="background:#6db33f;color:#fff;">OK</button>
+        <button id="prompt-no" style="background:#ccc;color:#222;">No thanks</button>
+      </div>
+
+      <!-- Giant Visage Overlay -->
+      <div id="giant-overlay">
+        <canvas id="giant-canvas" width="180" height="220"></canvas>
+        <h1 id="giant-title">Cosma says...</h1>
+        <p id="giant-speech">The sky, the sky, higher and higher it calls to me and lifts me up. This meditation comes to end... yet I do not fear the quack. Do not fear the quack, dear Glitchen.</p>
+        <small style="opacity:0.75; margin-top:16px;">● Click anywhere to continue ●</small>
+      </div>
+
+      <!-- Top-Left First Visit & Activity Toast -->
+      <div id="top-left-toast" style="position:absolute; top:14px; left:14px; background:rgba(28,38,32,0.94); color:#fff; border:2px solid #8de969; border-radius:12px; padding:10px 16px; font-size:13px; font-weight:bold; display:none; z-index:75; box-shadow:0 6px 18px rgba(0,0,0,0.4); align-items:center; gap:10px;">
+        <span style="background:#6db33f; color:#fff; border-radius:50%; width:28px; height:28px; display:inline-flex; align-items:center; justify-content:center;">★</span>
+        <span id="top-left-toast-text">This is your first visit! You received 2 xp!</span>
+      </div>
+
+      <!-- Butler Roy Interactive Speech Bubble -->
+      <div id="butler-speech-box" style="position:absolute; display:none; background:#ffffff; border:2px solid #597362; border-radius:12px; padding:10px 14px; max-width:250px; font-size:12px; color:#1f2d24; font-weight:bold; z-index:85; box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+        <div id="butler-speech-text" style="margin-bottom:8px;">There were a lot of visitors, I'll IM you the list.</div>
+        <div style="text-align:right;">
+          <button id="butler-thanks-btn" style="background:#6db33f; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-weight:bold; cursor:pointer;">Thanks!</button>
+        </div>
+      </div>
+
+      <!-- Street Loading Screen -->
+      <div id="loading-overlay">
+        <div style="background:#ffffff; border:3px solid #9eb596; border-radius:16px; padding:22px 28px; width:620px; max-width:92%; text-align:left; box-shadow:0 12px 32px rgba(0,0,0,0.22);">
+          <div style="font-size:14px; font-weight:bold; color:#5a7062; text-transform:uppercase;" id="loading-verb">Entering</div>
+          <h1 style="margin:2px 0 14px; font-size:28px; color:#23382c;" id="loading-street-title">Chego Chase in Andra</h1>
+          <div style="display:flex; gap:18px; align-items:flex-start; margin-bottom:14px;">
+            <canvas id="loading-preview-canvas" width="240" height="135" style="border-radius:10px; border:2px solid #cdd8c6; background:#1c2526; flex-shrink:0;"></canvas>
+            <div style="flex:1;">
+              <div style="font-weight:bold; font-size:13px; color:#2b4238; margin-bottom:4px;">Home to:</div>
+              <ul id="loading-home-to" style="margin:0 0 10px 18px; padding:0; font-size:12px; color:#3d5447; line-height:1.5;">
+                <li>Shrine to Grendaline</li>
+                <li>Ministry of Departments</li>
+                <li>Savanna Trees &amp; Chicken</li>
+              </ul>
+              <div style="font-size:11px; color:#52695c; background:#eef4eb; padding:6px 10px; border-radius:6px;" id="loading-tip">
+                Tip: Need some Seed? Let Piggies do the deed: feed them some crops, then examine the plops!
+              </div>
+            </div>
+          </div>
+          <div id="loading-progress-wrap" style="width:100%; height:18px; margin-top:8px;">
+            <div id="loading-progress-bar"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:5px; font-size:12px; font-weight:bold; color:#52695c;">
+            <span id="loading-spline-text">reticulating splines...</span>
+            <span id="loading-pct-text">100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right-hand Chat & Activity Panel -->
+    <div id="chat-panel">
+      <div id="chat-tabs">
+        <div class="chat-tab active" data-tab="local">Local Chat / Activity</div>
+        <div class="chat-tab" data-tab="global">Global</div>
+        <div class="chat-tab" data-tab="party">Party / Follow</div>
+      </div>
+      <div id="online-bar">
+        <span>On street (<span id="online-count">1</span>):</span>
+        <span id="online-list"></span>
+      </div>
+      <div id="chat-messages"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Say something (or /hi, /thriller, /poof)..." maxlength="140">
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM INVENTORY BAR -->
+  <div id="bottom-bar">
+    <div id="bag-sub-bar">
+      <strong style="font-size:11px; color:#2f4736;">👜 Generic Green Bag:</strong>
+      <div id="bag-slots-row" style="display:flex; gap:6px; flex:1;"></div>
+    </div>
+    <div id="inv-controls">
+      <div class="inv-tabs">
+        <button class="inv-tab-btn active" id="tab-inv-items">Inventory</button>
+        <button class="inv-tab-btn" id="tab-inv-furn">Furniture</button>
+        <button class="inv-tab-btn" id="btn-hi-emote" style="background:#dff0d8; border-color:#8cc665; color:#2b542c;">👋 Say 'hi' Sign</button>
+      </div>
+      <div id="inv-search-wrap">
+        <span>🔍 Search inventory for:</span>
+        <input type="text" id="inv-search" placeholder="Filter items...">
+      </div>
+    </div>
+    <div id="inv-slots-row"></div>
+  </div>
+</div>
+
+<!-- Context Menu -->
+<div id="context-menu">
+  <div class="ctx-title" id="ctx-title">Item</div>
+  <div id="ctx-verbs"></div>
+</div>
+
+<!-- Universal Modal Container -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 id="modal-title">Modal</h2>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+ * GIANTS' REVERIE — Complete Client & Solo/Multiplayer Engine
+ * Rebuilt from surviving gameplay footage (Videos A & B).
+ * ============================================================================ */
+
+// --- Telemetry & Seeded RNG ---
+window.__events = [];
+function logTelemetry(type, data = {}) {
+  const evt = { t: Math.round(performance.now()), type, ...data };
+  window.__events.push(evt);
+  if (window.__events.length > 500) window.__events.shift();
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+let rngSeed = parseInt(urlParams.get("seed") || "20121209", 10) || 20121209;
+function seededRandom() {
+  rngSeed = (rngSeed * 1664525 + 1013904223) >>> 0;
+  return rngSeed / 4294967296;
+}
+
+// --- Web Audio Synthesizer (Music, Musicblocks, Chimes, Thriller) ---
+const AudioEngine = {
+  ctx: null,
+  muted: false,
+  musicTimer: null,
+  currentTrack: null,
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this.ctx = new AC();
+    }
+    if (this.ctx && this.ctx.state === "suspended") this.ctx.resume();
+  },
+  playTone(freq, dur = 0.25, type = "sine", gainVal = 0.12, delay = 0) {
+    if (this.muted) return;
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime + delay;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.linearRampToValueAtTime(gainVal, now + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + dur + 0.02);
+  },
+  playChime(kind = "quoin") {
+    if (kind === "quoin") {
+      this.playTone(587.33, 0.18, "triangle", 0.12, 0);
+      this.playTone(880.0, 0.28, "triangle", 0.12, 0.08);
+    } else if (kind === "hi") {
+      this.playTone(523.25, 0.15, "sine", 0.14, 0);
+      this.playTone(659.25, 0.15, "sine", 0.14, 0.1);
+      this.playTone(1046.5, 0.35, "triangle", 0.16, 0.2);
+    } else if (kind === "giant") {
+      [220, 277.18, 329.63, 440, 659.25].forEach((f, i) => {
+        this.playTone(f, 0.8, "triangle", 0.1, i * 0.09);
+      });
+    } else if (kind === "mine") {
+      this.playTone(180, 0.09, "square", 0.08, 0);
+      this.playTone(320, 0.12, "triangle", 0.08, 0.05);
+    } else if (kind === "GNG") {
+      // Melancholic lullaby melody ("Lay all things..." from Video A 50:39)
+      const notes = [392, 440, 493.88, 587.33, 523.25, 493.88, 440, 392, 329.63, 349.23, 392];
+      notes.forEach((f, i) => this.playTone(f, 0.45, "sine", 0.13, i * 0.42));
+    } else if (kind === "DG2") {
+      const notes = [523.25, 659.25, 783.99, 659.25, 880, 783.99, 659.25, 523.25];
+      notes.forEach((f, i) => this.playTone(f, 0.22, "triangle", 0.12, i * 0.2));
+    } else if (kind === "thriller") {
+      // Funky bassline for Pumpkin Ale Thriller spell (Video A 29:43 / 32:20)
+      const bass = [146.83, 164.81, 174.61, 196.0, 174.61, 164.81, 146.83, 130.81];
+      bass.forEach((f, i) => this.playTone(f, 0.22, "sawtooth", 0.09, i * 0.24));
+    }
+  },
+  startAmbient(style) {
+    if (this.musicTimer) clearInterval(this.musicTimer);
+    this.currentTrack = style;
+    const scales = {
+      lost_woods: [220, 261.63, 293.66, 329.63, 392.0, 440.0],
+      vorn_road: [261.63, 329.63, 392.0, 493.88, 523.25, 659.25],
+      savanna: [293.66, 329.63, 392.0, 440.0, 493.88, 587.33],
+      cavern: [196.0, 233.08, 261.63, 293.66, 349.23],
+      office: [261.63, 293.66, 349.23, 392.0]
+    };
+    const notes = scales[style] || scales.savanna;
+    let step = 0;
+    this.musicTimer = setInterval(() => {
+      if (this.muted || !this.ctx || this.ctx.state !== "running") return;
+      const freq = notes[step % notes.length];
+      this.playTone(freq, 0.65, "sine", 0.035, 0);
+      step = (step + 1 + Math.floor(seededRandom() * 2)) % notes.length;
+    }, 950);
+  }
+};
+
+// --- Street Definitions (All 5 Streets from Footage) ---
+const STREETS = {
+  beau_home: {
+    id: "beau_home",
+    name: "Beau's Home Street",
+    region: "Home Streets",
+    style: "lost_woods",
+    width: 2400,
+    groundY: 460,
+    homeTo: ["Magic Rock & Butler Roy", "Fruit Tree, Gas Plant & Beryl Rock", "3 Wood Trees & Tower Construction Project"],
+    exits: [
+      { x: 115, y: 460, label: "Chego Chase / Paluol Peak", target: "chego_chase", spawnX: 2020 },
+      { x: 2285, y: 460, label: "Goli Grabs / Bongul Beat", target: "goli_grabs", spawnX: 200 }
+    ],
+    doors: [
+      { x: 470, y: 460, w: 55, h: 75, label: "Beau's House (Andra Hall Link)", target: "andra_hall", spawnX: 160 }
+    ],
+    platforms: [
+      // House roof ledges (Video A 08:03, 09:18)
+      { x: 380, y: 370, w: 190, label: "Porch Roof" },
+      { x: 400, y: 285, w: 160, label: "Second Story Ledge" },
+      { x: 420, y: 205, w: 130, label: "Top House Roof" }
+    ],
+    ladders: [],
+    resources: [
+      { id: "fruit_1", type: "fruit_tree", name: "Fruit Tree", x: 180, y: 460 },
+      { id: "beryl_1", type: "beryl_rock", name: "Beryl Rock", x: 275, y: 460 },
+      { id: "gas_1", type: "gas_plant", name: "Gas Plant", x: 355, y: 460 },
+      { id: "wood_1", type: "wood_tree", name: "Wood Tree", x: 890, y: 460 },
+      { id: "wood_2", type: "wood_tree", name: "Wood Tree", x: 1120, y: 460 },
+      { id: "wood_3", type: "wood_tree", name: "Wood Tree", x: 1310, y: 460 },
+      { id: "tower_1", type: "tower_project", name: "Tower Project", x: 1520, y: 460, progress: 11.4 }
+    ],
+    npcs: [
+      { id: "magic_rock_home", type: "magic_rock", name: "Magic Rock", x: 418, y: 460 },
+      { id: "butler_roy", type: "butler", name: "Roy (Beau)", x: 560, y: 460 }
+    ],
+    quoins: [
+      { id: "q_bh_1", x: 480, y: 155, kind: "img", amount: 5 },
+      { id: "q_bh_2", x: 1000, y: 370, kind: "mood", amount: 5 }
+    ]
+  },
+
+  goli_grabs: {
+    id: "goli_grabs",
+    name: "Goli Grabs in Kalavana",
+    region: "Kalavana",
+    style: "cavern",
+    width: 2200,
+    groundY: 470,
+    qurazy: true,
+    homeTo: ["Shrine to Lem", "Street Spirit (Kitchen Tools Vendor)", "Beryl Rock, Dirt Pile, Piggy & Butterfly"],
+    exits: [
+      { x: 110, y: 470, label: "Beau's Home Street / Laru Lane", target: "beau_home", spawnX: 2120 },
+      { x: 2090, y: 470, label: "Vaila Vincta / Chego Chase", target: "chego_chase", spawnX: 200 }
+    ],
+    doors: [],
+    platforms: [
+      { x: 220, y: 365, w: 340 },
+      { x: 620, y: 290, w: 420 },
+      { x: 1140, y: 350, w: 380 }
+    ],
+    ladders: [
+      { x: 520, y1: 365, y2: 470 },
+      { x: 980, y1: 290, y2: 470 }
+    ],
+    resources: [
+      { id: "beryl_gg_1", type: "beryl_rock", name: "Beryl Rock", x: 760, y: 290 },
+      { id: "dirt_gg_1", type: "dirt_pile", name: "Dirt Pile", x: 1290, y: 470 },
+      { id: "green_bag_ground", type: "ground_bag", name: "Generic Green Bag", x: 410, y: 470 }
+    ],
+    npcs: [
+      { id: "shrine_lem", type: "shrine", giant: "Lem", name: "Shrine to Lem", x: 640, y: 470 },
+      { id: "vendor_kitchen", type: "vendor", shop: "kitchen", name: "Street Spirit (Kitchen Tools Vendor)", x: 1560, y: 470 },
+      { id: "butterfly_gg_1", type: "butterfly", name: "Butterfly", x: 880, y: 230 },
+      { id: "piggy_gg_1", type: "piggy", name: "Piggy", x: 1420, y: 470 }
+    ],
+    quoins: [
+      { id: "q_gg_qurazy", x: 820, y: 210, kind: "qurazy", amount: 25 },
+      { id: "q_gg_2", x: 1280, y: 280, kind: "currants", amount: 4 }
+    ]
+  },
+
+  chego_chase: {
+    id: "chego_chase",
+    name: "Chego Chase in Andra",
+    region: "Andra",
+    style: "savanna",
+    width: 2300,
+    groundY: 465,
+    homeTo: ["Shrine to Grendaline", "Ministry of Departments (Bureaucratic Hall)", "Savanna Wood Tree, Dirt Pile, Chicken & Butterfly"],
+    exits: [
+      { x: 110, y: 465, label: "Bongul Beat / Paluol Peak", target: "bongul_beat", spawnX: 2040 },
+      { x: 2180, y: 465, label: "Laru Lane / Beau's Home", target: "beau_home", spawnX: 210 }
+    ],
+    doors: [
+      { x: 420, y: 465, w: 80, h: 95, label: "Ministry of Departments", target: "andra_hall", spawnX: 150 }
+    ],
+    platforms: [
+      { x: 1320, y: 375, w: 540 }
+    ],
+    ladders: [],
+    resources: [
+      { id: "wood_cc_1", type: "wood_tree", name: "Savanna Tree", x: 760, y: 465 },
+      { id: "dirt_cc_1", type: "dirt_pile", name: "Dirt Pile", x: 1620, y: 375 }
+    ],
+    npcs: [
+      { id: "shrine_grendaline", type: "shrine", giant: "Grendaline", name: "Shrine to Grendaline", x: 890, y: 465 },
+      { id: "butterfly_cc_1", type: "butterfly", name: "Butterfly", x: 1120, y: 350 },
+      { id: "chicken_cc_1", type: "chicken", name: "Chicken", x: 1450, y: 465 }
+    ],
+    quoins: [
+      { id: "q_cc_1", x: 1500, y: 305, kind: "xp", amount: 2 },
+      { id: "q_cc_2", x: 1680, y: 305, kind: "energy", amount: 3 }
+    ]
+  },
+
+  andra_hall: {
+    id: "andra_hall",
+    name: "Andra Bureaucratic Hall",
+    region: "Andra",
+    style: "office",
+    width: 1500,
+    groundY: 465,
+    exits: [],
+    doors: [
+      { x: 110, y: 465, w: 75, h: 105, label: "Chego Chase", target: "chego_chase", spawnX: 450 }
+    ],
+    platforms: [],
+    ladders: [],
+    resources: [
+      { id: "water_cooler_1", type: "water_cooler", name: "Water Cooler", x: 520, y: 465 }
+    ],
+    npcs: [
+      { id: "dir_wiggles", type: "bureaucrat", role: "director", name: "Director Wigglesbottom", x: 980, y: 465 },
+      { id: "sec_wiggles", type: "bureaucrat", role: "secretary", name: "Secretary Wigglesbottom", x: 1120, y: 465 },
+      { id: "mag_piks", type: "bureaucrat", role: "magister", name: "Magister Piksnikson", x: 850, y: 465 }
+    ],
+    quoins: []
+  },
+
+  bongul_beat: {
+    id: "bongul_beat",
+    name: "Bongul Beat in Andra",
+    region: "Andra",
+    style: "savanna",
+    width: 2300,
+    groundY: 465,
+    exits: [
+      { x: 90, y: 465, label: "Haaga Road / Iennern Draught", target: "goli_grabs", spawnX: 160 },
+      { x: 2200, y: 465, label: "Chego Chase / Paluol Peak", target: "chego_chase", spawnX: 160 }
+    ],
+    doors: [],
+    platforms: [
+      { x: 750, y: 375, w: 560 }
+    ],
+    ladders: [],
+    resources: [
+      { id: "fruit_bb_1", type: "fruit_tree", name: "Fruit Tree", x: 640, y: 465 },
+      { id: "dirt_bb_1", type: "dirt_pile", name: "Dirt Pile", x: 880, y: 375 },
+      { id: "spice_bb_1", type: "gas_plant", name: "Spice Plant", x: 1820, y: 465 }
+    ],
+    npcs: [
+      { id: "vendor_animal", type: "vendor", shop: "animal", name: "Street Spirit (Animal Goods Vendor)", x: 1480, y: 465 },
+      { id: "shrine_humbaba", type: "shrine", giant: "Humbaba", name: "Shrine to Humbaba", x: 1180, y: 465 },
+      { id: "chicken_bb_1", type: "chicken", name: "Chicken", x: 1320, y: 465 },
+      { id: "piggy_bb_1", type: "piggy", name: "Piggy", x: 1660, y: 465 },
+      { id: "butterfly_bb_1", type: "butterfly", name: "Butterfly", x: 980, y: 295 }
+    ],
+    quoins: [
+      { id: "q_bb_1", x: 520, y: 390, kind: "mood", amount: 1 },
+      { id: "q_bb_2", x: 590, y: 350, kind: "xp", amount: 1 },
+      { id: "q_bb_3", x: 660, y: 390, kind: "currants", amount: 1 },
+      { id: "q_bb_4", x: 1050, y: 300, kind: "energy", amount: 1 }
+    ]
+  }
+};
+
+// --- Item Definitions (All Items Seen in Footage) ---
+const ITEM_DEFS = {
+  watering_can: { name: "Watering Can", color: "#5bc0de", icon: "🚿", stack: 1, verbs: ["Use", "Inspect"] },
+  pickaxe: { name: "Pickaxe", color: "#8c9ba5", icon: "⛏️", stack: 1, verbs: ["Mine", "Inspect"] },
+  shovel: { name: "Shovel", color: "#b08d57", icon: " лопата", iconText: "🥄", stack: 1, verbs: ["Dig", "Inspect"] },
+  random_kindness: { name: "Random Kindness", color: "#ff7eb9", icon: "🌈", stack: 10, verbs: ["Bestow", "Inspect"] },
+  sparkle_powder: { name: "Sparkle Powder", color: "#ffd966", icon: "✨", stack: 10, verbs: ["Sprinkle", "Inspect"] },
+  pumpkin_ale: { name: "Pumpkin Ale", color: "#e67e22", icon: "🍺", stack: 16, verbs: ["Drink", "Give", "Inspect"] },
+  essence_purple: { name: "Essence of Purple", color: "#9b59b6", icon: "🧪", stack: 10, verbs: ["Drink (Embiggen)", "Sip (Shrink)", "Inspect"] },
+  musicblock_gng: { name: "Musicblock GNG", color: "#d4a359", icon: "📻", stack: 5, verbs: ["Play", "Play for", "Inspect"] },
+  musicblock_dg2: { name: "Musicblock DG-2", color: "#c27ba0", icon: "🎵", stack: 5, verbs: ["Play", "Inspect"] },
+  die_12: { name: "12-sided Die", color: "#3498db", icon: "🎲", stack: 1, verbs: ["Roll", "Inspect"] },
+  chick_cubimal: { name: "Chick Cubimal Lv1.1", color: "#f1c40f", icon: "🐤", stack: 5, verbs: ["Set out", "Inspect"] },
+  phantom_cubimal: { name: "Phantom Cubimal Lv1.1", color: "#95a5a6", icon: "👻", stack: 5, verbs: ["Set out", "Inspect"] },
+  emblem_friendly: { name: "Emblem of Friendly", color: "#2ecc71", icon: "🛡️", stack: 5, verbs: ["Spend", "Consider", "Contemplate", "Inspect"] },
+  butterfly_lotion: { name: "Butterfly Lotion", color: "#f78fb3", icon: "🧴", stack: 10, verbs: ["Taste", "Use on Butterfly", "Inspect"] },
+  butterfly_milker: { name: "Butterfly Milker", color: "#78e08f", icon: "🍼", stack: 1, verbs: ["Milk Butterfly", "Inspect"] },
+  cup_of_water: { name: "Cup of Water", color: "#dff9fb", icon: "🥛", stack: 1, verbs: ["Drink", "Drop", "Inspect"] },
+  beryl_chunk: { name: "Chunk of Beryl", color: "#1abc9c", icon: "💎", stack: 50, verbs: ["Donate to Shrine", "Inspect"] },
+  wood_plank: { name: "Plank", color: "#d38b4c", icon: "🪵", stack: 50, verbs: ["Contribute to Tower", "Inspect"] },
+  cherry: { name: "Cherries", color: "#e74c3c", icon: "🍒", stack: 50, verbs: ["Eat", "Feed Piggy", "Inspect"] },
+  earth_lump: { name: "Lump of Earth", color: "#7f5539", icon: "🪨", stack: 50, verbs: ["Donate to Shrine", "Inspect"] },
+  metal_rod: { name: "Metal Rod", color: "#7f8c8d", icon: "🦯", stack: 50, verbs: ["Inspect"] },
+  green_bag: { name: "Generic Green Bag", color: "#27ae60", icon: "👜", stack: 1, verbs: ["Open/Close Bag", "Inspect"] }
+};
+
+// --- Skills Data (From Video A 07:01, 14:13 & Video B 02:46) ---
+const SKILLS_LIST = [
+  { id: "potionmaking_3", name: "Potionmaking III", cat: "Alchemy", durationSec: 4605435, learned: false, learning: true, desc: "Brew potent potions of shrinking, embiggening, and garden mastery." },
+  { id: "master_gardener", name: "Master Gardener", cat: "Growing", durationSec: 356772, learned: false, learning: false, desc: "Water, plant, fertilize, and harvest an entire garden at once." },
+  { id: "animal_kinship_3", name: "Animal Kinship III", cat: "Animals", durationSec: 8640, learned: true, learning: false, desc: "Advanced rapport with Piggies, Chickens, and Butterflies." },
+  { id: "mining_4", name: "Mining IV", cat: "Industrial", durationSec: 17280, learned: true, learning: false, desc: "Extract additional chunks of Beryl and rare ores with less energy." },
+  { id: "saucery_1", name: "Saucery I", cat: "Cooking", durationSec: 3600, learned: false, learning: false, desc: "Prepare savory rubs, spice mixes, and condiments." },
+  { id: "cocktail_crafting_1", name: "Cocktail Crafting I", cat: "Cooking", durationSec: 5400, learned: false, learning: false, desc: "Mix refreshing beverages in a blender to restore mood." },
+  { id: "soil_appreciation_3", name: "Soil Appreciation III", cat: "Growing", durationSec: 7200, learned: true, learning: false, desc: "Dig richer Lumps of Earth from dirt piles." },
+  { id: "jellacae_hands_1", name: "Jellacae Hands I", cat: "Gathering", durationSec: 4200, learned: false, learning: false, desc: "Handle delicate resources and gas plants with care." }
+];
+
+// --- Quests Data (From Video B 02:53 - 03:19) ---
+const QUESTS_LIST = [
+  { id: "give_h2o", title: "Give some H2O love", desc: "Trees like water. Grab a Watering Can and water 5 Trees.", progress: 4, goal: 5, reward: "100 currants, 150 iMG, 25 energy, 10 favor with Grendaline" },
+  { id: "can_you_dig_it", title: "Can You Dig It?", desc: "Use your steadfast Shovel to dig 7 Lumps of Earth from Patches or Dirt Piles.", progress: 2, goal: 7, reward: "150 currants, 150 iMG, 25 energy, 15 favor with Spriggan" },
+  { id: "happy_endings", title: "Happy Endings for All!", desc: "Catch yourself 7 Butterflies and ease their tired little wings with a bit of healthful massage using Butterfly Lotion.", progress: 5, goal: 7, reward: "100 currants, 150 iMG, 50 energy, 15 favor with Cosma" },
+  { id: "porcine_pleaser", title: "Porcine Pleaser", desc: "Give 6 Piggies the pleasuring of a lifetime. By petting them, of course.", progress: 2, goal: 6, reward: "50 currants, 100 iMG, 30 energy, 10 favor with Humbaba" },
+  { id: "legalize_it", title: "Legalize It!", desc: "Obtain and activate the Card-Carrying Qualification from a Bureaucrat in Andra Bureaucratic Hall.", progress: 0, goal: 1, reward: "20 favor with Ti, 100 iMG" }
+];
+
+// --- Giants Data (From Video A 03:53, 44:31, 48:02, 54:57) ---
+const GIANTS_DATA = [
+  {
+    name: "Cosma",
+    color: "#f2d16b",
+    accent: "#c94a38",
+    speech: "The sky, the sky, higher and higher it calls to me and lifts me up. This meditation comes to end ... yet I do not fear the quack. Do not fear the quack, dear Glitchen."
+  },
+  {
+    name: "Zille",
+    color: "#8c7355",
+    accent: "#6db33f",
+    speech: "Zillots and other Glitchen! The hour approaches! I have felt a great disturbance in Ur, as if millions of voices suddenly cried out in terror and were suddenly silenced. Wait... hmmm. No, more like GIANT PARTY AMIRITE!"
+  },
+  {
+    name: "Humbaba",
+    color: "#3898b8",
+    accent: "#f39c12",
+    speech: "Oh how you've treated my creatures with such grace and comfort. Alas, they are ready to move on. To proceed to a place where the meadows of grain are plentiful, and the rivers of butterfly milk are vast. PROCEED! Find your milk river! And drink from its glory and wonder..."
+  },
+  {
+    name: "Alph",
+    color: "#e67e22",
+    accent: "#ecf0f1",
+    speech: "My name is Alph, King of Kings, Giant of Creation: Look on my works, ye mighty, and despair!"
+  }
+];
+
+// --- Player & World State ---
+const State = {
+  // Unique per client; never from the seeded RNG, or two players sharing a seed get the same id.
+  playerId: "p_" + (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)),
+  streetId: "beau_home",
+  player: {
+    name: urlParams.get("name") || "Beau",
+    x: 620,
+    y: 460,
+    vx: 0,
+    vy: 0,
+    dir: 1,
+    onGround: true,
+    climbing: false,
+    anim: "idle",
+    animTimer: 0,
+    scale: 1.0,
+    scaleTimer: 0,
+    thrillerTimer: 0,
+    musicIconTimer: 0,
+    hiSign: "bye", // Daily sign shown in Video A 19:37
+    level: 19,
+    img: 25990,
+    currants: 1441,
+    credits: 2748,
+    energy: 435,
+    maxEnergy: 495,
+    mood: 440,
+    maxMood: 500,
+    appearance: {
+      skinColor: "#fce2c4",
+      hairColor: "#f5e06b",
+      hairStyle: "long_blonde",
+      eyes: "bright",
+      nose: "button",
+      mouth: "smile",
+      ears: "round",
+      coat: "none",
+      shirt: "tunic",
+      pants: "jeans",
+      skirt: "none",
+      dress: "none",
+      shoes: "sneakers",
+      shirtColor: "#1f2428",
+      coatColor: "#7d3c98",
+      pantsColor: "#2c3e50",
+      skirtColor: "#c0392b",
+      shoeColor: "#e74c3c",
+      hat: "none", // none, top_hat, caterpillar_mask, censor_bar, dino_ride, piggy_ride
+      eyeScale: 1.0,
+      heightScale: 1.0
+    },
+    followingId: null,
+    followers: [],
+    visitors: ["DeadSparrow", "stormoffara", "Artichoke", "Kipple", "Draron", "Clark Griswold", "Pattonage", "Scyne", "stargrace"]
+  },
+  inventory: [
+    { id: "watering_can", count: 1 },
+    { id: "pickaxe", count: 1 },
+    { id: "shovel", count: 1 },
+    { id: "random_kindness", count: 8 },
+    { id: "sparkle_powder", count: 6 },
+    { id: "pumpkin_ale", count: 5 },
+    { id: "essence_purple", count: 4 },
+    { id: "musicblock_gng", count: 2 },
+    { id: "musicblock_dg2", count: 2 },
+    { id: "die_12", count: 1 },
+    { id: "chick_cubimal", count: 2 },
+    { id: "emblem_friendly", count: 3 },
+    { id: "butterfly_lotion", count: 4 },
+    { id: "beryl_chunk", count: 16 },
+    { id: "wood_plank", count: 16 },
+    { id: "green_bag", count: 1 }
+  ],
+  bagInventory: [
+    { id: "cherry", count: 15 },
+    { id: "earth_lump", count: 12 },
+    { id: "metal_rod", count: 10 },
+    { id: "butterfly_milker", count: 1 },
+    { id: "phantom_cubimal", count: 1 }
+  ],
+  bagOpen: false,
+  invMode: "items",
+  invFilter: "",
+  otherPlayers: {},
+  cubimals: [],
+  particles: [],
+  floatingTexts: [],
+  chatBubbles: {},
+  waitingRoom: {
+    active: false,
+    timer: 0,
+    qualified: false
+  },
+  keys: { left: false, right: false, up: false, down: false, jump: false },
+  camera: { x: 0, y: 0 },
+  ws: null,
+  connected: false
+};
+
+// Simulated friendly Glitchen when playing solo or alongside multiplayer
+const BOT_PROFILES = [ // hand fix: Argon output had "constBOT_PROFILES"
+  { id: "bot_deadsparrow", name: "DeadSparrow", street: "beau_home", x: 310, y: 460, dir: 1, skinColor: "#f3d1b8", hairColor: "#7f462c", shirtColor: "#9c3b2e", pantsColor: "#3b4c5e", hat: "none", hiSign: "bye" },
+  { id: "bot_stormoffara", name: "stormoffara", street: "beau_home", x: 750, y: 460, dir: -1, skinColor: "#b8e6d4", hairColor: "#f598b6", shirtColor: "#6c4f8c", pantsColor: "#2c3e50", hat: "ears", hiSign: "o/" },
+  { id: "bot_artichoke", name: "Artichoke", street: "beau_home", x: 950, y: 460, dir: -1, skinColor: "#c8b575", hairColor: "#ffffff", shirtColor: "#5b7035", pantsColor: "#3e4a24", hat: "spiky", hiSign: "bye" },
+  { id: "bot_draron", name: "Draron", street: "beau_home", x: 1060, y: 460, dir: -1, skinColor: "#78ab46", hairColor: "#3b2314", shirtColor: "#111111", pantsColor: "#111111", hat: "censor_bar", hiSign: "bye" },
+  { id: "bot_aris", name: "Aris", street: "chego_chase", x: 840, y: 465, dir: -1, skinColor: "#d9e05b", hairColor: "#e6b822", shirtColor: "#9dc43b", pantsColor: "#759c24", hat: "none", hiSign: "hi" }
+];
+
+// A simulated player gives way to any real player using the same name.
+function dropBotsNamed(names) {
+  const taken = new Set(names.map(n => String(n).toLowerCase()));
+  Object.keys(State.otherPlayers).forEach(k => {
+    const o = State.otherPlayers[k];
+    if (o.isBot && taken.has(o.name.toLowerCase())) delete State.otherPlayers[k];
+  });
+}
+
+function initBots() {
+  BOT_PROFILES.forEach(b => {
+    State.otherPlayers[b.id] = {
+      ...b,
+      isBot: true,
+      vx: 0,
+      vy: 0,
+      scale: 1.0,
+      thrillerTimer: 0,
+      actionCooldown: 120 + Math.floor(seededRandom() * 180)
+    };
+  });
+}
+initBots();
+dropBotsNamed([State.player.name]);
+
+// --- WebSocket Multiplayer Connection ---
+function connectWebSocket() {
+  try {
+    const proto = location.protocol === "https:" ? "wss:" : "ws:";
+    const ws = new WebSocket(`${proto}//${location.host}`);
+    State.ws = ws;
+    ws.onopen = () => {
+      State.connected = true;
+      ws.send(JSON.stringify({
+        type: "join",
+        id: State.playerId,
+        name: State.player.name,
+        street: State.streetId,
+        x: State.player.x,
+        y: State.player.y,
+        dir: State.player.dir,
+        scale: State.player.scale,
+        appearance: State.player.appearance
+      }));
+      logTelemetry("player_join", { id: State.playerId, street: State.streetId, online: true });
+    };
+    ws.onmessage = (ev) => {
+      try {
+        const msg = JSON.parse(ev.data);
+        handleServerMessage(msg);
+      } catch (e) {}
+    };
+    ws.onclose = () => {
+      State.connected = false;
+    };
+  } catch (e) {
+    State.connected = false;
+  }
+}
+
+function sendNet(payload) {
+  if (State.connected && State.ws && State.ws.readyState === WebSocket.OPEN) {
+    State.ws.send(JSON.stringify(payload));
+  }
+}
+
+function handleServerMessage(msg) {
+  if (msg.type === "street_players") {
+    // Keep bots if no remote players, plus sync real remote players
+    Object.keys(State.otherPlayers).forEach(k => {
+      if (!State.otherPlayers[k].isBot) delete State.otherPlayers[k];
+    });
+    (msg.players || []).forEach(p => {
+      if (p.id !== State.playerId) {
+        State.otherPlayers[p.id] = p;
+      }
+    });
+    dropBotsNamed((msg.players || []).map(p => p.name));
+    updateOnlineListUI();
+  } else if (msg.type === "player_moved") {
+    if (msg.id !== State.playerId && msg.street === State.streetId) {
+      State.otherPlayers[msg.id] = { ...(State.otherPlayers[msg.id] || {}), ...msg };
+    }
+  } else if (msg.type === "player_left") {
+    delete State.otherPlayers[msg.id];
+    updateOnlineListUI();
+  } else if (msg.type === "chat") {
+    addChatMessage(msg.sender, msg.text, msg.kind || "normal");
+    if (msg.senderId) {
+      State.chatBubbles[msg.senderId] = { text: msg.text, timer: 260 };
+    }
+  } else if (msg.type === "emote") {
+    handleRemoteEmote(msg);
+  } else if (msg.type === "street_style") {
+    if (STREETS[msg.street]) {
+      STREETS[msg.street].style = msg.style;
+      if (State.streetId === msg.street) {
+        AudioEngine.startAmbient(msg.style);
+      }
+    }
+  } else if (msg.type === "tower_progress") {
+    const res = STREETS.beau_home.resources.find(r => r.id === "tower_1");
+    if (res) res.progress = msg.progress;
+  } else if (msg.type === "co_mine_bonus") {
+    addFloatingText(State.player.x, State.player.y - 65, "+1 Bonus Beryl (Co-op Mine!)", "#2ecc71");
+    giveItem("beryl_chunk", 1);
+  } else if (msg.type === "giant_visage") {
+    const g = GIANTS_DATA.find(x => x.name === msg.giant) || GIANTS_DATA[0];
+    showGiantOverlay(g);
+  }
+}
+
+// --- Chat & Floating Feedback Helpers ---
+function addChatMessage(sender, text, kind = "normal") {
+  const box = document.getElementById("chat-messages");
+  const div = document.createElement("div");
+  div.className = "chat-msg " + kind;
+  if (sender) {
+    div.innerHTML = `<strong>${escapeHtml(sender)}:</strong> ${escapeHtml(text)}`;
+  } else {
+    div.textContent = text;
+  }
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function addFloatingText(x, y, text, color = "#ffffff") {
+  State.floatingTexts.push({ x, y, text, color, life: 85, maxLife: 85 });
+}
+
+function spawnParticles(x, y, count = 20, kind = "sparkle") {
+  for (let i = 0; i < count; i++) {
+    const ang = seededRandom() * Math.PI * 2;
+    const spd = 1 + seededRandom() * 4;
+    State.particles.push({
+      x, y,
+      vx: Math.cos(ang) * spd,
+      vy: Math.sin(ang) * spd - 1.5,
+      kind,
+      life: 55 + Math.floor(seededRandom() * 35),
+      color: kind === "rainbow"
+        ? ["#ff4b4b", "#ffa64b", "#ffe84b", "#59d959", "#4bb5ff", "#a66bff"][i % 6]
+        : "#ffffff"
+    });
+  }
+}
+
+// --- Inventory & Stat Helpers ---
+function changeMeters({ energy = 0, mood = 0, img = 0, currants = 0 }) {
+  const p = State.player;
+  if (energy !== 0) p.energy = Math.max(0, Math.min(p.maxEnergy, p.energy + energy));
+  if (mood !== 0) p.mood = Math.max(0, Math.min(p.maxMood, p.mood + mood));
+  if (img !== 0) {
+    // High mood (>80%) grants a 1.2x iMG bonus only on positive iMG gains, not purchases
+    const mult = (img > 0 && (p.mood / p.maxMood) >= 0.8) ? 1.2 : 1.0;
+    p.img += Math.round(img * mult);
+  }
+  if (currants !== 0) p.currants = Math.max(0, p.currants + currants);
+  updateHUD();
+  logTelemetry("meter_change", { energy: p.energy, mood: p.mood, img: p.img, currants: p.currants });
+}
+
+function countTotalSlotsUsed() {
+  return State.inventory.filter(Boolean).length;
+}
+
+function giveItem(itemId, amount = 1) {
+  const def = ITEM_DEFS[itemId];
+  if (!def) return false;
+  // Try stacking first
+  if (def.stack > 1) {
+    const existing = State.inventory.find(s => s && s.id === itemId && s.count < def.stack);
+    if (existing) {
+      existing.count = Math.min(def.stack, existing.count + amount);
+      renderInventory();
+      return true;
+    }
+  }
+  // Check if bag is full (16 slots max in main bar, Video B 03:51)
+  if (State.inventory.length >= 16) {
+    addFloatingText(State.player.x, State.player.y - 60, "Your bag is full!", "#e74c3c");
+    addChatMessage(null, "Your bag is full! Drop or consume an item first.", "sys");
+    return false;
+  }
+  State.inventory.push({ id: itemId, count: amount });
+  renderInventory();
+  return true;
+}
+
+function removeItem(itemId, amount = 1, fromBag = false) {
+  const list = fromBag ? State.bagInventory : State.inventory;
+  const idx = list.findIndex(s => s && s.id === itemId);
+  if (idx === -1) return false;
+  list[idx].count -= amount;
+  if (list[idx].count <= 0) list.splice(idx, 1);
+  renderInventory();
+  return true;
+}
+
+function updateHUD() {
+  const p = State.player;
+  const moodPct = Math.round((p.mood / p.maxMood) * 100);
+  document.getElementById("mood-pct").textContent = moodPct + "%";
+  document.getElementById("mood-num").textContent = `${p.mood}/${p.maxMood}`;
+  const ePct = Math.round((p.energy / p.maxEnergy) * 100);
+  document.getElementById("energy-bar-fill").style.width = ePct + "%";
+  document.getElementById("energy-text").textContent = `${p.energy} / ${p.maxEnergy} Energy`;
+  document.getElementById("level-val").textContent = p.level;
+  document.getElementById("img-val").textContent = p.img.toLocaleString();
+  document.getElementById("currants-val").textContent = p.currants.toLocaleString();
+  document.getElementById("street-name-label").textContent = STREETS[State.streetId].name;
+  document.getElementById("qurazy-banner").style.display = STREETS[State.streetId].qurazy ? "block" : "none";
+}
+
+function updateOnlineListUI() {
+  const wrap = document.getElementById("online-list");
+  wrap.innerHTML = "";
+  const visible = Object.values(State.otherPlayers).filter(p => p.street === State.streetId);
+  document.getElementById("online-count").textContent = visible.length + 1;
+
+  const selfChip = document.createElement("span");
+  selfChip.className = "player-chip";
+  selfChip.textContent = State.player.name + " (You)";
+  wrap.appendChild(selfChip);
+
+  visible.forEach(p => {
+    const chip = document.createElement("span");
+    chip.className = "player-chip";
+    chip.textContent = p.name;
+    chip.onclick = (e) => openPlayerContextMenu(p, e.clientX, e.clientY);
+    wrap.appendChild(chip);
+  });
+}
+
+// --- Inventory Rendering & Item Actions ---
+function drawItemIconToCanvas(canvas, itemId) {
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const def = ITEM_DEFS[itemId];
+  if (!def) return;
+  ctx.fillStyle = def.color;
+  ctx.beginPath();
+  ctx.arc(16, 16, 13, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.font = "16px sans-serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(def.iconText || def.icon, 16, 17);
+}
+
+function renderInventory() {
+  const row = document.getElementById("inv-slots-row");
+  row.innerHTML = "";
+  const filter = State.invFilter.trim().toLowerCase();
+
+  for (let i = 0; i < 16; i++) {
+    const slotData = State.inventory[i];
+    const slotEl = document.createElement("div");
+    slotEl.className = "inv-slot";
+    if (slotData) {
+      const def = ITEM_DEFS[slotData.id];
+      if (filter && !def.name.toLowerCase().includes(filter)) {
+        slotEl.classList.add("filtered-out");
+      }
+      const c = document.createElement("canvas");
+      c.width = 32; c.height = 32;
+      drawItemIconToCanvas(c, slotData.id);
+      slotEl.appendChild(c);
+
+      if (slotData.count > 1) {
+        const cnt = document.createElement("span");
+        cnt.className = "slot-count";
+        cnt.textContent = slotData.count;
+        slotEl.appendChild(cnt);
+      }
+      const tip = document.createElement("div");
+      tip.className = "slot-name";
+      tip.textContent = def.name;
+      slotEl.appendChild(tip);
+
+      slotEl.onclick = (e) => {
+        e.stopPropagation();
+        openItemContextMenu(slotData, false, e.clientX, e.clientY - 120);
+      };
+    }
+    row.appendChild(slotEl);
+  }
+
+  // Bag sub-bar
+  const bagBar = document.getElementById("bag-sub-bar");
+  const bagRow = document.getElementById("bag-slots-row");
+  bagBar.classList.toggle("open", State.bagOpen);
+  bagRow.innerHTML = "";
+  if (State.bagOpen) {
+    for (let i = 0; i < 8; i++) {
+      const slotData = State.bagInventory[i];
+      const slotEl = document.createElement("div");
+      slotEl.className = "inv-slot";
+      slotEl.style.width = "46px";
+      slotEl.style.height = "44px";
+      if (slotData) {
+        const def = ITEM_DEFS[slotData.id];
+        const c = document.createElement("canvas");
+        c.width = 32; c.height = 32;
+        drawItemIconToCanvas(c, slotData.id);
+        slotEl.appendChild(c);
+        if (slotData.count > 1) {
+          const cnt = document.createElement("span");
+          cnt.className = "slot-count";
+          cnt.textContent = slotData.count;
+          slotEl.appendChild(cnt);
+        }
+        slotEl.onclick = (e) => {
+          e.stopPropagation();
+          openItemContextMenu(slotData, true, e.clientX, e.clientY - 110);
+        };
+      }
+      bagRow.appendChild(slotEl);
+    }
+  }
+}
+
+function openItemContextMenu(slotData, fromBag, x, y) {
+  const def = ITEM_DEFS[slotData.id];
+  if (!def) return;
+  const menu = document.getElementById("context-menu");
+  document.getElementById("ctx-title").textContent = `${def.name} (${slotData.count})`;
+  const verbsWrap = document.getElementById("ctx-verbs");
+  verbsWrap.innerHTML = "";
+  const allVerbs = [...def.verbs];
+  if (!allVerbs.includes("Drop")) allVerbs.push("Drop");
+
+  allVerbs.forEach(v => {
+    const row = document.createElement("div");
+    row.className = "ctx-verb";
+    row.textContent = v;
+    row.onclick = () => {
+      menu.style.display = "none";
+      executeItemVerb(slotData.id, v, fromBag);
+    };
+    verbsWrap.appendChild(row);
+  });
+
+  menu.style.left = Math.min(window.innerWidth - 180, Math.max(10, x)) + "px";
+  menu.style.top = Math.min(window.innerHeight - 200, Math.max(10, y)) + "px";
+  menu.style.display = "block";
+}
+
+function executeItemVerb(itemId, verb, fromBag) {
+  const p = State.player;
+  logTelemetry("item_use", { item: itemId, verb, street: State.streetId });
+
+  if (itemId === "green_bag" && verb === "Open/Close Bag") {
+    State.bagOpen = !State.bagOpen;
+    renderInventory();
+    return;
+  }
+  if (verb === "Inspect") {
+    const def = ITEM_DEFS[itemId];
+    openModal(def.name, `<p><strong>${def.name}</strong> — A genuine artifact of Ur. Stack limit: ${def.stack} per slot.</p>`);
+    return;
+  }
+  if (verb === "Drop") {
+    removeItem(itemId, 1, fromBag);
+    addChatMessage(null, `You dropped 1 ${ITEM_DEFS[itemId].name}.`, "sys");
+    return;
+  }
+
+  if (itemId === "random_kindness" && verb === "Bestow") {
+    removeItem(itemId, 1, fromBag);
+    spawnParticles(p.x, p.y - 50, 35, "rainbow");
+    AudioEngine.playChime("hi");
+    changeMeters({ mood: 18, img: 10 });
+    addFloatingText(p.x, p.y - 75, "random kindness! +18 mood", "#ff7eb9");
+    addChatMessage(null, "You bestowed Random Kindness! Everyone nearby gains +18 mood.", "reward");
+    sendNet({ type: "emote", kind: "random_kindness", sender: p.name, x: p.x, y: p.y });
+  } else if (itemId === "sparkle_powder" && verb === "Sprinkle") {
+    removeItem(itemId, 1, fromBag);
+    spawnParticles(p.x, p.y - 60, 50, "sparkle");
+    AudioEngine.playChime("hi");
+    changeMeters({ mood: 30, img: 8 });
+    addFloatingText(p.x, p.y - 70, "+30 Mood (Sparkle Powder!)", "#ffd966");
+    addChatMessage(null, `${p.name} sprinkled a Sparkle Powder. The air fills with energizing, moisturizing, revitalizing Sparkle Powder! +30 Mood`, "reward");
+    sendNet({ type: "emote", kind: "sparkle", sender: p.name, x: p.x, y: p.y });
+  } else if (itemId === "pumpkin_ale" && verb === "Drink") {
+    // Video A 29:43: +29 Mood, Thriller spell & dance!
+    removeItem(itemId, 1, fromBag);
+    p.thrillerTimer = 360;
+    Object.values(State.otherPlayers).forEach(op => {
+      if (op.street === State.streetId) op.thrillerTimer = 360;
+    });
+    AudioEngine.playChime("thriller");
+    changeMeters({ mood: 29 });
+    addFloatingText(p.x, p.y - 75, "+29 Mood (Thriller!)", "#e67e22");
+    addChatMessage(null, "You drank a Pumpkin Ale. +29 Mood. The full moon and pint of vegetable-ale casts a spell on you. My, what a thriller!", "reward");
+    sendNet({ type: "emote", kind: "thriller", sender: p.name });
+  } else if (itemId === "essence_purple") {
+    removeItem(itemId, 1, fromBag);
+    if (verb.includes("Embiggen")) {
+      p.scale = 1.65;
+      p.scaleTimer = 600;
+      addFloatingText(p.x, p.y - 80, "Embiggened!", "#9b59b6");
+    } else {
+      p.scale = 0.52;
+      p.scaleTimer = 600;
+      addFloatingText(p.x, p.y - 60, "Shrunk!", "#9b59b6");
+    }
+  } else if (itemId === "musicblock_gng" || itemId === "musicblock_dg2") {
+    // Video A 50:39: +10 iMG +2 Mood -2 Energy
+    p.musicIconTimer = 320;
+    AudioEngine.playChime(itemId === "musicblock_gng" ? "GNG" : "DG2");
+    changeMeters({ img: 10, mood: 2, energy: -2 });
+    addFloatingText(p.x, p.y - 75, "+10 iMG +2 Mood -2 Energy", "#f1c40f");
+    addChatMessage(null, `You played a ${ITEM_DEFS[itemId].name}. Ah, first dose of music for the day! +10 iMG +2 Mood -2 Energy`, "reward");
+  } else if (itemId === "die_12" && verb === "Roll") {
+    const roll = Math.floor(seededRandom() * 12) + 1;
+    const words = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve"];
+    addFloatingText(p.x, p.y - 70, `Rolled "${words[roll - 1]}"!`, "#3498db");
+    addChatMessage(null, `${p.name} rolled "${words[roll - 1]}" on a 12-sided Die.`, "sys");
+  } else if (itemId === "chick_cubimal" || itemId === "phantom_cubimal") {
+    const dist = (1.5 + seededRandom() * 3.8).toFixed(2);
+    State.cubimals.push({
+      name: ITEM_DEFS[itemId].name,
+      kind: itemId,
+      x: p.x,
+      y: p.y,
+      vx: p.dir * (2.2 + seededRandom() * 1.5),
+      timer: 150,
+      dist
+    });
+    addChatMessage(null, `${p.name}'s ${ITEM_DEFS[itemId].name} went ${dist} planks before stopping.`, "sys");
+  } else if (itemId === "emblem_friendly") {
+    removeItem(itemId, 1, fromBag);
+    changeMeters({ img: 34 });
+    const sk = SKILLS_LIST.find(s => s.learning);
+    if (sk) sk.durationSec = Math.max(0, sk.durationSec - 5000);
+    addFloatingText(p.x, p.y - 70, `You ${verb.toLowerCase()}ed an Emblem! +34 iMG`, "#2ecc71");
+    addChatMessage(null, `You ${verb.toLowerCase()}ed an Emblem of Friendly. +34 iMG & skill learning sped up!`, "reward");
+  } else if (itemId === "butterfly_lotion" && verb === "Taste") {
+    // Video B 04:08: taste lotion -> gone, +12 mood
+    removeItem(itemId, 1, fromBag);
+    changeMeters({ mood: 12 });
+    addFloatingText(p.x, p.y - 70, "+12 Mood (Tasted Lotion!)", "#f78fb3");
+    addChatMessage(null, "You tasted a Butterfly Lotion. You tried to taste a little, but you ended up tasting a lot, and now it's gone. Oddly mood-enhancing though. You gain 12 mood.", "reward");
+  } else if (itemId === "cup_of_water" && verb === "Drink") {
+    // Video B 04:24: drink Cup of Water -> lose 5 mood
+    removeItem(itemId, 1, fromBag);
+    changeMeters({ mood: -5 });
+    addFloatingText(p.x, p.y - 70, "-5 Mood (Bureaucratically Dry)", "#95a5a6");
+    addChatMessage(null, "You drank a Cup of Water. Ewww. That water tastes really ... bureaucratically. You lose 5 mood.", "sys");
+  } else if (itemId === "cherry" && verb === "Eat") {
+    removeItem(itemId, 1, fromBag);
+    changeMeters({ energy: 12, mood: 2 });
+    addFloatingText(p.x, p.y - 65, "+12 Energy +2 Mood", "#2ecc71");
+  } else {
+    addFloatingText(p.x, p.y - 65, `Used ${ITEM_DEFS[itemId].name}`, "#fff");
+  }
+}
+
+// --- World & NPC Interactions ---
+function openWorldObjectMenu(obj, screenX, screenY) {
+  const menu = document.getElementById("context-menu");
+  document.getElementById("ctx-title").textContent = obj.name;
+  const verbsWrap = document.getElementById("ctx-verbs");
+  verbsWrap.innerHTML = "";
+
+  let verbs = [];
+  if (obj.type === "wood_tree" || obj.type === "fruit_tree") {
+    verbs = ["Water (-2e)", "Pet (-1e)", "Harvest"];
+  } else if (obj.type === "gas_plant") {
+    verbs = ["Harvest Gas/Spice (-3e)", "Pet (-1e)"];
+  } else if (obj.type === "beryl_rock") {
+    verbs = ["Mine (-7e)", "Talk to"];
+  } else if (obj.type === "dirt_pile") {
+    verbs = ["Dig (-5e)"];
+  } else if (obj.type === "tower_project") {
+    verbs = ["Contribute Plank & Labor (-6e)", "Inspect Project"];
+  } else if (obj.type === "ground_bag") {
+    verbs = ["Open / Loot"];
+  } else if (obj.type === "water_cooler") {
+    verbs = ["Get water (-2e)"];
+  } else if (obj.type === "magic_rock") {
+    document.getElementById("ctx-title").innerHTML = `Magic Rock<br><small style="font-weight:normal;color:#6c7a73;">A rock for your yard</small>`;
+    verbs = ["House keys", "Customize", "Change style", "Expand", "Cultivate land"];
+  } else if (obj.type === "butler") {
+    verbs = [
+      "Muffle butterfly wisdom",
+      "Stop telling me things visitors say",
+      "Zip lip",
+      "Set pace",
+      "Yoo-hoo",
+      "Gipe",
+      "Leave info",
+      "Animations",
+      "Mailbox",
+      "Who visited?"
+    ];
+  } else if (obj.type === "vendor") {
+    verbs = ["Buy/sell"];
+  } else if (obj.type === "shrine") {
+    verbs = [`Donate to ${obj.giant} (+Favor)`, "Contemplate Shrine"];
+  } else if (obj.type === "chicken") {
+    verbs = ["Squeeze (+1 mood)"];
+  } else if (obj.type === "piggy") {
+    verbs = ["Pet (+Porcine Pleaser)", "Feed Cherries (Get Seed)"];
+  } else if (obj.type === "butterfly") {
+    verbs = ["Massage with Lotion", "Milk Butterfly"];
+  } else if (obj.type === "bureaucrat") {
+    if (obj.role === "director") verbs = ["Talk to Director"];
+    else if (obj.role === "magister") verbs = ["Card-Carrying Qualification (50c)"];
+    else verbs = ["Inquire about Appointment"];
+  }
+
+  verbs.forEach(v => {
+    const row = document.createElement("div");
+    row.className = "ctx-verb";
+    row.textContent = v;
+    row.onclick = () => {
+      menu.style.display = "none";
+      executeWorldVerb(obj, v);
+    };
+    verbsWrap.appendChild(row);
+  });
+
+  menu.style.left = Math.min(window.innerWidth - 190, Math.max(10, screenX)) + "px";
+  menu.style.top = Math.min(window.innerHeight - 200, Math.max(10, screenY)) + "px";
+  menu.style.display = "block";
+}
+
+function executeWorldVerb(obj, verb) {
+  const p = State.player;
+  // Walk close if needed
+  p.x = Math.max(80, Math.min(STREETS[State.streetId].width - 80, obj.x - 35));
+
+  if (verb.startsWith("Water")) {
+    p.anim = "water"; p.animTimer = 45;
+    AudioEngine.playChime("quoin");
+    changeMeters({ energy: -2, img: 6, mood: 2 });
+    advanceQuest("give_h2o", 1);
+    addFloatingText(obj.x, obj.y - 80, "Watered! +6 iMG", "#4da6ff");
+    logTelemetry("harvest", { target: obj.id, action: "water", street: State.streetId });
+  } else if (verb.startsWith("Pet") && obj.type !== "piggy") {
+    changeMeters({ energy: -1, img: 4, mood: 3 });
+    addFloatingText(obj.x, obj.y - 80, "Petted! +4 iMG +3 Mood", "#8de969");
+  } else if (verb === "Harvest" || verb.startsWith("Harvest")) {
+    changeMeters({ energy: -3, img: 8 });
+    const item = obj.type === "wood_tree" ? "wood_plank" : "cherry";
+    giveItem(item, 2);
+    addFloatingText(obj.x, obj.y - 80, `+2 ${ITEM_DEFS[item].name} +8 iMG`, "#f1c40f");
+    logTelemetry("harvest", { target: obj.id, item, street: State.streetId });
+  } else if (verb.startsWith("Mine")) {
+    // Video A 08:34: -7 Energy +10 iMG +8 Chunks of Beryl + co-op bonus!
+    p.anim = "mine"; p.animTimer = 60;
+    AudioEngine.playChime("mine");
+    changeMeters({ energy: -7, img: 10 });
+    giveItem("beryl_chunk", 8);
+    addFloatingText(obj.x, obj.y - 70, "-7 Energy +10 iMG +8 Chunks of Beryl", "#1abc9c");
+    addChatMessage(null, "You mined a Beryl Rock. -7 Energy +10 iMG +8 Chunks of Beryl", "reward");
+
+    // Check if another player/bot is nearby for co-op mining bonus (Video A 08:35)
+    const coMiner = Object.values(State.otherPlayers).find(op => op.street === State.streetId && Math.abs(op.x - obj.x) < 160);
+    if (coMiner) {
+      giveItem("beryl_chunk", 1);
+      addFloatingText(obj.x, obj.y - 95, `+1 Bonus Beryl with ${coMiner.name}!`, "#2ecc71");
+      addChatMessage(null, `You got 1 additional Chunk of Beryl with the help you received from ${coMiner.name}.`, "reward");
+    }
+    sendNet({ type: "mine", rockId: obj.id, street: State.streetId });
+    logTelemetry("harvest", { target: obj.id, action: "mine", coOp: !!coMiner, street: State.streetId });
+  } else if (verb.startsWith("Dig")) {
+    p.anim = "mine"; p.animTimer = 45;
+    AudioEngine.playChime("mine");
+    changeMeters({ energy: -5, img: 7 });
+    giveItem("earth_lump", 2);
+    advanceQuest("can_you_dig_it", 1);
+    addFloatingText(obj.x, obj.y - 60, "+2 Lumps of Earth +7 iMG", "#b08d57");
+    logTelemetry("harvest", { target: obj.id, action: "dig", street: State.streetId });
+  } else if (verb.startsWith("Contribute Plank")) {
+    if (!removeItem("wood_plank", 1)) {
+      addFloatingText(obj.x, obj.y - 70, "Need 1 Plank!", "#e74c3c");
+      return;
+    }
+    obj.progress = Math.min(100, +(obj.progress + 2.6).toFixed(1));
+    changeMeters({ energy: -6, img: 15, mood: 4 });
+    addFloatingText(obj.x, obj.y - 80, `Tower ${obj.progress}% (+15 iMG)`, "#f39c12");
+    sendNet({ type: "tower_progress", progress: obj.progress });
+  } else if (verb.startsWith("Get water")) {
+    // Video B 03:51 & 04:17
+    if (giveItem("cup_of_water", 1)) {
+      changeMeters({ energy: -2 });
+      openModal("You discover a useful new item!", `
+        <div style="display:flex; align-items:center; gap:18px;">
+          <div style="font-size:48px;">🥛</div>
+          <div>
+            <h3 style="margin:0 0 6px;">Cup of Water</h3>
+            <p style="margin:0 0 8px; color:#555;">This water is so plain, it has no Brownian motion. But flatly bureaucracy-flavored. Drink at own risk.</p>
+            <div><strong>● Worth about 1 currant</strong> &nbsp;|&nbsp; 🎒 Fits only one in a backpack slot</div>
+          </div>
+        </div>
+      `);
+    }
+  } else if (verb.startsWith("Change style") || verb === "Cultivate land") {
+    openStreetStyleModal();
+  } else if (verb === "Skills & Quests" || verb === "House keys" || verb === "Customize" || verb === "Expand") {
+    openSkillsAndQuestsModal();
+  } else if (verb === "Who visited?") {
+    // Video A 19:16: Speech bubble with 'Thanks!' button + dedicated 'Roy' IM tab
+    const sb = document.getElementById("butler-speech-box");
+    const sx = Math.max(20, Math.min(canvas.width - 260, obj.x - State.camera.x - 110));
+    const sy = Math.max(20, obj.y - State.camera.y - 135);
+    sb.style.left = sx + "px";
+    sb.style.top = sy + "px";
+    sb.style.display = "block";
+    document.getElementById("butler-thanks-btn").onclick = () => { sb.style.display = "none"; };
+
+    // Ensure dedicated 'Roy' IM tab exists and is active in right sidebar
+    const tabsWrap = document.getElementById("chat-tabs");
+    let royTab = tabsWrap.querySelector("[data-tab='roy_im']");
+    if (!royTab) {
+      royTab = document.createElement("div");
+      royTab.className = "chat-tab";
+      royTab.setAttribute("data-tab", "roy_im");
+      royTab.innerHTML = "💬 Roy";
+      tabsWrap.appendChild(royTab);
+    }
+    tabsWrap.querySelectorAll(".chat-tab").forEach(t => t.classList.remove("active"));
+    royTab.classList.add("active");
+    addChatMessage("Roy (Beau) [IM]", `Since you last checked in, the following people have visited your street: ${State.player.visitors.join(", ")}.`, "reward");
+  } else if (verb === "Buy/sell") {
+    openVendorModal(obj);
+  } else if (verb.startsWith("Donate to")) {
+    changeMeters({ img: 20, mood: 5 });
+    addFloatingText(obj.x, obj.y - 80, `+10 Favor with ${obj.giant}! +20 iMG`, "#ffd966");
+  } else if (verb.startsWith("Squeeze")) {
+    // Video B 05:56
+    changeMeters({ mood: 1, img: 2 });
+    addFloatingText(obj.x, obj.y - 50, "+1 mood", "#8de969");
+    AudioEngine.playChime("quoin");
+  } else if (verb.startsWith("Pet (+Porcine")) {
+    changeMeters({ mood: 4, img: 5 });
+    advanceQuest("porcine_pleaser", 1);
+    addFloatingText(obj.x, obj.y - 55, "Oink! +4 mood +5 iMG", "#ff9ff3");
+  } else if (verb.startsWith("Massage with Lotion")) {
+    changeMeters({ mood: 5, img: 8 });
+    advanceQuest("happy_endings", 1);
+    addFloatingText(obj.x, obj.y - 45, " butterfly massaged! +8 iMG", "#f78fb3");
+  } else if (verb.startsWith("Talk to Director")) {
+    // Video B 04:35: waiting room mechanic
+    addChatMessage("Director Wigglesbottom", `${p.name}! We will be with you as soon as possible. Now please go and wait. Please move into the waiting area to your left.`, "sys");
+    State.waitingRoom.active = true;
+    State.waitingRoom.timer = 15 * 60; // 15 seconds at 60Hz
+    p.x = 680; // move into waiting area chairs
+    document.getElementById("waiting-banner").style.display = "block";
+  } else if (verb.startsWith("Card-Carrying Qualification")) {
+    // Video B 05:18
+    if (p.currants < 50) {
+      addFloatingText(obj.x, obj.y - 60, "Need 50 currants!", "#e74c3c");
+      return;
+    }
+    changeMeters({ currants: -50, img: 100 });
+    advanceQuest("legalize_it", 1);
+    addFloatingText(obj.x, obj.y - 75, "Card-Carrying Qualification Acquired! +100 iMG", "#2ecc71");
+    addChatMessage("Magister Piksnikson", "Here is your official Card-Carrying Qualification (-50c). Welcome to bureaucracy!", "reward");
+  } else {
+    addFloatingText(obj.x, obj.y - 60, `${verb} complete!`, "#fff");
+  }
+}
+
+function advanceQuest(questId, delta = 1) {
+  const q = QUESTS_LIST.find(x => x.id === questId);
+  if (q && q.progress < q.goal) {
+    q.progress = Math.min(q.goal, q.progress + delta);
+    if (q.progress === q.goal) {
+      changeMeters({ currants: 100, img: 150, energy: 25, mood: 15 });
+      addChatMessage(null, `🎉 Quest Completed: "${q.title}"! Reward: ${q.reward}`, "reward");
+    }
+  }
+}
+
+// --- Social Interactions & Conga / Follow (Video A 19:37, 24:31, 26:15, 33:49) ---
+function openPlayerContextMenu(targetPlayer, screenX, screenY) {
+  const menu = document.getElementById("context-menu");
+  document.getElementById("ctx-title").textContent = targetPlayer.name;
+  const verbsWrap = document.getElementById("ctx-verbs");
+  verbsWrap.innerHTML = "";
+
+  const verbs = [
+    "Greeting Sign ('hi'/'bye')",
+    "High five (+30 Mood)",
+    "Hug (+3 Mood)",
+    "Follow (Conga Line)",
+    "Summon here",
+    "Give Pumpkin Ale",
+    "Open Profile Page"
+  ];
+
+  verbs.forEach(v => {
+    const row = document.createElement("div");
+    row.className = "ctx-verb";
+    row.textContent = v;
+    row.onclick = () => {
+      menu.style.display = "none";
+      executePlayerSocialVerb(targetPlayer, v);
+    };
+    verbsWrap.appendChild(row);
+  });
+
+  menu.style.left = Math.min(window.innerWidth - 190, Math.max(10, screenX)) + "px";
+  menu.style.top = Math.min(window.innerHeight - 220, Math.max(10, screenY)) + "px";
+  menu.style.display = "block";
+}
+
+function executePlayerSocialVerb(target, verb) {
+  const p = State.player;
+  logTelemetry("emote", { verb, target: target.name, street: State.streetId });
+
+  if (verb.startsWith("Greeting Sign")) {
+    // Video A 19:39: matching sign bonus "2x! +10 mood!"
+    AudioEngine.playChime("hi");
+    State.chatBubbles[State.playerId] = { text: p.hiSign, timer: 140 };
+    State.chatBubbles[target.id] = { text: target.hiSign || p.hiSign, timer: 140 };
+    changeMeters({ mood: 10 });
+    addFloatingText(p.x, p.y - 75, `2x! Neat, we match today! +10 mood!`, "#f1c40f");
+    addChatMessage(null, `You and ${target.name} have the same hi sign "${p.hiSign}": Bonus time! +10 mood!`, "reward");
+  } else if (verb.startsWith("High five")) {
+    AudioEngine.playChime("hi");
+    changeMeters({ mood: 30 });
+    addFloatingText(p.x, p.y - 75, `HIGH 5 with ${target.name}! +30 Mood`, "#ffd966");
+    addChatMessage(null, `${target.name} high-fived you! Mood +30`, "reward");
+  } else if (verb.startsWith("Hug")) {
+    changeMeters({ mood: 3 });
+    addFloatingText(p.x, p.y - 75, `🧸 HUG! <3 +3 Mood`, "#ff7eb9");
+    addChatMessage(null, `You hugged ${target.name}! Mood +3`, "reward");
+  } else if (verb.startsWith("Follow")) {
+    if (target.isBot) {
+      // Bot follows player in conga line (Video A 28:45)
+      if (!p.followers.includes(target.id)) p.followers.push(target.id);
+      addChatMessage(null, `${target.name} is now following you in a conga line!`, "reward");
+    } else {
+      State.player.followingId = target.id;
+      addChatMessage(null, `You are now following ${target.name}.`, "sys");
+    }
+  } else if (verb.startsWith("Give Pumpkin Ale")) {
+    addChatMessage(null, `You gave ${target.name} a Pumpkin Ale.`, "reward");
+    addFloatingText(target.x, target.y - 65, "Received Pumpkin Ale!", "#e67e22");
+  } else if (verb.startsWith("Open Profile")) {
+    openProfileModal(target);
+  }
+}
+
+function handleRemoteEmote(msg) {
+  if (msg.kind === "sparkle") {
+    spawnParticles(msg.x || State.player.x, (msg.y || State.player.y) - 50, 40, "sparkle");
+    changeMeters({ mood: 15 });
+  } else if (msg.kind === "random_kindness") {
+    spawnParticles(msg.x || State.player.x, (msg.y || State.player.y) - 50, 35, "rainbow");
+    changeMeters({ mood: 18 });
+  } else if (msg.kind === "thriller") {
+    State.player.thrillerTimer = 300;
+    AudioEngine.playChime("thriller");
+  }
+}
+
+// --- Modals Implementation ---
+function openModal(title, htmlContent) {
+  document.getElementById("modal-title").textContent = title;
+  document.getElementById("modal-body").innerHTML = htmlContent;
+  document.getElementById("modal-backdrop").classList.add("open");
+}
+
+function closeModal() {
+  document.getElementById("modal-backdrop").classList.remove("open");
+}
+
+document.getElementById("modal-close").onclick = closeModal;
+document.getElementById("modal-backdrop").onclick = (e) => {
+  if (e.target.id === "modal-backdrop") closeModal();
+};
+
+const STREET_STYLE_THEMES = [
+  { id: "lost_woods", name: "Forgotten Growth", desc: "Spooky silhouetted trees and melancholic twilight ambiance.", cost: 190, sky: "#2f3a37", ground: "#080b0a", accent: "#4e6b5c" },
+  { id: "vorn_road", name: "Vorn Road", desc: "Snowy pine trees, crisp winter sky, and upbeat festive rhythm.", cost: 190, sky: "#bfe3f2", ground: "#ffffff", accent: "#5f8c78" },
+  { id: "savanna", name: "Floral Tangles", desc: "Lush tangled blossoms, warm golden light, and gentle breeze.", cost: 190, sky: "#e9f5d8", ground: "#8c874c", accent: "#f7b2bd" },
+  { id: "savanna", name: "Andra Savanna", desc: "Golden grasslands, olive hills, and warm savanna horizon.", cost: 190, sky: "#eef5d8", ground: "#878f50", accent: "#c5d18c" },
+  { id: "cavern", name: "Kalavana Cavern", desc: "Deep subterranean grotto with glowing crystals and stone ledges.", cost: 190, sky: "#4d3e30", ground: "#3b2f24", accent: "#3bb29b" },
+  { id: "vorn_road", name: "Alpine Frost", desc: "Icy mountain peaks, frosted evergreens, and crystalline air.", cost: 190, sky: "#cfeaf7", ground: "#e8f6fc", accent: "#4a7c9b" }
+];
+
+function openStreetStyleModal() {
+  // Video A 31:54: Change your street style (6-thumbnail grid -> wide preview banner -> 190i confirmation)
+  let html = `
+    <p style="margin-top:0;">Choose a new visual &amp; musical theme for your Home Street (<strong>190 iMG</strong>):</p>
+    <div id="street-style-stage"></div>
+    <div class="grid-cards" style="grid-template-columns: repeat(3, 1fr);">
+  `;
+  STREET_STYLE_THEMES.forEach((s, idx) => {
+    html += `
+      <div class="card-item" style="cursor:pointer;" onclick="previewStreetStyle(${idx})">
+        <div style="width:100%;height:68px;border-radius:8px;background:linear-gradient(180deg, ${s.sky} 0%, ${s.accent} 65%, ${s.ground} 100%);border:2px solid #8fa893;position:relative;overflow:hidden;">
+          <span style="position:absolute;bottom:4px;right:6px;background:rgba(0,0,0,0.65);color:#fff;font-size:10px;padding:1px 6px;border-radius:4px;">${s.cost}i</span>
+        </div>
+        <strong>${s.name}</strong>
+        <small style="color:#555;font-size:11px;">${s.desc}</small>
+        <button onclick="event.stopPropagation(); previewStreetStyle(${idx})">Preview ${s.name}</button>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  openModal("Change your street style", html);
+}
+
+window.previewStreetStyle = function(idx) {
+  const s = STREET_STYLE_THEMES[idx] || STREET_STYLE_THEMES[1];
+  const stage = document.getElementById("street-style-stage");
+  if (!stage) return;
+  stage.innerHTML = `
+    <div style="background:#fff; border:2px solid #2b8a9e; border-radius:12px; padding:14px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.12);">
+      <div style="width:100%; height:110px; border-radius:8px; background:linear-gradient(180deg, ${s.sky} 0%, ${s.accent} 65%, ${s.ground} 100%); border:2px solid #678074; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#1d2b24; text-shadow:0 1px 3px rgba(255,255,255,0.9); margin-bottom:10px;">
+        <h3 style="margin:0; font-size:22px;">${s.name}</h3>
+        <span style="font-size:12px; font-weight:bold;">${s.desc}</span>
+      </div>
+      <div id="style-confirm-area" style="display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:13px;">Cost: <strong>${s.cost} iMG</strong></span>
+        <div style="display:flex; gap:8px;">
+          <button onclick="document.getElementById('street-style-stage').innerHTML=''" style="background:#95a5a6; color:#fff; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold;">Cancel</button>
+          <button onclick="promptConfirmStreetStyle('${s.id}', ${s.cost}, '${s.name}')" style="background:#6db33f; color:#fff; border:none; padding:6px 16px; border-radius:6px; cursor:pointer; font-weight:bold;">Change to this</button>
+        </div>
+      </div>
+    </div>
+  `;
+};
+
+window.promptConfirmStreetStyle = function(styleId, cost, name) {
+  const area = document.getElementById("style-confirm-area");
+  if (!area) return;
+  area.innerHTML = `
+    <div style="width:100%; background:#fff9db; border:2px solid #e6a817; border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+      <strong>Are you sure you want to change your street style to ${name} for ${cost}i?</strong>
+      <div style="display:flex; gap:8px;">
+        <button onclick="openStreetStyleModal()" style="background:#95a5a6; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">Nevermind</button>
+        <button onclick="applyStreetStyle('${styleId}', ${cost})" style="background:#6db33f; color:#fff; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold;">Yes, change it</button>
+      </div>
+    </div>
+  `;
+};
+
+window.applyStreetStyle = function(styleId, cost) {
+  closeModal();
+  changeMeters({ img: -cost });
+  STREETS[State.streetId].style = styleId;
+  sendNet({ type: "street_style", street: State.streetId, style: styleId });
+  triggerLoadingTransition("Changing street style", "Sit tight, it'll be ready shortly!", () => {
+    AudioEngine.startAmbient(styleId);
+  });
+};
+
+function openSkillsAndQuestsModal(defaultTab = "skills") {
+  const learningSkill = SKILLS_LIST.find(s => s.learning);
+  let html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; background:#eef4ea; padding:10px 14px; border-radius:10px; margin-bottom:14px;">
+      <div>
+        <strong>Currently Learning:</strong> ${learningSkill ? learningSkill.name : "None"}
+        ${learningSkill ? `<span style="color:#2b8a9e; font-weight:bold; margin-left:8px;">(${formatDuration(learningSkill.durationSec)})</span>` : ""}
+      </div>
+      <div style="font-size:12px; color:#555;">
+        🧠 <strong>Brain Capacity:</strong> 101/133 Skills (2764% time penalty)
+      </div>
+    </div>
+    <h3>Skills Tree (Offline & Real-time Learning)</h3>
+    <div class="grid-cards" style="margin-bottom:18px;">
+  `;
+  SKILLS_LIST.forEach(sk => {
+    const status = sk.learned ? "✅ Learned" : (sk.learning ? "⏳ Learning..." : `Learn (${formatDuration(sk.durationSec)})`);
+    html += `
+      <div class="card-item" style="border-color:${sk.learned ? '#6db33f' : (sk.learning ? '#e6a817' : '#ccd6c4')}">
+        <small style="color:#6c7a73;font-weight:bold;">${sk.cat.toUpperCase()}</small>
+        <strong>${sk.name}</strong>
+        <small>${sk.desc}</small>
+        ${sk.learned ? `<span style="color:#2e7d32;font-weight:bold;">Learned</span>` :
+          `<button onclick="startLearningSkill('${sk.id}')">${status}</button>`}
+      </div>
+    `;
+  });
+  html += `</div><h3>Active Quest Log</h3><div style="display:flex;flex-direction:column;gap:8px;">`;
+  QUESTS_LIST.forEach(q => {
+    const pct = Math.round((q.progress / q.goal) * 100);
+    html += `
+      <div style="background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <strong>${q.title}</strong> (${q.progress}/${q.goal})
+          <div style="font-size:12px; color:#555;">${q.desc}</div>
+          <small style="color:#2e7d32;">Reward: ${q.reward}</small>
+        </div>
+        <div style="min-width:90px; text-align:right; font-weight:bold; color:${pct === 100 ? '#2e7d32' : '#2b8a9e'};">
+          ${pct === 100 ? "COMPLETED" : `${q.progress} / ${q.goal}`}
+        </div>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  openModal("Skills & Quest Log", html);
+}
+
+function formatDuration(sec) {
+  const d = Math.floor(sec / 86400);
+  const h = Math.floor((sec % 86400) / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (d > 0) return `${d}d ${h}h ${m}m`;
+  if (h > 0) return `${h}h ${m}m ${s}s`;
+  return `${m}m ${s}s`;
+}
+
+window.startLearningSkill = function(skillId) {
+  SKILLS_LIST.forEach(s => s.learning = (s.id === skillId));
+  openSkillsAndQuestsModal();
+};
+
+const WARDROBE_CATALOG = [
+  { key: "hat", val: "caterpillar_mask", name: "Imperial Caterpillar Mask", slot: "Hat / Mask", cost: "Owned", icon: "🐛", bg: "#3d4a2d" },
+  { key: "hat", val: "top_hat", name: "Red Top Hat", slot: "Hat / Mask", cost: "150 credits", icon: "🎩", bg: "#b32424" },
+  { key: "hat", val: "dino_ride", name: "Dinosaur Ride", slot: "Ride / Mount", cost: "450 credits", icon: "🦖", bg: "#6ab04c" },
+  { key: "hat", val: "piggy_ride", name: "Piggy Ride", slot: "Ride / Mount", cost: "400 credits", icon: "🐷", bg: "#ff9ff3" },
+  { key: "hat", val: "censor_bar", name: "Censor Bar", slot: "Full Suit", cost: "250 credits", icon: "⬛", bg: "#222222" },
+  { key: "hat", val: "none", name: "None (Blonde Hair)", slot: "Hair", cost: "Owned", icon: "👱", bg: "#f5e06b" },
+  { key: "coat", val: "cape", name: "Royal Cloak & Cape", slot: "Coat / Cloak", cost: "180 credits", icon: "🧥", bg: "#7d3c98" },
+  { key: "shirt", val: "striped", name: "Striped Adventurer Top", slot: "Shirt / Top", cost: "90 credits", icon: "👕", bg: "#2980b9" },
+  { key: "skirt", val: "pleated", name: "Crimson Pleated Skirt", slot: "Skirt", cost: "110 credits", icon: "👗", bg: "#c0392b" },
+  { key: "dress", val: "emerald", name: "Emerald Sun Dress", slot: "Dress", cost: "160 credits", icon: "👘", bg: "#27ae60" },
+  { key: "pants", val: "shorts", name: "Explorer Cargo Shorts", slot: "Pants / Shorts", cost: "85 credits", icon: "🩳", bg: "#8e704c" },
+  { key: "shoes", val: "boots", name: "Winged Crimson Boots", slot: "Shoes", cost: "120 credits", icon: "👟", bg: "#e74c3c" }
+];
+
+function openWardrobeAndVanityModal() {
+  // Video A 07:16 (Wardrobe) & 11:44 (Vanity Mirror)
+  const ap = State.player.appearance;
+  let cardsHtml = "";
+  WARDROBE_CATALOG.forEach(item => {
+    const isEquipped = ap[item.key] === item.val;
+    cardsHtml += `
+      <div class="card-item" style="border:2px solid ${isEquipped ? '#6db33f' : '#ccd6c4'}; background:${isEquipped ? '#f2faed' : '#fff'}; cursor:pointer; padding:8px;" onclick="updateLook('${item.key}', '${item.val}')">
+        <div style="width:100%; height:54px; border-radius:8px; background:${item.bg}; display:flex; align-items:center; justify-content:center; font-size:28px; color:#fff; box-shadow:inset 0 2px 5px rgba(0,0,0,0.25);">
+          ${item.icon}
+        </div>
+        <strong style="font-size:12px;">${item.name}</strong>
+        <div style="display:flex; justify-content:space-between; width:100%; font-size:10px; color:#6c7a73;">
+          <span>${item.slot}</span>
+          <span style="color:#2b8a9e; font-weight:bold;">${item.cost}</span>
+        </div>
+        <button style="width:100%; background:${isEquipped ? '#6db33f' : '#2b8a9e'};" onclick="event.stopPropagation(); updateLook('${item.key}', '${item.val}')">${isEquipped ? '✓ Equipped' : 'Try On'}</button>
+      </div>
+    `;
+  });
+
+  const html = `
+    <!-- Top Interactive Avatar Doll Preview & Equipment Slots -->
+    <div style="display:flex; gap:16px; background:linear-gradient(180deg, #e7f0e4 0%, #f7faf5 100%); border:2px solid #b8c9b0; border-radius:12px; padding:12px 16px; margin-bottom:14px; align-items:center;">
+      <div style="background:#232d32; border:3px solid #7fa6c4; border-radius:12px; padding:6px; display:flex; flex-direction:column; align-items:center;">
+        <canvas id="wardrobe-preview-canvas" width="130" height="135"></canvas>
+        <small style="color:#a8e6cf; font-size:10px; font-weight:bold;">Live 2D Doll Preview</small>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="font-size:14px; color:#23382c;">Equipped Slots &amp; Facial Features</strong>
+            <div style="font-size:11px; color:#556b5d;">No fixed gender — mix any hair, face, top, coat, pants, skirt, dress, or mount!</div>
+          </div>
+          <div style="background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:4px 10px; font-weight:bold; color:#d48817;">
+            ✨ ${State.player.credits.toLocaleString()} Credits
+          </div>
+        </div>
+        <!-- Slot Icons Bar -->
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">🎩 Hat: <b id="slot-lbl-hat">${ap.hat}</b></span>
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">🧥 Coat: <b id="slot-lbl-coat">${ap.coat || 'none'}</b></span>
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">👕 Shirt: <b id="slot-lbl-shirt">${ap.shirt || 'tunic'}</b></span>
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">👖 Pants: <b id="slot-lbl-pants">${ap.pants || 'jeans'}</b></span>
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">👗 Skirt/Dress: <b id="slot-lbl-skirt">${ap.dress !== 'none' ? ap.dress : (ap.skirt || 'none')}</b></span>
+          <span style="background:#fff; border:1px solid #9ab09e; border-radius:6px; padding:4px 8px; font-size:11px; font-weight:bold;">👟 Shoes: <b id="slot-lbl-shoes">${ap.shoes || 'sneakers'}</b></span>
+        </div>
+        <!-- Vanity Face & Color Quick Pickers -->
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; background:#fff; padding:6px 10px; border-radius:8px; border:1px solid #d4dfd0; font-size:11px;">
+          <label>👁️ Eyes:
+            <select onchange="updateLook('eyes', this.value)">
+              <option value="bright" ${ap.eyes==='bright'?'selected':''}>Bright Wide</option>
+              <option value="wink" ${ap.eyes==='wink'?'selected':''}>Playful</option>
+              <option value="lash" ${ap.eyes==='lash'?'selected':''}>Long Lashes</option>
+            </select>
+          </label>
+          <label>👃 Nose:
+            <select onchange="updateLook('nose', this.value)">
+              <option value="button" ${ap.nose==='button'?'selected':''}>Button</option>
+              <option value="pointed" ${ap.nose==='pointed'?'selected':''}>Pointed</option>
+              <option value="round" ${ap.nose==='round'?'selected':''}>Round</option>
+            </select>
+          </label>
+          <label>👄 Mouth:
+            <select onchange="updateLook('mouth', this.value)">
+              <option value="smile" ${ap.mouth==='smile'?'selected':''}>Cheerful Smile</option>
+              <option value="grin" ${ap.mouth==='grin'?'selected':''}>Toothy Grin</option>
+              <option value="o" ${ap.mouth==='o'?'selected':''}>Surprised O</option>
+            </select>
+          </label>
+          <label>👂 Ears:
+            <select onchange="updateLook('ears', this.value)">
+              <option value="round" ${ap.ears==='round'?'selected':''}>Round</option>
+              <option value="elven" ${ap.ears==='elven'?'selected':''}>Pointed</option>
+            </select>
+          </label>
+          <label>Skin <input type="color" value="${ap.skinColor}" onchange="updateLook('skinColor', this.value)"></label>
+          <label>Hair <input type="color" value="${ap.hairColor}" onchange="updateLook('hairColor', this.value)"></label>
+        </div>
+        <!-- Action Buttons: Reset, Test, Save & Checkout -->
+        <div style="display:flex; justify-content:flex-end; gap:8px;">
+          <button onclick="updateLook('hat','none');updateLook('coat','none');updateLook('dress','none');updateLook('skirt','none');" style="background:#95a5a6; color:#fff; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">Reset</button>
+          <button onclick="drawWardrobePreview()" style="background:#2b8a9e; color:#fff; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">Test</button>
+          <button onclick="closeModal()" style="background:#6db33f; color:#fff; border:none; padding:5px 16px; border-radius:6px; cursor:pointer; font-weight:bold;">Save &amp; Checkout</button>
+        </div>
+      </div>
+    </div>
+    <!-- Visual Catalog Grid -->
+    <div class="grid-cards" style="grid-template-columns: repeat(4, 1fr);">
+      ${cardsHtml}
+    </div>
+  `;
+  openModal("Glitch: Change your clothes or try on something new", html);
+  drawWardrobePreview();
+}
+
+window.drawWardrobePreview = function() {
+  const wc = document.getElementById("wardrobe-preview-canvas");
+  if (!wc) return;
+  const wctx = wc.getContext("2d");
+  wctx.clearRect(0, 0, wc.width, wc.height);
+  drawGlitchenAvatar(wctx, {
+    id: "wardrobe_preview",
+    name: State.player.name,
+    x: 65,
+    y: 122,
+    dir: 1,
+    scale: 1.15,
+    appearance: State.player.appearance
+  }, true);
+};
+
+window.updateLook = function(key, val) {
+  State.player.appearance[key] = val;
+  if (key === "dress" && val !== "none") State.player.appearance.skirt = "none";
+  if (key === "skirt" && val !== "none") State.player.appearance.dress = "none";
+  drawPortrait();
+  drawWardrobePreview();
+  const lbl = document.getElementById("slot-lbl-" + key);
+  if (lbl) lbl.textContent = val;
+  sendNet({
+    type: "move",
+    id: State.playerId,
+    name: State.player.name,
+    street: State.streetId,
+    x: State.player.x,
+    y: State.player.y,
+    dir: State.player.dir,
+    scale: State.player.scale,
+    appearance: State.player.appearance
+  });
+};
+
+function openVendorModal(vendorObj) {
+  // Video B 05:51: Animal Goods Vendor shop UI
+  const items = [
+    { id: "butterfly_lotion", price: 45, desc: "Massage butterflies or taste it for +12 mood." },
+    { id: "butterfly_milker", price: 400, desc: "Milk butterflies safely." },
+    { id: "pumpkin_ale", price: 25, desc: "Restores +29 mood and triggers Thriller dance!" },
+    { id: "sparkle_powder", price: 35, desc: "Sprinkle stars for +30 mood." },
+    { id: "random_kindness", price: 30, desc: "Bestow rainbow kindness on friends." },
+    { id: "essence_purple", price: 60, desc: "Embiggen or shrink your avatar." }
+  ];
+  let html = `<p>You have <strong>${State.player.currants.toLocaleString()} currants</strong>.</p><div class="grid-cards">`;
+  items.forEach(it => {
+    const def = ITEM_DEFS[it.id];
+    html += `
+      <div class="card-item">
+        <div style="font-size:28px;">${def.icon}</div>
+        <strong>${def.name}</strong>
+        <small>${it.desc}</small>
+        <button onclick="buyVendorItem('${it.id}', ${it.price})">Buy (${it.price}c)</button>
+      </div>
+    `;
+  });
+  html += `</div>`;
+  openModal(vendorObj.name, html);
+}
+
+window.buyVendorItem = function(itemId, price) {
+  if (State.player.currants < price) {
+    alert("Not enough currants!");
+    return;
+  }
+  if (giveItem(itemId, 1)) {
+    changeMeters({ currants: -price });
+    addFloatingText(State.player.x, State.player.y - 70, `Bought ${ITEM_DEFS[itemId].name} (-${price}c)`, "#2ecc71");
+    closeModal();
+  }
+};
+
+const MAP_NODES = [
+  { id: "beau_home", name: "Beau's Home Street", region: "HOME STREETS", x: 110, y: 175, color: "#6db33f" },
+  { id: "goli_grabs", name: "Goli Grabs", region: "KALAVANA", x: 255, y: 95, color: "#e6a817" },
+  { id: "chego_chase", name: "Chego Chase", region: "ANDRA", x: 390, y: 175, color: "#2b8a9e" },
+  { id: "andra_hall", name: "Andra Hall", region: "ANDRA", x: 485, y: 115, color: "#8446b0" },
+  { id: "bongul_beat", name: "Bongul Beat", region: "ANDRA", x: 560, y: 205, color: "#e67e22" }
+];
+
+const MAP_EDGES = [
+  ["beau_home", "goli_grabs"],
+  ["beau_home", "chego_chase"],
+  ["goli_grabs", "chego_chase"],
+  ["chego_chase", "andra_hall"],
+  ["chego_chase", "bongul_beat"],
+  ["goli_grabs", "bongul_beat"]
+];
+
+window.selectedMapStreetId = "goli_grabs";
+
+function openWorldMapModal(focusStreetId) {
+  // Video A 10:28 & 24:36: Illustrated World Map regions (Zhambu, Kalavana, Andra, Ixeta) + Region Map dashed lines & circular street nodes
+  if (focusStreetId) window.selectedMapStreetId = focusStreetId;
+  else if (window.selectedMapStreetId === State.streetId) {
+    window.selectedMapStreetId = State.streetId === "goli_grabs" ? "chego_chase" : "goli_grabs";
+  }
+  const selNode = MAP_NODES.find(n => n.id === window.selectedMapStreetId) || MAP_NODES[1];
+  const selStreet = STREETS[selNode.id];
+
+  // Build SVG dashed lines and circular street nodes over illustrated terrain
+  let svgEdges = "";
+  MAP_EDGES.forEach(([a, b]) => {
+    const na = MAP_NODES.find(n => n.id === a);
+    const nb = MAP_NODES.find(n => n.id === b);
+    if (na && nb) {
+      svgEdges += `<line x1="${na.x}" y1="${na.y}" x2="${nb.x}" y2="${nb.y}" stroke="#fff8dc" stroke-width="3.5" stroke-dasharray="7,6" />`;
+    }
+  });
+
+  let svgNodes = "";
+  MAP_NODES.forEach(n => {
+    const isHere = n.id === State.streetId;
+    const isSel = n.id === selNode.id;
+    svgNodes += `
+      <g style="cursor:pointer;" onclick="openWorldMapModal('${n.id}')">
+        <circle cx="${n.x}" cy="${n.y}" r="${isSel ? 15 : 11}" fill="${isHere ? '#6db33f' : n.color}" stroke="#ffffff" stroke-width="3" />
+        ${isHere ? `<circle cx="${n.x}" cy="${n.y}" r="5" fill="#ffffff" />` : ""}
+        <rect x="${n.x - 58}" y="${n.y + 16}" width="116" height="18" rx="5" fill="rgba(20,28,32,0.82)" />
+        <text x="${n.x}" y="${n.y + 29}" fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle">${n.name}</text>
+      </g>
+    `;
+  });
+
+  const html = `
+    <!-- World Regions Banner Bar -->
+    <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+      <div style="display:flex; gap:6px; flex-wrap:wrap;">
+        <span style="background:#355e47; color:#fff; padding:4px 10px; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="openWorldMapModal('beau_home')">🌲 HOME STREETS</span>
+        <span style="background:#7d5a2b; color:#fff; padding:4px 10px; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="openWorldMapModal('goli_grabs')">⛰️ KALAVANA</span>
+        <span style="background:#6e7832; color:#fff; padding:4px 10px; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="openWorldMapModal('chego_chase')">🌾 ANDRA</span>
+        <span style="background:#2b6980; color:#fff; padding:4px 10px; border-radius:8px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="openWorldMapModal('bongul_beat')">🏝️ ZHAMBU &amp; IXETA</span>
+      </div>
+      <small style="color:#556b5d; font-weight:bold;">Click any region or street node to inspect or teleport</small>
+    </div>
+
+    <!-- Graphical Region Map with Continents, Dashed Street Lines & Circular Nodes -->
+    <div style="position:relative; width:100%; height:270px; border-radius:12px; border:3px solid #6b8273; overflow:hidden; background:linear-gradient(135deg, #4b788c 0%, #3a6073 100%); box-shadow:inset 0 2px 10px rgba(0,0,0,0.35);">
+      <svg width="100%" height="100%" viewBox="0 0 680 270" preserveAspectRatio="none">
+        <!-- Illustrated Region Continents -->
+        <ellipse cx="115" cy="175" rx="85" ry="62" fill="#4c7853" stroke="#85b87e" stroke-width="2" />
+        <text x="115" y="130" fill="#d9f7d4" font-size="11" font-weight="bold" text-anchor="middle">HOME STREETS</text>
+
+        <ellipse cx="260" cy="100" rx="95" ry="60" fill="#7a6348" stroke="#c9ad86" stroke-width="2" />
+        <text x="260" y="58" fill="#ffe8c2" font-size="12" font-weight="bold" text-anchor="middle">KALAVANA</text>
+
+        <ellipse cx="475" cy="168" rx="165" ry="82" fill="#8b964a" stroke="#d4de8a" stroke-width="2" />
+        <text x="465" y="102" fill="#ffffd4" font-size="13" font-weight="bold" text-anchor="middle">ANDRA</text>
+
+        <ellipse cx="590" cy="58" rx="68" ry="36" fill="#5a8f76" stroke="#9be3c2" stroke-width="1.5" />
+        <text x="590" y="62" fill="#e8fff3" font-size="11" font-weight="bold" text-anchor="middle">ZHAMBU / IXETA</text>
+
+        <!-- Interconnected Street Dashed Lines & Circular Nodes -->
+        ${svgEdges}
+        ${svgNodes}
+      </svg>
+
+      <!-- Floating Street Node Popover Menu -->
+      <div style="position:absolute; top:12px; right:12px; width:215px; background:rgba(22, 28, 33, 0.95); color:#fff; border:2px solid #8bd3e8; border-radius:10px; padding:10px 12px; box-shadow:0 6px 18px rgba(0,0,0,0.45);">
+        <div style="font-size:10px; color:#8bd3e8; font-weight:bold; text-transform:uppercase;">${selStreet.region}</div>
+        <div style="font-size:14px; font-weight:bold; margin-bottom:6px;">${selStreet.name}</div>
+        <div style="display:flex; flex-direction:column; gap:5px;">
+          <button onclick="teleportToStreet('${selStreet.id}')" style="background:#6db33f; color:#fff; border:none; padding:6px 10px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:12px; text-align:left;">⚡ Teleport here (-10e)</button>
+          <button onclick="addChatMessage(null, '📍 Street Link: [${selStreet.name}]', 'reward'); closeModal();" style="background:#2b8a9e; color:#fff; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:11px; text-align:left;">🔗 Create Link for Chat</button>
+          <button onclick="addFloatingText(State.player.x, State.player.y - 70, 'Destination: ${selStreet.name}', '#8bd3e8'); closeModal();" style="background:#49585e; color:#fff; border:none; padding:5px 10px; border-radius:6px; cursor:pointer; font-weight:bold; font-size:11px; text-align:left;">🧭 Set as destination</button>
+        </div>
+      </div>
+    </div>
+  `;
+  openModal("World Map of Ur", html);
+}
+
+window.teleportToStreet = function(targetStreetId) {
+  closeModal();
+  changeMeters({ energy: -10 });
+  changeStreet(targetStreetId, 400);
+};
+
+function openProfileModal(target = State.player) {
+  // Video A 05:02: Web Profile with stats, achievements, friends, and snaps
+  const html = `
+    <div style="display:flex; gap:20px; align-items:center; border-bottom:1px solid #dde5d8; padding-bottom:14px; margin-bottom:14px;">
+      <div style="font-size:48px; background:#e3eff5; width:76px; height:76px; border-radius:50%; display:flex; align-items:center; justify-content:center;">🙂</div>
+      <div>
+        <h2 style="margin:0;">${escapeHtml(target.name)} <span style="color:#6db33f;font-size:14px;">● Online</span></h2>
+        <p style="margin:4px 0; color:#555;">Level ${target.level || 19} Glitchen &nbsp;|&nbsp; 🏆 217 Achievements &nbsp;|&nbsp; 🧠 101 Skills &nbsp;|&nbsp; ⚡ 63 Upgrades</p>
+        <small style="color:#2e7d32;">Daily Hi Sign: "${target.hiSign || 'bye'}"</small>
+      </div>
+    </div>
+    <h4>Recent Snaps from Ur</h4>
+    <div class="grid-cards">
+      <div class="card-item"><strong>DEATH PARTY!!!</strong><small>Cebarkul in Ixeta (71 views)</small></div>
+      <div class="card-item"><strong>Moving up to a better house</strong><small>Beau's Home Street</small></div>
+      <div class="card-item"><strong>Started my Tower today</strong><small>Beau's Home Street</small></div>
+    </div>
+  `;
+  openModal(`${target.name}'s Profile`, html);
+}
+
+// --- Giant Visage Overlay (Video A 03:53, 44:31, 48:02, 54:57) ---
+function showGiantOverlay(giant) {
+  AudioEngine.playChime("giant");
+  const ov = document.getElementById("giant-overlay");
+  document.getElementById("giant-title").textContent = `${giant.name} says...`;
+  document.getElementById("giant-speech").textContent = giant.speech;
+  drawGiantTotem(document.getElementById("giant-canvas"), giant);
+  ov.classList.add("open");
+}
+
+document.getElementById("giant-overlay").onclick = () => {
+  document.getElementById("giant-overlay").classList.remove("open");
+};
+
+function drawGiantTotem(canvas, giant) {
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  ctx.translate(90, 110);
+  // Ornate symmetrical totem mask inspired by Cosma/Zille/Humbaba/Alph in Video A
+  for (let i = 0; i < 12; i++) {
+    ctx.save();
+    ctx.rotate((i / 12) * Math.PI * 2);
+    ctx.fillStyle = i % 2 === 0 ? giant.color : giant.accent;
+    ctx.beginPath();
+    ctx.ellipse(0, -68, 10, 26, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.fillStyle = "#fff8e7";
+  ctx.beginPath();
+  ctx.ellipse(0, 0, 48, 62, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = giant.accent;
+  ctx.stroke();
+
+  // Eyes
+  [-18, 18].forEach(ex => {
+    ctx.fillStyle = "#2c3e50";
+    ctx.beginPath();
+    ctx.arc(ex, -10, 10, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(ex - 3, -13, 3, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  // Ornate mouth/beard
+  ctx.fillStyle = giant.accent;
+  ctx.beginPath();
+  ctx.arc(0, 22, 16, 0, Math.PI);
+  ctx.fill();
+  ctx.restore();
+}
+
+// --- Street Transition Logic ---
+const visitedStreets = new Set(["beau_home"]);
+State.transitioning = false;
+State.transitionCooldown = 0;
+
+function drawLoadingStreetPreview(st) {
+  const c = document.getElementById("loading-preview-canvas");
+  if (!c || !st) return;
+  const lctx = c.getContext("2d");
+  drawParallaxBackground(lctx, c.width, c.height, st, 0, 0);
+  lctx.fillStyle = st.style === "vorn_road" ? "#ffffff" : (st.style === "savanna" ? "#8c874c" : "#27362b");
+  lctx.fillRect(0, c.height - 28, c.width, 28);
+  lctx.fillStyle = "rgba(0,0,0,0.55)";
+  lctx.fillRect(0, c.height - 24, c.width, 24);
+  lctx.fillStyle = "#fff";
+  lctx.font = "bold 11px sans-serif";
+  lctx.fillText(st.name, 10, c.height - 8);
+}
+
+function showTopLeftToast(text) {
+  const toast = document.getElementById("top-left-toast");
+  const lbl = document.getElementById("top-left-toast-text");
+  if (!toast || !lbl) return;
+  lbl.textContent = text;
+  toast.style.display = "flex";
+  clearTimeout(window.__toastTimer);
+  window.__toastTimer = setTimeout(() => { toast.style.display = "none"; }, 3200);
+}
+
+function triggerLoadingTransition(verbText, streetTitle, onComplete, targetStreetObj) {
+  State.transitioning = true;
+  const ov = document.getElementById("loading-overlay");
+  const bar = document.getElementById("loading-progress-bar");
+  const pctLbl = document.getElementById("loading-pct-text");
+  document.getElementById("loading-verb").textContent = verbText;
+  document.getElementById("loading-street-title").textContent = streetTitle;
+
+  const st = targetStreetObj || STREETS[State.streetId];
+  drawLoadingStreetPreview(st);
+  const homeList = document.getElementById("loading-home-to");
+  if (homeList && st && st.homeTo) {
+    homeList.innerHTML = st.homeTo.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+  }
+
+  ov.classList.add("open");
+  bar.style.width = "22%";
+  if (pctLbl) pctLbl.textContent = "22%";
+  setTimeout(() => { bar.style.width = "74%"; if (pctLbl) pctLbl.textContent = "74%"; }, 140);
+  setTimeout(() => { bar.style.width = "100%"; if (pctLbl) pctLbl.textContent = "100%"; }, 280);
+  setTimeout(() => {
+    ov.classList.remove("open");
+    bar.style.width = "0%";
+    State.transitioning = false;
+    State.transitionCooldown = 45;
+    if (onComplete) onComplete();
+  }, 420);
+}
+
+function changeStreet(targetStreetId, spawnX = 300) {
+  if (State.transitioning) return;
+  const st = STREETS[targetStreetId];
+  if (!st) return;
+  State.waitingRoom.active = false;
+  document.getElementById("waiting-banner").style.display = "none";
+  document.getElementById("butler-speech-box").style.display = "none";
+  State.player.vx = 0;
+  State.player.vy = 0;
+
+  triggerLoadingTransition("Entering", st.name, () => {
+    State.streetId = targetStreetId;
+    State.player.x = Math.max(180, Math.min(st.width - 180, spawnX));
+    State.player.y = st.groundY;
+    State.player.vx = 0;
+    State.player.vy = 0;
+
+    // Move any following bots to the new street with us (Video A 26:48)
+    State.player.followers.forEach((botId, idx) => {
+      if (State.otherPlayers[botId]) {
+        State.otherPlayers[botId].street = targetStreetId;
+        State.otherPlayers[botId].x = State.player.x - (idx + 1) * 45;
+        State.otherPlayers[botId].y = st.groundY;
+      }
+    });
+
+    if (!visitedStreets.has(targetStreetId)) {
+      visitedStreets.add(targetStreetId);
+      changeMeters({ img: 2 });
+      const msg = `This is your first visit to ${st.name}. You received 2 xp!`;
+      addChatMessage(null, msg, "reward");
+      showTopLeftToast(msg);
+    } else {
+      addChatMessage(null, `Entered ${st.name}.`, "sys");
+    }
+
+    AudioEngine.startAmbient(st.style);
+    updateHUD();
+    updateOnlineListUI();
+    sendNet({
+      type: "change_street",
+      id: State.playerId,
+      street: targetStreetId,
+      x: State.player.x,
+      y: State.player.y
+    });
+    logTelemetry("street_change", { street: targetStreetId, name: st.name });
+  }, st);
+}
+
+// --- Input & UI Event Listeners ---
+window.addEventListener("keydown", (e) => {
+  if (document.activeElement === document.getElementById("chat-input") ||
+      document.activeElement === document.getElementById("inv-search")) {
+    if (e.key === "Enter" && document.activeElement.id === "chat-input") {
+      submitChat();
+    }
+    return;
+  }
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") State.keys.left = true;
+  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") State.keys.right = true;
+  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") State.keys.up = true;
+  if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") State.keys.down = true;
+  if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") State.keys.jump = true;
+});
+
+window.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") State.keys.left = false;
+  if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") State.keys.right = false;
+  if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") State.keys.up = false;
+  if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") State.keys.down = false;
+  if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") State.keys.jump = false;
+});
+
+window.addEventListener("click", (e) => {
+  if (!e.target.closest("#context-menu")) {
+    document.getElementById("context-menu").style.display = "none";
+  }
+  if (!e.target.closest("#hud-left")) {
+    document.getElementById("left-menu").classList.remove("open");
+  }
+});
+
+document.getElementById("avatar-btn").onclick = (e) => {
+  e.stopPropagation();
+  document.getElementById("left-menu").classList.toggle("open");
+};
+
+document.querySelectorAll("#left-menu .menu-item[data-modal]").forEach(el => {
+  el.onclick = () => {
+    document.getElementById("left-menu").classList.remove("open");
+    const m = el.getAttribute("data-modal");
+    if (m === "profile") openProfileModal();
+    else if (m === "skills" || m === "quests") openSkillsAndQuestsModal(m);
+    else if (m === "vanity" || m === "wardrobe") openWardrobeAndVanityModal();
+    else if (m === "map") openWorldMapModal();
+  };
+});
+
+document.getElementById("menu-go-home").onclick = () => {
+  document.getElementById("left-menu").classList.remove("open");
+  changeStreet("beau_home", 600);
+};
+
+document.getElementById("menu-giant-summon").onclick = () => {
+  document.getElementById("left-menu").classList.remove("open");
+  const g = GIANTS_DATA[Math.floor(seededRandom() * GIANTS_DATA.length)];
+  showGiantOverlay(g);
+  sendNet({ type: "giant_visage", giant: g.name });
+};
+
+document.getElementById("magic-rock-top").onclick = () => openSkillsAndQuestsModal();
+document.getElementById("btn-cultivate").onclick = () => openStreetStyleModal();
+document.getElementById("minimap-canvas").onclick = () => openWorldMapModal();
+document.getElementById("world-map-btn").onclick = () => openWorldMapModal();
+
+document.getElementById("btn-mute").onclick = () => {
+  AudioEngine.muted = !AudioEngine.muted;
+  document.getElementById("btn-mute").textContent = AudioEngine.muted ? "🔇" : "🔊";
+};
+
+document.getElementById("btn-snap").onclick = () => {
+  const visible = Object.values(State.otherPlayers).filter(p => p.street === State.streetId).map(p => p.name);
+  addFloatingText(State.player.x, State.player.y - 80, "📸 Snapshot Published!", "#ffd966");
+  addChatMessage(null, `📷 Snapshot taken in ${STREETS[State.streetId].name}! Glitchen in this snap: ${[State.player.name, ...visible].join(", ")}.`, "reward");
+};
+
+document.getElementById("btn-hi-emote").onclick = () => {
+  const nearby = Object.values(State.otherPlayers).find(p => p.street === State.streetId);
+  if (nearby) {
+    executePlayerSocialVerb(nearby, "Greeting Sign ('hi'/'bye')");
+  } else {
+    AudioEngine.playChime("hi");
+    State.chatBubbles[State.playerId] = { text: State.player.hiSign, timer: 140 };
+    changeMeters({ mood: 5 });
+    addFloatingText(State.player.x, State.player.y - 70, "+5 mood", "#8de969");
+  }
+};
+
+document.getElementById("inv-search").oninput = (e) => {
+  State.invFilter = e.target.value;
+  renderInventory();
+};
+
+function submitChat() {
+  const inp = document.getElementById("chat-input");
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = "";
+
+  if (text === "/poof") {
+    addChatMessage("GOD", "Server shutdown in 10 seconds! We really, really, really love you. *poof*", "god");
+    return;
+  }
+  if (text === "/thriller") {
+    executeItemVerb("pumpkin_ale", "Drink", false);
+    return;
+  }
+
+  addChatMessage(State.player.name, text, "normal");
+  State.chatBubbles[State.playerId] = { text, timer: 260 };
+  sendNet({ type: "chat", sender: State.player.name, senderId: State.playerId, text });
+  logTelemetry("chat", { sender: State.player.name, text, street: State.streetId });
+}
+
+// --- Canvas Click Detection for World Objects & Players ---
+const canvas = document.getElementById("game-canvas");
+const ctx = canvas.getContext("2d");
+
+canvas.addEventListener("click", (e) => {
+  AudioEngine.init();
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left;
+  const sy = e.clientY - rect.top;
+  const wx = sx + State.camera.x;
+  const wy = sy + State.camera.y;
+  const st = STREETS[State.streetId];
+
+  // 1. Check Quoins
+  for (const q of st.quoins) {
+    if (!q.collected && Math.hypot(wx - q.x, wy - q.y) < 35) {
+      State.player.x = q.x;
+      State.player.vy = -8;
+      return;
+    }
+  }
+  // 2. Check Doors
+  for (const d of st.doors) {
+    if (wx >= d.x - d.w / 2 && wx <= d.x + d.w / 2 && wy >= d.y - d.h && wy <= d.y + 10) {
+      changeStreet(d.target, d.spawnX);
+      return;
+    }
+  }
+  // 3. Check Signposts (Exits)
+  for (const ex of st.exits) {
+    if (Math.abs(wx - ex.x) < 48 && Math.abs(wy - (ex.y - 45)) < 65) {
+      changeStreet(ex.target, ex.spawnX);
+      return;
+    }
+  }
+  // 4. Check Other Players
+  for (const op of Object.values(State.otherPlayers)) {
+    if (op.street === State.streetId && Math.abs(wx - op.x) < 30 && wy >= op.y - 80 && wy <= op.y + 10) {
+      e.stopPropagation();
+      openPlayerContextMenu(op, e.clientX, e.clientY);
+      return;
+    }
+  }
+  // 5. Check NPCs & Resources
+  const allInteractive = [...st.npcs, ...st.resources];
+  for (const obj of allInteractive) {
+    if (Math.abs(wx - obj.x) < 55 && Math.abs(wy - (obj.y - 45)) < 75) {
+      e.stopPropagation();
+      openWorldObjectMenu(obj, e.clientX, e.clientY);
+      return;
+    }
+  }
+});
+
+// --- Fixed-Timestep Simulation (60 Hz) ---
+let simTick = 0;
+
+function updateSimulation() {
+  simTick++;
+  const st = STREETS[State.streetId];
+  const p = State.player;
+
+  // Skill countdown every 60 ticks (1 sec)
+  if (simTick % 60 === 0) {
+    const sk = SKILLS_LIST.find(s => s.learning);
+    if (sk && sk.durationSec > 0) sk.durationSec--;
+  }
+
+  // Scale & Thriller timers
+  if (p.scaleTimer > 0) {
+    p.scaleTimer--;
+    if (p.scaleTimer === 0) p.scale = 1.0;
+  }
+  if (p.thrillerTimer > 0) p.thrillerTimer--;
+  if (p.musicIconTimer > 0) p.musicIconTimer--;
+
+  // Waiting Room countdown in Andra Bureaucratic Hall (Video B 04:45 - 05:06)
+  if (State.waitingRoom.active) {
+    if (State.keys.left || State.keys.right || State.keys.jump) {
+      addFloatingText(p.x, p.y - 70, "Do not move, just wait!", "#e67e22");
+      State.keys.left = false; State.keys.right = false; State.keys.jump = false;
+    }
+    State.waitingRoom.timer--;
+    const secs = Math.ceil(State.waitingRoom.timer / 60);
+    document.getElementById("waiting-timer-text").textContent = `at max, ${secs} secs`;
+    if (State.waitingRoom.timer <= 0) {
+      State.waitingRoom.active = false;
+      State.waitingRoom.qualified = true;
+      document.getElementById("waiting-banner").style.display = "none";
+      const mag = st.npcs.find(n => n.id === "mag_piks");
+      if (mag) {
+        mag.x = 760;
+        State.chatBubbles[mag.id] = { text: `${p.name} Step up`, timer: 240 };
+      }
+      addChatMessage("Magister Piksnikson", `${p.name}! Step up to receive your Card-Carrying Qualification.`, "reward");
+    }
+  }
+
+  // Horizontal movement
+  const moveSpeed = 4.2;
+  if (!State.waitingRoom.active) {
+    if (State.keys.left) {
+      p.vx = -moveSpeed;
+      p.dir = -1;
+    } else if (State.keys.right) {
+      p.vx = moveSpeed;
+      p.dir = 1;
+    } else {
+      p.vx *= 0.72;
+      if (Math.abs(p.vx) < 0.1) p.vx = 0;
+    }
+  }
+
+  // Ladders check
+  const onLadder = st.ladders.find(l => Math.abs(p.x - l.x) < 24 && p.y >= l.y1 && p.y <= l.y2 + 10);
+  if (onLadder && (State.keys.up || State.keys.down)) {
+    p.climbing = true;
+    p.vy = State.keys.up ? -3.5 : 3.5;
+  } else {
+    p.climbing = false;
+  }
+
+  // Jump
+  if (State.keys.jump && p.onGround && !State.waitingRoom.active) {
+    p.vy = -10.8;
+    p.onGround = false;
+    State.keys.jump = false;
+  }
+
+  // Apply gravity & velocity
+  if (!p.climbing) {
+    p.vy += 0.48; // gravity
+  }
+  const prevY = p.y;
+  p.x += p.vx;
+  p.y += p.vy;
+
+  // Platform collisions (one-way from above)
+  p.onGround = false;
+  if (p.vy >= 0 && !State.keys.down) {
+    for (const plat of st.platforms) {
+      if (p.x >= plat.x && p.x <= plat.x + plat.w && prevY <= plat.y + 4 && p.y >= plat.y) {
+        p.y = plat.y;
+        p.vy = 0;
+        p.onGround = true;
+        break;
+      }
+    }
+  }
+
+  // Ground collision
+  if (p.y >= st.groundY) {
+    p.y = st.groundY;
+    p.vy = 0;
+    p.onGround = true;
+  }
+
+  // Street boundaries & automatic signpost exit trigger
+  if (State.transitionCooldown > 0) State.transitionCooldown--;
+  if (!State.transitioning && State.transitionCooldown <= 0) {
+    if (p.x < 95) {
+      p.x = 95;
+      const leftExit = st.exits.find(ex => ex.x < 250);
+      if (leftExit) changeStreet(leftExit.target, leftExit.spawnX);
+    } else if (p.x > st.width - 95) {
+      p.x = st.width - 95;
+      const rightExit = st.exits.find(ex => ex.x > st.width - 250);
+      if (rightExit) changeStreet(rightExit.target, rightExit.spawnX);
+    }
+  }
+
+  // Animation state
+  if (p.animTimer > 0) {
+    p.animTimer--;
+  } else if (p.thrillerTimer > 0) {
+    p.anim = "thriller";
+  } else if (!p.onGround) {
+    p.anim = "jump";
+  } else if (Math.abs(p.vx) > 0.4) {
+    p.anim = "walk";
+  } else {
+    p.anim = "idle";
+  }
+
+  // Quoin collection (Video B 06:16 - 06:26)
+  st.quoins.forEach(q => {
+    if (q.collected) {
+      q.respawnTimer--;
+      if (q.respawnTimer <= 0) q.collected = false;
+      return;
+    }
+    if (Math.hypot(p.x - q.x, (p.y - 35) - q.y) < 36) {
+      q.collected = true;
+      q.respawnTimer = 600;
+      AudioEngine.playChime("quoin");
+      if (q.kind === "mood") {
+        changeMeters({ mood: q.amount });
+        addFloatingText(q.x, q.y, `+${q.amount} mood`, "#8de969");
+      } else if (q.kind === "xp" || q.kind === "img" || q.kind === "qurazy") {
+        changeMeters({ img: q.amount });
+        addFloatingText(q.x, q.y, `+${q.amount} xp`, "#b388ff");
+      } else if (q.kind === "currants") {
+        changeMeters({ currants: q.amount });
+        addFloatingText(q.x, q.y, `+${q.amount} currants`, "#f1c40f");
+      } else if (q.kind === "energy") {
+        changeMeters({ energy: q.amount });
+        addFloatingText(q.x, q.y, `+${q.amount} energy`, "#4da6ff");
+      }
+    }
+  });
+
+  // Update Conga Line Followers & Bots
+  p.followers.forEach((fId, idx) => {
+    const bot = State.otherPlayers[fId];
+    if (bot && bot.street === State.streetId) {
+      const targetX = p.x - p.dir * (idx + 1) * 44;
+      const dx = targetX - bot.x;
+      if (Math.abs(dx) > 6) {
+        bot.x += Math.sign(dx) * Math.min(Math.abs(dx), 4.0);
+        bot.dir = Math.sign(dx) || p.dir;
+      }
+      bot.y = p.y;
+    }
+  });
+
+  Object.values(State.otherPlayers).forEach(op => {
+    if (op.thrillerTimer > 0) op.thrillerTimer--;
+    if (op.isBot && op.street === State.streetId && !p.followers.includes(op.id)) {
+      op.actionCooldown--;
+      if (op.actionCooldown <= 0) {
+        op.actionCooldown = 180 + Math.floor(seededRandom() * 240);
+        const step = (seededRandom() - 0.5) * 90;
+        op.x = Math.max(140, Math.min(st.width - 140, op.x + step));
+        op.dir = step >= 0 ? 1 : -1;
+      }
+    }
+  });
+
+  // Update Cubimals
+  for (let i = State.cubimals.length - 1; i >= 0; i--) {
+    const c = State.cubimals[i];
+    c.x += c.vx;
+    c.timer--;
+    if (c.timer <= 0) State.cubimals.splice(i, 1);
+  }
+
+  // Update Particles & Floating Texts & Chat Bubbles
+  for (let i = State.particles.length - 1; i >= 0; i--) {
+    const pt = State.particles[i];
+    pt.x += pt.vx;
+    pt.y += pt.vy;
+    pt.vy += 0.06;
+    pt.life--;
+    if (pt.life <= 0) State.particles.splice(i, 1);
+  }
+  for (let i = State.floatingTexts.length - 1; i >= 0; i--) {
+    const ft = State.floatingTexts[i];
+    ft.y -= 0.7;
+    ft.life--;
+    if (ft.life <= 0) State.floatingTexts.splice(i, 1);
+  }
+  Object.keys(State.chatBubbles).forEach(k => {
+    State.chatBubbles[k].timer--;
+    if (State.chatBubbles[k].timer <= 0) delete State.chatBubbles[k];
+  });
+
+  // Broadcast player position periodically
+  if (simTick % 4 === 0 && (Math.abs(p.vx) > 0.1 || Math.abs(p.vy) > 0.1)) {
+    sendNet({
+      type: "move",
+      id: State.playerId,
+      name: p.name,
+      street: State.streetId,
+      x: Math.round(p.x),
+      y: Math.round(p.y),
+      dir: p.dir,
+      scale: p.scale,
+      appearance: p.appearance
+    });
+  }
+}
+
+// --- Procedural 2D Canvas Rendering (Parallax, Props, Avatars, UI) ---
+function resizeCanvas() {
+  const wrap = document.getElementById("viewport-wrap");
+  canvas.width = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+
+function renderScene() {
+  const wrapEl = document.getElementById("viewport-wrap");
+  if (canvas.width !== wrapEl.clientWidth || canvas.height !== wrapEl.clientHeight) resizeCanvas();
+  const W = canvas.width;
+  const H = canvas.height;
+  const st = STREETS[State.streetId];
+  const p = State.player;
+
+  // Smooth camera tracking
+  const targetCamX = Math.max(0, Math.min(st.width - W, p.x - W / 2));
+  const targetCamY = Math.max(-120, Math.min(80, (p.y - st.groundY) * 0.4 - (H - 540) * 0.5));
+  State.camera.x += (targetCamX - State.camera.x) * 0.14;
+  State.camera.y += (targetCamY - State.camera.y) * 0.14;
+
+  const camX = State.camera.x;
+  const camY = State.camera.y;
+
+  // 1. Sky & Parallax Background Layers by Street Style
+  drawParallaxBackground(ctx, W, H, st, camX, camY);
+
+  ctx.save();
+  ctx.translate(-camX, -camY);
+
+  // 2. Ground Plane
+  drawStreetGround(ctx, st);
+
+  // 3. Street Architecture (Beau's Crooked House / Ministry of Departments / Office Interior)
+  drawStreetBuildings(ctx, st);
+
+  // 4. Platforms & Ladders
+  st.platforms.forEach(plat => {
+    if (st.id !== "beau_home") {
+      ctx.fillStyle = st.style === "cavern" ? "#5c4d3c" : "#877c58";
+      ctx.beginPath();
+      ctx.roundRect(plat.x, plat.y, plat.w, 22, 8);
+      ctx.fill();
+      ctx.fillStyle = st.style === "cavern" ? "#7a6752" : "#9cb053";
+      ctx.fillRect(plat.x + 4, plat.y, plat.w - 8, 6);
+    }
+  });
+  st.ladders.forEach(lad => {
+    ctx.strokeStyle = "#8c6239";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(lad.x - 10, lad.y1); ctx.lineTo(lad.x - 10, lad.y2);
+    ctx.moveTo(lad.x + 10, lad.y1); ctx.lineTo(lad.x + 10, lad.y2);
+    for (let ry = lad.y1 + 12; ry < lad.y2; ry += 16) {
+      ctx.moveTo(lad.x - 10, ry); ctx.lineTo(lad.x + 10, ry);
+    }
+    ctx.stroke();
+  });
+
+  // 5. Signposts (Exits)
+  st.exits.forEach(ex => drawSignpost(ctx, ex));
+
+  // 6. Resources & Projects
+  st.resources.forEach(res => drawResource(ctx, res));
+
+  // 7. NPCs & Shrines & Vendors
+  st.npcs.forEach(npc => drawNPC(ctx, npc));
+
+  // 8. Floating Quoins
+  st.quoins.forEach(q => {
+    if (q.collected) return;
+    const bob = Math.sin(simTick * 0.08 + q.x) * 5;
+    ctx.save();
+    ctx.translate(q.x, q.y + bob);
+    ctx.strokeStyle = q.kind === "qurazy" ? "#d580ff" : "#ffffff";
+    ctx.lineWidth = 2.5;
+    ctx.fillStyle = q.kind === "qurazy" ? "rgba(180,80,255,0.45)" : "rgba(255,255,255,0.28)";
+    ctx.beginPath();
+    ctx.arc(0, 0, q.kind === "qurazy" ? 18 : 14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(q.kind === "qurazy" ? "❗" : "✦", 0, 4);
+    ctx.restore();
+  });
+
+  // 9. Cubimals Racing
+  State.cubimals.forEach(c => {
+    ctx.save();
+    ctx.translate(c.x, c.y - 12);
+    ctx.fillStyle = c.kind === "chick_cubimal" ? "#f1c40f" : "#bdc3c7";
+    ctx.fillRect(-10, -10, 20, 20);
+    ctx.strokeStyle = "#333";
+    ctx.strokeRect(-10, -10, 20, 20);
+    ctx.restore();
+  });
+
+  // 10. Other Players / Bots on this Street
+  Object.values(State.otherPlayers).forEach(op => {
+    if (op.street === State.streetId) {
+      drawGlitchenAvatar(ctx, op, false);
+    }
+  });
+
+  // 11. Local Player Avatar
+  drawGlitchenAvatar(ctx, {
+    id: State.playerId,
+    name: p.name,
+    x: p.x,
+    y: p.y,
+    dir: p.dir,
+    anim: p.anim,
+    scale: p.scale,
+    thrillerTimer: p.thrillerTimer,
+    musicIconTimer: p.musicIconTimer,
+    appearance: p.appearance
+  }, true);
+
+  // 12. Particles
+  State.particles.forEach(pt => {
+    ctx.save();
+    ctx.fillStyle = pt.color;
+    ctx.translate(pt.x, pt.y);
+    ctx.beginPath();
+    ctx.arc(0, 0, pt.kind === "sparkle" ? 4 : 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+
+  // 13. Floating Texts
+  State.floatingTexts.forEach(ft => {
+    ctx.save();
+    ctx.font = "bold 14px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "rgba(0,0,0,0.65)";
+    ctx.fillText(ft.text, ft.x + 1, ft.y + 1);
+    ctx.fillStyle = ft.color;
+    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.restore();
+  });
+
+  ctx.restore();
+
+  // 14. Update Minimap
+  drawMinimap(st);
+}
+
+function drawParallaxBackground(ctx, W, H, st, camX, camY) {
+  if (st.style === "lost_woods") {
+    // Spooky dark forest from Video A 00:00
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#3b4642");
+    grad.addColorStop(0.65, "#111615");
+    grad.addColorStop(1, "#050707");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Distant silhouetted bare trees (parallax 0.25)
+    ctx.fillStyle = "#18201e";
+    for (let i = 0; i < 12; i++) {
+      const tx = ((i * 260 - camX * 0.25) % (W + 400)) - 100;
+      ctx.fillRect(tx, 60, 26, H);
+    }
+    // Midground gnarled dark trees (parallax 0.5)
+    ctx.fillStyle = "#0b0e0d";
+    for (let i = 0; i < 9; i++) {
+      const tx = ((i * 340 - camX * 0.5) % (W + 500)) - 120;
+      ctx.fillRect(tx, 40, 42, H);
+      ctx.beginPath();
+      ctx.moveTo(tx + 20, 180);
+      ctx.lineTo(tx - 60, 90);
+      ctx.lineTo(tx - 45, 80);
+      ctx.lineTo(tx + 25, 150);
+      ctx.fill();
+    }
+  } else if (st.style === "vorn_road") {
+    // Snowy winter theme from Video A 32:06
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#bfe3f2");
+    grad.addColorStop(0.65, "#eef7fa");
+    grad.addColorStop(1, "#ffffff");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Snowy hills & pines
+    ctx.fillStyle = "#d9edf5";
+    ctx.beginPath();
+    ctx.ellipse(W * 0.3 - (camX * 0.2) % 400, H * 0.72, 420, 120, 0, 0, Math.PI * 2);
+    ctx.ellipse(W * 0.8 - (camX * 0.2) % 400, H * 0.72, 460, 140, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    for (let i = 0; i < 10; i++) {
+      const px = ((i * 240 - camX * 0.45) % (W + 300)) - 80;
+      ctx.fillStyle = "#5f8c78";
+      ctx.beginPath();
+      ctx.moveTo(px, 210); ctx.lineTo(px - 36, 370); ctx.lineTo(px + 36, 370);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.moveTo(px, 210); ctx.lineTo(px - 22, 290); ctx.lineTo(px + 22, 290);
+      ctx.fill();
+    }
+  } else if (st.style === "savanna") {
+    // Andra savanna grassland from Video B 00:06 & 05:44
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, "#eef5d8");
+    grad.addColorStop(0.55, "#c5d18c");
+    grad.addColorStop(1, "#878f50");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Rolling savanna hills
+    ctx.fillStyle = "#9da860";
+    for (let i = 0; i < 6; i++) {
+      const hx = ((i * 450 - camX * 0.3) % (W + 600)) - 150;
+      ctx.beginPath();
+      ctx.ellipse(hx, H * 0.75, 340, 110, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (st.style === "cavern") {
+    // Goli Grabs rocky cavern from Video A 24:39
+    ctx.fillStyle = "#4d3e30";
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = "#3b2f24";
+    for (let i = 0; i < 8; i++) {
+      const cx = ((i * 320 - camX * 0.35) % (W + 400)) - 100;
+      ctx.beginPath();
+      ctx.ellipse(cx, H * 0.5, 160, 260, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (st.style === "office") {
+    // Andra Bureaucratic Hall interior from Video B 03:38
+    ctx.fillStyle = "#cbd1be";
+    ctx.fillRect(0, 0, W, H);
+  }
+}
+
+function drawStreetGround(ctx, st) {
+  if (st.style === "lost_woods") {
+    ctx.fillStyle = "#040505";
+    ctx.fillRect(0, st.groundY - 12, st.width, 300);
+  } else if (st.style === "vorn_road") {
+    ctx.fillStyle = "#638c38";
+    ctx.fillRect(0, st.groundY - 10, st.width, 300);
+    ctx.fillStyle = "#ffffff";
+    for (let x = 40; x < st.width; x += 140) {
+      ctx.beginPath();
+      ctx.ellipse(x, st.groundY + 10, 55, 16, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (st.style === "savanna") {
+    ctx.fillStyle = "#8c874c";
+    ctx.fillRect(0, st.groundY - 12, st.width, 300);
+    ctx.fillStyle = "#a39c62";
+    for (let x = 100; x < st.width; x += 260) {
+      ctx.beginPath();
+      ctx.ellipse(x, st.groundY + 8, 90, 18, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  } else if (st.style === "cavern") {
+    ctx.fillStyle = "#594836";
+    ctx.fillRect(0, st.groundY - 12, st.width, 300);
+  } else if (st.style === "office") {
+    ctx.fillStyle = "#b8b497";
+    ctx.fillRect(0, st.groundY - 12, st.width, 300);
+    ctx.fillStyle = "#8a866d";
+    ctx.fillRect(0, st.groundY - 18, st.width, 6);
+  }
+}
+
+function drawStreetBuildings(ctx, st) {
+  if (st.id === "beau_home") {
+    // Whimsical crooked multi-story blue/purple house from Video A 00:01 & 09:18
+    ctx.save();
+    const hx = 470, hy = st.groundY;
+    // First floor
+    ctx.fillStyle = "#2b5b78";
+    ctx.strokeStyle = "#172e3d";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(hx - 95, hy);
+    ctx.lineTo(hx - 105, hy - 95);
+    ctx.lineTo(hx + 95, hy - 90);
+    ctx.lineTo(hx + 80, hy);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Second story (tilted)
+    ctx.fillStyle = "#387ca3";
+    ctx.beginPath();
+    ctx.moveTo(hx - 85, hy - 92);
+    ctx.lineTo(hx - 100, hy - 180);
+    ctx.lineTo(hx + 75, hy - 175);
+    ctx.lineTo(hx + 85, hy - 90);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Third story / attic tower
+    ctx.fillStyle = "#5c4b78";
+    ctx.beginPath();
+    ctx.moveTo(hx - 55, hy - 178);
+    ctx.lineTo(hx - 40, hy - 255);
+    ctx.lineTo(hx + 60, hy - 250);
+    ctx.lineTo(hx + 50, hy - 175);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Glowing windows & front door
+    ctx.fillStyle = "#ffdf80";
+    ctx.fillRect(hx - 65, hy - 150, 32, 36);
+    ctx.fillRect(hx + 15, hy - 145, 28, 32);
+    // Door
+    ctx.fillStyle = "#6e3b28";
+    ctx.beginPath();
+    ctx.roundRect(hx - 24, hy - 72, 48, 72, [22, 22, 0, 0]);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#9be3de";
+    ctx.beginPath();
+    ctx.arc(hx, hy - 46, 12, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  } else if (st.id === "chego_chase") {
+    // Stone pyramid-like Bureau of Administrative Affairs / Ministry of Departments (Video B 00:18, 02:29)
+    const bx = 360, by = st.groundY;
+    ctx.save();
+    ctx.fillStyle = "#d4cfc2";
+    ctx.strokeStyle = "#8c8678";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(bx - 180, by);
+    ctx.lineTo(bx - 120, by - 210);
+    ctx.lineTo(bx + 220, by - 210);
+    ctx.lineTo(bx + 290, by);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Carved circular bird emblem & title text
+    ctx.fillStyle = "#a39d8f";
+    ctx.beginPath();
+    ctx.arc(bx - 40, by - 95, 36, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = "#595347";
+    ctx.font = "bold 16px Georgia, serif";
+    ctx.fillText("Bureau of Administrative Affairs", bx - 60, by - 165);
+    ctx.fillText("Ministry of Departments", bx - 40, by - 142);
+
+    // Teal-framed double doors
+    ctx.fillStyle = "#7a583b";
+    ctx.strokeStyle = "#3bb2c4";
+    ctx.lineWidth = 4;
+    ctx.fillRect(bx + 20, by - 95, 80, 95);
+    ctx.strokeRect(bx + 20, by - 95, 80, 95);
+    ctx.restore();
+  } else if (st.id === "andra_hall") {
+    // Interior of Andra Bureaucratic Hall (Video B 03:38 - 05:28)
+    const gy = st.groundY;
+    ctx.save();
+    ctx.fillStyle = "#5c5749";
+    ctx.font = "bold 18px Georgia, serif";
+    ctx.fillText("Department of Administrative Affairs", 260, gy - 175);
+    ctx.fillText("Ministry of Departments", 310, gy - 150);
+
+    // Exit door on left
+    ctx.fillStyle = "#a8d8e6";
+    ctx.strokeStyle = "#7a583b";
+    ctx.lineWidth = 5;
+    ctx.fillRect(72, gy - 105, 75, 105);
+    ctx.strokeRect(72, gy - 105, 75, 105);
+
+    // Desk on left
+    ctx.fillStyle = "#c2b59b";
+    ctx.fillRect(280, gy - 45, 180, 12);
+    ctx.fillRect(295, gy - 33, 8, 33);
+    ctx.fillRect(440, gy - 33, 8, 33);
+
+    // WAITING AREA sign & 4 orange chairs (Video B 03:48)
+    ctx.fillStyle = "#333";
+    ctx.strokeStyle = "#fff";
+    ctx.fillRect(640, gy - 165, 95, 42);
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 11px sans-serif";
+    ctx.fillText("WAITING", 662, gy - 147);
+    ctx.fillText("AREA", 670, gy - 132);
+
+    [580, 650, 720, 790].forEach(cx => {
+      ctx.fillStyle = "#d97941";
+      ctx.beginPath();
+      ctx.roundRect(cx - 18, gy - 58, 36, 34, 6);
+      ctx.fill();
+      ctx.strokeStyle = "#555";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cx - 14, gy - 24); ctx.lineTo(cx - 18, gy);
+      ctx.moveTo(cx + 14, gy - 24); ctx.lineTo(cx + 18, gy);
+      ctx.stroke();
+    });
+
+    // Filing cabinets on right
+    ctx.fillStyle = "#8c8f84";
+    ctx.fillRect(920, gy - 120, 55, 120);
+    ctx.fillRect(1190, gy - 120, 55, 120);
+    ctx.restore();
+  }
+}
+
+function drawSignpost(ctx, ex) {
+  ctx.save();
+  ctx.translate(ex.x, ex.y);
+  const isLeft = ex.x < 400;
+  // Wooden post & finial cap
+  ctx.fillStyle = "#5c4328";
+  ctx.strokeStyle = "#2d1f11";
+  ctx.lineWidth = 2;
+  ctx.fillRect(-6, -112, 12, 112);
+  ctx.strokeRect(-6, -112, 12, 112);
+  ctx.beginPath();
+  ctx.arc(0, -116, 8, 0, Math.PI * 2);
+  ctx.fill(); ctx.stroke();
+
+  // Split adjacent street names into directional arrow signboards
+  const parts = String(ex.label).split("/").map(s => s.trim());
+  parts.forEach((lbl, idx) => {
+    const sy = -102 + idx * 32;
+    ctx.fillStyle = idx === 0 ? "#6e4e2e" : "#593e23";
+    ctx.strokeStyle = "#d4b483";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    if (isLeft) {
+      ctx.moveTo(58, sy);
+      ctx.lineTo(-56, sy);
+      ctx.lineTo(-74, sy + 12);
+      ctx.lineTo(-56, sy + 24);
+      ctx.lineTo(58, sy + 24);
+    } else {
+      ctx.moveTo(-58, sy);
+      ctx.lineTo(56, sy);
+      ctx.lineTo(74, sy + 12);
+      ctx.lineTo(56, sy + 24);
+      ctx.lineTo(-58, sy + 24);
+    }
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    ctx.fillStyle = "#fff8e7";
+    ctx.font = "bold 11px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText((isLeft ? "← " : "") + lbl + (!isLeft ? " →" : ""), 0, sy + 16);
+  });
+  ctx.restore();
+}
+
+function drawResource(ctx, res) {
+  ctx.save();
+  ctx.translate(res.x, res.y);
+  if (res.type === "wood_tree") {
+    // Quirky branching Wood Tree (Video A 02:27)
+    ctx.fillStyle = "#7d6b38";
+    ctx.strokeStyle = "#3d3419";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(-12, 0);
+    ctx.lineTo(-8, -75);
+    ctx.lineTo(-28, -60);
+    ctx.lineTo(-24, -72);
+    ctx.lineTo(-4, -92);
+    ctx.lineTo(6, -92);
+    ctx.lineTo(26, -70);
+    ctx.lineTo(22, -58);
+    ctx.lineTo(8, -72);
+    ctx.lineTo(12, 0);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+  } else if (res.type === "fruit_tree") {
+    // Pink blossom Fruit Tree (Video A 01:51 & Video B 06:05)
+    ctx.fillStyle = "#5c3d28";
+    ctx.fillRect(-8, -45, 16, 45);
+    const puffs = [[-28, -65, 26], [28, -65, 26], [0, -88, 32], [-18, -95, 24], [18, -95, 24], [0, -62, 28]];
+    puffs.forEach(([px, py, r]) => {
+      ctx.fillStyle = "#f7b2bd";
+      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#e84a5f";
+      ctx.beginPath(); ctx.arc(px + 5, py - 4, 4, 0, Math.PI * 2); ctx.fill();
+    });
+  } else if (res.type === "gas_plant") {
+    // Red/blue ornate Gas Plant (Video A 01:43)
+    ctx.strokeStyle = "#b83b2b";
+    ctx.lineWidth = 4;
+    for (let i = -2; i <= 2; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(i * 22, -45, i * 28, -85);
+      ctx.stroke();
+      ctx.fillStyle = "#70c4cf";
+      ctx.beginPath();
+      ctx.arc(i * 28, -85, 9, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+  } else if (res.type === "beryl_rock") {
+    // Faceted teal Beryl Rock (Video A 01:48 & 08:25)
+    ctx.fillStyle = "#3bb29b";
+    ctx.strokeStyle = "#1c6b5b";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(-26, 0);
+    ctx.lineTo(-30, -38);
+    ctx.lineTo(-10, -68);
+    ctx.lineTo(14, -64);
+    ctx.lineTo(28, -32);
+    ctx.lineTo(24, 0);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "rgba(255,255,255,0.25)";
+    ctx.beginPath();
+    ctx.moveTo(-10, -68); ctx.lineTo(0, -32); ctx.lineTo(-26, 0);
+    ctx.fill();
+  } else if (res.type === "dirt_pile") {
+    // Lumpy brown Dirt Pile (Video B 06:21)
+    ctx.fillStyle = "#6e5239";
+    ctx.strokeStyle = "#473423";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(-18, -12, 16, 0, Math.PI * 2);
+    ctx.arc(0, -20, 20, 0, Math.PI * 2);
+    ctx.arc(18, -12, 15, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+  } else if (res.type === "tower_project") {
+    // Wooden scaffolding Tower construction project (Video A 02:33 & 03:49)
+    ctx.strokeStyle = "#8c5828";
+    ctx.fillStyle = "#b87a3d";
+    ctx.lineWidth = 4;
+    ctx.strokeRect(-55, -42, 110, 42);
+    for (let x = -45; x <= 45; x += 22) {
+      ctx.fillRect(x - 3, -48, 6, 48);
+    }
+    ctx.fillStyle = "#fff";
+    ctx.strokeStyle = "#333";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(-32, -74, 64, 20, 5);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#222";
+    ctx.font = "bold 11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(`${res.progress}%`, 0, -60);
+  } else if (res.type === "water_cooler") {
+    // Office Water Cooler (Video B 03:50)
+    ctx.fillStyle = "#f2f4f0";
+    ctx.strokeStyle = "#95a5a6";
+    ctx.lineWidth = 2;
+    ctx.fillRect(-16, -48, 32, 48);
+    ctx.strokeRect(-16, -48, 32, 48);
+    ctx.fillStyle = "rgba(116, 185, 255, 0.65)";
+    ctx.beginPath();
+    ctx.roundRect(-13, -84, 26, 36, 8);
+    ctx.fill(); ctx.stroke();
+  } else if (res.type === "ground_bag") {
+    ctx.fillStyle = "#2ecc71";
+    ctx.beginPath();
+    ctx.arc(0, -14, 14, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawNPC(ctx, npc) {
+  ctx.save();
+  ctx.translate(npc.x, npc.y);
+  if (npc.type === "magic_rock") {
+    // Smiling floating blue Magic Rock on pedestal (Video A 01:43)
+    const bob = Math.sin(simTick * 0.06) * 3;
+    ctx.fillStyle = "#7f8c8d";
+    ctx.fillRect(-16, -12, 32, 12);
+    ctx.fillStyle = "#7ed6df";
+    ctx.strokeStyle = "#22a6b3";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(-14, -44 + bob, 28, 30, 10);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#130f40";
+    ctx.beginPath();
+    ctx.arc(-5, -32 + bob, 2.2, 0, Math.PI * 2);
+    ctx.arc(5, -32 + bob, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "butler") {
+    // Little grey Butler Roy (Video A 01:20)
+    ctx.fillStyle = "#2c3e50";
+    ctx.fillRect(-9, -30, 18, 22);
+    ctx.fillStyle = "#bdc3c7";
+    ctx.beginPath();
+    ctx.arc(0, -42, 13, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#222";
+    ctx.beginPath();
+    ctx.arc(-4, -43, 2, 0, Math.PI * 2);
+    ctx.arc(4, -43, 2, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "shrine") {
+    // Stone basin Shrine (Video B 00:53 & 05:58)
+    ctx.fillStyle = "#dcdde1";
+    ctx.strokeStyle = "#7f8fa6";
+    ctx.lineWidth = 2;
+    ctx.fillRect(-24, -22, 48, 22);
+    ctx.strokeRect(-24, -22, 48, 22);
+    ctx.fillRect(-14, -52, 28, 30);
+    ctx.strokeRect(-14, -52, 28, 30);
+    ctx.beginPath();
+    ctx.ellipse(0, -56, 30, 10, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+  } else if (npc.type === "vendor") {
+    // Wooden tiki Street Spirit with pot on head (Video B 05:49)
+    ctx.fillStyle = "#6e472b";
+    ctx.beginPath();
+    ctx.roundRect(-20, -45, 40, 45, 10);
+    ctx.fill();
+    ctx.fillStyle = "#c2b280";
+    ctx.beginPath();
+    ctx.ellipse(0, -52, 16, 8, 0, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "chicken") {
+    // White Chicken (Video B 05:56)
+    const hop = Math.abs(Math.sin(simTick * 0.12)) * 4;
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.ellipse(0, -14 - hop, 13, 10, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#e74c3c";
+    ctx.beginPath();
+    ctx.arc(6, -24 - hop, 4, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "piggy") {
+    // Pink Piggy
+    ctx.fillStyle = "#ff9ff3";
+    ctx.beginPath();
+    ctx.ellipse(0, -15, 18, 13, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#f368e0";
+    ctx.beginPath();
+    ctx.ellipse(14, -14, 5, 4, 0, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "butterfly") {
+    // Blue fluttering Butterfly (Video B 00:11)
+    const bx = Math.sin(simTick * 0.05 + npc.x) * 18;
+    const by = Math.cos(simTick * 0.08) * 10;
+    ctx.fillStyle = "#48dbfb";
+    ctx.beginPath();
+    ctx.ellipse(bx - 6, by, 7, 4, 0.4, 0, Math.PI * 2);
+    ctx.ellipse(bx + 6, by, 7, 4, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+  } else if (npc.type === "bureaucrat") {
+    // Frog/Lizard Bureaucrats in suits (Video B 04:33 & 05:11)
+    ctx.fillStyle = npc.role === "director" ? "#2c2c54" : "#3d3d3d";
+    ctx.fillRect(-12, -36, 24, 28);
+    ctx.fillStyle = "#6ab04c";
+    ctx.beginPath();
+    ctx.ellipse(0, -46, 16, 12, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#c0392b";
+    ctx.fillRect(-2, -34, 4, 14); // red tie
+    ctx.fillStyle = "#fff";
+    ctx.beginPath();
+    ctx.arc(-5, -48, 3.5, 0, Math.PI * 2);
+    ctx.arc(5, -48, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#111";
+    ctx.beginPath();
+    ctx.arc(-5, -48, 1.5, 0, Math.PI * 2);
+    ctx.arc(5, -48, 1.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    const bbl = State.chatBubbles[npc.id];
+    if (bbl) drawSpeechBubble(ctx, 0, -78, bbl.text);
+  }
+  ctx.restore();
+}
+
+function drawGlitchenAvatar(ctx, av, isSelf) {
+  const ap = av.appearance || {
+    skinColor: av.skinColor || "#fce2c4",
+    hairColor: av.hairColor || "#f5e06b",
+    shirtColor: av.shirtColor || "#1f2428",
+    pantsColor: av.pantsColor || "#1a1d20",
+    shoeColor: "#e74c3c",
+    hat: av.hat || "none",
+    eyeScale: 1.0,
+    heightScale: 1.0
+  };
+  const scale = (av.scale || 1.0) * (ap.heightScale || 1.0);
+  const isThriller = (av.thrillerTimer || 0) > 0;
+  const isWalking = av.anim === "walk";
+  const walkCycle = isWalking ? Math.sin(simTick * 0.28) : 0;
+  const thrillerCycle = isThriller ? Math.sin(simTick * 0.25) : 0;
+
+  ctx.save();
+  ctx.translate(av.x, av.y);
+
+  // Blue aura glow during Thriller or buff (Video A 29:57)
+  if (isThriller) {
+    ctx.fillStyle = "rgba(72, 219, 251, 0.28)";
+    ctx.beginPath();
+    ctx.ellipse(0, -38 * scale, 28 * scale, 46 * scale, 0, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.scale((av.dir || 1) * scale, scale);
+
+  // Legs & Shoes
+  ctx.strokeStyle = ap.pantsColor;
+  ctx.lineWidth = 6;
+  ctx.beginPath();
+  ctx.moveTo(-5, -18); ctx.lineTo(-5 + walkCycle * 7, 0);
+  ctx.moveTo(5, -18); ctx.lineTo(5 - walkCycle * 7, 0);
+  ctx.stroke();
+
+  ctx.fillStyle = ap.shoeColor || "#e74c3c";
+  ctx.fillRect(-8 + walkCycle * 7, -4, 9, 4);
+  ctx.fillRect(2 - walkCycle * 7, -4, 9, 4);
+
+  // Torso
+  ctx.fillStyle = ap.hat === "censor_bar" ? ap.skinColor : ap.shirtColor;
+  ctx.beginPath();
+  ctx.roundRect(-11, -42, 22, 25, 5);
+  ctx.fill();
+
+  // Optional Censor Bar (Video A 17:56 & 20:43)
+  if (ap.hat === "censor_bar") {
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(-15, -34, 30, 12);
+  }
+
+  // Optional Dinosaur Ride mount (Video A 07:40 & 16:40)
+  if (ap.hat === "dino_ride") {
+    ctx.fillStyle = "#6ab04c";
+    ctx.beginPath();
+    ctx.roundRect(-22, -28, 44, 18, 8);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(20, -34, 10, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Arms (zombie outstretched arms when Thriller active!)
+  ctx.strokeStyle = ap.skinColor;
+  ctx.lineWidth = 4.5;
+  ctx.beginPath();
+  if (isThriller) {
+    ctx.moveTo(-6, -36); ctx.lineTo(18, -38 + thrillerCycle * 6);
+    ctx.moveTo(6, -36); ctx.lineTo(20, -32 - thrillerCycle * 6);
+  } else {
+    ctx.moveTo(-9, -38); ctx.lineTo(-12 - walkCycle * 5, -22);
+    ctx.moveTo(9, -38); ctx.lineTo(12 + walkCycle * 5, -22);
+  }
+  ctx.stroke();
+
+  // Tool in hand if watering or mining (Video A 03:48, 08:26)
+  if (av.anim === "water") {
+    ctx.fillStyle = "#5bc0de";
+    ctx.fillRect(12, -32, 14, 10);
+  } else if (av.anim === "mine") {
+    ctx.strokeStyle = "#bdc3c7";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(12, -30); ctx.lineTo(24, -46 + Math.sin(simTick * 0.5) * 12);
+    ctx.stroke();
+  }
+
+  // Layered Coat / Cloak behind torso
+  if (ap.coat === "cape") {
+    ctx.fillStyle = ap.coatColor || "#7d3c98";
+    ctx.beginPath();
+    ctx.moveTo(-10, -42);
+    ctx.lineTo(-22, -10);
+    ctx.lineTo(-4, -12);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Layered Skirt or Dress
+  if (ap.dress === "emerald") {
+    ctx.fillStyle = "#27ae60";
+    ctx.beginPath();
+    ctx.moveTo(-11, -40);
+    ctx.lineTo(11, -40);
+    ctx.lineTo(16, -12);
+    ctx.lineTo(-16, -12);
+    ctx.closePath();
+    ctx.fill();
+  } else if (ap.skirt === "pleated") {
+    ctx.fillStyle = ap.skirtColor || "#c0392b";
+    ctx.beginPath();
+    ctx.moveTo(-11, -24);
+    ctx.lineTo(11, -24);
+    ctx.lineTo(16, -12);
+    ctx.lineTo(-16, -12);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Optional Piggy Ride mount
+  if (ap.hat === "piggy_ride") {
+    ctx.fillStyle = "#ff9ff3";
+    ctx.beginPath();
+    ctx.roundRect(-22, -28, 44, 18, 9);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(20, -32, 10, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Large Expressive Cartoon Head + Ears
+  ctx.fillStyle = ap.skinColor;
+  ctx.strokeStyle = "rgba(80,50,35,0.35)";
+  ctx.lineWidth = 1.5;
+  // Ears
+  ctx.beginPath();
+  if (ap.ears === "elven") {
+    ctx.moveTo(-16, -58); ctx.lineTo(-26, -65); ctx.lineTo(-16, -52);
+  } else {
+    ctx.arc(-17, -56, 5, 0, Math.PI * 2);
+  }
+  ctx.fill(); ctx.stroke();
+
+  // Head oval
+  ctx.beginPath();
+  ctx.ellipse(0, -60, 19, 20, 0, 0, Math.PI * 2);
+  ctx.fill(); ctx.stroke();
+
+  if (ap.hat === "caterpillar_mask") {
+    // Imperial Caterpillar Mask (Video A 07:19 & 23:44)
+    ctx.fillStyle = "#3d4a2d";
+    ctx.strokeStyle = "#1e2615";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.ellipse(0, -61, 21, 22, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#f1c40f";
+    ctx.beginPath();
+    ctx.arc(5, -62, 4, 0, Math.PI * 2);
+    ctx.arc(14, -62, 3.5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#ecf0f1";
+    for (let t = -10; t <= 10; t += 5) {
+      ctx.fillRect(t, -49, 3, 6);
+    }
+  } else {
+    // Layered Cartoon Hair
+    ctx.fillStyle = ap.hairColor;
+    ctx.beginPath();
+    ctx.arc(0, -64, 19.5, Math.PI * 0.95, Math.PI * 2.05);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.roundRect(-19, -65, 9, 25, 4);
+    ctx.fill();
+
+    // Eyebrows & Eyes
+    const es = ap.eyeScale || 1.0;
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(5, -60, 4.6 * es, 0, Math.PI * 2);
+    ctx.arc(14, -60, 4.2 * es, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#1e272e";
+    ctx.beginPath();
+    ctx.arc(6, -60, 2.2 * es, 0, Math.PI * 2);
+    ctx.arc(15, -60, 2.0 * es, 0, Math.PI * 2);
+    ctx.fill();
+    // Eye highlights
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(5, -61.5, 1.0, 0, Math.PI * 2);
+    ctx.arc(14, -61.5, 1.0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Customizable Cartoon Nose
+    ctx.fillStyle = "#e8be99";
+    ctx.strokeStyle = "#8c5a3c";
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    if (ap.nose === "pointed") {
+      ctx.moveTo(10, -58); ctx.lineTo(17, -54); ctx.lineTo(10, -53);
+    } else {
+      ctx.arc(11, -55, 2.6, 0, Math.PI * 2);
+    }
+    ctx.fill(); ctx.stroke();
+
+    // Customizable Cartoon Mouth
+    ctx.strokeStyle = "#6e473b";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    if (ap.mouth === "o") {
+      ctx.arc(9, -49, 3, 0, Math.PI * 2);
+    } else {
+      ctx.arc(8, -51, 4.5, 0.1, Math.PI - 0.15);
+    }
+    ctx.stroke();
+
+    // Red Top Hat (Video B 00:06)
+    if (ap.hat === "top_hat") {
+      ctx.fillStyle = "#b32424";
+      ctx.fillRect(-20, -76, 40, 5);
+      ctx.fillRect(-13, -98, 26, 22);
+      ctx.fillStyle = "#111";
+      ctx.fillRect(-13, -80, 26, 4);
+    }
+  }
+
+  ctx.restore();
+
+  // Floating Musicblock Speaker Icon (Video A 50:40)
+  if ((av.musicIconTimer || 0) > 0) {
+    ctx.save();
+    ctx.translate(av.x, av.y - 98 * scale + Math.sin(simTick * 0.12) * 4);
+    ctx.fillStyle = "#f39c12";
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(-14, -14, 28, 24, 6);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#222";
+    ctx.font = "14px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("🔊", 0, 3);
+    ctx.restore();
+  }
+
+  // Nameplate
+  ctx.save();
+  ctx.font = "bold 11px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillStyle = isSelf ? "#a8e6cf" : "#ffffff";
+  ctx.fillText(av.name, av.x, av.y - 82 * scale);
+
+  // Speech bubble if active
+  const bbl = State.chatBubbles[av.id];
+  if (bbl) {
+    drawSpeechBubble(ctx, av.x, av.y - 105 * scale, bbl.text);
+  }
+  ctx.restore();
+}
+
+function drawSpeechBubble(ctx, x, y, text) {
+  ctx.save();
+  ctx.font = "12px 'Trebuchet MS', sans-serif";
+  const pad = 10;
+  const tw = Math.min(220, ctx.measureText(text).width + pad * 2);
+  const bx = x - tw / 2;
+  const by = y - 28;
+  ctx.fillStyle = "rgba(255, 255, 255, 0.94)";
+  ctx.strokeStyle = "#8fa893";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.roundRect(bx, by, tw, 26, 8);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = "#1e272e";
+  ctx.textAlign = "center";
+  ctx.fillText(text.length > 32 ? text.slice(0, 30) + "…" : text, x, by + 17);
+  ctx.restore();
+}
+
+function drawMinimap(st) {
+  const mc = document.getElementById("minimap-canvas");
+  const mctx = mc.getContext("2d");
+  mctx.clearRect(0, 0, mc.width, mc.height);
+  mctx.fillStyle = "#2f383d";
+  mctx.fillRect(0, 0, mc.width, mc.height);
+  mctx.fillStyle = "#6c7a73";
+  mctx.fillRect(4, 19, mc.width - 8, 2);
+
+  // Other players dots
+  Object.values(State.otherPlayers).forEach(op => {
+    if (op.street === State.streetId) {
+      const mx = (op.x / st.width) * (mc.width - 8) + 4;
+      mctx.fillStyle = "#f1c40f";
+      mctx.fillRect(mx - 1.5, 13, 3, 5);
+    }
+  });
+
+  // Self dot
+  const sx = (State.player.x / st.width) * (mc.width - 8) + 4;
+  mctx.fillStyle = "#6db33f";
+  mctx.beginPath();
+  mctx.arc(sx, 14, 3.5, 0, Math.PI * 2);
+  mctx.fill();
+}
+
+function drawPortrait() {
+  const pc = document.getElementById("portrait-canvas");
+  const pctx = pc.getContext("2d");
+  pctx.clearRect(0, 0, 40, 40);
+  drawGlitchenAvatar(pctx, {
+    id: "portrait",
+    name: "",
+    x: 18,
+    y: 58,
+    dir: 1,
+    scale: 0.85,
+    appearance: State.player.appearance
+  }, false);
+}
+
+// --- Boot & Main 60Hz Loop ---
+drawPortrait();
+renderInventory();
+updateHUD();
+updateOnlineListUI();
+connectWebSocket();
+
+addChatMessage(null, "Welcome to Giants' Reverie! Click any tree, rock, shrine, vendor, or player to interact.", "sys");
+addChatMessage("GOD", "Explore all 5 streets via signposts, doors, or the World Map!", "god");
+
+let lastTime = performance.now();
+let accumulator = 0;
+const STEP = 1000 / 60;
+
+function frame(now) {
+  const dt = Math.min(100, now - lastTime);
+  lastTime = now;
+  accumulator += dt;
+  while (accumulator >= STEP) {
+    updateSimulation();
+    accumulator -= STEP;
+  }
+  renderScene();
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

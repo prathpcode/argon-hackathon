@@ -3,9 +3,9 @@
   "errors": [],
   "events": [
    {
-    "t": 96,
+    "t": 125,
     "type": "player_join",
-    "id": "p_4a835ac6-dc23-4182-8a4a-b6e72295d96d",
+    "id": "p_4d8d57ea-2ebb-4cc1-8ca1-bca1992067ae",
     "street": "beau_home",
     "online": true
    }
@@ -35,9 +35,9 @@
    "events": [
     [
      {
-      "t": 86,
+      "t": 186,
       "type": "player_join",
-      "id": "p_d75d871c-dca8-4c10-8b48-a67e27da73bd",
+      "id": "p_a2f39939-f6da-401d-8332-0b0d356a9919",
       "street": "beau_home",
       "online": true
      }
@@ -67,21 +67,21 @@
    "events": [
     [
      {
-      "t": 84,
+      "t": 161,
       "type": "player_join",
-      "id": "p_79508571-e487-4754-9bc9-dfd60432ed84",
+      "id": "p_a46000d5-1488-4e9b-89e2-dd5852cb166c",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 4519,
+      "t": 4568,
       "type": "item_use",
       "item": "pumpkin_ale",
       "verb": "Drink",
       "street": "beau_home"
      },
      {
-      "t": 4692,
+      "t": 4743,
       "type": "meter_change",
       "energy": 435,
       "mood": 469,
@@ -109,14 +109,14 @@
    "events": [
     [
      {
-      "t": 66,
+      "t": 149,
       "type": "player_join",
-      "id": "p_bc0d568c-4d48-4b18-a888-26775057895b",
+      "id": "p_2638a3d7-2486-4893-9128-6876251d2ee6",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 5758,
+      "t": 5772,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -149,21 +149,21 @@
    "events": [
     [
      {
-      "t": 82,
+      "t": 177,
       "type": "player_join",
-      "id": "p_da0130bf-f54d-4779-96c2-51a65d2cba55",
+      "id": "p_ba59d30c-0acd-4126-ab53-2361dde349e9",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3100,
+      "t": 3157,
       "type": "item_use",
       "item": "essence_purple",
       "verb": "Sip (Shrink)",
       "street": "beau_home"
      },
      {
-      "t": 4491,
+      "t": 4555,
       "type": "item_use",
       "item": "essence_purple",
       "verb": "Drink (Embiggen)",
@@ -190,9 +190,9 @@
    "events": [
     [
      {
-      "t": 51,
+      "t": 48,
       "type": "player_join",
-      "id": "p_43904406-ba48-4187-b49e-ac61002a7fb0",
+      "id": "p_2311fccc-8953-43bb-b878-79fb5ef23508",
       "street": "beau_home",
       "online": true
      }
@@ -217,9 +217,9 @@
    "events": [
     [
      {
-      "t": 49,
+      "t": 44,
       "type": "player_join",
-      "id": "p_d103a743-33a4-4726-916d-9cba89631512",
+      "id": "p_f1651691-e1dd-46d2-b4ab-705708ea6a88",
       "street": "beau_home",
       "online": true
      }
@@ -244,9 +244,9 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 44,
       "type": "player_join",
-      "id": "p_b4e9e706-a0fc-427c-b69f-6a754a1551b7",
+      "id": "p_1cc4ff64-27fd-4274-b90b-1de92bfb52a1",
       "street": "beau_home",
       "online": true
      }
@@ -271,14 +271,14 @@
    "events": [
     [
      {
-      "t": 46,
+      "t": 43,
       "type": "player_join",
-      "id": "p_1ac3a7e5-3659-43c7-bf46-e6ea6e569dcc",
+      "id": "p_36fdbed1-989b-4c84-9346-c968b9020e14",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3616,
+      "t": 3646,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -286,7 +286,7 @@
       "currants": 1441
      },
      {
-      "t": 3618,
+      "t": 3648,
       "type": "street_change",
       "street": "chego_chase",
       "name": "Chego Chase in Andra"
@@ -312,14 +312,14 @@
    "events": [
     [
      {
-      "t": 54,
+      "t": 57,
       "type": "player_join",
-      "id": "p_8f50d81a-bf55-46aa-9f36-836ab7acf4d8",
+      "id": "p_e9894c41-4ad0-4814-819f-22a0b5fa9a4d",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2683,
+      "t": 2686,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -327,13 +327,13 @@
       "currants": 1441
      },
      {
-      "t": 2683,
+      "t": 2686,
       "type": "street_change",
       "street": "chego_chase",
       "name": "Chego Chase in Andra"
      },
      {
-      "t": 3694,
+      "t": 3697,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -341,7 +341,7 @@
       "currants": 1441
      },
      {
-      "t": 3694,
+      "t": 3697,
       "type": "street_change",
       "street": "andra_hall",
       "name": "Andra Bureaucratic Hall"
@@ -367,14 +367,14 @@
    "events": [
     [
      {
-      "t": 53,
+      "t": 55,
       "type": "player_join",
-      "id": "p_f024ce47-2d0c-43a0-8c68-685da777c4ca",
+      "id": "p_703e89c0-04f7-474d-8576-f9510d1100b9",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3612,
+      "t": 3745,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -382,7 +382,7 @@
       "currants": 1441
      },
      {
-      "t": 3613,
+      "t": 3746,
       "type": "street_change",
       "street": "goli_grabs",
       "name": "Goli Grabs in Kalavana"
@@ -415,12 +415,12 @@
      {
       "t": 42,
       "type": "player_join",
-      "id": "p_adc78852-5c1a-44d8-952b-2201532cfab9",
+      "id": "p_826d059f-d761-4584-8689-1112513df39c",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3634,
+      "t": 3647,
       "type": "meter_change",
       "energy": 425,
       "mood": 440,
@@ -428,7 +428,7 @@
       "currants": 1441
      },
      {
-      "t": 4056,
+      "t": 4069,
       "type": "meter_change",
       "energy": 425,
       "mood": 440,
@@ -436,13 +436,13 @@
       "currants": 1441
      },
      {
-      "t": 4057,
+      "t": 4070,
       "type": "street_change",
       "street": "goli_grabs",
       "name": "Goli Grabs in Kalavana"
      },
      {
-      "t": 5969,
+      "t": 6032,
       "type": "street_change",
       "street": "beau_home",
       "name": "Beau's Home Street"
@@ -457,9 +457,7 @@
     "home_street_butler_npc_menu_p0.mp4"
    ],
    "errors": [],
-   "step_errors": [
-    "step 4 click_text: Locator.click: Timeout 3000ms exceeded."
-   ],
+   "step_errors": [],
    "expects": [
     {
      "expect": "Clicking Butler Roy opens popup menu with Who visited?",
@@ -468,16 +466,16 @@
     },
     {
      "expect": "Butler Roy reports recent visitors in the chat log",
-     "ok": false,
-     "value": false
+     "ok": true,
+     "value": true
     }
    ],
    "events": [
     [
      {
-      "t": 43,
+      "t": 42,
       "type": "player_join",
-      "id": "p_a7e15ab3-f617-42b9-a5cc-f948664fefcb",
+      "id": "p_223dec55-80f4-45fd-8a57-aa2fd1f09de6",
       "street": "beau_home",
       "online": true
      }
@@ -502,14 +500,14 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 45,
       "type": "player_join",
-      "id": "p_3df27d7a-ec10-4f2f-8b42-1f590e09fb77",
+      "id": "p_eb518034-3598-47e6-93ae-5afb29708972",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 6300,
+      "t": 6550,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -544,12 +542,12 @@
      {
       "t": 43,
       "type": "player_join",
-      "id": "p_40127571-d1fc-4cf6-9135-230cb4ac94f3",
+      "id": "p_b3b6c279-404c-40fd-ae4e-fec6fa85659c",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2671,
+      "t": 2673,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -557,13 +555,13 @@
       "currants": 1441
      },
      {
-      "t": 2671,
+      "t": 2673,
       "type": "street_change",
       "street": "bongul_beat",
       "name": "Bongul Beat in Andra"
      },
      {
-      "t": 4149,
+      "t": 4169,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -596,14 +594,14 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 45,
       "type": "player_join",
-      "id": "p_2209adca-23b8-4953-a799-1b99239df767",
+      "id": "p_c659abc2-9ff4-4aab-bd6e-1219ffd4659a",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2673,
+      "t": 2674,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -611,13 +609,13 @@
       "currants": 1441
      },
      {
-      "t": 2673,
+      "t": 2675,
       "type": "street_change",
       "street": "bongul_beat",
       "name": "Bongul Beat in Andra"
      },
      {
-      "t": 3709,
+      "t": 3721,
       "type": "meter_change",
       "energy": 435,
       "mood": 441,
@@ -625,7 +623,7 @@
       "currants": 1441
      },
      {
-      "t": 5132,
+      "t": 5253,
       "type": "meter_change",
       "energy": 435,
       "mood": 445,
@@ -653,14 +651,14 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 43,
       "type": "player_join",
-      "id": "p_d0f4ec46-740e-4033-91cb-a376667dba41",
+      "id": "p_a2b46eb2-3681-4cc3-a5f3-98eabdcb6d63",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3433,
+      "t": 3233,
       "type": "item_use",
       "item": "chick_cubimal",
       "verb": "Set out",
@@ -692,14 +690,14 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 48,
       "type": "player_join",
-      "id": "p_67fb66db-f265-44c5-a718-77a7b0ff7879",
+      "id": "p_5b630b97-ffe3-4741-975b-4c8dab79c07a",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2671,
+      "t": 2676,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -707,13 +705,13 @@
       "currants": 1441
      },
      {
-      "t": 2672,
+      "t": 2676,
       "type": "street_change",
       "street": "andra_hall",
       "name": "Andra Bureaucratic Hall"
      },
      {
-      "t": 6449,
+      "t": 6533,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -721,7 +719,7 @@
       "currants": 1391
      },
      {
-      "t": 6449,
+      "t": 6534,
       "type": "meter_change",
       "energy": 460,
       "mood": 455,
@@ -749,14 +747,14 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 43,
       "type": "player_join",
-      "id": "p_90fc1f0d-f475-432d-a2fd-e674ea4f209a",
+      "id": "p_c677db09-eff2-4005-8ca5-e4862b5dcbc0",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2673,
+      "t": 2671,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -764,13 +762,13 @@
       "currants": 1441
      },
      {
-      "t": 2673,
+      "t": 2671,
       "type": "street_change",
       "street": "chego_chase",
       "name": "Chego Chase in Andra"
      },
      {
-      "t": 3716,
+      "t": 3717,
       "type": "meter_change",
       "energy": 435,
       "mood": 445,
@@ -800,14 +798,14 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 44,
       "type": "player_join",
-      "id": "p_7c50aa81-8b1b-4eca-a6d9-5e4294149933",
+      "id": "p_3b596b72-e96b-422b-be58-444f6dc7137a",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3006,
+      "t": 3084,
       "type": "meter_change",
       "energy": 433,
       "mood": 442,
@@ -815,7 +813,7 @@
       "currants": 1441
      },
      {
-      "t": 3006,
+      "t": 3084,
       "type": "meter_change",
       "energy": 458,
       "mood": 457,
@@ -823,7 +821,7 @@
       "currants": 1541
      },
      {
-      "t": 3007,
+      "t": 3084,
       "type": "harvest",
       "target": "wood_1",
       "action": "water",
@@ -854,9 +852,9 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 42,
       "type": "player_join",
-      "id": "p_089d0931-5ba9-4d5b-a377-1027eb4777d2",
+      "id": "p_3bd1c77c-1155-41ee-9e32-6f79ea48590b",
       "street": "beau_home",
       "online": true
      }
@@ -865,7 +863,7 @@
      {
       "t": 44,
       "type": "player_join",
-      "id": "p_435d0477-b39d-4189-9d1f-0068d8335156",
+      "id": "p_f8d1af09-5723-4ffb-a402-f2630c0a38b6",
       "street": "beau_home",
       "online": true
      }
@@ -890,14 +888,14 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 100,
       "type": "player_join",
-      "id": "p_242d346c-54cf-4470-a428-f3705b43f37d",
+      "id": "p_fa765568-ec6f-4a7a-8311-8a99f53d5431",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2986,
+      "t": 2687,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -905,13 +903,13 @@
       "currants": 1441
      },
      {
-      "t": 2986,
+      "t": 2687,
       "type": "street_change",
       "street": "bongul_beat",
       "name": "Bongul Beat in Andra"
      },
      {
-      "t": 4539,
+      "t": 3851,
       "type": "meter_change",
       "energy": 430,
       "mood": 440,
@@ -919,7 +917,7 @@
       "currants": 1441
      },
      {
-      "t": 4539,
+      "t": 3851,
       "type": "harvest",
       "target": "dirt_bb_1",
       "action": "dig",
@@ -946,14 +944,14 @@
    "events": [
     [
      {
-      "t": 46,
+      "t": 48,
       "type": "player_join",
-      "id": "p_a3cfc99f-7c75-4dac-9127-99b29532bb96",
+      "id": "p_8bc60aa5-c1f0-4a10-9bdb-67ecc0a83245",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2675,
+      "t": 2674,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -961,13 +959,13 @@
       "currants": 1441
      },
      {
-      "t": 2676,
+      "t": 2675,
       "type": "street_change",
       "street": "bongul_beat",
       "name": "Bongul Beat in Andra"
      },
      {
-      "t": 3367,
+      "t": 3363,
       "type": "meter_change",
       "energy": 435,
       "mood": 441,
@@ -975,7 +973,7 @@
       "currants": 1441
      },
      {
-      "t": 4129,
+      "t": 4131,
       "type": "meter_change",
       "energy": 435,
       "mood": 441,
@@ -1008,14 +1006,14 @@
    "events": [
     [
      {
-      "t": 49,
+      "t": 45,
       "type": "player_join",
-      "id": "p_0ac09859-ad68-402d-bba3-f64e5639b45b",
+      "id": "p_f4cbdc56-bea2-4e8d-aa62-5eb79c4a549f",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3119,
+      "t": 3171,
       "type": "item_use",
       "item": "green_bag",
       "verb": "Open/Close Bag",
@@ -1042,28 +1040,28 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 47,
       "type": "player_join",
-      "id": "p_2de82974-85e5-46ba-ba7b-c7cab37254ad",
+      "id": "p_a7ab87f6-daf1-4651-af80-6bf62f2aefea",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3250,
+      "t": 3383,
       "type": "item_use",
       "item": "die_12",
       "verb": "Roll",
       "street": "beau_home"
      },
      {
-      "t": 4916,
+      "t": 4402,
       "type": "item_use",
       "item": "random_kindness",
       "verb": "Bestow",
       "street": "beau_home"
      },
      {
-      "t": 4919,
+      "t": 4405,
       "type": "meter_change",
       "energy": 435,
       "mood": 458,
@@ -1096,14 +1094,14 @@
    "events": [
     [
      {
-      "t": 47,
+      "t": 50,
       "type": "player_join",
-      "id": "p_96bb7686-3df6-42dd-bc8a-c0a6b4ab12dc",
+      "id": "p_2deb9cff-cda0-4410-b86a-801d7c5d1461",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2925,
+      "t": 2788,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -1111,7 +1109,7 @@
       "currants": 1441
      },
      {
-      "t": 2925,
+      "t": 2788,
       "type": "street_change",
       "street": "andra_hall",
       "name": "Andra Bureaucratic Hall"
@@ -1137,14 +1135,14 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 43,
       "type": "player_join",
-      "id": "p_c6c53ec5-507d-4706-aca7-11a3a39c592e",
+      "id": "p_0e3f278f-bfed-494a-abaf-d323f60d857f",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 1666,
+      "t": 1770,
       "type": "meter_change",
       "energy": 435,
       "mood": 458,
@@ -1172,31 +1170,39 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 42,
       "type": "player_join",
-      "id": "p_5a329590-ab0c-4883-a11c-c8e950f32ec4",
+      "id": "p_9069b617-9ad2-4e40-a37a-7a987645eff5",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3031,
+      "t": 322,
+      "type": "meter_change",
+      "energy": 435,
+      "mood": 458,
+      "img": 25990,
+      "currants": 1441
+     },
+     {
+      "t": 3281,
       "type": "item_use",
       "item": "green_bag",
       "verb": "Open/Close Bag",
       "street": "beau_home"
      },
      {
-      "t": 3947,
+      "t": 3946,
       "type": "item_use",
       "item": "cherry",
       "verb": "Eat",
       "street": "beau_home"
      },
      {
-      "t": 3948,
+      "t": 3947,
       "type": "meter_change",
       "energy": 447,
-      "mood": 442,
+      "mood": 460,
       "img": 25990,
       "currants": 1441
      }
@@ -1226,9 +1232,9 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 49,
       "type": "player_join",
-      "id": "p_13596aa1-fed4-4f2e-b9df-24b80026f2dc",
+      "id": "p_e563324c-5630-40fc-a72e-61b8b7298bc6",
       "street": "beau_home",
       "online": true
      }
@@ -1253,9 +1259,9 @@
    "events": [
     [
      {
-      "t": 43,
+      "t": 44,
       "type": "player_join",
-      "id": "p_a12a63ba-f2c0-431c-b9e4-c0e102086943",
+      "id": "p_bddd9404-f7b6-4749-a380-0760856317b9",
       "street": "beau_home",
       "online": true
      },
@@ -1295,14 +1301,14 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 42,
       "type": "player_join",
-      "id": "p_41409df3-6cbc-48d7-b147-2f04a4f03b00",
+      "id": "p_f2c92da7-c0cf-48f7-8dc1-29c3db13f12f",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3003,
+      "t": 3002,
       "type": "meter_change",
       "energy": 433,
       "mood": 442,
@@ -1310,7 +1316,7 @@
       "currants": 1441
      },
      {
-      "t": 3003,
+      "t": 3002,
       "type": "meter_change",
       "energy": 458,
       "mood": 457,
@@ -1318,7 +1324,7 @@
       "currants": 1541
      },
      {
-      "t": 3003,
+      "t": 3002,
       "type": "harvest",
       "target": "wood_1",
       "action": "water",
@@ -1350,14 +1356,14 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 43,
       "type": "player_join",
-      "id": "p_e5aac462-7bbd-479f-8828-b7d323b21b2b",
+      "id": "p_f9440541-3d4f-498d-b547-c517aae9b0d0",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 3166,
+      "t": 3454,
       "type": "meter_change",
       "energy": 428,
       "mood": 440,
@@ -1365,7 +1371,7 @@
       "currants": 1441
      },
      {
-      "t": 3168,
+      "t": 3457,
       "type": "harvest",
       "target": "beryl_1",
       "action": "mine",
@@ -1373,7 +1379,7 @@
       "street": "beau_home"
      },
      {
-      "t": 4415,
+      "t": 5500,
       "type": "meter_change",
       "energy": 426,
       "mood": 442,
@@ -1381,7 +1387,7 @@
       "currants": 1441
      },
      {
-      "t": 4416,
+      "t": 5500,
       "type": "meter_change",
       "energy": 451,
       "mood": 457,
@@ -1389,7 +1395,7 @@
       "currants": 1541
      },
      {
-      "t": 4416,
+      "t": 5500,
       "type": "harvest",
       "target": "wood_1",
       "action": "water",
@@ -1416,9 +1422,9 @@
    "events": [
     [
      {
-      "t": 49,
+      "t": 56,
       "type": "player_join",
-      "id": "p_a599a7dd-630f-4fbf-96a1-4b77343d176e",
+      "id": "p_dfd75710-2fdd-45cb-b0b1-ac41e98fc0f6",
       "street": "beau_home",
       "online": true
      },
@@ -1457,14 +1463,14 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 45,
       "type": "player_join",
-      "id": "p_dc51df70-57cc-4cda-857f-b69ffb57904f",
+      "id": "p_0dc21515-e69e-4c0e-a7d2-5cde60ada331",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 5838,
+      "t": 6182,
       "type": "meter_change",
       "energy": 435,
       "mood": 440,
@@ -1472,7 +1478,7 @@
       "currants": 1441
      },
      {
-      "t": 5838,
+      "t": 6182,
       "type": "street_change",
       "street": "andra_hall",
       "name": "Andra Bureaucratic Hall"
@@ -1480,9 +1486,9 @@
     ],
     [
      {
-      "t": 54,
+      "t": 61,
       "type": "player_join",
-      "id": "p_3316d264-7a53-4f5b-8aec-5bee3c1c6aeb",
+      "id": "p_db7ae9c9-931b-49a5-bc9b-40d6cdf96ed3",
       "street": "beau_home",
       "online": true
      }
@@ -1496,9 +1502,7 @@
     "butler_visitor_log_recording_p0.mp4"
    ],
    "errors": [],
-   "step_errors": [
-    "step 3 click_text: Locator.click: Timeout 3000ms exceeded."
-   ],
+   "step_errors": [],
    "expects": [
     {
      "expect": "Butler Roy records and reports Home Street visitor traffic",
@@ -1509,9 +1513,9 @@
    "events": [
     [
      {
-      "t": 60,
+      "t": 62,
       "type": "player_join",
-      "id": "p_0a810f23-3ce8-4e95-b5c5-1fb0e036f244",
+      "id": "p_15d87dc6-d348-4041-848a-9afa5ef7c814",
       "street": "beau_home",
       "online": true
      }
@@ -1529,16 +1533,16 @@
    "expects": [
     {
      "expect": "Right-hand panel has Local/Global/Party tabs, online players list, and activity log",
-     "ok": true,
-     "value": true
+     "ok": false,
+     "value": false
     }
    ],
    "events": [
     [
      {
-      "t": 57,
+      "t": 45,
       "type": "player_join",
-      "id": "p_205cbec8-a4d5-4e63-8808-cb419771ba2b",
+      "id": "p_c82b5c09-d052-44b3-8c73-cd9da72076a2",
       "street": "beau_home",
       "online": true
      }
@@ -1564,14 +1568,14 @@
    "events": [
     [
      {
-      "t": 47,
+      "t": 45,
       "type": "player_join",
-      "id": "p_6e086880-6583-40fa-a90d-0be6e530fa88",
+      "id": "p_f14ec6ac-c415-4af4-8de2-a384d66d79f2",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 4476,
+      "t": 4583,
       "type": "chat",
       "sender": "Beau",
       "text": "Hello Glitchen!",
@@ -1580,9 +1584,9 @@
     ],
     [
      {
-      "t": 79,
+      "t": 48,
       "type": "player_join",
-      "id": "p_983ad2b5-9e8f-43b5-bcf7-d876f582a68f",
+      "id": "p_c4658552-a3e8-4e9e-9f53-4eeb67a2a2ec",
       "street": "beau_home",
       "online": true
      }
@@ -1614,9 +1618,9 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 47,
       "type": "player_join",
-      "id": "p_f8a9c742-1ba6-481d-9352-3327ce63b944",
+      "id": "p_2e1ae9ce-3931-4d3b-81ef-bef9941f6c8f",
       "street": "beau_home",
       "online": true
      }
@@ -1644,9 +1648,9 @@
    "events": [
     [
      {
-      "t": 52,
+      "t": 57,
       "type": "player_join",
-      "id": "p_a0df8a24-2e77-4edd-8a2e-248b4ea610ae",
+      "id": "p_60d8406f-91ba-4577-b89b-6af79f131f9f",
       "street": "beau_home",
       "online": true
      }
@@ -1671,21 +1675,21 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 54,
       "type": "player_join",
-      "id": "p_00b6ac5c-29ff-4fda-80a5-fe4d8ca81720",
+      "id": "p_b9d9c88c-6ea2-4421-9faf-da8793df6801",
       "street": "beau_home",
       "online": true
      },
      {
-      "t": 2717,
+      "t": 2898,
       "type": "emote",
       "verb": "Greeting Sign ('hi'/'bye')",
       "target": "stormoffara",
       "street": "beau_home"
      },
      {
-      "t": 2720,
+      "t": 2901,
       "type": "meter_change",
       "energy": 435,
       "mood": 450,
@@ -1718,9 +1722,9 @@
    "events": [
     [
      {
-      "t": 45,
+      "t": 44,
       "type": "player_join",
-      "id": "p_a5ffc8d1-b12d-4d3d-a3d0-fd631ce2a260",
+      "id": "p_eda164f3-fc5a-48c2-9b2e-3be5b9671b58",
       "street": "beau_home",
       "online": true
      }
@@ -1752,9 +1756,9 @@
    "events": [
     [
      {
-      "t": 44,
+      "t": 43,
       "type": "player_join",
-      "id": "p_e4ffef34-aa86-4d43-8c01-c999db95d750",
+      "id": "p_e084baa0-6eec-48b7-bb77-f9480cc941c2",
       "street": "beau_home",
       "online": true
      }

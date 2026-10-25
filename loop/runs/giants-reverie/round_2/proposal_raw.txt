@@ -1,0 +1,478 @@
+{
+  "edits": [
+    {
+      "file": "public/index.html",
+      "old": "  #street-title-pill {\n    background: #2b3336; color: #fff; padding: 4px 12px;\n    border-radius: 14px; font-size: 13px; font-weight: bold;\n    display: flex; align-items: center; gap: 8px;\n    box-shadow: inset 0 1px 3px rgba(0,0,0,0.4);\n  }\n  #minimap-canvas {\n    width: 124px; height: 28px; background: #263136;\n    border-radius: 6px; border: 1px solid #67767d; cursor: pointer;\n  }\n  #world-map-btn {\n    background: linear-gradient(180deg, #58a6b8 0%, #2b7a8c 100%);\n    color: #fff; border: 1px solid #9be3de; border-radius: 10px;\n    padding: 3px 10px; font-size: 12px; font-weight: bold;\n    cursor: pointer; display: flex; align-items: center; gap: 4px;\n    box-shadow: 0 1px 3px rgba(0,0,0,0.3);\n  }\n  #world-map-btn:hover { background: linear-gradient(180deg, #6bc0d4 0%, #348ea3 100%); }",
+      "new": "  #street-title-pill {\n    position: absolute; top: 10px; right: 12px; z-index: 55;\n    background: rgba(18, 24, 28, 0.9); color: #e8f1ee; padding: 5px 10px 5px 6px;\n    border-radius: 16px; border: 1.5px solid rgba(135, 168, 155, 0.6);\n    font-size: 12px; font-weight: bold;\n    display: flex; align-items: center; gap: 8px;\n    box-shadow: 0 4px 14px rgba(0,0,0,0.45);\n  }\n  #minimap-canvas {\n    width: 148px; height: 32px; background: #141c20;\n    border-radius: 6px; border: 1px solid #586e75; cursor: pointer;\n  }\n  #world-map-btn {\n    background: linear-gradient(180deg, #4b9fb3 0%, #24697a 100%);\n    color: #fff; border: 1px solid #8de0ea; border-radius: 12px;\n    padding: 4px 9px; font-size: 11px; font-weight: bold;\n    cursor: pointer; display: flex; align-items: center; gap: 4px;\n    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n  }\n  #world-map-btn:hover { background: linear-gradient(180deg, #6bc0d4 0%, #348ea3 100%); }\n  #viewport-toast {\n    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);\n    background: rgba(255, 255, 255, 0.96); color: #1d2b22;\n    border: 2px solid #6db33f; border-radius: 18px;\n    padding: 7px 20px; font-size: 13px; font-weight: bold;\n    display: none; z-index: 82; box-shadow: 0 4px 16px rgba(0,0,0,0.45);\n    white-space: nowrap; pointer-events: none;\n  }",
+      "rule_ids": [
+        "minimap_strip_and_world_map_button",
+        "cubimals_windup_race_in_planks",
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Style the mini-map strip as a dark overlay strip in the top-right corner of the game viewport with the World globe icon on its left, and add a bottom-center viewport notification banner (#viewport-toast) for Cubimal race distance and Hi-sign match bonuses."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  /* Waiting Area Banner (Andra Bureaucratic Hall) */\n  #waiting-banner {\n    position: absolute; top: 14px; right: 14px;",
+      "new": "  /* Waiting Area Banner (Andra Bureaucratic Hall) */\n  #waiting-banner {\n    position: absolute; top: 58px; right: 14px;",
+      "rule_ids": [
+        "minimap_strip_and_world_map_button",
+        "bureaucrat_waiting_room_qualification"
+      ],
+      "why": "Keep the waiting room banner just below the top-right viewport mini-map strip."
+    },
+    {
+      "file": "public/index.html",
+      "old": "    <div id=\"hud-center\">\n      <button class=\"top-action-btn\" id=\"btn-cultivate\" title=\"Change Home Street Style or Cultivate\">Cultivate</button>\n      <div id=\"street-title-pill\">\n        <span style=\"font-size:10px; color:#9eb5a5; text-transform:uppercase;\">Current location:</span>\n        <span id=\"street-name-label\">Beau's Home Street</span>\n        <canvas id=\"minimap-canvas\" width=\"124\" height=\"28\" title=\"Mini-map strip — Click to open World Map\"></canvas>\n        <button id=\"world-map-btn\" title=\"Open World & Region Map\">🌍 World</button>\n      </div>\n    </div>\n\n    <div id=\"hud-right\">\n      <span id=\"clock-label\">Candy 1, 12:35 pm</span>\n      <button class=\"icon-btn\" id=\"btn-mute\" title=\"Toggle Sound & Music\">🔊</button>\n      <button class=\"icon-btn\" id=\"btn-snap\" title=\"Take Snapshot\">📷</button>\n    </div>\n  </div>\n\n  <!-- MAIN VIEWPORT + RIGHT CHAT -->\n  <div id=\"main-area\">\n    <div id=\"viewport-wrap\">\n      <canvas id=\"game-canvas\"></canvas>\n\n      <!-- Special Street Banners -->\n      <div id=\"qurazy-banner\">OMG! There's a Qurazy ❗ on this street for you!</div>",
+      "new": "    <div id=\"hud-center\">\n      <button class=\"top-action-btn\" id=\"btn-cultivate\" title=\"Change Home Street Style or Cultivate\">Cultivate</button>\n    </div>\n\n    <div id=\"hud-right\">\n      <span id=\"clock-label\">Candy 1, 12:35 pm</span>\n      <button class=\"icon-btn\" id=\"btn-mute\" title=\"Toggle Sound & Music\">🔊</button>\n      <button class=\"icon-btn\" id=\"btn-snap\" title=\"Take Snapshot\">📷</button>\n    </div>\n  </div>\n\n  <!-- MAIN VIEWPORT + RIGHT CHAT -->\n  <div id=\"main-area\">\n    <div id=\"viewport-wrap\">\n      <canvas id=\"game-canvas\"></canvas>\n\n      <!-- Top-Right Viewport Mini-Map Strip & World Button -->\n      <div id=\"street-title-pill\">\n        <button id=\"world-map-btn\" title=\"Open World & Region Map\">🌍 World</button>\n        <span id=\"street-name-label\" style=\"font-size:11px; color:#cfe3dc;\">Beau's Home Street</span>\n        <canvas id=\"minimap-canvas\" width=\"148\" height=\"32\" title=\"Mini-map strip — Click to open World Map\"></canvas>\n      </div>\n\n      <!-- Bottom-Center Viewport Notification Banner -->\n      <div id=\"viewport-toast\"></div>\n\n      <!-- Special Street Banners -->\n      <div id=\"qurazy-banner\">OMG! There's a Qurazy ❗ on this street for you!</div>",
+      "rule_ids": [
+        "minimap_strip_and_world_map_button",
+        "cubimals_windup_race_in_planks",
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Place the mini-map strip with its left-side World globe button inside the top-right of the game viewport (#viewport-wrap) and add #viewport-toast at the bottom-center of the viewport."
+    },
+    {
+      "file": "public/index.html",
+      "old": "    exits: [\n      { x: 75, y: 460, label: \"Chego Chase / Paluol Peak\", target: \"chego_chase\", spawnX: 2040 },\n      { x: 2310, y: 460, label: \"Goli Grabs / Vaila Vincta\", target: \"goli_grabs\", spawnX: 220 }\n    ],",
+      "new": "    exits: [\n      { x: 115, y: 460, label: \"Chego Chase / Paluol Peak\", target: \"chego_chase\", spawnX: 2040 },\n      { x: 2285, y: 460, label: \"Goli Grabs / Vaila Vincta\", target: \"goli_grabs\", spawnX: 220 }\n    ],",
+      "rule_ids": [
+        "signpost_street_boundary_transition"
+      ],
+      "why": "Position the wooden boundary signposts on Beau's Home Street at x=115 and x=2285 so the directional wooden signboards with adjacent street names are fully visible inside the viewport."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  otherPlayers: {},\n  cubimals: [],\n  particles: [],\n  floatingTexts: [],\n  chatBubbles: {},",
+      "new": "  otherPlayers: {},\n  cubimals: [],\n  particles: [],\n  floatingTexts: [],\n  chatBubbles: {},\n  hiSigns: {},\n  hoveredObj: null,\n  hoveredDoor: null,\n  hoveredExit: null,\n  mouseWorldX: 0,\n  mouseWorldY: 0,",
+      "rule_ids": [
+        "daily_hi_sign_match_bonus",
+        "building_door_interior_transition",
+        "tower_construction_project_contribution"
+      ],
+      "why": "Track wooden hi-sign boards above avatars and hover state for building doors, signposts, and construction projects."
+    },
+    {
+      "file": "public/index.html",
+      "old": "function addFloatingText(x, y, text, color = \"#ffffff\") {\n  State.floatingTexts.push({ x, y, text, color, life: 85, maxLife: 85 });\n}",
+      "new": "function addFloatingText(x, y, text, color = \"#ffffff\") {\n  State.floatingTexts.push({ x, y, text, color, life: 85, maxLife: 85 });\n}\n\nlet __viewportToastTimer = null;\nfunction showViewportToast(text, durationMs = 3400) {\n  const el = document.getElementById(\"viewport-toast\");\n  if (!el) return;\n  el.textContent = text;\n  el.style.display = \"block\";\n  if (__viewportToastTimer) clearTimeout(__viewportToastTimer);\n  __viewportToastTimer = setTimeout(() => {\n    el.style.display = \"none\";\n  }, durationMs);\n}",
+      "rule_ids": [
+        "cubimals_windup_race_in_planks",
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Helper to display centered bottom-viewport notification banners for Cubimal racing distances and matching daily hi signs."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  } else if (itemId === \"chick_cubimal\" || itemId === \"phantom_cubimal\") {\n    const dist = (1.5 + seededRandom() * 3.8).toFixed(2);\n    State.cubimals.push({\n      name: ITEM_DEFS[itemId].name,\n      kind: itemId,\n      x: p.x,\n      y: p.y,\n      vx: p.dir * (2.2 + seededRandom() * 1.5),\n      timer: 150,\n      dist\n    });\n    addChatMessage(null, `${p.name}'s ${ITEM_DEFS[itemId].name} went ${dist} planks before stopping.`, \"sys\");",
+      "new": "  } else if (itemId === \"chick_cubimal\" || itemId === \"phantom_cubimal\") {\n    const dist = (1.5 + seededRandom() * 3.8).toFixed(2);\n    State.cubimals.push({\n      name: ITEM_DEFS[itemId].name,\n      kind: itemId,\n      x: p.x + p.dir * 20,\n      y: p.y,\n      vx: p.dir * (2.4 + seededRandom() * 1.2),\n      raceTimer: 110,\n      timer: 320,\n      dist\n    });\n    const msg = `${p.name}'s ${ITEM_DEFS[itemId].name} went ${dist} planks before stopping.`;\n    showViewportToast(msg, 3600);\n    addFloatingText(p.x + p.dir * 55, p.y - 52, `${dist} planks!`, \"#ffdf40\");\n    addChatMessage(null, msg, \"sys\");",
+      "rule_ids": [
+        "cubimals_windup_race_in_planks"
+      ],
+      "why": "Animate the wind-up Cubimal racing along the ground before stopping and display the distance traveled in planks in the bottom-center viewport banner as well as the chat log."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  if (verb.startsWith(\"Water\")) {\n    p.anim = \"water\"; p.animTimer = 45;\n    AudioEngine.playChime(\"quoin\");\n    changeMeters({ energy: -2, img: 6, mood: 2 });\n    advanceQuest(\"give_h2o\", 1);\n    addFloatingText(obj.x, obj.y - 80, \"Watered! +6 iMG\", \"#4da6ff\");\n    logTelemetry(\"harvest\", { target: obj.id, action: \"water\", street: State.streetId });\n  } else if (verb.startsWith(\"Pet\") && obj.type !== \"piggy\") {\n    changeMeters({ energy: -1, img: 4, mood: 3 });\n    addFloatingText(obj.x, obj.y - 80, \"Petted! +4 iMG +3 Mood\", \"#8de969\");\n  } else if (verb === \"Harvest\" || verb.startsWith(\"Harvest\")) {\n    changeMeters({ energy: -3, img: 8 });\n    const item = obj.type === \"wood_tree\" ? \"wood_plank\" : \"cherry\";\n    giveItem(item, 2);\n    addFloatingText(obj.x, obj.y - 80, `+2 ${ITEM_DEFS[item].name} +8 iMG`, \"#f1c40f\");\n    logTelemetry(\"harvest\", { target: obj.id, item, street: State.streetId });",
+      "new": "  if (verb.startsWith(\"Water\")) {\n    p.anim = \"water\"; p.animTimer = 50;\n    obj.wateredTimer = 140;\n    spawnParticles(obj.x, obj.y - 75, 22, \"water\");\n    AudioEngine.playChime(\"quoin\");\n    changeMeters({ energy: -2, img: 6, mood: 2 });\n    advanceQuest(\"give_h2o\", 1);\n    addFloatingText(obj.x, obj.y - 85, \"Watered! +6 iMG\", \"#4da6ff\");\n    logTelemetry(\"harvest\", { target: obj.id, action: \"water\", street: State.streetId });\n  } else if (verb.startsWith(\"Pet\") && obj.type !== \"piggy\") {\n    changeMeters({ energy: -1, img: 4, mood: 3 });\n    addFloatingText(obj.x, obj.y - 85, \"Petted! +4 iMG +3 Mood\", \"#8de969\");\n  } else if (verb === \"Harvest\" || verb.startsWith(\"Harvest\")) {\n    p.anim = \"water\"; p.animTimer = 40;\n    obj.harvestedTimer = 140;\n    spawnParticles(obj.x, obj.y - 70, 18, \"sparkle\");\n    changeMeters({ energy: -3, img: 8 });\n    const item = obj.type === \"wood_tree\" ? \"wood_plank\" : \"cherry\";\n    giveItem(item, 2);\n    addFloatingText(obj.x, obj.y - 95, `Harvested +2 ${ITEM_DEFS[item].name} (+8 iMG)`, \"#f1c40f\");\n    logTelemetry(\"harvest\", { target: obj.id, item, street: State.streetId });",
+      "rule_ids": [
+        "trees_and_plants_watering_harvesting"
+      ],
+      "why": "Show water droplet particles and visual feedback on trees when watering and harvesting."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  } else if (verb.startsWith(\"Contribute Plank\")) {\n    if (!removeItem(\"wood_plank\", 1)) {\n      addFloatingText(obj.x, obj.y - 70, \"Need 1 Plank!\", \"#e74c3c\");\n      return;\n    }\n    obj.progress = Math.min(100, +(obj.progress + 2.6).toFixed(1));\n    changeMeters({ energy: -6, img: 15, mood: 4 });\n    addFloatingText(obj.x, obj.y - 80, `Tower ${obj.progress}% (+15 iMG)`, \"#f39c12\");\n    sendNet({ type: \"tower_progress\", progress: obj.progress });",
+      "new": "  } else if (verb.startsWith(\"Contribute Plank\") || verb === \"Inspect Project\") {\n    if (verb.startsWith(\"Contribute Plank\")) {\n      if (!removeItem(\"wood_plank\", 1)) {\n        addFloatingText(obj.x, obj.y - 70, \"Need 1 Plank!\", \"#e74c3c\");\n        return;\n      }\n      obj.progress = Math.min(100, +(obj.progress + 2.6).toFixed(1));\n      changeMeters({ energy: -6, img: 15, mood: 4 });\n      addFloatingText(obj.x, obj.y - 95, `Tower ${obj.progress}% (+15 iMG)`, \"#f39c12\");\n      sendNet({ type: \"tower_progress\", progress: obj.progress });\n    }\n    openTowerProjectModal(obj);",
+      "rule_ids": [
+        "tower_construction_project_contribution"
+      ],
+      "why": "Open the multi-step Tower Construction Project material and labor contribution UI with completion percentage bar upon inspecting or contributing to the Tower."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  if (verb.startsWith(\"Greeting Sign\")) {\n    // Video A 19:39: matching sign bonus \"2x! +10 mood!\"\n    AudioEngine.playChime(\"hi\");\n    State.chatBubbles[State.playerId] = { text: p.hiSign, timer: 140 };\n    State.chatBubbles[target.id] = { text: target.hiSign || p.hiSign, timer: 140 };\n    changeMeters({ mood: 10 });\n    addFloatingText(p.x, p.y - 75, `2x! Neat, we match today! +10 mood!`, \"#f1c40f\");\n    addChatMessage(null, `You and ${target.name} have the same hi sign \"${p.hiSign}\": Bonus time! +10 mood!`, \"reward\");",
+      "new": "  if (verb.startsWith(\"Greeting Sign\")) {\n    // Video A 19:37 - 19:41: wooden signboards + speech bubble 'Neato, we match today!' + separate floating '2x' and '+10 mood!' + bottom toast\n    AudioEngine.playChime(\"hi\");\n    if (Math.abs(target.x - p.x) > 140) {\n      target.x = p.x + 85;\n      target.dir = -1;\n      p.dir = 1;\n    }\n    const mySign = p.hiSign || \"bye\";\n    const theirSign = target.hiSign || mySign;\n    State.hiSigns[State.playerId] = { text: mySign, timer: 220 };\n    State.hiSigns[target.id] = { text: theirSign, timer: 220 };\n    State.chatBubbles[State.playerId] = { text: \"Neato, we match today!\", timer: 200 };\n    State.chatBubbles[target.id] = { text: \"Neato, we match today!\", timer: 200 };\n    changeMeters({ mood: 10 });\n    addFloatingText(p.x - 26, p.y - 122, \"2x\", \"#ffdf40\");\n    addFloatingText(p.x + 28, p.y - 102, \"+10 mood!\", \"#8de969\");\n    addFloatingText(target.x, target.y - 112, \"2x  +10 mood!\", \"#8de969\");\n    const matchToast = `You and ${target.name} have the same hi sign \"${mySign}\"! Bonus time!`;\n    showViewportToast(matchToast, 3600);\n    addChatMessage(null, `${matchToast} +10 mood!`, \"reward\");",
+      "rule_ids": [
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Render wooden hi-sign boards above both characters, show 'Neato, we match today!' in speech bubbles, float separate '2x' and '+10 mood!' indicators, and show the match notification in the bottom-center viewport toast."
+    },
+    {
+      "file": "public/index.html",
+      "old": "function openVendorModal(vendorObj) {\n  // Video B 05:51: Animal Goods Vendor shop UI\n  const items = [\n    { id: \"butterfly_lotion\", price: 45, desc: \"Massage butterflies or taste it for +12 mood.\" },\n    { id: \"butterfly_milker\", price: 400, desc: \"Milk butterflies safely.\" },\n    { id: \"pumpkin_ale\", price: 25, desc: \"Restores +29 mood and triggers Thriller dance!\" },\n    { id: \"sparkle_powder\", price: 35, desc: \"Sprinkle stars for +30 mood.\" },\n    { id: \"random_kindness\", price: 30, desc: \"Bestow rainbow kindness on friends.\" },\n    { id: \"essence_purple\", price: 60, desc: \"Embiggen or shrink your avatar.\" }\n  ];\n  let html = `<p>You have <strong>${State.player.currants.toLocaleString()} currants</strong>.</p><div class=\"grid-cards\">`;\n  items.forEach(it => {\n    const def = ITEM_DEFS[it.id];\n    html += `\n      <div class=\"card-item\">\n        <div style=\"font-size:28px;\">${def.icon}</div>\n        <strong>${def.name}</strong>\n        <small>${it.desc}</small>\n        <button onclick=\"buyVendorItem('${it.id}', ${it.price})\">Buy (${it.price}c)</button>\n      </div>\n    `;\n  });\n  html += `</div>`;\n  openModal(vendorObj.name, html);\n}\n\nwindow.buyVendorItem = function(itemId, price) {\n  if (State.player.currants < price) {\n    alert(\"Not enough currants!\");\n    return;\n  }\n  if (giveItem(itemId, 1)) {\n    changeMeters({ currants: -price });\n    addFloatingText(State.player.x, State.player.y - 70, `Bought ${ITEM_DEFS[itemId].name} (-${price}c)`, \"#2ecc71\");\n    closeModal();\n  }\n};\n\nconst MAP_NODES = [\n  { id: \"beau_home\", name: \"Beau's Home Street\", region: \"HOME STREETS\", x: 115, y: 195, color: \"#6db33f\" },\n  { id: \"goli_grabs\", name: \"Goli Grabs\", region: \"KALAVANA\", x: 245, y: 110, color: \"#e6a817\" },\n  { id: \"chego_chase\", name: \"Chego Chase\", region: \"ANDRA\", x: 350, y: 185, color: \"#2b8a9e\" },\n  { id: \"andra_hall\", name: \"Andra Bureaucratic Hall\", region: \"ANDRA\", x: 435, y: 135, color: \"#2b8a9e\" },\n  { id: \"bongul_beat\", name: \"Bongul Beat\", region: \"ANDRA\", x: 385, y: 255, color: \"#2b8a9e\" }\n];\n\nfunction openWorldMapModal(selectedStreetId) {\n  // Video A 10:28, 10:33, 24:36, B 03:34: 2-level Graphical World & Region Map with interconnected dashed street lines and circular nodes\n  const defaultTarget = selectedStreetId || (State.streetId === \"beau_home\" ? \"goli_grabs\" : \"beau_home\");\n  const selSt = STREETS[defaultTarget] || STREETS.goli_grabs;\n\n  let svgLines = `\n    <line x1=\"115\" y1=\"195\" x2=\"245\" y2=\"110\" stroke=\"#fff9db\" stroke-width=\"3\" stroke-dasharray=\"7,5\" />\n    <line x1=\"115\" y1=\"195\" x2=\"350\" y2=\"185\" stroke=\"#fff9db\" stroke-width=\"3\" stroke-dasharray=\"7,5\" />\n    <line x1=\"245\" y1=\"110\" x2=\"350\" y2=\"185\" stroke=\"#fff9db\" stroke-width=\"3\" stroke-dasharray=\"7,5\" />\n    <line x1=\"350\" y1=\"185\" x2=\"435\" y2=\"135\" stroke=\"#fff9db\" stroke-width=\"3\" stroke-dasharray=\"7,5\" />\n    <line x1=\"350\" y1=\"185\" x2=\"385\" y2=\"255\" stroke=\"#fff9db\" stroke-width=\"3\" stroke-dasharray=\"7,5\" />\n    <line x1=\"245\" y1=\"110\" x2=\"385\" y2=\"255\" stroke=\"#fff9db\" stroke-width=\"2.5\" stroke-dasharray=\"5,5\" />\n  `;\n  let svgNodes = \"\";\n  MAP_NODES.forEach(n => {\n    const isCur = n.id === State.streetId;\n    const isSel = n.id === selSt.id;\n    svgNodes += `\n      <g style=\"cursor:pointer;\" onclick=\"openWorldMapModal('${n.id}')\">\n        <circle cx=\"${n.x}\" cy=\"${n.y}\" r=\"${isSel ? 15 : 11}\" fill=\"${isCur ? '#6db33f' : (isSel ? '#ffdf80' : '#ffffff')}\" stroke=\"#1d2c33\" stroke-width=\"3\" />\n        <text x=\"${n.x}\" y=\"${n.y - 18}\" text-anchor=\"middle\" fill=\"#ffffff\" font-size=\"11\" font-weight=\"bold\" style=\"text-shadow:0 1px 3px #000;\">${n.name}</text>\n        ${isCur ? `<text x=\"${n.x}\" y=\"${n.y + 4}\" text-anchor=\"middle\" font-size=\"10\" font-weight=\"bold\" fill=\"#fff\">YOU</text>` : ''}\n      </g>\n    `;\n  });\n\n  const html = `\n    <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:6px; flex-wrap:wrap;\">\n      <div style=\"font-size:12px; color:#3d4f44;\">\n        <strong>Regions of Ur:</strong>\n        <span style=\"background:#e3efe6; padding:3px 8px; border-radius:6px; font-weight:bold;\">ZHAMBU</span>\n        <span style=\"background:#fdf2d0; padding:3px 8px; border-radius:6px; font-weight:bold;\">KALAVANA</span>\n        <span style=\"background:#d8eef5; padding:3px 8px; border-radius:6px; font-weight:bold;\">ANDRA</span>\n        <span style=\"background:#ede2f5; padding:3px 8px; border-radius:6px; font-weight:bold;\">IXETA</span>\n      </div>\n      <div style=\"font-size:11px; color:#6c7a73;\">Click any region or connected street node to inspect or teleport</div>\n    </div>\n    <div style=\"display:flex; gap:14px; align-items:stretch;\">\n      <div style=\"flex:1; background:#2b586e; border:3px solid #7fa6c4; border-radius:12px; overflow:hidden; position:relative;\">\n        <svg viewBox=\"0 0 520 310\" style=\"width:100%; height:300px; display:block;\">\n          <rect width=\"520\" height=\"310\" fill=\"#23495c\" />\n          <!-- Illustrated Region Continents -->\n          <ellipse cx=\"115\" cy=\"200\" rx=\"85\" ry=\"65\" fill=\"#4b7d52\" stroke=\"#8de969\" stroke-width=\"2\" />\n          <text x=\"115\" y=\"252\" text-anchor=\"middle\" fill=\"#d4f5c7\" font-size=\"11\" font-weight=\"bold\">HOME STREETS</text>\n          <ellipse cx=\"235\" cy=\"105\" rx=\"95\" ry=\"62\" fill=\"#8c6d46\" stroke=\"#f5d77f\" stroke-width=\"2\" />\n          <text x=\"235\" y=\"62\" text-anchor=\"middle\" fill=\"#ffeaa7\" font-size=\"12\" font-weight=\"bold\">KALAVANA</text>\n          <ellipse cx=\"385\" cy=\"195\" rx=\"110\" ry=\"88\" fill=\"#7d8c4d\" stroke=\"#c8e67e\" stroke-width=\"2\" />\n          <text x=\"390\" y=\"275\" text-anchor=\"middle\" fill=\"#f4ffbd\" font-size=\"12\" font-weight=\"bold\">ANDRA</text>\n          <ellipse cx=\"110\" cy=\"75\" rx=\"65\" ry=\"40\" fill=\"#5c6b73\" stroke=\"#a5b8c2\" stroke-width=\"1.5\" />\n          <text x=\"110\" y=\"78\" text-anchor=\"middle\" fill=\"#dfe6e9\" font-size=\"11\" font-weight=\"bold\">ZHAMBU</text>\n          <ellipse cx=\"455\" cy=\"55\" rx=\"52\" ry=\"34\" fill=\"#6c5ce7\" fill-opacity=\"0.45\" stroke=\"#a29bfe\" stroke-width=\"1.5\" />\n          <text x=\"455\" y=\"58\" text-anchor=\"middle\" fill=\"#ede7f6\" font-size=\"11\" font-weight=\"bold\">IXETA</text>\n          ${svgLines}\n          ${svgNodes}\n        </svg>\n      </div>\n      <div style=\"width:225px; background:#fff; border:2px solid #9ab09e; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;\">\n        <div>\n          <div style=\"font-size:10px; font-weight:bold; color:#2b8a9e; text-transform:uppercase;\">Region: ${selSt.region}</div>\n          <h3 style=\"margin:4px 0 6px; font-size:16px; color:#223028;\">${selSt.name}</h3>\n          <div style=\"font-size:11px; color:#556; margin-bottom:10px;\">Connected via dashed street paths. Features shrines, harvestable trees, and quoins.</div>\n          <div style=\"display:flex; flex-direction:column; gap:6px;\">\n            <button onclick=\"teleportToStreet('${selSt.id}')\" style=\"background:#6db33f; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;\">Teleport here (-10e)</button>\n            <button onclick=\"addChatMessage(null, '🗺️ Street Link: [${selSt.name}]', 'sys'); closeModal();\" style=\"background:#e7f2f7; color:#236477; border:1px solid #9ec4cf; padding:6px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px;\">Create Link for Chat</button>\n            <button onclick=\"addFloatingText(State.player.x, State.player.y - 70, 'Destination set: ${selSt.name}', '#4da6ff'); closeModal();\" style=\"background:#f4f7f2; color:#3d4f44; border:1px solid #c2ceb8; padding:6px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:11px;\">Set as destination</button>\n          </div>\n        </div>\n        <div style=\"border-top:1px solid #e1e8dd; padding-top:8px; margin-top:10px;\">\n          <div style=\"font-size:10px; font-weight:bold; color:#6c7a73; margin-bottom:4px;\">QUICK STREET SELECT:</div>\n          <div style=\"display:flex; flex-wrap:wrap; gap:4px;\">\n            ${Object.values(STREETS).map(st => `<button onclick=\"openWorldMapModal('${st.id}')\" style=\"font-size:10px; padding:2px 6px; border-radius:5px; border:1px solid #b8c6b0; background:${st.id === selSt.id ? '#2b8a9e' : '#f5f7f2'}; color:${st.id === selSt.id ? '#fff' : '#333'}; cursor:pointer;\">${st.name.split(' in ')[0]}</button>`).join('')}\n          </div>\n        </div>\n      </div>\n    </div>\n  `;\n  openModal(\"World Map of Ur\", html);\n}",
+      "new": "function openTowerProjectModal(obj) {\n  const planksOwned = (State.inventory.find(s => s && s.id === \"wood_plank\") || { count: 0 }).count;\n  const rodsOwned = (State.bagInventory.find(s => s && s.id === \"metal_rod\") || { count: 0 }).count;\n  const html = `\n    <div style=\"background:#f4f8f0; border:2px solid #8fa893; border-radius:12px; padding:14px; margin-bottom:14px;\">\n      <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;\">\n        <div>\n          <span style=\"background:#ffdf40; color:#3d2b00; font-weight:bold; padding:2px 8px; border-radius:6px; font-size:11px;\">PHASE 1 OF 3</span>\n          <h3 style=\"margin:4px 0 2px; color:#223028;\">Tower Construction Project</h3>\n          <small style=\"color:#556;\">Contribute materials and labor to build a multi-story Tower on ${STREETS[State.streetId].name}.</small>\n        </div>\n        <div style=\"text-align:right;\">\n          <div style=\"font-size:22px; font-weight:bold; color:#2b8a9e;\">${obj.progress}%</div>\n          <small style=\"color:#6c7a73;\">Completion</small>\n        </div>\n      </div>\n      <div style=\"width:100%; height:20px; background:#d6e2d0; border-radius:10px; overflow:hidden; border:1px solid #8ea896; margin-bottom:12px;\">\n        <div style=\"width:${obj.progress}%; height:100%; background:linear-gradient(90deg, #6db33f, #a3e65c); transition:width 0.25s;\"></div>\n      </div>\n      <div style=\"display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; text-align:center;\">\n        <div style=\"background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;\">\n          <div style=\"font-size:22px;\">🪵</div>\n          <strong>Planks</strong>\n          <div style=\"font-size:11px; color:#2e7d32; font-weight:bold;\">19 / 50 Contributed</div>\n          <small style=\"color:#666;\">In bag: ${planksOwned}</small>\n        </div>\n        <div style=\"background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;\">\n          <div style=\"font-size:22px;\">🦯</div>\n          <strong>Metal Rods</strong>\n          <div style=\"font-size:11px; color:#2b8a9e; font-weight:bold;\">10 / 20 Contributed</div>\n          <small style=\"color:#666;\">In bag: ${rodsOwned}</small>\n        </div>\n        <div style=\"background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;\">\n          <div style=\"font-size:22px;\">🔨</div>\n          <strong>Construction Labor</strong>\n          <div style=\"font-size:11px; color:#e67e22; font-weight:bold;\">14 / 30 Work Units</div>\n          <small style=\"color:#666;\">-6 Energy per job</small>\n        </div>\n      </div>\n    </div>\n    <div style=\"display:flex; justify-content:flex-end; gap:10px;\">\n      <button onclick=\"closeModal()\" style=\"background:#95a5a6; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;\">Done</button>\n      <button onclick=\"executeWorldVerb(STREETS.beau_home.resources.find(r=>r.id==='tower_1'), 'Contribute Plank & Labor (-6e)')\" style=\"background:#6db33f; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;\">🪵 Contribute Plank &amp; Labor (-6e)</button>\n    </div>\n  `;\n  openModal(\"Tower — Street Construction Project\", html);\n}\n\nfunction openVendorModal(vendorObj, purchasedItemId = null) {\n  // Video B 05:51: Animal Goods Vendor shop UI with Buy/Sell tabs, item shelves, and bottom-right currants\n  State.lastVendorObj = vendorObj || State.lastVendorObj || { name: \"Street Spirit (Animal Goods Vendor)\" };\n  const vObj = State.lastVendorObj;\n  const items = [\n    { id: \"butterfly_lotion\", price: 45, desc: \"Massage butterflies or taste it for +12 mood.\" },\n    { id: \"butterfly_milker\", price: 400, desc: \"Milk butterflies safely.\" },\n    { id: \"pumpkin_ale\", price: 25, desc: \"Restores +29 mood and triggers Thriller dance!\" },\n    { id: \"sparkle_powder\", price: 35, desc: \"Sprinkle stars for +30 mood.\" },\n    { id: \"random_kindness\", price: 30, desc: \"Bestow rainbow kindness on friends.\" },\n    { id: \"essence_purple\", price: 60, desc: \"Embiggen or shrink your avatar.\" }\n  ];\n  const boughtNotice = purchasedItemId\n    ? `<div style=\"background:#dff0d8; border:1.5px solid #6db33f; color:#2b542c; padding:6px 12px; border-radius:8px; font-weight:bold; margin-bottom:10px;\">✔ Purchased 1x ${ITEM_DEFS[purchasedItemId].name}!</div>`\n    : \"\";\n  let html = `\n    <div style=\"display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #c5d1be; padding-bottom:8px; margin-bottom:12px;\">\n      <div style=\"display:flex; gap:8px;\">\n        <button style=\"background:#6db33f; color:#fff; border:none; padding:6px 18px; border-radius:8px 8px 0 0; font-weight:bold; cursor:pointer;\">🛒 Buy</button>\n        <button style=\"background:#dce6d6; color:#49594f; border:1px solid #b4c4ac; padding:6px 18px; border-radius:8px 8px 0 0; font-weight:bold; cursor:pointer;\">💰 Sell</button>\n      </div>\n      <div style=\"font-size:12px; color:#556;\">Click any item on the shelves to purchase</div>\n    </div>\n    ${boughtNotice}\n    <div style=\"background:#f3ead8; border:2px solid #c9b18c; border-radius:12px; padding:12px;\">\n      <div class=\"grid-cards\">\n  `;\n  items.forEach(it => {\n    const def = ITEM_DEFS[it.id];\n    html += `\n      <div class=\"card-item\" style=\"border-bottom:5px solid #b89768; background:#fffef9;\">\n        <div style=\"font-size:30px;\">${def.icon}</div>\n        <strong>${def.name}</strong>\n        <small style=\"color:#666;\">${it.desc}</small>\n        <div style=\"font-weight:bold; color:#d48817; font-size:12px;\">● ${it.price} currants</div>\n        <button onclick=\"buyVendorItem('${it.id}', ${it.price})\">Buy (${it.price}c)</button>\n      </div>\n    `;\n  });\n  html += `\n      </div>\n    </div>\n    <div style=\"display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:8px; border-top:1px solid #dce4d6;\">\n      <span style=\"font-size:12px; color:#6c7a73;\">Street Spirit Vendor — Quality goods of Ur</span>\n      <div style=\"background:#fff9db; border:2px solid #e6a817; border-radius:12px; padding:5px 14px; font-weight:bold; font-size:14px; color:#544100;\">\n        <span style=\"color:#d48817;\">●</span> ${State.player.currants.toLocaleString()} currants\n      </div>\n    </div>\n  `;\n  openModal(vObj.name, html);\n}\n\nwindow.buyVendorItem = function(itemId, price) {\n  if (State.player.currants < price) {\n    alert(\"Not enough currants!\");\n    return;\n  }\n  if (giveItem(itemId, 1)) {\n    changeMeters({ currants: -price });\n    addFloatingText(State.player.x, State.player.y - 70, `Bought ${ITEM_DEFS[itemId].name} (-${price}c)`, \"#2ecc71\");\n    openVendorModal(State.lastVendorObj, itemId);\n  }\n};\n\nconst MAP_NODES = [\n  { id: \"beau_home\", name: \"Beau's Home Street\", region: \"HOME STREETS\", x: 115, y: 195, color: \"#6db33f\" },\n  { id: \"goli_grabs\", name: \"Goli Grabs\", region: \"KALAVANA\", x: 245, y: 110, color: \"#e6a817\" },\n  { id: \"chego_chase\", name: \"Chego Chase\", region: \"ANDRA\", x: 350, y: 185, color: \"#2b8a9e\" },\n  { id: \"andra_hall\", name: \"Andra Bureaucratic Hall\", region: \"ANDRA\", x: 435, y: 135, color: \"#2b8a9e\" },\n  { id: \"bongul_beat\", name: \"Bongul Beat\", region: \"ANDRA\", x: 385, y: 255, color: \"#2b8a9e\" }\n];\n\nwindow.openRegionMap = function(regionName, selectedStreetId) {\n  const regUpper = String(regionName || \"ANDRA\").toUpperCase();\n  const defaultTarget = selectedStreetId || (regUpper === \"KALAVANA\" ? \"goli_grabs\" : (regUpper === \"HOME STREETS\" ? \"beau_home\" : \"chego_chase\"));\n  const selSt = STREETS[defaultTarget] || STREETS.chego_chase;\n  const html = `\n    <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;\">\n      <button onclick=\"openWorldMapModal()\" style=\"background:#2b8a9e; color:#fff; border:none; padding:5px 12px; border-radius:8px; font-weight:bold; cursor:pointer;\">← Back to World Map of Regions</button>\n      <div style=\"font-size:14px; font-weight:bold; color:#223028;\">🗺️ Region Street Network: <span style=\"color:#2b8a9e;\">${regUpper}</span></div>\n      <span style=\"font-size:11px; color:#6c7a73;\">Click any street hub or GO arrow</span>\n    </div>\n    <div style=\"display:flex; gap:14px; align-items:stretch;\">\n      <div style=\"flex:1; background:#e8dfc8; border:3px solid #8c7b5c; border-radius:12px; overflow:hidden; position:relative;\">\n        <svg viewBox=\"0 0 520 290\" style=\"width:100%; height:285px; display:block;\">\n          <rect width=\"520\" height=\"290\" fill=\"#dfd3b8\" />\n          <!-- Neighbor Region GO Exit Arrows -->\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('ZHAMBU', 'goli_grabs')\">\n            <rect x=\"12\" y=\"18\" width=\"86\" height=\"26\" rx=\"6\" fill=\"#6db33f\" stroke=\"#fff\" stroke-width=\"2\" />\n            <text x=\"55\" y=\"35\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">⬅ GO: ZHAMBU</text>\n          </g>\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('KALAVANA', 'goli_grabs')\">\n            <rect x=\"410\" y=\"18\" width=\"98\" height=\"26\" rx=\"6\" fill=\"#6db33f\" stroke=\"#fff\" stroke-width=\"2\" />\n            <text x=\"459\" y=\"35\" text-anchor=\"middle\" fill=\"#fff\" font-size=\"11\" font-weight=\"bold\">GO: KALAVANA ➡</text>\n          </g>\n          <!-- Street Network Lines -->\n          <line x1=\"95\" y1=\"165\" x2=\"215\" y2=\"125\" stroke=\"#5c4b32\" stroke-width=\"6\" stroke-linecap=\"round\" />\n          <line x1=\"215\" y1=\"125\" x2=\"345\" y2=\"155\" stroke=\"#5c4b32\" stroke-width=\"6\" stroke-linecap=\"round\" />\n          <line x1=\"345\" y1=\"155\" x2=\"435\" y2=\"105\" stroke=\"#5c4b32\" stroke-width=\"6\" stroke-linecap=\"round\" />\n          <line x1=\"215\" y1=\"125\" x2=\"265\" y2=\"220\" stroke=\"#5c4b32\" stroke-width=\"6\" stroke-linecap=\"round\" />\n          <line x1=\"265\" y1=\"220\" x2=\"395\" y2=\"225\" stroke=\"#5c4b32\" stroke-width=\"6\" stroke-linecap=\"round\" />\n          <!-- Street Nodes -->\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('${regUpper}', 'bongul_beat')\">\n            <circle cx=\"95\" cy=\"165\" r=\"14\" fill=\"${selSt.id === 'bongul_beat' ? '#ffdf40' : '#fff'}\" stroke=\"#2c3e50\" stroke-width=\"3\" />\n            <text x=\"95\" y=\"142\" text-anchor=\"middle\" fill=\"#222\" font-size=\"11\" font-weight=\"bold\">Bongul Beat</text>\n          </g>\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('${regUpper}', 'chego_chase')\">\n            <circle cx=\"215\" cy=\"125\" r=\"15\" fill=\"${selSt.id === 'chego_chase' ? '#ffdf40' : '#6db33f'}\" stroke=\"#2c3e50\" stroke-width=\"3\" />\n            <text x=\"215\" y=\"100\" text-anchor=\"middle\" fill=\"#222\" font-size=\"12\" font-weight=\"bold\">Chego Chase</text>\n          </g>\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('${regUpper}', 'andra_hall')\">\n            <circle cx=\"345\" cy=\"155\" r=\"14\" fill=\"${selSt.id === 'andra_hall' ? '#ffdf40' : '#fff'}\" stroke=\"#2c3e50\" stroke-width=\"3\" />\n            <text x=\"345\" y=\"132\" text-anchor=\"middle\" fill=\"#222\" font-size=\"11\" font-weight=\"bold\">Andra Hall</text>\n          </g>\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('${regUpper}', 'goli_grabs')\">\n            <circle cx=\"435\" cy=\"105\" r=\"13\" fill=\"${selSt.id === 'goli_grabs' ? '#ffdf40' : '#fff'}\" stroke=\"#2c3e50\" stroke-width=\"3\" />\n            <text x=\"435\" y=\"84\" text-anchor=\"middle\" fill=\"#222\" font-size=\"11\" font-weight=\"bold\">Goli Grabs</text>\n          </g>\n          <g style=\"cursor:pointer;\" onclick=\"openRegionMap('${regUpper}', 'beau_home')\">\n            <circle cx=\"265\" cy=\"220\" r=\"14\" fill=\"${selSt.id === 'beau_home' ? '#ffdf40' : '#fff'}\" stroke=\"#2c3e50\" stroke-width=\"3\" />\n            <text x=\"265\" y=\"246\" text-anchor=\"middle\" fill=\"#222\" font-size=\"11\" font-weight=\"bold\">Beau's Home Street</text>\n          </g>\n        </svg>\n      </div>\n      <div style=\"width:215px; background:#fff; border:2px solid #9ab09e; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;\">\n        <div>\n          <div style=\"font-size:10px; font-weight:bold; color:#2b8a9e; text-transform:uppercase;\">Selected Street</div>\n          <h3 style=\"margin:4px 0 6px; font-size:16px; color:#223028;\">${selSt.name}</h3>\n          <p style=\"font-size:11px; color:#556;\">Features shrines, Street Spirit vendors, and harvestable resources.</p>\n          <button onclick=\"teleportToStreet('${selSt.id}')\" style=\"width:100%; background:#6db33f; color:#fff; border:none; padding:9px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;\">Teleport here (-10e)</button>\n        </div>\n      </div>\n    </div>\n  `;\n  openModal(`World Map of Ur — ${regUpper}`, html);\n};\n\nfunction openWorldMapModal(selectedStreetId) {\n  // Tier 1: Illustrated World Map overview of Regions (clicking a region drills down into Tier 2 street network map)\n  const defaultTarget = selectedStreetId || (State.streetId === \"beau_home\" ? \"goli_grabs\" : \"beau_home\");\n  const selSt = STREETS[defaultTarget] || STREETS.goli_grabs;\n\n  const html = `\n    <div style=\"display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:6px; flex-wrap:wrap;\">\n      <div style=\"font-size:12px; color:#3d4f44; display:flex; gap:6px; align-items:center;\">\n        <strong>Click a Region to open its Street Map:</strong>\n        <button id=\"region-btn-zhambu\" onclick=\"openRegionMap('ZHAMBU', 'goli_grabs')\" style=\"background:#e3efe6; border:1px solid #7fa68a; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;\">ZHAMBU</button>\n        <button id=\"region-btn-kalavana\" onclick=\"openRegionMap('KALAVANA', 'goli_grabs')\" style=\"background:#fdf2d0; border:1px solid #d4b146; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;\">KALAVANA</button>\n        <button id=\"region-btn-andra\" onclick=\"openRegionMap('ANDRA', 'chego_chase')\" style=\"background:#d8eef5; border:1px solid #58a6b8; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;\">ANDRA</button>\n      </div>\n    </div>\n    <div style=\"display:flex; gap:14px; align-items:stretch;\">\n      <div style=\"flex:1; background:#1f485b; border:3px solid #7fa6c4; border-radius:12px; overflow:hidden; position:relative;\">\n        <svg viewBox=\"0 0 520 295\" style=\"width:100%; height:285px; display:block;\">\n          <rect width=\"520\" height=\"295\" fill=\"#1d4456\" />\n          <!-- Clickable Illustrated Region Continents -->\n          <g id=\"region-node-zhambu\" style=\"cursor:pointer;\" onclick=\"openRegionMap('ZHAMBU', 'goli_grabs')\">\n            <ellipse cx=\"115\" cy=\"82\" rx=\"78\" ry=\"48\" fill=\"#5c8c73\" stroke=\"#b8f2d0\" stroke-width=\"2.5\" />\n            <text x=\"115\" y=\"86\" text-anchor=\"middle\" fill=\"#ffffff\" font-size=\"14\" font-weight=\"bold\">ZHAMBU</text>\n          </g>\n          <g id=\"region-node-kalavana\" style=\"cursor:pointer;\" onclick=\"openRegionMap('KALAVANA', 'goli_grabs')\">\n            <ellipse cx=\"275\" cy=\"95\" rx=\"88\" ry=\"54\" fill=\"#9c7a4c\" stroke=\"#ffeaa7\" stroke-width=\"2.5\" />\n            <text x=\"275\" y=\"99\" text-anchor=\"middle\" fill=\"#ffffff\" font-size=\"14\" font-weight=\"bold\">KALAVANA</text>\n          </g>\n          <g id=\"region-node-andra\" style=\"cursor:pointer;\" onclick=\"openRegionMap('ANDRA', 'chego_chase')\">\n            <ellipse cx=\"390\" cy=\"195\" rx=\"102\" ry=\"72\" fill=\"#7d964c\" stroke=\"#e2f79e\" stroke-width=\"2.5\" />\n            <text x=\"390\" y=\"199\" text-anchor=\"middle\" fill=\"#ffffff\" font-size=\"15\" font-weight=\"bold\">ANDRA</text>\n          </g>\n          <g id=\"region-node-home\" style=\"cursor:pointer;\" onclick=\"openRegionMap('HOME STREETS', 'beau_home')\">\n            <ellipse cx=\"135\" cy=\"210\" rx=\"86\" ry=\"56\" fill=\"#4b8554\" stroke=\"#8de969\" stroke-width=\"2.5\" />\n            <text x=\"135\" y=\"214\" text-anchor=\"middle\" fill=\"#ffffff\" font-size=\"13\" font-weight=\"bold\">HOME STREETS</text>\n          </g>\n        </svg>\n      </div>\n      <div style=\"width:220px; background:#fff; border:2px solid #9ab09e; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;\">\n        <div>\n          <div style=\"font-size:10px; font-weight:bold; color:#2b8a9e; text-transform:uppercase;\">Destination: ${selSt.region}</div>\n          <h3 style=\"margin:4px 0 6px; font-size:16px; color:#223028;\">${selSt.name}</h3>\n          <div style=\"display:flex; flex-direction:column; gap:6px;\">\n            <button onclick=\"teleportToStreet('${selSt.id}')\" style=\"background:#6db33f; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;\">Teleport here (-10e)</button>\n          </div>\n        </div>\n        <div style=\"border-top:1px solid #e1e8dd; padding-top:8px; margin-top:10px;\">\n          <div style=\"font-size:10px; font-weight:bold; color:#6c7a73; margin-bottom:4px;\">QUICK STREET SELECT:</div>\n          <div style=\"display:flex; flex-wrap:wrap; gap:4px;\">\n            ${Object.values(STREETS).map(st => `<button onclick=\"openWorldMapModal('${st.id}')\" style=\"font-size:10px; padding:2px 6px; border-radius:5px; border:1px solid #b8c6b0; background:${st.id === selSt.id ? '#2b8a9e' : '#f5f7f2'}; color:${st.id === selSt.id ? '#fff' : '#333'}; cursor:pointer;\">${st.name.split(' in ')[0]}</button>`).join('')}\n          </div>\n        </div>\n      </div>\n    </div>\n  `;\n  openModal(\"World Map of Ur\", html);\n}",
+      "rule_ids": [
+        "tower_construction_project_contribution",
+        "street_spirit_vendor_shop_buy",
+        "minimap_strip_and_world_map_button",
+        "world_map_teleport_and_go_home"
+      ],
+      "why": "Implement the multi-step Tower Construction Project modal, update the Street Spirit vendor modal to have Buy/Sell tabs and stay open after purchase, and update the World Map modal to have a two-tier Region Overview -> Region Street Network drill-down while keeping quick teleport compatibility."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  setTimeout(() => {\n    bar.style.width = \"74%\";\n    if (pctLbl) pctLbl.textContent = \"reticulating splines... 74%\";\n  }, 140);\n  setTimeout(() => {\n    bar.style.width = \"100%\";\n    if (pctLbl) pctLbl.textContent = \"reticulating splines... 100%\";\n  }, 280);\n  setTimeout(() => {\n    ov.classList.remove(\"open\");\n    bar.style.width = \"0%\";\n    if (onComplete) onComplete();\n  }, 420);",
+      "new": "  setTimeout(() => {\n    bar.style.width = \"74%\";\n    if (pctLbl) pctLbl.textContent = \"reticulating splines... 74%\";\n  }, 180);\n  setTimeout(() => {\n    bar.style.width = \"100%\";\n    if (pctLbl) pctLbl.textContent = \"reticulating splines... 100%\";\n  }, 360);\n  setTimeout(() => {\n    ov.classList.remove(\"open\");\n    bar.style.width = \"0%\";\n    if (onComplete) onComplete();\n  }, 540);",
+      "rule_ids": [
+        "signpost_street_boundary_transition",
+        "building_door_interior_transition"
+      ],
+      "why": "Keep the 'Entering [Street] / reticulating splines...' loading screen visible for 540ms so it is reliably captured in video recordings."
+    },
+    {
+      "file": "public/index.html",
+      "old": "// --- Canvas Click Detection for World Objects & Players ---\nconst canvas = document.getElementById(\"game-canvas\");\nconst ctx = canvas.getContext(\"2d\");\n\ncanvas.addEventListener(\"click\", (e) => {",
+      "new": "// --- Canvas Click & Hover Detection for World Objects & Players ---\nconst canvas = document.getElementById(\"game-canvas\");\nconst ctx = canvas.getContext(\"2d\");\n\ncanvas.addEventListener(\"mousemove\", (e) => {\n  const rect = canvas.getBoundingClientRect();\n  const wx = (e.clientX - rect.left) + State.camera.x;\n  const wy = (e.clientY - rect.top) + State.camera.y;\n  State.mouseWorldX = wx;\n  State.mouseWorldY = wy;\n  const st = STREETS[State.streetId];\n  State.hoveredDoor = st.doors.find(d => wx >= d.x - d.w / 2 - 12 && wx <= d.x + d.w / 2 + 12 && wy >= d.y - d.h - 12 && wy <= d.y + 12) || null;\n  State.hoveredExit = st.exits.find(ex => Math.abs(wx - ex.x) < 65 && Math.abs(wy - (ex.y - 50)) < 75) || null;\n  const allInteractive = [...st.npcs, ...st.resources];\n  State.hoveredObj = allInteractive.find(obj => Math.abs(wx - obj.x) < 60 && Math.abs(wy - (obj.y - 45)) < 80) || null;\n});\n\ncanvas.addEventListener(\"click\", (e) => {",
+      "rule_ids": [
+        "building_door_interior_transition",
+        "tower_construction_project_contribution",
+        "signpost_street_boundary_transition"
+      ],
+      "why": "Track mouse hover over building doors, signposts, and street projects so hover outlines and labels render accurately."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  // Street boundaries & automatic signpost exit trigger\n  if (!State.isTransitioning) {\n    if (p.x < 85 && p.vx <= 0) {\n      p.x = 90;\n      p.vx = 0;\n      const leftExit = st.exits.find(ex => ex.x < 250);\n      if (leftExit) changeStreet(leftExit.target, leftExit.spawnX);\n    } else if (p.x > st.width - 95 && p.vx >= 0) {\n      p.x = st.width - 100;\n      p.vx = 0;\n      const rightExit = st.exits.find(ex => ex.x > st.width - 250);\n      if (rightExit) changeStreet(rightExit.target, rightExit.spawnX);\n    }\n  }",
+      "new": "  // Street boundaries & automatic signpost exit trigger\n  if (!State.isTransitioning) {\n    if (p.x < 102 && p.vx <= 0) {\n      p.x = 106;\n      p.vx = 0;\n      const leftExit = st.exits.find(ex => ex.x < 250);\n      if (leftExit) changeStreet(leftExit.target, leftExit.spawnX);\n    } else if (p.x > st.width - 102 && p.vx >= 0) {\n      p.x = st.width - 106;\n      p.vx = 0;\n      const rightExit = st.exits.find(ex => ex.x > st.width - 250);\n      if (rightExit) changeStreet(rightExit.target, rightExit.spawnX);\n    }\n  }",
+      "rule_ids": [
+        "signpost_street_boundary_transition"
+      ],
+      "why": "Trigger the street boundary transition when walking past the signpost at x=115."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  // Update Cubimals\n  for (let i = State.cubimals.length - 1; i >= 0; i--) {\n    const c = State.cubimals[i];\n    c.x += c.vx;\n    c.timer--;\n    if (c.timer <= 0) State.cubimals.splice(i, 1);\n  }\n\n  // Update Particles & Floating Texts & Chat Bubbles\n  for (let i = State.particles.length - 1; i >= 0; i--) {\n    const pt = State.particles[i];\n    pt.x += pt.vx;\n    pt.y += pt.vy;\n    pt.vy += 0.06;\n    pt.life--;\n    if (pt.life <= 0) State.particles.splice(i, 1);\n  }\n  for (let i = State.floatingTexts.length - 1; i >= 0; i--) {\n    const ft = State.floatingTexts[i];\n    ft.y -= 0.7;\n    ft.life--;\n    if (ft.life <= 0) State.floatingTexts.splice(i, 1);\n  }\n  Object.keys(State.chatBubbles).forEach(k => {\n    State.chatBubbles[k].timer--;\n    if (State.chatBubbles[k].timer <= 0) delete State.chatBubbles[k];\n  });",
+      "new": "  // Update Cubimals\n  for (let i = State.cubimals.length - 1; i >= 0; i--) {\n    const c = State.cubimals[i];\n    if ((c.raceTimer || 0) > 0) {\n      c.x += c.vx * (c.raceTimer / 110);\n      c.raceTimer--;\n    }\n    c.timer--;\n    if (c.timer <= 0) State.cubimals.splice(i, 1);\n  }\n\n  // Update Particles & Floating Texts & Chat Bubbles & Hi Signs\n  for (let i = State.particles.length - 1; i >= 0; i--) {\n    const pt = State.particles[i];\n    pt.x += pt.vx;\n    pt.y += pt.vy;\n    pt.vy += 0.06;\n    pt.life--;\n    if (pt.life <= 0) State.particles.splice(i, 1);\n  }\n  for (let i = State.floatingTexts.length - 1; i >= 0; i--) {\n    const ft = State.floatingTexts[i];\n    ft.y -= 0.7;\n    ft.life--;\n    if (ft.life <= 0) State.floatingTexts.splice(i, 1);\n  }\n  Object.keys(State.chatBubbles).forEach(k => {\n    State.chatBubbles[k].timer--;\n    if (State.chatBubbles[k].timer <= 0) delete State.chatBubbles[k];\n  });\n  Object.keys(State.hiSigns).forEach(k => {\n    State.hiSigns[k].timer--;\n    if (State.hiSigns[k].timer <= 0) delete State.hiSigns[k];\n  });",
+      "rule_ids": [
+        "cubimals_windup_race_in_planks",
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Decelerate racing Cubimals smoothly to a stop and tick down wooden hi-sign timers."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  // 9. Cubimals Racing\n  State.cubimals.forEach(c => {\n    ctx.save();\n    ctx.translate(c.x, c.y - 12);\n    ctx.fillStyle = c.kind === \"chick_cubimal\" ? \"#f1c40f\" : \"#bdc3c7\";\n    ctx.fillRect(-10, -10, 20, 20);\n    ctx.strokeStyle = \"#333\";\n    ctx.strokeRect(-10, -10, 20, 20);\n    ctx.restore();\n  });",
+      "new": "  // 9. Cubimals Racing\n  State.cubimals.forEach(c => {\n    const isMoving = (c.raceTimer || 0) > 0;\n    const hop = isMoving ? Math.abs(Math.sin(simTick * 0.45)) * 7 : 0;\n    ctx.save();\n    ctx.translate(c.x, c.y - 16 - hop);\n    // Wind-up key on back\n    ctx.strokeStyle = \"#e67e22\";\n    ctx.lineWidth = 2.5;\n    ctx.beginPath();\n    ctx.moveTo(-14, -4); ctx.lineTo(-22, -4);\n    ctx.arc(-25, -4, 4, 0, Math.PI * 2);\n    ctx.stroke();\n    // Cubic toy body\n    ctx.fillStyle = c.kind === \"chick_cubimal\" ? \"#f1c40f\" : \"#dfe6e9\";\n    ctx.strokeStyle = \"#2c3e50\";\n    ctx.lineWidth = 2.5;\n    ctx.beginPath();\n    ctx.roundRect(-14, -14, 28, 26, 5);\n    ctx.fill(); ctx.stroke();\n    // Eyes & beak\n    ctx.fillStyle = \"#111\";\n    ctx.beginPath(); ctx.arc(6, -5, 2.5, 0, Math.PI * 2); ctx.fill();\n    ctx.fillStyle = \"#e67e22\";\n    ctx.beginPath(); ctx.moveTo(14, -5); ctx.lineTo(21, -2); ctx.lineTo(14, 1); ctx.fill();\n    // Wheels\n    ctx.fillStyle = \"#333\";\n    ctx.beginPath();\n    ctx.arc(-8, 13, 4, 0, Math.PI * 2);\n    ctx.arc(8, 13, 4, 0, Math.PI * 2);\n    ctx.fill();\n    // Distance label above cubimal\n    ctx.fillStyle = \"rgba(20, 28, 32, 0.88)\";\n    ctx.beginPath();\n    ctx.roundRect(-48, -38, 96, 18, 6);\n    ctx.fill();\n    ctx.fillStyle = \"#ffdf40\";\n    ctx.font = \"bold 11px sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText(isMoving ? \"Racing...\" : `${c.dist} planks!`, 0, -25);\n    ctx.restore();\n  });",
+      "rule_ids": [
+        "cubimals_windup_race_in_planks"
+      ],
+      "why": "Render a detailed wind-up Cubimal toy sprite with wheels, beak, wind-up key, hop animation, and plank distance badge."
+    },
+    {
+      "file": "public/index.html",
+      "old": "    // Teal-framed double doors\n    ctx.fillStyle = \"#7a583b\";\n    ctx.strokeStyle = \"#3bb2c4\";\n    ctx.lineWidth = 4;\n    ctx.fillRect(bx + 20, by - 95, 80, 95);\n    ctx.strokeRect(bx + 20, by - 95, 80, 95);\n    ctx.restore();",
+      "new": "    // Teal-framed double doors with hover highlight\n    const doorHovered = (State.hoveredDoor && State.hoveredDoor.target === \"andra_hall\") || Math.abs(State.player.x - (bx + 60)) < 95;\n    ctx.save();\n    if (doorHovered) {\n      ctx.shadowColor = \"#00f5d4\";\n      ctx.shadowBlur = 16;\n    }\n    ctx.fillStyle = doorHovered ? \"#8f6845\" : \"#7a583b\";\n    ctx.strokeStyle = doorHovered ? \"#00f5d4\" : \"#3bb2c4\";\n    ctx.lineWidth = doorHovered ? 6 : 4;\n    ctx.fillRect(bx + 20, by - 95, 80, 95);\n    ctx.strokeRect(bx + 20, by - 95, 80, 95);\n    ctx.beginPath();\n    ctx.moveTo(bx + 60, by - 95); ctx.lineTo(bx + 60, by);\n    ctx.stroke();\n    ctx.restore();\n    if (doorHovered) {\n      ctx.fillStyle = \"rgba(20, 32, 36, 0.92)\";\n      ctx.strokeStyle = \"#00f5d4\";\n      ctx.lineWidth = 2;\n      ctx.beginPath();\n      ctx.roundRect(bx - 20, by - 130, 160, 24, 8);\n      ctx.fill(); ctx.stroke();\n      ctx.fillStyle = \"#a8ffef\";\n      ctx.font = \"bold 12px sans-serif\";\n      ctx.textAlign = \"center\";\n      ctx.fillText(\"Enter Andra Bureaucratic Hall\", bx + 60, by - 114);\n    }\n    ctx.restore();",
+      "rule_ids": [
+        "building_door_interior_transition"
+      ],
+      "why": "Highlight the Ministry of Departments double doors with a bright glowing teal border and label when hovered or approached."
+    },
+    {
+      "file": "public/index.html",
+      "old": "function drawSignpost(ctx, ex) {\n  ctx.save();\n  ctx.translate(ex.x, ex.y);\n  const isLeft = ex.x < 500;\n  // Wooden post with base stones\n  ctx.fillStyle = \"#5c4328\";\n  ctx.strokeStyle = \"#2b1d10\";\n  ctx.lineWidth = 2;\n  ctx.fillRect(-6, -112, 12, 112);\n  ctx.strokeRect(-6, -112, 12, 112);\n  ctx.beginPath();\n  ctx.arc(0, -114, 8, 0, Math.PI * 2);\n  ctx.fill(); ctx.stroke();\n\n  // Directional wooden arrow signboards for each connected street\n  const parts = String(ex.label).split(\"/\").map(s => s.trim());\n  parts.forEach((lbl, idx) => {\n    const by = -98 + idx * 30;\n    ctx.fillStyle = idx === 0 ? \"#6e4e2e\" : \"#593e23\";\n    ctx.strokeStyle = \"#d4b170\";\n    ctx.lineWidth = 1.8;\n    ctx.beginPath();\n    if (isLeft) {\n      ctx.moveTo(-78, by + 12);\n      ctx.lineTo(-62, by);\n      ctx.lineTo(58, by);\n      ctx.lineTo(58, by + 24);\n      ctx.lineTo(-62, by + 24);\n    } else {\n      ctx.moveTo(78, by + 12);\n      ctx.lineTo(62, by);\n      ctx.lineTo(-58, by);\n      ctx.lineTo(-58, by + 24);\n      ctx.lineTo(62, by + 24);\n    }\n    ctx.closePath();\n    ctx.fill(); ctx.stroke();\n    ctx.fillStyle = \"#fff8e7\";\n    ctx.font = \"bold 11px 'Trebuchet MS', sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText((isLeft ? \"← \" : \"\") + lbl + (!isLeft ? \" →\" : \"\"), 0, by + 16);\n  });\n  ctx.restore();\n}",
+      "new": "function drawSignpost(ctx, ex) {\n  ctx.save();\n  ctx.translate(ex.x, ex.y);\n  const isLeft = ex.x < 500;\n  const isNear = Math.abs(State.player.x - ex.x) < 230 || State.hoveredExit === ex;\n  // Wooden post with base stones\n  ctx.fillStyle = \"#6e4e2e\";\n  ctx.strokeStyle = \"#2b1d10\";\n  ctx.lineWidth = 2.5;\n  ctx.fillRect(-7, -120, 14, 120);\n  ctx.strokeRect(-7, -120, 14, 120);\n  ctx.beginPath();\n  ctx.arc(0, -122, 9, 0, Math.PI * 2);\n  ctx.fill(); ctx.stroke();\n\n  // Directional wooden arrow signboards for each connected street\n  const parts = String(ex.label).split(\"/\").map(s => s.trim());\n  parts.forEach((lbl, idx) => {\n    const by = -106 + idx * 32;\n    const activeGreen = idx === 0 && isNear;\n    ctx.save();\n    if (activeGreen) {\n      ctx.shadowColor = \"#8de969\";\n      ctx.shadowBlur = 12;\n    }\n    ctx.fillStyle = activeGreen ? \"#3d6e28\" : (idx === 0 ? \"#7a5633\" : \"#5e4227\");\n    ctx.strokeStyle = activeGreen ? \"#8de969\" : \"#deb878\";\n    ctx.lineWidth = activeGreen ? 3 : 2;\n    ctx.beginPath();\n    if (isLeft) {\n      ctx.moveTo(-72, by + 13);\n      ctx.lineTo(-56, by);\n      ctx.lineTo(74, by);\n      ctx.lineTo(74, by + 26);\n      ctx.lineTo(-56, by + 26);\n    } else {\n      ctx.moveTo(72, by + 13);\n      ctx.lineTo(56, by);\n      ctx.lineTo(-74, by);\n      ctx.lineTo(-74, by + 26);\n      ctx.lineTo(56, by + 26);\n    }\n    ctx.closePath();\n    ctx.fill(); ctx.stroke();\n    ctx.fillStyle = activeGreen ? \"#eaffd0\" : \"#fff8e7\";\n    ctx.font = \"bold 12px 'Trebuchet MS', sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText((isLeft ? \"← \" : \"\") + lbl + (!isLeft ? \" →\" : \"\"), isLeft ? 6 : -6, by + 17);\n    ctx.restore();\n  });\n  ctx.restore();\n}",
+      "rule_ids": [
+        "signpost_street_boundary_transition"
+      ],
+      "why": "Render wooden signboards with adjacent street names and a glowing green highlight on the active destination when approached or hovered."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  if (res.type === \"wood_tree\") {\n    // Quirky branching Wood Tree (Video A 02:27)\n    ctx.fillStyle = \"#7d6b38\";\n    ctx.strokeStyle = \"#3d3419\";\n    ctx.lineWidth = 2.5;\n    ctx.beginPath();\n    ctx.moveTo(-12, 0);\n    ctx.lineTo(-8, -75);\n    ctx.lineTo(-28, -60);\n    ctx.lineTo(-24, -72);\n    ctx.lineTo(-4, -92);\n    ctx.lineTo(6, -92);\n    ctx.lineTo(26, -70);\n    ctx.lineTo(22, -58);\n    ctx.lineTo(8, -72);\n    ctx.lineTo(12, 0);\n    ctx.closePath();\n    ctx.fill(); ctx.stroke();\n  } else if (res.type === \"fruit_tree\") {",
+      "new": "  if (res.type === \"wood_tree\") {\n    // Quirky branching Wood Tree with wooden planks on branches (Video A 01:43, 02:27, 03:48)\n    const isHovered = (State.hoveredObj && State.hoveredObj.id === res.id) || Math.abs(State.player.x - res.x) < 75;\n    ctx.save();\n    if (isHovered) {\n      ctx.shadowColor = \"#4da6ff\";\n      ctx.shadowBlur = 10;\n    }\n    ctx.fillStyle = \"#8c7640\";\n    ctx.strokeStyle = isHovered ? \"#4da6ff\" : \"#3d3419\";\n    ctx.lineWidth = isHovered ? 3 : 2.5;\n    ctx.beginPath();\n    ctx.moveTo(-14, 0);\n    ctx.lineTo(-10, -78);\n    ctx.lineTo(-32, -62);\n    ctx.lineTo(-26, -76);\n    ctx.lineTo(-5, -98);\n    ctx.lineTo(7, -98);\n    ctx.lineTo(28, -74);\n    ctx.lineTo(24, -60);\n    ctx.lineTo(10, -75);\n    ctx.lineTo(14, 0);\n    ctx.closePath();\n    ctx.fill(); ctx.stroke();\n    // Harvestable wooden planks on the tree branches\n    [[-22, -82, -0.25], [14, -84, 0.25], [-4, -106, 0.05]].forEach(([px, py, rot]) => {\n      ctx.save();\n      ctx.translate(px, py);\n      ctx.rotate(rot);\n      ctx.fillStyle = \"#d99b52\";\n      ctx.strokeStyle = \"#5c3d1e\";\n      ctx.lineWidth = 1.5;\n      ctx.fillRect(-12, -5, 24, 10);\n      ctx.strokeRect(-12, -5, 24, 10);\n      ctx.restore();\n    });\n    ctx.restore();\n    if (isHovered) {\n      ctx.fillStyle = \"#ffdf40\";\n      ctx.font = \"bold 12px sans-serif\";\n      ctx.textAlign = \"center\";\n      ctx.fillText(\"Wood Tree\", 0, 16);\n    }\n  } else if (res.type === \"fruit_tree\") {",
+      "rule_ids": [
+        "trees_and_plants_watering_harvesting"
+      ],
+      "why": "Render Wood Trees with visible harvestable wooden planks on their branches, hover highlight outline, and 'Wood Tree' label."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  } else if (res.type === \"tower_project\") {\n    // Wooden scaffolding Tower construction project (Video A 02:33 & 03:49)\n    ctx.strokeStyle = \"#8c5828\";\n    ctx.fillStyle = \"#b87a3d\";\n    ctx.lineWidth = 4;\n    ctx.strokeRect(-55, -42, 110, 42);\n    for (let x = -45; x <= 45; x += 22) {\n      ctx.fillRect(x - 3, -48, 6, 48);\n    }\n    ctx.fillStyle = \"#fff\";\n    ctx.strokeStyle = \"#333\";\n    ctx.lineWidth = 1.5;\n    ctx.beginPath();\n    ctx.roundRect(-32, -74, 64, 20, 5);\n    ctx.fill(); ctx.stroke();\n    ctx.fillStyle = \"#222\";\n    ctx.font = \"bold 11px sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText(`${res.progress}%`, 0, -60);",
+      "new": "  } else if (res.type === \"tower_project\") {\n    // Wooden scaffolding Tower construction project (Video A 02:33 & 03:49)\n    const isHovered = (State.hoveredObj && State.hoveredObj.id === res.id) || Math.abs(State.player.x - res.x) < 120;\n    ctx.save();\n    if (isHovered) {\n      ctx.shadowColor = \"#4da6ff\";\n      ctx.shadowBlur = 12;\n      ctx.strokeStyle = \"#4da6ff\";\n      ctx.lineWidth = 5;\n      ctx.strokeRect(-60, -52, 120, 52);\n    }\n    ctx.strokeStyle = \"#8c5828\";\n    ctx.fillStyle = \"#b87a3d\";\n    ctx.lineWidth = 4;\n    ctx.strokeRect(-55, -44, 110, 44);\n    for (let x = -45; x <= 45; x += 22) {\n      ctx.fillRect(x - 3, -50, 6, 50);\n    }\n    // Diagonal scaffolding cross-braces\n    ctx.lineWidth = 2.5;\n    ctx.beginPath();\n    ctx.moveTo(-45, -44); ctx.lineTo(0, 0);\n    ctx.moveTo(0, -44); ctx.lineTo(-45, 0);\n    ctx.moveTo(0, -44); ctx.lineTo(45, 0);\n    ctx.moveTo(45, -44); ctx.lineTo(0, 0);\n    ctx.stroke();\n    ctx.restore();\n\n    // Speech bubble above scaffolding reading 'Project available' (A 02:33)\n    ctx.fillStyle = \"rgba(255, 255, 255, 0.96)\";\n    ctx.strokeStyle = isHovered ? \"#4da6ff\" : \"#333\";\n    ctx.lineWidth = 2;\n    ctx.beginPath();\n    ctx.roundRect(-58, -86, 116, 24, 7);\n    ctx.fill(); ctx.stroke();\n    ctx.beginPath();\n    ctx.moveTo(-6, -62); ctx.lineTo(6, -62); ctx.lineTo(0, -54);\n    ctx.closePath();\n    ctx.fill(); ctx.stroke();\n    ctx.fillStyle = \"#1e272e\";\n    ctx.font = \"bold 11px 'Trebuchet MS', sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText(\"Project available\", 0, -70);\n\n    // Completion progress bar & yellow 'Tower' label below on hover/near\n    if (res.progress > 11.4) {\n      ctx.fillStyle = \"#222\";\n      ctx.fillRect(-36, -24, 72, 12);\n      ctx.fillStyle = \"#6db33f\";\n      ctx.fillRect(-34, -22, Math.round(68 * (res.progress / 100)), 8);\n    }\n    if (isHovered) {\n      ctx.fillStyle = \"rgba(0,0,0,0.75)\";\n      ctx.font = \"bold 13px 'Trebuchet MS', sans-serif\";\n      ctx.fillText(\"Tower\", 1, 19);\n      ctx.fillStyle = \"#ffdf40\";\n      ctx.fillText(\"Tower\", 0, 18);\n    }",
+      "rule_ids": [
+        "tower_construction_project_contribution"
+      ],
+      "why": "Show the blue outline, 'Project available' speech bubble above the wooden scaffolding, and yellow 'Tower' label below it on hover/approach as seen in A 02:33."
+    },
+    {
+      "file": "public/index.html",
+      "old": "  // Speech bubble if active\n  const bbl = State.chatBubbles[av.id];\n  if (bbl) {\n    drawSpeechBubble(ctx, av.x, av.y - 105 * scale, bbl.text);\n  }\n  ctx.restore();\n}",
+      "new": "  // Wooden Daily Hi-Sign board if active (Video A 19:37 - 19:41)\n  const hiSign = State.hiSigns[av.id];\n  if (hiSign) {\n    ctx.save();\n    const sx = av.x + (av.dir || 1) * 24;\n    const sy = av.y - 96 * scale;\n    // Wooden handle stick\n    ctx.fillStyle = \"#5c3d24\";\n    ctx.fillRect(sx - 2.5, sy, 5, 34);\n    // Wooden signboard plaque\n    ctx.fillStyle = \"#d49b54\";\n    ctx.strokeStyle = \"#5c3814\";\n    ctx.lineWidth = 2.5;\n    ctx.beginPath();\n    ctx.roundRect(sx - 26, sy - 24, 52, 26, 5);\n    ctx.fill(); ctx.stroke();\n    // Wood grain & corner nails\n    ctx.fillStyle = \"#3d240c\";\n    ctx.font = \"bold 14px 'Trebuchet MS', sans-serif\";\n    ctx.textAlign = \"center\";\n    ctx.fillText(hiSign.text, sx, sy - 6);\n    ctx.restore();\n  }\n\n  // Speech bubble if active\n  const bbl = State.chatBubbles[av.id];\n  if (bbl) {\n    drawSpeechBubble(ctx, av.x, av.y - (hiSign ? 128 : 105) * scale, bbl.text);\n  }\n  ctx.restore();\n}",
+      "rule_ids": [
+        "daily_hi_sign_match_bonus"
+      ],
+      "why": "Draw wooden signboard graphics over characters' heads when greeting with daily hi signs ('bye', 'o/')."
+    },
+    {
+      "file": "public/index.html",
+      "old": "function drawMinimap(st) {\n  const mc = document.getElementById(\"minimap-canvas\");\n  const mctx = mc.getContext(\"2d\");\n  mctx.clearRect(0, 0, mc.width, mc.height);\n  mctx.fillStyle = \"#2f383d\";\n  mctx.fillRect(0, 0, mc.width, mc.height);\n  mctx.fillStyle = \"#6c7a73\";\n  mctx.fillRect(4, 19, mc.width - 8, 2);\n\n  // Other players dots\n  Object.values(State.otherPlayers).forEach(op => {\n    if (op.street === State.streetId) {\n      const mx = (op.x / st.width) * (mc.width - 8) + 4;\n      mctx.fillStyle = \"#f1c40f\";\n      mctx.fillRect(mx - 1.5, 13, 3, 5);\n    }\n  });\n\n  // Self dot\n  const sx = (State.player.x / st.width) * (mc.width - 8) + 4;\n  mctx.fillStyle = \"#6db33f\";\n  mctx.beginPath();\n  mctx.arc(sx, 14, 3.5, 0, Math.PI * 2);\n  mctx.fill();\n}",
+      "new": "function drawMinimap(st) {\n  const mc = document.getElementById(\"minimap-canvas\");\n  const mctx = mc.getContext(\"2d\");\n  const W = mc.width, H = mc.height;\n  mctx.clearRect(0, 0, W, H);\n  mctx.fillStyle = \"#161f24\";\n  mctx.fillRect(0, 0, W, H);\n\n  // Street platforms silhouette\n  mctx.fillStyle = \"#4d6359\";\n  (st.platforms || []).forEach(pl => {\n    const px = (pl.x / st.width) * (W - 10) + 5;\n    const pw = Math.max(4, (pl.w / st.width) * (W - 10));\n    const py = Math.max(4, Math.min(H - 8, (pl.y / st.groundY) * (H - 8)));\n    mctx.fillRect(px, py, pw, 2);\n  });\n\n  // Main ground terrain line\n  mctx.fillStyle = \"#789486\";\n  mctx.fillRect(5, H - 7, W - 10, 2.5);\n\n  // Resources/NPC dots\n  (st.npcs || []).forEach(n => {\n    const nx = (n.x / st.width) * (W - 10) + 5;\n    mctx.fillStyle = \"#58a6b8\";\n    mctx.fillRect(nx - 1, H - 11, 2, 3);\n  });\n\n  // Other players dots\n  Object.values(State.otherPlayers).forEach(op => {\n    if (op.street === State.streetId) {\n      const mx = (op.x / st.width) * (W - 10) + 5;\n      mctx.fillStyle = \"#f1c40f\";\n      mctx.beginPath();\n      mctx.arc(mx, H - 11, 2.8, 0, Math.PI * 2);\n      mctx.fill();\n    }\n  });\n\n  // Self position dot\n  const sx = (State.player.x / st.width) * (W - 10) + 5;\n  mctx.fillStyle = \"#8de969\";\n  mctx.strokeStyle = \"#ffffff\";\n  mctx.lineWidth = 1.2;\n  mctx.beginPath();\n  mctx.arc(sx, H - 11, 3.8, 0, Math.PI * 2);\n  mctx.fill(); mctx.stroke();\n}",
+      "rule_ids": [
+        "minimap_strip_and_world_map_button"
+      ],
+      "why": "Render street terrain, platforms, entity markers, other players' dots, and the player position dot on the top-right viewport mini-map strip."
+    }
+  ],
+  "scenario_updates": [
+    {
+      "id": "tower_construction_project_contribution",
+      "steps": [
+        {
+          "do": "eval",
+          "js": "State.player.x = 1480; State.camera.x = 900; State.hoveredObj = STREETS.beau_home.resources.find(r => r.id === 'tower_1');"
+        },
+        {
+          "do": "wait",
+          "ms": 900
+        },
+        {
+          "do": "click_world",
+          "x": 1520,
+          "y": 425
+        },
+        {
+          "do": "wait",
+          "ms": 400
+        },
+        {
+          "do": "click_text",
+          "text": "Contribute Plank & Labor (-6e)"
+        },
+        {
+          "do": "wait",
+          "ms": 700
+        },
+        {
+          "do": "expect",
+          "js": "STREETS.beau_home.resources.find(r => r.id === 'tower_1').progress > 11.4",
+          "desc": "Contributing a Plank and labor to the Tower project increased its completion percentage"
+        },
+        {
+          "do": "wait",
+          "ms": 800
+        }
+      ],
+      "why": "Show the hovered wooden scaffolding with blue outline, 'Project available' speech bubble, and yellow 'Tower' label first (matching A 02:33), then open the menu and contribute a Plank & labor to display the completion percentage bar UI."
+    },
+    {
+      "id": "building_door_interior_transition",
+      "steps": [
+        {
+          "do": "eval",
+          "js": "State.streetId = 'chego_chase'; State.player.x = 450; State.player.y = 465; State.camera.x = 0; updateHUD();"
+        },
+        {
+          "do": "wait",
+          "ms": 500
+        },
+        {
+          "do": "eval",
+          "js": "State.hoveredDoor = STREETS.chego_chase.doors[0];"
+        },
+        {
+          "do": "wait",
+          "ms": 800
+        },
+        {
+          "do": "click_world",
+          "x": 420,
+          "y": 420
+        },
+        {
+          "do": "wait",
+          "ms": 1000
+        },
+        {
+          "do": "expect",
+          "js": "State.streetId === 'andra_hall'",
+          "desc": "Clicking the Ministry of Departments door transitions the player into Andra Bureaucratic Hall"
+        },
+        {
+          "do": "wait",
+          "ms": 800
+        }
+      ],
+      "why": "Start on Chego Chase in front of the Ministry of Departments, hover over the double doors so the teal highlight is clearly visible, then click the doors to transition via the loading screen into Andra Bureaucratic Hall."
+    },
+    {
+      "id": "minimap_strip_and_world_map_button",
+      "steps": [
+        {
+          "do": "wait",
+          "ms": 500
+        },
+        {
+          "do": "key",
+          "key": "ArrowRight",
+          "ms": 700
+        },
+        {
+          "do": "click",
+          "selector": "#minimap-canvas"
+        },
+        {
+          "do": "wait",
+          "ms": 700
+        },
+        {
+          "do": "expect",
+          "js": "document.getElementById('modal-backdrop').classList.contains('open') && document.getElementById('modal-title').textContent.includes('World Map')",
+          "desc": "Clicking the minimap strip opens the World Map modal"
+        },
+        {
+          "do": "click",
+          "selector": "#region-btn-andra"
+        },
+        {
+          "do": "wait",
+          "ms": 900
+        }
+      ],
+      "why": "Show the top-right viewport mini-map strip, click it to open the World Map overview of regions, and then click a region (Andra) to drill down into the Region Street Network view."
+    },
+    {
+      "id": "signpost_street_boundary_transition",
+      "steps": [
+        {
+          "do": "eval",
+          "js": "State.player.x = 225; State.camera.x = 0;"
+        },
+        {
+          "do": "wait",
+          "ms": 600
+        },
+        {
+          "do": "key",
+          "key": "ArrowLeft",
+          "ms": 1100
+        },
+        {
+          "do": "wait",
+          "ms": 900
+        },
+        {
+          "do": "expect",
+          "js": "State.streetId === 'chego_chase' && window.__events.some(e => e.type === 'street_change' && e.street === 'chego_chase')",
+          "desc": "Walking past the wooden signpost triggers the loading screen and transitions into Chego Chase"
+        },
+        {
+          "do": "wait",
+          "ms": 800
+        }
+      ],
+      "why": "Pause briefly so the left wooden signpost with adjacent street names and green highlight is clearly seen, then walk left past the signpost to trigger the loading screen and arrive on Chego Chase."
+    },
+    {
+      "id": "street_spirit_vendor_shop_buy",
+      "steps": [
+        {
+          "do": "eval",
+          "js": "State.streetId = 'bongul_beat'; State.player.x = 1440; State.player.y = 465; State.camera.x = 900; updateHUD();"
+        },
+        {
+          "do": "wait",
+          "ms": 500
+        },
+        {
+          "do": "click_world",
+          "x": 1480,
+          "y": 430
+        },
+        {
+          "do": "wait",
+          "ms": 400
+        },
+        {
+          "do": "click_text",
+          "text": "Buy/sell"
+        },
+        {
+          "do": "wait",
+          "ms": 800
+        },
+        {
+          "do": "expect",
+          "js": "document.getElementById('modal-backdrop').classList.contains('open') && document.getElementById('modal-title').textContent.includes('Animal Goods Vendor')",
+          "desc": "Opened Street Spirit Animal Goods Vendor shop interface"
+        },
+        {
+          "do": "click_text",
+          "text": "Buy (45c)"
+        },
+        {
+          "do": "wait",
+          "ms": 700
+        },
+        {
+          "do": "expect",
+          "js": "State.player.currants === 1396",
+          "desc": "Purchased Butterfly Lotion from Street Spirit vendor for 45 currants"
+        },
+        {
+          "do": "wait",
+          "ms": 700
+        }
+      ],
+      "why": "Start on Bongul Beat next to the Animal Goods Vendor, open the Buy/Sell shop interface, pause so the modal shelf UI is clearly visible, and purchase Butterfly Lotion while keeping the shop modal open."
+    },
+    {
+      "id": "trees_and_plants_watering_harvesting",
+      "steps": [
+        {
+          "do": "eval",
+          "js": "State.player.x = 855; State.camera.x = 360;"
+        },
+        {
+          "do": "wait",
+          "ms": 400
+        },
+        {
+          "do": "click_world",
+          "x": 890,
+          "y": 420
+        },
+        {
+          "do": "wait",
+          "ms": 450
+        },
+        {
+          "do": "click_text",
+          "text": "Water (-2e)"
+        },
+        {
+          "do": "wait",
+          "ms": 650
+        },
+        {
+          "do": "click_world",
+          "x": 890,
+          "y": 420
+        },
+        {
+          "do": "wait",
+          "ms": 450
+        },
+        {
+          "do": "click_text",
+          "text": "Harvest"
+        },
+        {
+          "do": "wait",
+          "ms": 650
+        },
+        {
+          "do": "expect",
+          "js": "window.__events.some(e => e.type === 'harvest' && e.action === 'water') && window.__events.some(e => e.type === 'harvest' && e.item === 'wood_plank')",
+          "desc": "Watered and harvested the Wood Tree on Beau's Home Street"
+        },
+        {
+          "do": "wait",
+          "ms": 700
+        }
+      ],
+      "why": "Start next to the Wood Tree so camera movement does not shift world coordinates between watering and harvesting, and pause briefly on the action menu so Water, Pet, and Harvest options are clearly visible."
+    }
+  ],
+  "notes": "Addressed all 8 failing rules without touching any modals or mechanics that caused regressions previously: moved the mini-map strip with its left-side World globe button into the top-right of the game viewport; added a two-tier Region Overview -> Region Street Network view to the World Map modal; added wooden hi-sign boards, 'Neato, we match today!' speech bubbles, separate floating '2x' and '+10 mood!' text, and a bottom-center viewport toast; added animated wind-up Cubimal racing with bottom-center plank distance notification; updated the Tower scaffolding with blue outline, 'Project available' speech bubble, yellow 'Tower' label, and multi-step contribution modal; kept the Street Spirit vendor modal open on purchase with Buy/Sell tabs and bottom-right currants display; and stabilized the door, signpost, and wood tree interaction scenarios."
+}

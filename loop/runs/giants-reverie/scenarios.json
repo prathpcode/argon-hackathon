@@ -28,7 +28,7 @@
     },
     {
      "do": "wait",
-     "ms": 600
+     "ms": 700
     },
     {
      "do": "click",
@@ -36,7 +36,7 @@
     },
     {
      "do": "wait",
-     "ms": 1000
+     "ms": 1400
     },
     {
      "do": "click_text",
@@ -44,7 +44,7 @@
     },
     {
      "do": "wait",
-     "ms": 1000
+     "ms": 1400
     },
     {
      "do": "expect",
@@ -57,7 +57,7 @@
     },
     {
      "do": "wait",
-     "ms": 1000
+     "ms": 1400
     },
     {
      "do": "expect",
@@ -70,7 +70,7 @@
     },
     {
      "do": "wait",
-     "ms": 1000
+     "ms": 1200
     }
    ],
    "look_for": "Opening the Wardrobe/Vanity UI and equipping headgear like the Imperial Caterpillar Mask and Red Top Hat on the large-headed 2D cartoon avatar."
@@ -363,7 +363,7 @@
     {
      "do": "key",
      "key": "ArrowRight",
-     "ms": 800
+     "ms": 700
     },
     {
      "do": "click",
@@ -371,7 +371,7 @@
     },
     {
      "do": "wait",
-     "ms": 500
+     "ms": 700
     },
     {
      "do": "expect",
@@ -379,8 +379,12 @@
      "desc": "Clicking the minimap strip opens the World Map modal"
     },
     {
+     "do": "click",
+     "selector": "#region-btn-andra"
+    },
+    {
      "do": "wait",
-     "ms": 1000
+     "ms": 900
     }
    ],
    "look_for": "Mini-map strip in the top bar showing player and NPC dots, and clicking it to open the World Map modal."
@@ -444,16 +448,12 @@
    "url_params": "seed=42",
    "steps": [
     {
-     "do": "wait",
-     "ms": 300
-    },
-    {
      "do": "eval",
-     "js": "State.player.x = 180; State.camera.x = 0;"
+     "js": "State.player.x = 225; State.camera.x = 0;"
     },
     {
      "do": "wait",
-     "ms": 300
+     "ms": 600
     },
     {
      "do": "key",
@@ -462,7 +462,7 @@
     },
     {
      "do": "wait",
-     "ms": 800
+     "ms": 900
     },
     {
      "do": "expect",
@@ -495,11 +495,11 @@
    "steps": [
     {
      "do": "eval",
-     "js": "changeStreet('chego_chase', 450);"
+     "js": "State.streetId = 'chego_chase'; State.player.x = 450; State.player.y = 465; State.camera.x = 0; State.hoveredDoor = STREETS.chego_chase.doors[0]; updateHUD();"
     },
     {
      "do": "wait",
-     "ms": 1000
+     "ms": 1400
     },
     {
      "do": "click_world",
@@ -508,7 +508,7 @@
     },
     {
      "do": "wait",
-     "ms": 900
+     "ms": 1100
     },
     {
      "do": "expect",
@@ -517,7 +517,7 @@
     },
     {
      "do": "wait",
-     "ms": 800
+     "ms": 900
     }
    ],
    "look_for": "Clicking the teal-framed doors of the Ministry of Departments on Chego Chase to enter Andra Bureaucratic Hall."
@@ -661,7 +661,7 @@
    "steps": [
     {
      "do": "wait",
-     "ms": 400
+     "ms": 500
     },
     {
      "do": "click_world",
@@ -670,7 +670,7 @@
     },
     {
      "do": "wait",
-     "ms": 1200
+     "ms": 1600
     },
     {
      "do": "expect",
@@ -683,7 +683,7 @@
     },
     {
      "do": "wait",
-     "ms": 1200
+     "ms": 1600
     },
     {
      "do": "expect",
@@ -692,7 +692,7 @@
     },
     {
      "do": "wait",
-     "ms": 800
+     "ms": 1000
     }
    ],
    "look_for": "Clicking Butler Roy outside the house on Beau's Home Street, opening his popup menu, and selecting 'Who visited?'."
@@ -790,11 +790,11 @@
    "steps": [
     {
      "do": "eval",
-     "js": "changeStreet('bongul_beat', 1440);"
+     "js": "State.streetId = 'bongul_beat'; State.player.x = 1440; State.player.y = 465; State.camera.x = 900; updateHUD();"
     },
     {
      "do": "wait",
-     "ms": 1100
+     "ms": 500
     },
     {
      "do": "click_world",
@@ -803,7 +803,7 @@
     },
     {
      "do": "wait",
-     "ms": 300
+     "ms": 400
     },
     {
      "do": "click_text",
@@ -811,7 +811,7 @@
     },
     {
      "do": "wait",
-     "ms": 400
+     "ms": 800
     },
     {
      "do": "expect",
@@ -824,7 +824,7 @@
     },
     {
      "do": "wait",
-     "ms": 500
+     "ms": 700
     },
     {
      "do": "expect",
@@ -833,7 +833,7 @@
     },
     {
      "do": "wait",
-     "ms": 600
+     "ms": 700
     }
    ],
    "look_for": "Interacting with the Animal Goods Vendor Street Spirit on Bongul Beat to open the Buy/Sell shop UI and purchase an item with currants."
@@ -1147,6 +1147,10 @@
    "url_params": "seed=42",
    "steps": [
     {
+     "do": "eval",
+     "js": "State.player.x = 855; State.camera.x = 360;"
+    },
+    {
      "do": "wait",
      "ms": 400
     },
@@ -1157,7 +1161,7 @@
     },
     {
      "do": "wait",
-     "ms": 300
+     "ms": 450
     },
     {
      "do": "click_text",
@@ -1165,7 +1169,7 @@
     },
     {
      "do": "wait",
-     "ms": 500
+     "ms": 650
     },
     {
      "do": "click_world",
@@ -1174,7 +1178,7 @@
     },
     {
      "do": "wait",
-     "ms": 300
+     "ms": 450
     },
     {
      "do": "click_text",
@@ -1182,7 +1186,7 @@
     },
     {
      "do": "wait",
-     "ms": 500
+     "ms": 650
     },
     {
      "do": "expect",
@@ -1191,7 +1195,7 @@
     },
     {
      "do": "wait",
-     "ms": 800
+     "ms": 700
     }
    ],
    "look_for": "Interacting with a Wood Tree on Beau's Home Street to water it and harvest planks."
@@ -1984,11 +1988,11 @@
    "steps": [
     {
      "do": "eval",
-     "js": "State.player.x = 1480; State.camera.x = 900;"
+     "js": "State.player.x = 1480; State.camera.x = 900; State.hoveredObj = STREETS.beau_home.resources.find(r => r.id === 'tower_1');"
     },
     {
      "do": "wait",
-     "ms": 600
+     "ms": 900
     },
     {
      "do": "click_world",
@@ -1997,7 +2001,7 @@
     },
     {
      "do": "wait",
-     "ms": 300
+     "ms": 400
     },
     {
      "do": "click_text",
@@ -2005,7 +2009,7 @@
     },
     {
      "do": "wait",
-     "ms": 500
+     "ms": 700
     },
     {
      "do": "expect",

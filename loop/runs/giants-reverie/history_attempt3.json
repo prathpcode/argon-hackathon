@@ -1,0 +1,70 @@
+[
+ {
+  "round": 0,
+  "score": 11,
+  "total": 41,
+  "accepted": true,
+  "secs": 0
+ },
+ {
+  "round": 1,
+  "score": 15,
+  "total": 41,
+  "accepted": false,
+  "regressions": [
+   "building_door_interior_transition",
+   "daily_hi_sign_match_bonus",
+   "giant_shrines_and_visage_overlay",
+   "tower_construction_project_contribution"
+  ],
+  "newly_passing": [
+   "bureaucrat_waiting_room_qualification",
+   "first_street_visit_xp_bonus",
+   "floating_quoins_jump_collection",
+   "inventory_item_context_menu_verbs",
+   "magic_rock_change_street_style",
+   "minimap_strip_and_world_map_button",
+   "mood_energy_img_meters_and_restoration",
+   "world_map_teleport_and_go_home"
+  ],
+  "edits_applied": 18,
+  "edits_failed": 0,
+  "fix_usage": {
+   "in": 60746,
+   "out": 25134,
+   "secs": 323
+  },
+  "secs": 57
+ },
+ {
+  "round": 2,
+  "score": 18,
+  "total": 41,
+  "accepted": false,
+  "regressions": [
+   "building_door_interior_transition",
+   "daily_hi_sign_match_bonus",
+   "tower_construction_project_contribution"
+  ],
+  "newly_passing": [
+   "avatar_wardrobe_vanity_customization",
+   "bureaucrat_waiting_room_qualification",
+   "butler_visitor_log_recording",
+   "first_street_visit_xp_bonus",
+   "floating_quoins_jump_collection",
+   "home_street_butler_npc_menu",
+   "inventory_16_slots_bag_and_search",
+   "magic_rock_change_street_style",
+   "real_time_skill_learning_and_brain_capacity",
+   "world_map_teleport_and_go_home"
+  ],
+  "edits_applied": 20,
+  "edits_failed": 0,
+  "fix_usage": {
+   "in": 61209,
+   "out": 28180,
+   "secs": 445
+  },
+  "secs": 630
+ }
+]

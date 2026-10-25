@@ -93,13 +93,32 @@
   }
   .top-action-btn:hover { background: #f0f6ec; border-color: #7ea36b; }
   #street-title-pill {
-    background: #2b3336; color: #fff; padding: 5px 14px;
-    border-radius: 14px; font-size: 13px; font-weight: bold;
+    position: absolute; top: 10px; right: 12px; z-index: 55;
+    background: rgba(18, 24, 28, 0.9); color: #e8f1ee; padding: 5px 10px 5px 6px;
+    border-radius: 16px; border: 1.5px solid rgba(135, 168, 155, 0.6);
+    font-size: 12px; font-weight: bold;
     display: flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.45);
   }
   #minimap-canvas {
-    width: 110px; height: 26px; background: #3b464b;
-    border-radius: 6px; border: 1px solid #67767d; cursor: pointer;
+    width: 148px; height: 32px; background: #141c20;
+    border-radius: 6px; border: 1px solid #586e75; cursor: pointer;
+  }
+  #world-map-btn {
+    background: linear-gradient(180deg, #4b9fb3 0%, #24697a 100%);
+    color: #fff; border: 1px solid #8de0ea; border-radius: 12px;
+    padding: 4px 9px; font-size: 11px; font-weight: bold;
+    cursor: pointer; display: flex; align-items: center; gap: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  #world-map-btn:hover { background: linear-gradient(180deg, #6bc0d4 0%, #348ea3 100%); }
+  #viewport-toast {
+    position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.96); color: #1d2b22;
+    border: 2px solid #6db33f; border-radius: 18px;
+    padding: 7px 20px; font-size: 13px; font-weight: bold;
+    display: none; z-index: 82; box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+    white-space: nowrap; pointer-events: none;
   }
 
   #hud-right {
@@ -111,20 +130,34 @@
     padding: 4px 8px; cursor: pointer; font-size: 13px;
   }
 
-  /* Avatar Left Dropdown Menu */
+  /* Avatar Left Graphical Overlay Menu */
   #left-menu {
-    position: absolute; top: 52px; left: 8px; width: 170px;
-    background: #fff; border: 2px solid #9ab09e; border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.25); padding: 6px 0;
-    display: none; z-index: 100;
+    position: absolute; top: 52px; left: 6px; width: 290px;
+    background: rgba(24, 30, 34, 0.96); border: 2px solid #5c7568; border-radius: 14px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.55); padding: 10px;
+    display: none; z-index: 100; color: #fff;
   }
   #left-menu.open { display: block; }
-  .menu-item {
-    padding: 7px 14px; font-size: 13px; color: #2b5770; font-weight: bold;
-    cursor: pointer; display: flex; justify-content: space-between;
+  .left-menu-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;
   }
-  .menu-item:hover { background: #e7f2f7; }
-  .menu-sep { height: 1px; background: #e1e8dd; margin: 4px 0; }
+  .menu-item {
+    padding: 8px 10px; font-size: 12px; color: #e8f4f8; font-weight: bold;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: background 0.12s, transform 0.08s;
+  }
+  .menu-item:hover { background: rgba(109, 179, 63, 0.28); border-color: #8de969; transform: translateY(-1px); }
+  .menu-item .mi-icon {
+    width: 30px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.35);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  #menu-go-home {
+    width: 100%; padding: 10px 12px; background: linear-gradient(90deg, #1e3c4c 0%, #2d5a42 100%);
+    border: 2px solid #6db33f; border-radius: 10px; color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .menu-sep { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 0; }
 
   /* Main Middle Area: Viewport + Chat */
   #main-area {
@@ -286,22 +319,48 @@
 
   /* Loading / Street Transition Overlay */
   #loading-overlay {
-    position: absolute; inset: 0; background: linear-gradient(180deg, #cbe3d6 0%, #f4f7f0 100%);
+    position: absolute; inset: 0; background: linear-gradient(180deg, #dcebe2 0%, #f4f7f0 100%);
     display: none; flex-direction: column; align-items: center; justify-content: center;
-    z-index: 120; color: #2b4238; text-align: center; padding: 24px;
+    z-index: 120; color: #2b4238; padding: 24px;
   }
   #loading-overlay.open { display: flex; }
+  .loading-card {
+    display: flex; gap: 22px; align-items: center; background: #ffffff;
+    border: 3px solid #b8cbb0; border-radius: 16px; padding: 18px 24px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.15); max-width: 650px; width: 92%;
+    text-align: left;
+  }
+  #loading-preview-canvas {
+    width: 210px; height: 135px; border-radius: 10px; border: 3px solid #6db33f;
+    background: #1c2224; flex-shrink: 0;
+  }
   #loading-progress-wrap {
-    width: 320px; height: 14px; background: #d6e2d0; border-radius: 7px;
-    overflow: hidden; margin-top: 16px; border: 1px solid #9eb596;
+    width: 650px; max-width: 92%; height: 18px; background: #d6e2d0; border-radius: 9px;
+    overflow: hidden; margin-top: 18px; border: 1px solid #9eb596; position: relative;
   }
   #loading-progress-bar {
-    width: 0%; height: 100%; background: #6db33f; transition: width 0.15s;
+    width: 0%; height: 100%; background: linear-gradient(90deg, #5da332, #8de969); transition: width 0.12s;
+  }
+  #first-visit-toast {
+    position: absolute; top: 14px; left: 14px;
+    background: rgba(28, 38, 34, 0.92); color: #fff; border: 2px solid #8de969;
+    border-radius: 12px; padding: 8px 14px; font-size: 13px; font-weight: bold;
+    display: none; z-index: 65; box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+  }
+  #butler-speech-popup {
+    position: absolute; background: #fffef9; border: 2px solid #6c8776;
+    border-radius: 12px; padding: 10px 14px; font-size: 12px; color: #223028;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3); display: none; z-index: 75;
+    max-width: 230px; text-align: center;
+  }
+  #roy-im-panel {
+    display: none; background: #eef7fa; border-bottom: 2px solid #9ec4cf;
+    padding: 8px 10px; font-size: 11px; color: #1d4654;
   }
 
   /* Waiting Area Banner (Andra Bureaucratic Hall) */
   #waiting-banner {
-    position: absolute; top: 14px; right: 14px;
+    position: absolute; top: 58px; right: 14px;
     background: #fff9db; border: 2px solid #d4b146; border-radius: 10px;
     padding: 8px 14px; font-size: 12px; color: #544100; font-weight: bold;
     display: none; z-index: 50; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
@@ -366,26 +425,37 @@
         <span>🪨</span> <span id="active-skill- top">Skills & Quests</span>
       </div>
 
-      <!-- Left Avatar Menu Dropdown -->
+      <!-- Left Avatar Graphical Overlay Menu -->
       <div id="left-menu">
-        <div class="menu-item" data-modal="profile">Profile <span>↗</span></div>
-        <div class="menu-item" data-modal="skills">Skills <span>🧠</span></div>
-        <div class="menu-item" data-modal="vanity">Vanity (Look) <span>🪞</span></div>
-        <div class="menu-item" data-modal="wardrobe">Wardrobe <span>🎩</span></div>
-        <div class="menu-item" data-modal="quests">Quest Log <span>📜</span></div>
+        <div style="font-size:11px; color:#9eb5a5; margin-bottom:6px; font-weight:bold; display:flex; justify-content:space-between;">
+          <span>GLITCHEN MENU</span>
+          <span style="color:#8de969;">Lv 19 ● Beau</span>
+        </div>
+        <div class="left-menu-grid">
+          <div class="menu-item" data-modal="skills"><span class="mi-icon">🧠</span><div><div>Skills</div><small style="font-size:9px;color:#9ec4cf;">Learn & Train</small></div></div>
+          <div class="menu-item" data-modal="quests"><span class="mi-icon">⚡</span><div><div>Upgrades</div><small style="font-size:9px;color:#9ec4cf;">& Quest Log</small></div></div>
+          <div class="menu-item" data-modal="wardrobe"><span class="mi-icon">🎩</span><div><div>Your looks</div><small style="font-size:9px;color:#9ec4cf;">Wardrobe</small></div></div>
+          <div class="menu-item" data-modal="map"><span class="mi-icon">🧭</span><div><div>Teleport</div><small style="font-size:9px;color:#9ec4cf;">World Map</small></div></div>
+          <div class="menu-item" data-modal="profile"><span class="mi-icon">🪪</span><div><div>Profile</div><small style="font-size:9px;color:#9ec4cf;">Achievements</small></div></div>
+          <div class="menu-item" id="menu-giant-summon"><span class="mi-icon">✨</span><div><div>Giants</div><small style="font-size:9px;color:#9ec4cf;">Visage</small></div></div>
+        </div>
+        <div class="menu-item" data-modal="vanity" style="display:none;">Vanity</div>
         <div class="menu-sep"></div>
-        <div class="menu-item" id="menu-go-home">Go Home Street <span>🏠</span></div>
-        <div class="menu-item" data-modal="map">World Map <span>🗺️</span></div>
-        <div class="menu-item" id="menu-giant-summon"> Invoke Giant Visage <span>✨</span></div>
+        <div class="menu-item" id="menu-go-home">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:22px;">🏡</span>
+            <div>
+              <div style="font-size:13px; color:#8de969;">Go home</div>
+              <div style="font-size:10px; color:#cbd8d0;">Beau's Home Street (Home)</div>
+            </div>
+          </div>
+          <span style="background:#6db33f; color:#fff; font-size:10px; padding:3px 8px; border-radius:6px;">Free ➔</span>
+        </div>
       </div>
     </div>
 
     <div id="hud-center">
       <button class="top-action-btn" id="btn-cultivate" title="Change Home Street Style or Cultivate">Cultivate</button>
-      <div id="street-title-pill">
-        <span id="street-name-label">Beau's Home Street</span>
-        <canvas id="minimap-canvas" width="110" height="26" title="Click to open World Map"></canvas>
-      </div>
     </div>
 
     <div id="hud-right">
@@ -399,6 +469,16 @@
   <div id="main-area">
     <div id="viewport-wrap">
       <canvas id="game-canvas"></canvas>
+
+      <!-- Top-Right Viewport Mini-Map Strip & World Button -->
+      <div id="street-title-pill">
+        <button id="world-map-btn" title="Open World & Region Map">🌍 World</button>
+        <span id="street-name-label" style="font-size:11px; color:#cfe3dc;">Beau's Home Street</span>
+        <canvas id="minimap-canvas" width="148" height="32" title="Mini-map strip — Click to open World Map"></canvas>
+      </div>
+
+      <!-- Bottom-Center Viewport Notification Banner -->
+      <div id="viewport-toast"></div>
 
       <!-- Special Street Banners -->
       <div id="qurazy-banner">OMG! There's a Qurazy ❗ on this street for you!</div>
@@ -420,17 +500,35 @@
         <small style="opacity:0.75; margin-top:16px;">● Click anywhere to continue ●</small>
       </div>
 
+      <div id="first-visit-toast">✨ First visit bonus!</div>
+      <div id="butler-speech-popup">
+        <div id="butler-speech-text" style="margin-bottom:8px; font-weight:bold;">There were a lot of visitors, I'll IM you the list.</div>
+        <button id="butler-thanks-btn" style="background:#6db33f; color:#fff; border:none; border-radius:6px; padding:4px 12px; font-weight:bold; cursor:pointer;">Thanks!</button>
+      </div>
+
       <!-- Street Loading Screen -->
       <div id="loading-overlay">
-        <div style="font-size:15px; opacity:0.8;" id="loading-verb">Entering</div>
-        <h1 style="margin:4px 0 8px; font-size:32px;" id="loading-street-title">Your Home Street</h1>
-        <div style="font-size:13px; max-width:420px; color:#496356;" id="loading-tip">
-          Tip: Need some Seed? Let Piggies do the deed: feed them some crops, then examine the plops!
+        <div class="loading-card">
+          <canvas id="loading-preview-canvas" width="210" height="135"></canvas>
+          <div style="flex:1;">
+            <div style="font-size:14px; color:#5a7062; font-weight:bold;" id="loading-verb">Entering</div>
+            <h1 style="margin:2px 0 6px; font-size:26px; color:#1f3328;" id="loading-street-title">Your Home Street</h1>
+            <div id="loading-home-to" style="font-size:12px; color:#3b5246; margin-bottom:8px;">
+              <strong>Home to:</strong>
+              <ul id="loading-features-list" style="margin:4px 0 0 18px; padding:0;">
+                <li>Fruit Tree, Wood Trees &amp; Beryl Rock</li>
+                <li>Shrine &amp; Street Spirit Vendors</li>
+              </ul>
+            </div>
+            <div style="font-size:11px; color:#687d70; font-style:italic;" id="loading-tip">
+              Tip: Need some Seed? Let Piggies do the deed: feed them some crops, then examine the plops!
+            </div>
+          </div>
         </div>
         <div id="loading-progress-wrap">
           <div id="loading-progress-bar"></div>
         </div>
-        <small style="margin-top:6px; color:#697d72;">reticulating splines...</small>
+        <small id="loading-pct-label" style="margin-top:6px; color:#3d5245; font-weight:bold;">reticulating splines... 100%</small>
       </div>
     </div>
 
@@ -438,9 +536,11 @@
     <div id="chat-panel">
       <div id="chat-tabs">
         <div class="chat-tab active" data-tab="local">Local Chat / Activity</div>
+        <div class="chat-tab" data-tab="roy" id="chat-tab-roy" style="display:none; background:#cde8f0; color:#184b5c;">💬 Roy (Beau)</div>
         <div class="chat-tab" data-tab="global">Global</div>
         <div class="chat-tab" data-tab="party">Party / Follow</div>
       </div>
+      <div id="roy-im-panel"></div>
       <div id="online-bar">
         <span>On street (<span id="online-count">1</span>):</span>
         <span id="online-list"></span>
@@ -600,8 +700,8 @@ const STREETS = {
     width: 2400,
     groundY: 460,
     exits: [
-      { x: 60, y: 460, label: "Chego Chase / Paluol Peak", target: "chego_chase", spawnX: 2150 },
-      { x: 2320, y: 460, label: "Goli Grabs", target: "goli_grabs", spawnX: 140 }
+      { x: 115, y: 460, label: "Chego Chase / Paluol Peak", target: "chego_chase", spawnX: 2040 },
+      { x: 2285, y: 460, label: "Goli Grabs / Vaila Vincta", target: "goli_grabs", spawnX: 220 }
     ],
     doors: [
       { x: 470, y: 460, w: 55, h: 75, label: "Beau's House (Andra Hall Link)", target: "andra_hall", spawnX: 160 }
@@ -641,8 +741,8 @@ const STREETS = {
     groundY: 470,
     qurazy: true,
     exits: [
-      { x: 80, y: 470, label: "Beau's Home Street", target: "beau_home", spawnX: 2220 },
-      { x: 2100, y: 470, label: "Vaila Vincta / Chego Chase", target: "chego_chase", spawnX: 160 }
+      { x: 85, y: 470, label: "Beau's Home Street / Laru Lane", target: "beau_home", spawnX: 2140 },
+      { x: 2100, y: 470, label: "Vaila Vincta / Chego Chase", target: "chego_chase", spawnX: 220 }
     ],
     doors: [],
     platforms: [
@@ -679,8 +779,8 @@ const STREETS = {
     width: 2300,
     groundY: 465,
     exits: [
-      { x: 90, y: 465, label: "Bongul Beat / Paluol Peak", target: "bongul_beat", spawnX: 2080 },
-      { x: 2210, y: 465, label: "Laru Lane / Beau's Home", target: "beau_home", spawnX: 150 }
+      { x: 90, y: 465, label: "Bongul Beat / Paluol Peak", target: "bongul_beat", spawnX: 2020 },
+      { x: 2210, y: 465, label: "Laru Lane / Beau's Home", target: "beau_home", spawnX: 220 }
     ],
     doors: [
       { x: 420, y: 465, w: 80, h: 95, label: "Ministry of Departments", target: "andra_hall", spawnX: 150 }
@@ -873,10 +973,18 @@ const State = {
       skinColor: "#fce2c4",
       hairColor: "#f5e06b",
       hairStyle: "long_blonde",
+      eyeType: "bright",
+      noseType: "button",
+      mouthType: "smile",
+      earType: "round",
       shirtColor: "#1f2428",
+      shirtStyle: "tunic",
+      coat: "none",
       pantsColor: "#1a1d20",
+      skirt: "none",
+      dress: "none",
       shoeColor: "#e74c3c",
-      hat: "none", // none, top_hat, caterpillar_mask, censor_bar,dino_ride
+      hat: "none", // none, top_hat, caterpillar_mask, censor_bar, dino_ride, piggy_ride
       eyeScale: 1.0,
       heightScale: 1.0
     },
@@ -917,6 +1025,12 @@ const State = {
   particles: [],
   floatingTexts: [],
   chatBubbles: {},
+  hiSigns: {},
+  hoveredObj: null,
+  hoveredDoor: null,
+  hoveredExit: null,
+  mouseWorldX: 0,
+  mouseWorldY: 0,
   waitingRoom: {
     active: false,
     timer: 0,
@@ -1071,6 +1185,18 @@ function addFloatingText(x, y, text, color = "#ffffff") {
   State.floatingTexts.push({ x, y, text, color, life: 85, maxLife: 85 });
 }
 
+let __viewportToastTimer = null;
+function showViewportToast(text, durationMs = 3400) {
+  const el = document.getElementById("viewport-toast");
+  if (!el) return;
+  el.textContent = text;
+  el.style.display = "block";
+  if (__viewportToastTimer) clearTimeout(__viewportToastTimer);
+  __viewportToastTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, durationMs);
+}
+
 function spawnParticles(x, y, count = 20, kind = "sparkle") {
   for (let i = 0; i < count; i++) {
     const ang = seededRandom() * Math.PI * 2;
@@ -1094,9 +1220,9 @@ function changeMeters({ energy = 0, mood = 0, img = 0, currants = 0 }) {
   if (energy !== 0) p.energy = Math.max(0, Math.min(p.maxEnergy, p.energy + energy));
   if (mood !== 0) p.mood = Math.max(0, Math.min(p.maxMood, p.mood + mood));
   if (img !== 0) {
-    // GUESS: High mood (>80%) grants a 1.2x iMG bonus
-    const mult = (p.mood / p.maxMood) >= 0.8 ? 1.2 : 1.0;
-    p.img += Math.round(img * mult);
+    // High mood (>80%) grants a 1.2x iMG bonus on standard harvesting/quest gains, never on negative costs
+    const mult = (img > 2 && (p.mood / p.maxMood) >= 0.8) ? 1.2 : 1.0;
+    p.img = Math.max(0, p.img + Math.round(img * mult));
   }
   if (currants !== 0) p.currants = Math.max(0, p.currants + currants);
   updateHUD();
@@ -1365,13 +1491,17 @@ function executeItemVerb(itemId, verb, fromBag) {
     State.cubimals.push({
       name: ITEM_DEFS[itemId].name,
       kind: itemId,
-      x: p.x,
+      x: p.x + p.dir * 20,
       y: p.y,
-      vx: p.dir * (2.2 + seededRandom() * 1.5),
-      timer: 150,
+      vx: p.dir * (2.4 + seededRandom() * 1.2),
+      raceTimer: 110,
+      timer: 320,
       dist
     });
-    addChatMessage(null, `${p.name}'s ${ITEM_DEFS[itemId].name} went ${dist} planks before stopping.`, "sys");
+    const msg = `${p.name}'s ${ITEM_DEFS[itemId].name} went ${dist} planks before stopping.`;
+    showViewportToast(msg, 3600);
+    addFloatingText(p.x + p.dir * 55, p.y - 52, `${dist} planks!`, "#ffdf40");
+    addChatMessage(null, msg, "sys");
   } else if (itemId === "emblem_friendly") {
     removeItem(itemId, 1, fromBag);
     changeMeters({ img: 34 });
@@ -1423,9 +1553,22 @@ function openWorldObjectMenu(obj, screenX, screenY) {
   } else if (obj.type === "water_cooler") {
     verbs = ["Get water (-2e)"];
   } else if (obj.type === "magic_rock") {
-    verbs = ["Change style (190i)", "Skills & Quests", "Customize Home"];
+    document.getElementById("ctx-title").textContent = "Magic Rock — A rock for your yard";
+    verbs = ["House keys", "Customize", "Change style", "Expand", "Cultivate land"];
   } else if (obj.type === "butler") {
-    verbs = ["Who visited?", "Muffle butterfly wisdom", "Set pace"];
+    document.getElementById("ctx-title").textContent = `${obj.name} — Home Street Butler`;
+    verbs = [
+      "Muffle butterfly wisdom",
+      "Stop telling me things visitors say",
+      "Zip lip",
+      "Set pace",
+      "Yoo-hoo",
+      "Gipe",
+      "Leave info",
+      "Animations",
+      "Mailbox",
+      "Who visited?"
+    ];
   } else if (obj.type === "vendor") {
     verbs = ["Buy/sell"];
   } else if (obj.type === "shrine") {
@@ -1453,8 +1596,13 @@ function openWorldObjectMenu(obj, screenX, screenY) {
     verbsWrap.appendChild(row);
   });
 
-  menu.style.left = Math.min(window.innerWidth - 190, Math.max(10, screenX)) + "px";
-  menu.style.top = Math.min(window.innerHeight - 200, Math.max(10, screenY)) + "px";
+  const rect = canvas.getBoundingClientRect();
+  const objScreenX = rect.left + (obj.x - State.camera.x);
+  const objScreenY = rect.top + (obj.y - State.camera.y);
+  const menuX = (screenX && screenX > 20) ? screenX - 75 : objScreenX - 85;
+  const menuY = (screenY && screenY > 20) ? Math.min(screenY - 120, objScreenY - 190) : objScreenY - 190;
+  menu.style.left = Math.min(window.innerWidth - 230, Math.max(12, menuX)) + "px";
+  menu.style.top = Math.min(window.innerHeight - 280, Math.max(58, menuY)) + "px";
   menu.style.display = "block";
 }
 
@@ -1464,20 +1612,25 @@ function executeWorldVerb(obj, verb) {
   p.x = Math.max(80, Math.min(STREETS[State.streetId].width - 80, obj.x - 35));
 
   if (verb.startsWith("Water")) {
-    p.anim = "water"; p.animTimer = 45;
+    p.anim = "water"; p.animTimer = 50;
+    obj.wateredTimer = 140;
+    spawnParticles(obj.x, obj.y - 75, 22, "water");
     AudioEngine.playChime("quoin");
     changeMeters({ energy: -2, img: 6, mood: 2 });
     advanceQuest("give_h2o", 1);
-    addFloatingText(obj.x, obj.y - 80, "Watered! +6 iMG", "#4da6ff");
+    addFloatingText(obj.x, obj.y - 85, "Watered! +6 iMG", "#4da6ff");
     logTelemetry("harvest", { target: obj.id, action: "water", street: State.streetId });
   } else if (verb.startsWith("Pet") && obj.type !== "piggy") {
     changeMeters({ energy: -1, img: 4, mood: 3 });
-    addFloatingText(obj.x, obj.y - 80, "Petted! +4 iMG +3 Mood", "#8de969");
+    addFloatingText(obj.x, obj.y - 85, "Petted! +4 iMG +3 Mood", "#8de969");
   } else if (verb === "Harvest" || verb.startsWith("Harvest")) {
+    p.anim = "water"; p.animTimer = 40;
+    obj.harvestedTimer = 140;
+    spawnParticles(obj.x, obj.y - 70, 18, "sparkle");
     changeMeters({ energy: -3, img: 8 });
     const item = obj.type === "wood_tree" ? "wood_plank" : "cherry";
     giveItem(item, 2);
-    addFloatingText(obj.x, obj.y - 80, `+2 ${ITEM_DEFS[item].name} +8 iMG`, "#f1c40f");
+    addFloatingText(obj.x, obj.y - 95, `Harvested +2 ${ITEM_DEFS[item].name} (+8 iMG)`, "#f1c40f");
     logTelemetry("harvest", { target: obj.id, item, street: State.streetId });
   } else if (verb.startsWith("Mine")) {
     // Video A 08:34: -7 Energy +10 iMG +8 Chunks of Beryl + co-op bonus!
@@ -1505,15 +1658,18 @@ function executeWorldVerb(obj, verb) {
     advanceQuest("can_you_dig_it", 1);
     addFloatingText(obj.x, obj.y - 60, "+2 Lumps of Earth +7 iMG", "#b08d57");
     logTelemetry("harvest", { target: obj.id, action: "dig", street: State.streetId });
-  } else if (verb.startsWith("Contribute Plank")) {
-    if (!removeItem("wood_plank", 1)) {
-      addFloatingText(obj.x, obj.y - 70, "Need 1 Plank!", "#e74c3c");
-      return;
+  } else if (verb.startsWith("Contribute Plank") || verb === "Inspect Project") {
+    if (verb.startsWith("Contribute Plank")) {
+      if (!removeItem("wood_plank", 1)) {
+        addFloatingText(obj.x, obj.y - 70, "Need 1 Plank!", "#e74c3c");
+        return;
+      }
+      obj.progress = Math.min(100, +(obj.progress + 2.6).toFixed(1));
+      changeMeters({ energy: -6, img: 15, mood: 4 });
+      addFloatingText(obj.x, obj.y - 95, `Tower ${obj.progress}% (+15 iMG)`, "#f39c12");
+      sendNet({ type: "tower_progress", progress: obj.progress });
     }
-    obj.progress = Math.min(100, +(obj.progress + 2.6).toFixed(1));
-    changeMeters({ energy: -6, img: 15, mood: 4 });
-    addFloatingText(obj.x, obj.y - 80, `Tower ${obj.progress}% (+15 iMG)`, "#f39c12");
-    sendNet({ type: "tower_progress", progress: obj.progress });
+    openTowerProjectModal(obj);
   } else if (verb.startsWith("Get water")) {
     // Video B 03:51 & 04:17
     if (giveItem("cup_of_water", 1)) {
@@ -1529,14 +1685,34 @@ function executeWorldVerb(obj, verb) {
         </div>
       `);
     }
-  } else if (verb.startsWith("Change style")) {
+  } else if (verb.startsWith("Change style") || verb === "Cultivate land" || verb === "Customize") {
     openStreetStyleModal();
-  } else if (verb === "Skills & Quests") {
+  } else if (verb === "Skills & Quests" || verb === "House keys" || verb === "Expand") {
     openSkillsAndQuestsModal();
   } else if (verb === "Who visited?") {
-    // Video A 19:16
-    addChatMessage("Roy (Beau)", `Since you last checked in, the following people have visited your street: ${State.player.visitors.join(", ")}.`, "sys");
-    addFloatingText(obj.x, obj.y - 70, "I'll IM you the visitor lot!", "#fff");
+    // Video A 19:16: Speech bubble with 'Thanks!' button + dedicated Roy IM tab
+    const msgText = `Since you last checked in, the following people have visited your street: ${State.player.visitors.join(", ")}.`;
+    State.chatBubbles[obj.id] = { text: "There were a lot of visitors, I'll IM you the list.", timer: 360 };
+    const popup = document.getElementById("butler-speech-popup");
+    if (popup) {
+      const cRect = canvas.getBoundingClientRect();
+      popup.style.left = Math.max(20, (obj.x - State.camera.x) - 105) + "px";
+      popup.style.top = Math.max(20, (obj.y - State.camera.y) - 150) + "px";
+      popup.style.display = "block";
+      document.getElementById("butler-thanks-btn").onclick = () => { popup.style.display = "none"; };
+    }
+    const royTab = document.getElementById("chat-tab-roy");
+    if (royTab) {
+      royTab.style.display = "block";
+      document.querySelectorAll("#chat-tabs .chat-tab").forEach(t => t.classList.remove("active"));
+      royTab.classList.add("active");
+    }
+    const royPanel = document.getElementById("roy-im-panel");
+    if (royPanel) {
+      royPanel.style.display = "block";
+      royPanel.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;"><strong>🎩 Roy (Beau) — Butler IM</strong><span style="font-size:10px; color:#567;">Just now</span></div><div>${escapeHtml(msgText)}</div>`;
+    }
+    addChatMessage("Roy (Beau)", msgText, "sys");
   } else if (verb === "Buy/sell") {
     openVendorModal(obj);
   } else if (verb.startsWith("Donate to")) {
@@ -1626,13 +1802,26 @@ function executePlayerSocialVerb(target, verb) {
   logTelemetry("emote", { verb, target: target.name, street: State.streetId });
 
   if (verb.startsWith("Greeting Sign")) {
-    // Video A 19:39: matching sign bonus "2x! +10 mood!"
+    // Video A 19:37 - 19:41: wooden signboards + speech bubble 'Neato, we match today!' + separate floating '2x' and '+10 mood!' + bottom toast
     AudioEngine.playChime("hi");
-    State.chatBubbles[State.playerId] = { text: p.hiSign, timer: 140 };
-    State.chatBubbles[target.id] = { text: target.hiSign || p.hiSign, timer: 140 };
+    if (Math.abs(target.x - p.x) > 140) {
+      target.x = p.x + 85;
+      target.dir = -1;
+      p.dir = 1;
+    }
+    const mySign = p.hiSign || "bye";
+    const theirSign = target.hiSign || mySign;
+    State.hiSigns[State.playerId] = { text: mySign, timer: 220 };
+    State.hiSigns[target.id] = { text: theirSign, timer: 220 };
+    State.chatBubbles[State.playerId] = { text: "Neato, we match today!", timer: 200 };
+    State.chatBubbles[target.id] = { text: "Neato, we match today!", timer: 200 };
     changeMeters({ mood: 10 });
-    addFloatingText(p.x, p.y - 75, `2x! Neat, we match today! +10 mood!`, "#f1c40f");
-    addChatMessage(null, `You and ${target.name} have the same hi sign "${p.hiSign}": Bonus time! +10 mood!`, "reward");
+    addFloatingText(p.x - 26, p.y - 122, "2x", "#ffdf40");
+    addFloatingText(p.x + 28, p.y - 102, "+10 mood!", "#8de969");
+    addFloatingText(target.x, target.y - 112, "2x  +10 mood!", "#8de969");
+    const matchToast = `You and ${target.name} have the same hi sign "${mySign}"! Bonus time!`;
+    showViewportToast(matchToast, 3600);
+    addChatMessage(null, `${matchToast} +10 mood!`, "reward");
   } else if (verb.startsWith("High five")) {
     AudioEngine.playChime("hi");
     changeMeters({ mood: 30 });
@@ -1688,21 +1877,38 @@ document.getElementById("modal-backdrop").onclick = (e) => {
   if (e.target.id === "modal-backdrop") closeModal();
 };
 
+const STREET_STYLE_CATALOG = [
+  { id: "lost_woods", name: "Forgotten Growth", desc: "Spooky silhouetted trees and melancholic twilight ambiance.", cost: 190, sky: "#2c3634", hill: "#121716", ground: "#060808" },
+  { id: "floral_tangles", name: "Floral Tangles", desc: "Lush emerald vines, giant blossoms, and sunlit canopy.", cost: 190, sky: "#c6f0d6", hill: "#5ea874", ground: "#36754b" },
+  { id: "vorn_road", name: "Vorn Road", desc: "Snowy pine trees, crisp winter sky, and upbeat festive rhythm.", cost: 190, sky: "#bfe3f2", hill: "#d9edf5", ground: "#638c38" },
+  { id: "savanna", name: "Andra Savanna", desc: "Golden grasslands, olive hills, and warm savanna breeze.", cost: 190, sky: "#eef5d8", hill: "#9da860", ground: "#8c874c" },
+  { id: "high_desert", name: "High Desert", desc: "Red sandstone mesas, warm amber skies, and desert cacti.", cost: 190, sky: "#f9e2ba", hill: "#c97b53", ground: "#a65c38" },
+  { id: "cavern", name: "Crystal Cavern", desc: "Subterranean mineral grotto with glowing beryl formations.", cost: 190, sky: "#4d3e30", hill: "#3b2f24", ground: "#594836" }
+];
+
 function openStreetStyleModal() {
-  // Video A 31:54: Change your street style (190i)
-  const styles = [
-    { id: "lost_woods", name: "Lost Woods", desc: "Spooky silhouetted trees and melancholic twilight ambiance.", cost: 190, color: "#1c2224" },
-    { id: "vorn_road", name: "Vorn Road", desc: "Snowy pine trees, crisp winter sky, and upbeat festive rhythm.", cost: 190, color: "#d8ecf2" },
-    { id: "savanna", name: "Andra Savanna", desc: "Golden grasslands, olive hills, and warm breeze.", cost: 190, color: "#a4b065" }
-  ];
-  let html = `<p>Change your Home Street visual & musical style for <strong>190 iMG</strong>:</p><div class="grid-cards">`;
-  styles.forEach(s => {
+  // Video A 31:52 - 32:33: 6-thumbnail grid -> wide preview banner -> 190i confirmation dialog
+  const curStyle = STREETS[State.streetId].style;
+  let html = `
+    <p style="margin-top:0; color:#49594f;">Choose a visual &amp; musical theme for your street. Changing style costs <strong>190 iMG</strong>:</p>
+    <div id="style-preview-stage"></div>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;">
+  `;
+  STREET_STYLE_CATALOG.forEach(s => {
+    const isCurrent = s.id === curStyle;
     html += `
-      <div class="card-item">
-        <div style="width:100%;height:54px;border-radius:6px;background:${s.color};border:1px solid #999;"></div>
-        <strong>${s.name}</strong>
-        <small style="color:#555;">${s.desc}</small>
-        <button onclick="applyStreetStyle('${s.id}', ${s.cost})">Change for ${s.cost}i</button>
+      <div class="card-item" style="border:2px solid ${isCurrent ? '#6db33f' : '#ccd6c4'}; padding:8px; cursor:pointer;" onclick="previewStreetStyle('${s.id}')">
+        <div style="width:100%; height:68px; border-radius:8px; overflow:hidden; position:relative; background:${s.sky}; border:1px solid #889;">
+          <div style="position:absolute; bottom:18px; left:-10%; width:120%; height:28px; border-radius:50%; background:${s.hill};"></div>
+          <div style="position:absolute; bottom:0; left:0; width:100%; height:20px; background:${s.ground};"></div>
+          ${s.id === 'vorn_road' ? '<div style="position:absolute; bottom:14px; left:24px; font-size:20px;">🌲❄️🌲</div><div style="position:absolute; bottom:6px; right:18px; width:46px; height:8px; background:#fff; border-radius:6px;"></div>' : ''}
+          ${s.id === 'lost_woods' ? '<div style="position:absolute; bottom:14px; left:24px; font-size:18px; filter:brightness(0.3);">🌳🌲🌳</div>' : ''}
+        </div>
+        <strong style="font-size:13px;">${s.name}</strong>
+        <small style="color:#666; font-size:11px;">${s.desc}</small>
+        ${isCurrent
+          ? `<span style="color:#6db33f; font-weight:bold; font-size:11px;">● Current Style</span>`
+          : `<button onclick="event.stopPropagation(); previewStreetStyle('${s.id}')">Preview ${s.name}</button>`}
       </div>
     `;
   });
@@ -1710,7 +1916,47 @@ function openStreetStyleModal() {
   openModal("Change your street style", html);
 }
 
-window.applyStreetStyle = function(styleId, cost) {
+window.previewStreetStyle = function(styleId) {
+  const s = STREET_STYLE_CATALOG.find(x => x.id === styleId) || STREET_STYLE_CATALOG[2];
+  const stage = document.getElementById("style-preview-stage");
+  if (!stage) return;
+  stage.innerHTML = `
+    <div style="background:#fff; border:3px solid #2b8a9e; border-radius:12px; padding:14px; margin-bottom:14px; box-shadow:0 6px 18px rgba(0,0,0,0.15);">
+      <div style="width:100%; height:115px; border-radius:10px; background:linear-gradient(180deg, ${s.sky} 0%, ${s.hill} 70%, ${s.ground} 70%); position:relative; overflow:hidden; border:2px solid #7fa6c4; margin-bottom:10px;">
+        <div style="position:absolute; top:10px; left:14px; background:rgba(0,0,0,0.65); color:#fff; padding:4px 12px; border-radius:12px; font-weight:bold; font-size:14px;">${s.name} — Street Preview</div>
+        <div style="position:absolute; bottom:24px; left:60px; font-size:32px;">${s.id === 'vorn_road' ? '🌲❄️🏡❄️🌲' : '🌳🏡🌳'}</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <strong style="font-size:15px;">${s.name}</strong>
+          <div style="font-size:12px; color:#555;">${s.desc} (Cost: <strong>${s.cost} iMG</strong>)</div>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button onclick="document.getElementById('style-preview-stage').innerHTML=''" style="background:#95a5a6; color:#fff; border:none; padding:7px 14px; border-radius:8px; cursor:pointer; font-weight:bold;">Cancel</button>
+          <button onclick="confirmStreetStyle('${s.id}', ${s.cost})" style="background:#6db33f; color:#fff; border:none; padding:7px 16px; border-radius:8px; cursor:pointer; font-weight:bold;">Change to this</button>
+        </div>
+      </div>
+      <div id="style-confirm-box"></div>
+    </div>
+  `;
+};
+
+window.confirmStreetStyle = function(styleId, cost = 190) {
+  const s = STREET_STYLE_CATALOG.find(x => x.id === styleId) || STREET_STYLE_CATALOG[2];
+  const box = document.getElementById("style-confirm-box");
+  if (!box) return;
+  box.innerHTML = `
+    <div style="margin-top:12px; padding:12px 16px; background:#fff9db; border:2px solid #e6a817; border-radius:10px; display:flex; justify-content:space-between; align-items:center;">
+      <strong style="color:#544100; font-size:13px;">Are you sure you want to change your street style to ${s.name} for ${cost}i?</strong>
+      <div style="display:flex; gap:8px;">
+        <button onclick="document.getElementById('style-confirm-box').innerHTML=''" style="background:#ccc; color:#222; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">Nevermind</button>
+        <button onclick="applyStreetStyle('${s.id}', ${cost})" style="background:#d9534f; color:#fff; border:none; padding:6px 14px; border-radius:6px; cursor:pointer; font-weight:bold;">Yes, change it</button>
+      </div>
+    </div>
+  `;
+};
+
+window.applyStreetStyle = function(styleId, cost = 190) {
   closeModal();
   changeMeters({ img: -cost });
   STREETS[State.streetId].style = styleId;
@@ -1782,40 +2028,137 @@ window.startLearningSkill = function(skillId) {
   openSkillsAndQuestsModal();
 };
 
+const WARDROBE_CATALOG = [
+  { id: "caterpillar_mask", slot: "hat", val: "caterpillar_mask", name: "Imperial Caterpillar Mask", cat: "Hat / Mask", cost: "450 credits", icon: "🐛", bg: "#d8ebcd" },
+  { id: "top_hat", slot: "hat", val: "top_hat", name: "Red Top Hat", cat: "Hat / Mask", cost: "250 credits", icon: "🎩", bg: "#f9d6d5" },
+  { id: "none_hat", slot: "hat", val: "none", name: "None (Blonde Hair)", cat: "Hair / Head", cost: "Owned", icon: "👱", bg: "#fdf3c7" },
+  { id: "dino_ride", slot: "hat", val: "dino_ride", name: "Dinosaur Ride", cat: "Mount / Outfit", cost: "600 credits", icon: "🦖", bg: "#d4efdf" },
+  { id: "piggy_ride", slot: "hat", val: "piggy_ride", name: "Piggy Ride", cat: "Mount / Outfit", cost: "550 credits", icon: "🐷", bg: "#fde2f3" },
+  { id: "censor_bar", slot: "hat", val: "censor_bar", name: "Censor Bar", cat: "Special", cost: "100 credits", icon: "⬛", bg: "#e5e8e8" },
+  { id: "crimson_cloak", slot: "coat", val: "crimson_cloak", name: "Crimson Traveler Cloak", cat: "Coat / Cape", cost: "320 credits", icon: "🧥", bg: "#fadbd8" },
+  { id: "explorer_coat", slot: "coat", val: "explorer_coat", name: "Emerald Explorer Coat", cat: "Coat / Cape", cost: "280 credits", icon: "🥼", bg: "#d5f5e3" },
+  { id: "striped_tunic", slot: "shirtStyle", val: "striped", name: "Striped Pirate Tunic", cat: "Shirt / Top", cost: "180 credits", icon: "👕", bg: "#d6eaf8" },
+  { id: "tartan_skirt", slot: "skirt", val: "tartan", name: "Pleated Tartan Skirt", cat: "Skirt", cost: "200 credits", icon: "👗", bg: "#ebdef0" },
+  { id: "sundress", slot: "dress", val: "sundress", name: "Starlight Sundress", cat: "Dress", cost: "340 credits", icon: "👘", bg: "#fef9e7" },
+  { id: "wingtip_boots", slot: "shoeColor", val: "#e74c3c", name: "Scarlet Wingtip Boots", cat: "Shoes", cost: "120 credits", icon: "🥾", bg: "#fdedec" }
+];
+
 function openWardrobeAndVanityModal() {
-  // Video A 07:16 (Wardrobe) & 11:44 (Vanity Mirror)
+  // Video A 07:16 (Wardrobe), 11:44 (Vanity), 12:53: Live Avatar Preview Doll, Equipment Slots, Visual Item Grid
   const ap = State.player.appearance;
-  const html = `
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
-      <div style="background:#fff; padding:14px; border:1px solid #cdd6c6; border-radius:10px;">
-        <h3 style="margin-top:0;">🪞 Vanity (Face, Skin & Proportions)</h3>
-        <label>Skin Color: <input type="color" value="${ap.skinColor}" onchange="updateLook('skinColor', this.value)"></label><br><br>
-        <label>Hair Color: <input type="color" value="${ap.hairColor}" onchange="updateLook('hairColor', this.value)"></label><br><br>
-        <label>Eye Size Slider: <input type="range" min="0.7" max="1.5" step="0.1" value="${ap.eyeScale}" oninput="updateLook('eyeScale', parseFloat(this.value))"></label><br><br>
-        <label>Avatar Height: <input type="range" min="0.8" max="1.25" step="0.05" value="${ap.heightScale}" oninput="updateLook('heightScale', parseFloat(this.value))"></label>
+  let cardsHtml = "";
+  WARDROBE_CATALOG.forEach(item => {
+    const isEquipped = ap[item.slot] === item.val;
+    cardsHtml += `
+      <div class="card-item" onclick="updateLook('${item.slot}', '${item.val}')" style="cursor:pointer; border:2px solid ${isEquipped ? '#6db33f' : '#ccd6c4'}; background:${isEquipped ? '#f4fbf0' : '#fff'}; padding:8px;">
+        <div style="width:100%; height:52px; border-radius:8px; background:${item.bg}; display:flex; align-items:center; justify-content:center; font-size:28px; border:1px solid rgba(0,0,0,0.08);">
+          ${item.icon}
+        </div>
+        <strong style="font-size:12px; color:#2b3c32;">${item.name}</strong>
+        <div style="display:flex; justify-content:space-between; width:100%; font-size:10px; color:#6c7a73;">
+          <span>${item.cat}</span>
+          <strong style="color:${item.cost === 'Owned' ? '#2e7d32' : '#d48817'};">${item.cost}</strong>
+        </div>
       </div>
-      <div style="background:#fff; padding:14px; border:1px solid #cdd6c6; border-radius:10px;">
-        <h3 style="margin-top:0;">🎩 Wardrobe (Hats, Masks & Rides)</h3>
-        <p style="font-size:12px; color:#555;">Credits Available: <strong>${State.player.credits} credits</strong></p>
-        <label>Shirt Color: <input type="color" value="${ap.shirtColor}" onchange="updateLook('shirtColor', this.value)"></label><br><br>
-        <label>Pants/Skirt Color: <input type="color" value="${ap.pantsColor}" onchange="updateLook('pantsColor', this.value)"></label><br><br>
-        <label>Special Headgear / Outfit:</label>
-        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
-          <button onclick="updateLook('hat', 'none')">None (Blonde Hair)</button>
-          <button onclick="updateLook('hat', 'top_hat')">Red Top Hat</button>
-          <button onclick="updateLook('hat', 'caterpillar_mask')">Imperial Caterpillar Mask</button>
-          <button onclick="updateLook('hat', 'censor_bar')">Censor Bar</button>
-          <button onclick="updateLook('hat', 'dino_ride')">Dinosaur Ride</button>
+    `;
+  });
+
+  const html = `
+    <div style="display:flex; gap:16px; background:linear-gradient(180deg,#eef5ea 0%,#dfece0 100%); border:2px solid #b8ccb2; border-radius:12px; padding:12px 16px; margin-bottom:14px; align-items:center;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+        <canvas id="wardrobe-preview-canvas" width="145" height="165" style="background:#fff; border:2px solid #8fa893; border-radius:12px; box-shadow:inset 0 2px 6px rgba(0,0,0,0.08);"></canvas>
+        <div style="display:flex; gap:6px;">
+          <button onclick="resetWardrobeLook()" style="background:#7f8c8d; color:#fff; border:none; border-radius:6px; padding:4px 9px; font-size:11px; font-weight:bold; cursor:pointer;">↺ Reset</button>
+          <button onclick="testWardrobeAnim()" style="background:#2b8a9e; color:#fff; border:none; border-radius:6px; padding:4px 9px; font-size:11px; font-weight:bold; cursor:pointer;">▶ Test</button>
+          <button onclick="closeModal()" style="background:#6db33f; color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:11px; font-weight:bold; cursor:pointer;">✔ Save &amp; Checkout</button>
+        </div>
+      </div>
+      <div style="flex:1; display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="font-size:14px; color:#233829;">Equipped Slots &amp; Vanity Features</strong>
+            <div style="font-size:11px; color:#556b5d;">No fixed gender — mix &amp; match any facial features, hats, coats, tops, skirts, dresses &amp; shoes!</div>
+          </div>
+          <div style="background:#fff; border:1px solid #c2ceb8; padding:4px 10px; border-radius:10px; font-weight:bold; color:#d48817; font-size:12px;">
+            💳 ${State.player.credits.toLocaleString()} Credits
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:6px; text-align:center; font-size:10px; font-weight:bold;">
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">🎩<br>Hat/Mask</div>
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">🧥<br>Coat/Cape</div>
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">👕<br>Shirt/Top</div>
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">👖<br>Pants</div>
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">👗<br>Skirt/Dress</div>
+          <div style="background:#fff; border:1px solid #b7c9b0; border-radius:8px; padding:6px;">🥾<br>Shoes</div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; background:#fff; padding:8px 10px; border-radius:8px; border:1px solid #cdd6c6; font-size:11px;">
+          <span><strong>Skin:</strong>
+            <button onclick="updateLook('skinColor','#fce2c4')" style="width:16px;height:16px;background:#fce2c4;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="updateLook('skinColor','#d9a17c')" style="width:16px;height:16px;background:#d9a17c;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="updateLook('skinColor','#8fd6b8')" style="width:16px;height:16px;background:#8fd6b8;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+          </span>
+          <span><strong>Hair:</strong>
+            <button onclick="updateLook('hairColor','#f5e06b')" style="width:16px;height:16px;background:#f5e06b;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="updateLook('hairColor','#b83b2b')" style="width:16px;height:16px;background:#b83b2b;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+            <button onclick="updateLook('hairColor','#3b2314')" style="width:16px;height:16px;background:#3b2314;border:1px solid #666;border-radius:50%;cursor:pointer;"></button>
+          </span>
+          <button onclick="cycleFacialFeature('eyeType',['bright','wink','wide'])" style="padding:2px 7px;border-radius:5px;border:1px solid #9ab;background:#eef;cursor:pointer;">👀 Eyes</button>
+          <button onclick="cycleFacialFeature('noseType',['button','pointed','round'])" style="padding:2px 7px;border-radius:5px;border:1px solid #9ab;background:#eef;cursor:pointer;">👃 Nose</button>
+          <button onclick="cycleFacialFeature('mouthType',['smile','grin','open'])" style="padding:2px 7px;border-radius:5px;border:1px solid #9ab;background:#eef;cursor:pointer;">👄 Mouth</button>
+          <button onclick="cycleFacialFeature('earType',['round','elf'])" style="padding:2px 7px;border-radius:5px;border:1px solid #9ab;background:#eef;cursor:pointer;">👂 Ears</button>
         </div>
       </div>
     </div>
+    <h4 style="margin:0 0 8px; color:#2b3c32;">🛍️ Wardrobe &amp; Store Catalog (Click any item to try on)</h4>
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:10px;">${cardsHtml}</div>
   `;
-  openModal("Wardrobe & Vanity Customization", html);
+  openModal("Glitch: Change your clothes or try on something new", html);
+  drawWardrobePreview();
 }
+
+function drawWardrobePreview() {
+  const wc = document.getElementById("wardrobe-preview-canvas");
+  if (!wc) return;
+  const wctx = wc.getContext("2d");
+  wctx.clearRect(0, 0, wc.width, wc.height);
+  wctx.fillStyle = "#e9f2e6";
+  wctx.fillRect(0, 138, wc.width, 27);
+  drawGlitchenAvatar(wctx, {
+    id: "wardrobe_preview",
+    name: State.player.name,
+    x: 72,
+    y: 146,
+    dir: 1,
+    anim: window.__wardrobePreviewAnim || "idle",
+    scale: 1.32,
+    appearance: State.player.appearance
+  }, true);
+}
+
+window.cycleFacialFeature = function(key, opts) {
+  const cur = State.player.appearance[key] || opts[0];
+  const next = opts[(opts.indexOf(cur) + 1) % opts.length];
+  updateLook(key, next);
+};
+
+window.resetWardrobeLook = function() {
+  Object.assign(State.player.appearance, {
+    hat: "none", coat: "none", skirt: "none", dress: "none", shirtStyle: "tunic"
+  });
+  openWardrobeAndVanityModal();
+  drawPortrait();
+};
+
+window.testWardrobeAnim = function() {
+  window.__wardrobePreviewAnim = "walk";
+  drawWardrobePreview();
+  setTimeout(() => { window.__wardrobePreviewAnim = "idle"; drawWardrobePreview(); }, 600);
+};
 
 window.updateLook = function(key, val) {
   State.player.appearance[key] = val;
   drawPortrait();
+  drawWardrobePreview();
   sendNet({
     type: "move",
     id: State.playerId,
@@ -1829,8 +2172,58 @@ window.updateLook = function(key, val) {
   });
 };
 
-function openVendorModal(vendorObj) {
-  // Video B 05:51: Animal Goods Vendor shop UI
+function openTowerProjectModal(obj) {
+  const planksOwned = (State.inventory.find(s => s && s.id === "wood_plank") || { count: 0 }).count;
+  const rodsOwned = (State.bagInventory.find(s => s && s.id === "metal_rod") || { count: 0 }).count;
+  const html = `
+    <div style="background:#f4f8f0; border:2px solid #8fa893; border-radius:12px; padding:14px; margin-bottom:14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <div>
+          <span style="background:#ffdf40; color:#3d2b00; font-weight:bold; padding:2px 8px; border-radius:6px; font-size:11px;">PHASE 1 OF 3</span>
+          <h3 style="margin:4px 0 2px; color:#223028;">Tower Construction Project</h3>
+          <small style="color:#556;">Contribute materials and labor to build a multi-story Tower on ${STREETS[State.streetId].name}.</small>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:22px; font-weight:bold; color:#2b8a9e;">${obj.progress}%</div>
+          <small style="color:#6c7a73;">Completion</small>
+        </div>
+      </div>
+      <div style="width:100%; height:20px; background:#d6e2d0; border-radius:10px; overflow:hidden; border:1px solid #8ea896; margin-bottom:12px;">
+        <div style="width:${obj.progress}%; height:100%; background:linear-gradient(90deg, #6db33f, #a3e65c); transition:width 0.25s;"></div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; text-align:center;">
+        <div style="background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;">
+          <div style="font-size:22px;">🪵</div>
+          <strong>Planks</strong>
+          <div style="font-size:11px; color:#2e7d32; font-weight:bold;">19 / 50 Contributed</div>
+          <small style="color:#666;">In bag: ${planksOwned}</small>
+        </div>
+        <div style="background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;">
+          <div style="font-size:22px;">🦯</div>
+          <strong>Metal Rods</strong>
+          <div style="font-size:11px; color:#2b8a9e; font-weight:bold;">10 / 20 Contributed</div>
+          <small style="color:#666;">In bag: ${rodsOwned}</small>
+        </div>
+        <div style="background:#fff; border:1px solid #cdd6c6; border-radius:8px; padding:8px;">
+          <div style="font-size:22px;">🔨</div>
+          <strong>Construction Labor</strong>
+          <div style="font-size:11px; color:#e67e22; font-weight:bold;">14 / 30 Work Units</div>
+          <small style="color:#666;">-6 Energy per job</small>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:10px;">
+      <button onclick="closeModal()" style="background:#95a5a6; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">Done</button>
+      <button onclick="executeWorldVerb(STREETS.beau_home.resources.find(r=>r.id==='tower_1'), 'Contribute Plank & Labor (-6e)')" style="background:#6db33f; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">🪵 Contribute Plank &amp; Labor (-6e)</button>
+    </div>
+  `;
+  openModal("Tower — Street Construction Project", html);
+}
+
+function openVendorModal(vendorObj, purchasedItemId = null) {
+  // Video B 05:51: Animal Goods Vendor shop UI with Buy/Sell tabs, item shelves, and bottom-right currants
+  State.lastVendorObj = vendorObj || State.lastVendorObj || { name: "Street Spirit (Animal Goods Vendor)" };
+  const vObj = State.lastVendorObj;
   const items = [
     { id: "butterfly_lotion", price: 45, desc: "Massage butterflies or taste it for +12 mood." },
     { id: "butterfly_milker", price: 400, desc: "Milk butterflies safely." },
@@ -1839,20 +2232,44 @@ function openVendorModal(vendorObj) {
     { id: "random_kindness", price: 30, desc: "Bestow rainbow kindness on friends." },
     { id: "essence_purple", price: 60, desc: "Embiggen or shrink your avatar." }
   ];
-  let html = `<p>You have <strong>${State.player.currants.toLocaleString()} currants</strong>.</p><div class="grid-cards">`;
+  const boughtNotice = purchasedItemId
+    ? `<div style="background:#dff0d8; border:1.5px solid #6db33f; color:#2b542c; padding:6px 12px; border-radius:8px; font-weight:bold; margin-bottom:10px;">✔ Purchased 1x ${ITEM_DEFS[purchasedItemId].name}!</div>`
+    : "";
+  let html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #c5d1be; padding-bottom:8px; margin-bottom:12px;">
+      <div style="display:flex; gap:8px;">
+        <button style="background:#6db33f; color:#fff; border:none; padding:6px 18px; border-radius:8px 8px 0 0; font-weight:bold; cursor:pointer;">🛒 Buy</button>
+        <button style="background:#dce6d6; color:#49594f; border:1px solid #b4c4ac; padding:6px 18px; border-radius:8px 8px 0 0; font-weight:bold; cursor:pointer;">💰 Sell</button>
+      </div>
+      <div style="font-size:12px; color:#556;">Click any item on the shelves to purchase</div>
+    </div>
+    ${boughtNotice}
+    <div style="background:#f3ead8; border:2px solid #c9b18c; border-radius:12px; padding:12px;">
+      <div class="grid-cards">
+  `;
   items.forEach(it => {
     const def = ITEM_DEFS[it.id];
     html += `
-      <div class="card-item">
-        <div style="font-size:28px;">${def.icon}</div>
+      <div class="card-item" style="border-bottom:5px solid #b89768; background:#fffef9;">
+        <div style="font-size:30px;">${def.icon}</div>
         <strong>${def.name}</strong>
-        <small>${it.desc}</small>
+        <small style="color:#666;">${it.desc}</small>
+        <div style="font-weight:bold; color:#d48817; font-size:12px;">● ${it.price} currants</div>
         <button onclick="buyVendorItem('${it.id}', ${it.price})">Buy (${it.price}c)</button>
       </div>
     `;
   });
-  html += `</div>`;
-  openModal(vendorObj.name, html);
+  html += `
+      </div>
+    </div>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding-top:8px; border-top:1px solid #dce4d6;">
+      <span style="font-size:12px; color:#6c7a73;">Street Spirit Vendor — Quality goods of Ur</span>
+      <div style="background:#fff9db; border:2px solid #e6a817; border-radius:12px; padding:5px 14px; font-weight:bold; font-size:14px; color:#544100;">
+        <span style="color:#d48817;">●</span> ${State.player.currants.toLocaleString()} currants
+      </div>
+    </div>
+  `;
+  openModal(vObj.name, html);
 }
 
 window.buyVendorItem = function(itemId, price) {
@@ -1863,26 +2280,137 @@ window.buyVendorItem = function(itemId, price) {
   if (giveItem(itemId, 1)) {
     changeMeters({ currants: -price });
     addFloatingText(State.player.x, State.player.y - 70, `Bought ${ITEM_DEFS[itemId].name} (-${price}c)`, "#2ecc71");
-    closeModal();
+    openVendorModal(State.lastVendorObj, itemId);
   }
 };
 
-function openWorldMapModal() {
-  // Video A 10:28: World Map & Street Teleportation
-  let html = `<p>Select any street in Ur to teleport immediately (-10 Energy) or set as destination:</p><div class="grid-cards">`;
-  Object.values(STREETS).forEach(st => {
-    const isCurrent = st.id === State.streetId;
-    html += `
-      <div class="card-item" style="border-color:${isCurrent ? '#2b8a9e' : '#ccd6c4'}">
-        <small style="color:#6c7a73;font-weight:bold;">${st.region.toUpperCase()}</small>
-        <strong>${st.name}</strong>
-        <small>Style: ${st.style}</small>
-        ${isCurrent ? `<span style="color:#2b8a9e;font-weight:bold;">You are here</span>` :
-          `<button onclick="teleportToStreet('${st.id}')">Teleport here (-10e)</button>`}
+const MAP_NODES = [
+  { id: "beau_home", name: "Beau's Home Street", region: "HOME STREETS", x: 115, y: 195, color: "#6db33f" },
+  { id: "goli_grabs", name: "Goli Grabs", region: "KALAVANA", x: 245, y: 110, color: "#e6a817" },
+  { id: "chego_chase", name: "Chego Chase", region: "ANDRA", x: 350, y: 185, color: "#2b8a9e" },
+  { id: "andra_hall", name: "Andra Bureaucratic Hall", region: "ANDRA", x: 435, y: 135, color: "#2b8a9e" },
+  { id: "bongul_beat", name: "Bongul Beat", region: "ANDRA", x: 385, y: 255, color: "#2b8a9e" }
+];
+
+window.openRegionMap = function(regionName, selectedStreetId) {
+  const regUpper = String(regionName || "ANDRA").toUpperCase();
+  const defaultTarget = selectedStreetId || (regUpper === "KALAVANA" ? "goli_grabs" : (regUpper === "HOME STREETS" ? "beau_home" : "chego_chase"));
+  const selSt = STREETS[defaultTarget] || STREETS.chego_chase;
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <button onclick="openWorldMapModal()" style="background:#2b8a9e; color:#fff; border:none; padding:5px 12px; border-radius:8px; font-weight:bold; cursor:pointer;">← Back to World Map of Regions</button>
+      <div style="font-size:14px; font-weight:bold; color:#223028;">🗺️ Region Street Network: <span style="color:#2b8a9e;">${regUpper}</span></div>
+      <span style="font-size:11px; color:#6c7a73;">Click any street hub or GO arrow</span>
+    </div>
+    <div style="display:flex; gap:14px; align-items:stretch;">
+      <div style="flex:1; background:#e8dfc8; border:3px solid #8c7b5c; border-radius:12px; overflow:hidden; position:relative;">
+        <svg viewBox="0 0 520 290" style="width:100%; height:285px; display:block;">
+          <rect width="520" height="290" fill="#dfd3b8" />
+          <!-- Neighbor Region GO Exit Arrows -->
+          <g style="cursor:pointer;" onclick="openRegionMap('ZHAMBU', 'goli_grabs')">
+            <rect x="12" y="18" width="86" height="26" rx="6" fill="#6db33f" stroke="#fff" stroke-width="2" />
+            <text x="55" y="35" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">⬅ GO: ZHAMBU</text>
+          </g>
+          <g style="cursor:pointer;" onclick="openRegionMap('KALAVANA', 'goli_grabs')">
+            <rect x="410" y="18" width="98" height="26" rx="6" fill="#6db33f" stroke="#fff" stroke-width="2" />
+            <text x="459" y="35" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">GO: KALAVANA ➡</text>
+          </g>
+          <!-- Street Network Lines -->
+          <line x1="95" y1="165" x2="215" y2="125" stroke="#5c4b32" stroke-width="6" stroke-linecap="round" />
+          <line x1="215" y1="125" x2="345" y2="155" stroke="#5c4b32" stroke-width="6" stroke-linecap="round" />
+          <line x1="345" y1="155" x2="435" y2="105" stroke="#5c4b32" stroke-width="6" stroke-linecap="round" />
+          <line x1="215" y1="125" x2="265" y2="220" stroke="#5c4b32" stroke-width="6" stroke-linecap="round" />
+          <line x1="265" y1="220" x2="395" y2="225" stroke="#5c4b32" stroke-width="6" stroke-linecap="round" />
+          <!-- Street Nodes -->
+          <g style="cursor:pointer;" onclick="openRegionMap('${regUpper}', 'bongul_beat')">
+            <circle cx="95" cy="165" r="14" fill="${selSt.id === 'bongul_beat' ? '#ffdf40' : '#fff'}" stroke="#2c3e50" stroke-width="3" />
+            <text x="95" y="142" text-anchor="middle" fill="#222" font-size="11" font-weight="bold">Bongul Beat</text>
+          </g>
+          <g style="cursor:pointer;" onclick="openRegionMap('${regUpper}', 'chego_chase')">
+            <circle cx="215" cy="125" r="15" fill="${selSt.id === 'chego_chase' ? '#ffdf40' : '#6db33f'}" stroke="#2c3e50" stroke-width="3" />
+            <text x="215" y="100" text-anchor="middle" fill="#222" font-size="12" font-weight="bold">Chego Chase</text>
+          </g>
+          <g style="cursor:pointer;" onclick="openRegionMap('${regUpper}', 'andra_hall')">
+            <circle cx="345" cy="155" r="14" fill="${selSt.id === 'andra_hall' ? '#ffdf40' : '#fff'}" stroke="#2c3e50" stroke-width="3" />
+            <text x="345" y="132" text-anchor="middle" fill="#222" font-size="11" font-weight="bold">Andra Hall</text>
+          </g>
+          <g style="cursor:pointer;" onclick="openRegionMap('${regUpper}', 'goli_grabs')">
+            <circle cx="435" cy="105" r="13" fill="${selSt.id === 'goli_grabs' ? '#ffdf40' : '#fff'}" stroke="#2c3e50" stroke-width="3" />
+            <text x="435" y="84" text-anchor="middle" fill="#222" font-size="11" font-weight="bold">Goli Grabs</text>
+          </g>
+          <g style="cursor:pointer;" onclick="openRegionMap('${regUpper}', 'beau_home')">
+            <circle cx="265" cy="220" r="14" fill="${selSt.id === 'beau_home' ? '#ffdf40' : '#fff'}" stroke="#2c3e50" stroke-width="3" />
+            <text x="265" y="246" text-anchor="middle" fill="#222" font-size="11" font-weight="bold">Beau's Home Street</text>
+          </g>
+        </svg>
       </div>
-    `;
-  });
-  html += `</div>`;
+      <div style="width:215px; background:#fff; border:2px solid #9ab09e; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="font-size:10px; font-weight:bold; color:#2b8a9e; text-transform:uppercase;">Selected Street</div>
+          <h3 style="margin:4px 0 6px; font-size:16px; color:#223028;">${selSt.name}</h3>
+          <p style="font-size:11px; color:#556;">Features shrines, Street Spirit vendors, and harvestable resources.</p>
+          <button onclick="teleportToStreet('${selSt.id}')" style="width:100%; background:#6db33f; color:#fff; border:none; padding:9px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Teleport here (-10e)</button>
+        </div>
+      </div>
+    </div>
+  `;
+  openModal(`World Map of Ur — ${regUpper}`, html);
+};
+
+function openWorldMapModal(selectedStreetId) {
+  // Tier 1: Illustrated World Map overview of Regions (clicking a region drills down into Tier 2 street network map)
+  const defaultTarget = selectedStreetId || (State.streetId === "beau_home" ? "goli_grabs" : "beau_home");
+  const selSt = STREETS[defaultTarget] || STREETS.goli_grabs;
+
+  const html = `
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:6px; flex-wrap:wrap;">
+      <div style="font-size:12px; color:#3d4f44; display:flex; gap:6px; align-items:center;">
+        <strong>Click a Region to open its Street Map:</strong>
+        <button id="region-btn-zhambu" onclick="openRegionMap('ZHAMBU', 'goli_grabs')" style="background:#e3efe6; border:1px solid #7fa68a; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;">ZHAMBU</button>
+        <button id="region-btn-kalavana" onclick="openRegionMap('KALAVANA', 'goli_grabs')" style="background:#fdf2d0; border:1px solid #d4b146; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;">KALAVANA</button>
+        <button id="region-btn-andra" onclick="openRegionMap('ANDRA', 'chego_chase')" style="background:#d8eef5; border:1px solid #58a6b8; padding:3px 9px; border-radius:6px; font-weight:bold; cursor:pointer;">ANDRA</button>
+      </div>
+    </div>
+    <div style="display:flex; gap:14px; align-items:stretch;">
+      <div style="flex:1; background:#1f485b; border:3px solid #7fa6c4; border-radius:12px; overflow:hidden; position:relative;">
+        <svg viewBox="0 0 520 295" style="width:100%; height:285px; display:block;">
+          <rect width="520" height="295" fill="#1d4456" />
+          <!-- Clickable Illustrated Region Continents -->
+          <g id="region-node-zhambu" style="cursor:pointer;" onclick="openRegionMap('ZHAMBU', 'goli_grabs')">
+            <ellipse cx="115" cy="82" rx="78" ry="48" fill="#5c8c73" stroke="#b8f2d0" stroke-width="2.5" />
+            <text x="115" y="86" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">ZHAMBU</text>
+          </g>
+          <g id="region-node-kalavana" style="cursor:pointer;" onclick="openRegionMap('KALAVANA', 'goli_grabs')">
+            <ellipse cx="275" cy="95" rx="88" ry="54" fill="#9c7a4c" stroke="#ffeaa7" stroke-width="2.5" />
+            <text x="275" y="99" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">KALAVANA</text>
+          </g>
+          <g id="region-node-andra" style="cursor:pointer;" onclick="openRegionMap('ANDRA', 'chego_chase')">
+            <ellipse cx="390" cy="195" rx="102" ry="72" fill="#7d964c" stroke="#e2f79e" stroke-width="2.5" />
+            <text x="390" y="199" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold">ANDRA</text>
+          </g>
+          <g id="region-node-home" style="cursor:pointer;" onclick="openRegionMap('HOME STREETS', 'beau_home')">
+            <ellipse cx="135" cy="210" rx="86" ry="56" fill="#4b8554" stroke="#8de969" stroke-width="2.5" />
+            <text x="135" y="214" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">HOME STREETS</text>
+          </g>
+        </svg>
+      </div>
+      <div style="width:220px; background:#fff; border:2px solid #9ab09e; border-radius:12px; padding:12px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="font-size:10px; font-weight:bold; color:#2b8a9e; text-transform:uppercase;">Destination: ${selSt.region}</div>
+          <h3 style="margin:4px 0 6px; font-size:16px; color:#223028;">${selSt.name}</h3>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <button onclick="teleportToStreet('${selSt.id}')" style="background:#6db33f; color:#fff; border:none; padding:8px 10px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">Teleport here (-10e)</button>
+          </div>
+        </div>
+        <div style="border-top:1px solid #e1e8dd; padding-top:8px; margin-top:10px;">
+          <div style="font-size:10px; font-weight:bold; color:#6c7a73; margin-bottom:4px;">QUICK STREET SELECT:</div>
+          <div style="display:flex; flex-wrap:wrap; gap:4px;">
+            ${Object.values(STREETS).map(st => `<button onclick="openWorldMapModal('${st.id}')" style="font-size:10px; padding:2px 6px; border-radius:5px; border:1px solid #b8c6b0; background:${st.id === selSt.id ? '#2b8a9e' : '#f5f7f2'}; color:${st.id === selSt.id ? '#fff' : '#333'}; cursor:pointer;">${st.name.split(' in ')[0]}</button>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
   openModal("World Map of Ur", html);
 }
 
@@ -1971,30 +2499,68 @@ function drawGiantTotem(canvas, giant) {
 
 // --- Street Transition Logic ---
 const visitedStreets = new Set(["beau_home"]);
+State.isTransitioning = false;
+State.transitionTarget = null;
 
-function triggerLoadingTransition(verbText, streetTitle, onComplete) {
+function drawLoadingStreetPreview(st) {
+  const lc = document.getElementById("loading-preview-canvas");
+  if (!lc || !st) return;
+  const lctx = lc.getContext("2d");
+  drawParallaxBackground(lctx, lc.width, lc.height, st, 0, 0);
+  lctx.fillStyle = st.style === "vorn_road" ? "#638c38" : (st.style === "savanna" ? "#8c874c" : "#3b2f24");
+  lctx.fillRect(0, 102, lc.width, 35);
+}
+
+function triggerLoadingTransition(verbText, streetTitle, onComplete, targetStreetObj = null) {
   const ov = document.getElementById("loading-overlay");
   const bar = document.getElementById("loading-progress-bar");
+  const pctLbl = document.getElementById("loading-pct-label");
   document.getElementById("loading-verb").textContent = verbText;
   document.getElementById("loading-street-title").textContent = streetTitle;
+  if (targetStreetObj) {
+    drawLoadingStreetPreview(targetStreetObj);
+    const featList = document.getElementById("loading-features-list");
+    if (featList) {
+      const items = [...targetStreetObj.npcs.map(n => n.name), ...targetStreetObj.resources.slice(0, 3).map(r => r.name)];
+      featList.innerHTML = items.slice(0, 3).map(x => `<li>${escapeHtml(x)}</li>`).join("") || "<li>Quoins &amp; Resources</li>";
+    }
+  }
   ov.classList.add("open");
-  bar.style.width = "15%";
-  setTimeout(() => { bar.style.width = "70%"; }, 140);
-  setTimeout(() => { bar.style.width = "100%"; }, 280);
+  bar.style.width = "22%";
+  if (pctLbl) pctLbl.textContent = "loading... 22%";
+  setTimeout(() => {
+    bar.style.width = "74%";
+    if (pctLbl) pctLbl.textContent = "reticulating splines... 74%";
+  }, 180);
+  setTimeout(() => {
+    bar.style.width = "100%";
+    if (pctLbl) pctLbl.textContent = "reticulating splines... 100%";
+  }, 360);
   setTimeout(() => {
     ov.classList.remove("open");
     bar.style.width = "0%";
     if (onComplete) onComplete();
-  }, 420);
+  }, 540);
 }
 
 function changeStreet(targetStreetId, spawnX = 300) {
   const st = STREETS[targetStreetId];
   if (!st) return;
+  if (State.isTransitioning && State.transitionTarget === targetStreetId) return;
+  State.isTransitioning = true;
+  State.transitionTarget = targetStreetId;
   State.waitingRoom.active = false;
   document.getElementById("waiting-banner").style.display = "none";
+  const bPopup = document.getElementById("butler-speech-popup");
+  if (bPopup) bPopup.style.display = "none";
+
+  // Update player coordinates right away so boundary loop checks never re-fire during the loading screen
+  State.player.vx = 0;
+  State.player.vy = 0;
 
   triggerLoadingTransition("Entering", st.name, () => {
+    State.isTransitioning = false;
+    State.transitionTarget = null;
     State.streetId = targetStreetId;
     State.player.x = spawnX;
     State.player.y = st.groundY;
@@ -2013,7 +2579,14 @@ function changeStreet(targetStreetId, spawnX = 300) {
     if (!visitedStreets.has(targetStreetId)) {
       visitedStreets.add(targetStreetId);
       changeMeters({ img: 2 });
-      addChatMessage(null, `This is your first visit to ${st.name}. You received 2 xp!`, "reward");
+      const fvMsg = `This is your first visit to ${st.name}. You received 2 xp!`;
+      addChatMessage(null, fvMsg, "reward");
+      const toast = document.getElementById("first-visit-toast");
+      if (toast) {
+        toast.textContent = `✨ ${fvMsg}`;
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 3500);
+      }
     } else {
       addChatMessage(null, `Entered ${st.name}.`, "sys");
     }
@@ -2029,7 +2602,7 @@ function changeStreet(targetStreetId, spawnX = 300) {
       y: State.player.y
     });
     logTelemetry("street_change", { street: targetStreetId, name: st.name });
-  });
+  }, st);
 }
 
 // --- Input & UI Event Listeners ---
@@ -2096,6 +2669,8 @@ document.getElementById("menu-giant-summon").onclick = () => {
 document.getElementById("magic-rock-top").onclick = () => openSkillsAndQuestsModal();
 document.getElementById("btn-cultivate").onclick = () => openStreetStyleModal();
 document.getElementById("minimap-canvas").onclick = () => openWorldMapModal();
+const wmBtn = document.getElementById("world-map-btn");
+if (wmBtn) wmBtn.onclick = () => openWorldMapModal();
 
 document.getElementById("btn-mute").onclick = () => {
   AudioEngine.muted = !AudioEngine.muted;
@@ -2146,9 +2721,22 @@ function submitChat() {
   logTelemetry("chat", { sender: State.player.name, text, street: State.streetId });
 }
 
-// --- Canvas Click Detection for World Objects & Players ---
+// --- Canvas Click & Hover Detection for World Objects & Players ---
 const canvas = document.getElementById("game-canvas");
 const ctx = canvas.getContext("2d");
+
+canvas.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const wx = (e.clientX - rect.left) + State.camera.x;
+  const wy = (e.clientY - rect.top) + State.camera.y;
+  State.mouseWorldX = wx;
+  State.mouseWorldY = wy;
+  const st = STREETS[State.streetId];
+  State.hoveredDoor = st.doors.find(d => wx >= d.x - d.w / 2 - 12 && wx <= d.x + d.w / 2 + 12 && wy >= d.y - d.h - 12 && wy <= d.y + 12) || null;
+  State.hoveredExit = st.exits.find(ex => Math.abs(wx - ex.x) < 65 && Math.abs(wy - (ex.y - 50)) < 75) || null;
+  const allInteractive = [...st.npcs, ...st.resources];
+  State.hoveredObj = allInteractive.find(obj => Math.abs(wx - obj.x) < 60 && Math.abs(wy - (obj.y - 45)) < 80) || null;
+});
 
 canvas.addEventListener("click", (e) => {
   AudioEngine.init();
@@ -2304,14 +2892,18 @@ function updateSimulation() {
   }
 
   // Street boundaries & automatic signpost exit trigger
-  if (p.x < 35) {
-    p.x = 35;
-    const leftExit = st.exits.find(ex => ex.x < 250);
-    if (leftExit) changeStreet(leftExit.target, leftExit.spawnX);
-  } else if (p.x > st.width - 35) {
-    p.x = st.width - 35;
-    const rightExit = st.exits.find(ex => ex.x > st.width - 250);
-    if (rightExit) changeStreet(rightExit.target, rightExit.spawnX);
+  if (!State.isTransitioning) {
+    if (p.x < 102 && p.vx <= 0) {
+      p.x = 106;
+      p.vx = 0;
+      const leftExit = st.exits.find(ex => ex.x < 250);
+      if (leftExit) changeStreet(leftExit.target, leftExit.spawnX);
+    } else if (p.x > st.width - 102 && p.vx >= 0) {
+      p.x = st.width - 106;
+      p.vx = 0;
+      const rightExit = st.exits.find(ex => ex.x > st.width - 250);
+      if (rightExit) changeStreet(rightExit.target, rightExit.spawnX);
+    }
   }
 
   // Animation state
@@ -2384,12 +2976,15 @@ function updateSimulation() {
   // Update Cubimals
   for (let i = State.cubimals.length - 1; i >= 0; i--) {
     const c = State.cubimals[i];
-    c.x += c.vx;
+    if ((c.raceTimer || 0) > 0) {
+      c.x += c.vx * (c.raceTimer / 110);
+      c.raceTimer--;
+    }
     c.timer--;
     if (c.timer <= 0) State.cubimals.splice(i, 1);
   }
 
-  // Update Particles & Floating Texts & Chat Bubbles
+  // Update Particles & Floating Texts & Chat Bubbles & Hi Signs
   for (let i = State.particles.length - 1; i >= 0; i--) {
     const pt = State.particles[i];
     pt.x += pt.vx;
@@ -2407,6 +3002,10 @@ function updateSimulation() {
   Object.keys(State.chatBubbles).forEach(k => {
     State.chatBubbles[k].timer--;
     if (State.chatBubbles[k].timer <= 0) delete State.chatBubbles[k];
+  });
+  Object.keys(State.hiSigns).forEach(k => {
+    State.hiSigns[k].timer--;
+    if (State.hiSigns[k].timer <= 0) delete State.hiSigns[k];
   });
 
   // Broadcast player position periodically
@@ -2516,12 +3115,44 @@ function renderScene() {
 
   // 9. Cubimals Racing
   State.cubimals.forEach(c => {
+    const isMoving = (c.raceTimer || 0) > 0;
+    const hop = isMoving ? Math.abs(Math.sin(simTick * 0.45)) * 7 : 0;
     ctx.save();
-    ctx.translate(c.x, c.y - 12);
-    ctx.fillStyle = c.kind === "chick_cubimal" ? "#f1c40f" : "#bdc3c7";
-    ctx.fillRect(-10, -10, 20, 20);
-    ctx.strokeStyle = "#333";
-    ctx.strokeRect(-10, -10, 20, 20);
+    ctx.translate(c.x, c.y - 16 - hop);
+    // Wind-up key on back
+    ctx.strokeStyle = "#e67e22";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(-14, -4); ctx.lineTo(-22, -4);
+    ctx.arc(-25, -4, 4, 0, Math.PI * 2);
+    ctx.stroke();
+    // Cubic toy body
+    ctx.fillStyle = c.kind === "chick_cubimal" ? "#f1c40f" : "#dfe6e9";
+    ctx.strokeStyle = "#2c3e50";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(-14, -14, 28, 26, 5);
+    ctx.fill(); ctx.stroke();
+    // Eyes & beak
+    ctx.fillStyle = "#111";
+    ctx.beginPath(); ctx.arc(6, -5, 2.5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#e67e22";
+    ctx.beginPath(); ctx.moveTo(14, -5); ctx.lineTo(21, -2); ctx.lineTo(14, 1); ctx.fill();
+    // Wheels
+    ctx.fillStyle = "#333";
+    ctx.beginPath();
+    ctx.arc(-8, 13, 4, 0, Math.PI * 2);
+    ctx.arc(8, 13, 4, 0, Math.PI * 2);
+    ctx.fill();
+    // Distance label above cubimal
+    ctx.fillStyle = "rgba(20, 28, 32, 0.88)";
+    ctx.beginPath();
+    ctx.roundRect(-48, -38, 96, 18, 6);
+    ctx.fill();
+    ctx.fillStyle = "#ffdf40";
+    ctx.font = "bold 11px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(isMoving ? "Racing..." : `${c.dist} planks!`, 0, -25);
     ctx.restore();
   });
 
@@ -2775,12 +3406,34 @@ function drawStreetBuildings(ctx, st) {
     ctx.fillText("Bureau of Administrative Affairs", bx - 60, by - 165);
     ctx.fillText("Ministry of Departments", bx - 40, by - 142);
 
-    // Teal-framed double doors
-    ctx.fillStyle = "#7a583b";
-    ctx.strokeStyle = "#3bb2c4";
-    ctx.lineWidth = 4;
+    // Teal-framed double doors with hover highlight
+    const doorHovered = (State.hoveredDoor && State.hoveredDoor.target === "andra_hall") || Math.abs(State.player.x - (bx + 60)) < 95;
+    ctx.save();
+    if (doorHovered) {
+      ctx.shadowColor = "#00f5d4";
+      ctx.shadowBlur = 16;
+    }
+    ctx.fillStyle = doorHovered ? "#8f6845" : "#7a583b";
+    ctx.strokeStyle = doorHovered ? "#00f5d4" : "#3bb2c4";
+    ctx.lineWidth = doorHovered ? 6 : 4;
     ctx.fillRect(bx + 20, by - 95, 80, 95);
     ctx.strokeRect(bx + 20, by - 95, 80, 95);
+    ctx.beginPath();
+    ctx.moveTo(bx + 60, by - 95); ctx.lineTo(bx + 60, by);
+    ctx.stroke();
+    ctx.restore();
+    if (doorHovered) {
+      ctx.fillStyle = "rgba(20, 32, 36, 0.92)";
+      ctx.strokeStyle = "#00f5d4";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(bx - 20, by - 130, 160, 24, 8);
+      ctx.fill(); ctx.stroke();
+      ctx.fillStyle = "#a8ffef";
+      ctx.font = "bold 12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Enter Andra Bureaucratic Hall", bx + 60, by - 114);
+    }
     ctx.restore();
   } else if (st.id === "andra_hall") {
     // Interior of Andra Bureaucratic Hall (Video B 03:38 - 05:28)
@@ -2837,18 +3490,53 @@ function drawStreetBuildings(ctx, st) {
 function drawSignpost(ctx, ex) {
   ctx.save();
   ctx.translate(ex.x, ex.y);
-  ctx.fillStyle = "#4a3b2c";
-  ctx.fillRect(-5, -85, 10, 85);
-  ctx.fillStyle = "#2b221a";
-  ctx.strokeStyle = "#7a6248";
-  ctx.lineWidth = 2;
+  const isLeft = ex.x < 500;
+  const isNear = Math.abs(State.player.x - ex.x) < 230 || State.hoveredExit === ex;
+  // Wooden post with base stones
+  ctx.fillStyle = "#6e4e2e";
+  ctx.strokeStyle = "#2b1d10";
+  ctx.lineWidth = 2.5;
+  ctx.fillRect(-7, -120, 14, 120);
+  ctx.strokeRect(-7, -120, 14, 120);
   ctx.beginPath();
-  ctx.roundRect(-68, -78, 136, 26, 5);
+  ctx.arc(0, -122, 9, 0, Math.PI * 2);
   ctx.fill(); ctx.stroke();
-  ctx.fillStyle = "#f5f0e1";
-  ctx.font = "bold 11px sans-serif";
-  ctx.textAlign = "center";
-  ctx.fillText(ex.label, 0, -61);
+
+  // Directional wooden arrow signboards for each connected street
+  const parts = String(ex.label).split("/").map(s => s.trim());
+  parts.forEach((lbl, idx) => {
+    const by = -106 + idx * 32;
+    const activeGreen = idx === 0 && isNear;
+    ctx.save();
+    if (activeGreen) {
+      ctx.shadowColor = "#8de969";
+      ctx.shadowBlur = 12;
+    }
+    ctx.fillStyle = activeGreen ? "#3d6e28" : (idx === 0 ? "#7a5633" : "#5e4227");
+    ctx.strokeStyle = activeGreen ? "#8de969" : "#deb878";
+    ctx.lineWidth = activeGreen ? 3 : 2;
+    ctx.beginPath();
+    if (isLeft) {
+      ctx.moveTo(-72, by + 13);
+      ctx.lineTo(-56, by);
+      ctx.lineTo(74, by);
+      ctx.lineTo(74, by + 26);
+      ctx.lineTo(-56, by + 26);
+    } else {
+      ctx.moveTo(72, by + 13);
+      ctx.lineTo(56, by);
+      ctx.lineTo(-74, by);
+      ctx.lineTo(-74, by + 26);
+      ctx.lineTo(56, by + 26);
+    }
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = activeGreen ? "#eaffd0" : "#fff8e7";
+    ctx.font = "bold 12px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText((isLeft ? "← " : "") + lbl + (!isLeft ? " →" : ""), isLeft ? 6 : -6, by + 17);
+    ctx.restore();
+  });
   ctx.restore();
 }
 
@@ -2856,23 +3544,48 @@ function drawResource(ctx, res) {
   ctx.save();
   ctx.translate(res.x, res.y);
   if (res.type === "wood_tree") {
-    // Quirky branching Wood Tree (Video A 02:27)
-    ctx.fillStyle = "#7d6b38";
-    ctx.strokeStyle = "#3d3419";
-    ctx.lineWidth = 2.5;
+    // Quirky branching Wood Tree with wooden planks on branches (Video A 01:43, 02:27, 03:48)
+    const isHovered = (State.hoveredObj && State.hoveredObj.id === res.id) || Math.abs(State.player.x - res.x) < 75;
+    ctx.save();
+    if (isHovered) {
+      ctx.shadowColor = "#4da6ff";
+      ctx.shadowBlur = 10;
+    }
+    ctx.fillStyle = "#8c7640";
+    ctx.strokeStyle = isHovered ? "#4da6ff" : "#3d3419";
+    ctx.lineWidth = isHovered ? 3 : 2.5;
     ctx.beginPath();
-    ctx.moveTo(-12, 0);
-    ctx.lineTo(-8, -75);
-    ctx.lineTo(-28, -60);
-    ctx.lineTo(-24, -72);
-    ctx.lineTo(-4, -92);
-    ctx.lineTo(6, -92);
-    ctx.lineTo(26, -70);
-    ctx.lineTo(22, -58);
-    ctx.lineTo(8, -72);
-    ctx.lineTo(12, 0);
+    ctx.moveTo(-14, 0);
+    ctx.lineTo(-10, -78);
+    ctx.lineTo(-32, -62);
+    ctx.lineTo(-26, -76);
+    ctx.lineTo(-5, -98);
+    ctx.lineTo(7, -98);
+    ctx.lineTo(28, -74);
+    ctx.lineTo(24, -60);
+    ctx.lineTo(10, -75);
+    ctx.lineTo(14, 0);
     ctx.closePath();
     ctx.fill(); ctx.stroke();
+    // Harvestable wooden planks on the tree branches
+    [[-22, -82, -0.25], [14, -84, 0.25], [-4, -106, 0.05]].forEach(([px, py, rot]) => {
+      ctx.save();
+      ctx.translate(px, py);
+      ctx.rotate(rot);
+      ctx.fillStyle = "#d99b52";
+      ctx.strokeStyle = "#5c3d1e";
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(-12, -5, 24, 10);
+      ctx.strokeRect(-12, -5, 24, 10);
+      ctx.restore();
+    });
+    ctx.restore();
+    if (isHovered) {
+      ctx.fillStyle = "#ffdf40";
+      ctx.font = "bold 12px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Wood Tree", 0, 16);
+    }
   } else if (res.type === "fruit_tree") {
     // Pink blossom Fruit Tree (Video A 01:51 & Video B 06:05)
     ctx.fillStyle = "#5c3d28";
@@ -2929,23 +3642,62 @@ function drawResource(ctx, res) {
     ctx.fill(); ctx.stroke();
   } else if (res.type === "tower_project") {
     // Wooden scaffolding Tower construction project (Video A 02:33 & 03:49)
+    const isHovered = (State.hoveredObj && State.hoveredObj.id === res.id) || Math.abs(State.player.x - res.x) < 120;
+    ctx.save();
+    if (isHovered) {
+      ctx.shadowColor = "#4da6ff";
+      ctx.shadowBlur = 12;
+      ctx.strokeStyle = "#4da6ff";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(-60, -52, 120, 52);
+    }
     ctx.strokeStyle = "#8c5828";
     ctx.fillStyle = "#b87a3d";
     ctx.lineWidth = 4;
-    ctx.strokeRect(-55, -42, 110, 42);
+    ctx.strokeRect(-55, -44, 110, 44);
     for (let x = -45; x <= 45; x += 22) {
-      ctx.fillRect(x - 3, -48, 6, 48);
+      ctx.fillRect(x - 3, -50, 6, 50);
     }
-    ctx.fillStyle = "#fff";
-    ctx.strokeStyle = "#333";
-    ctx.lineWidth = 1.5;
+    // Diagonal scaffolding cross-braces
+    ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.roundRect(-32, -74, 64, 20, 5);
+    ctx.moveTo(-45, -44); ctx.lineTo(0, 0);
+    ctx.moveTo(0, -44); ctx.lineTo(-45, 0);
+    ctx.moveTo(0, -44); ctx.lineTo(45, 0);
+    ctx.moveTo(45, -44); ctx.lineTo(0, 0);
+    ctx.stroke();
+    ctx.restore();
+
+    // Speech bubble above scaffolding reading 'Project available' (A 02:33)
+    ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+    ctx.strokeStyle = isHovered ? "#4da6ff" : "#333";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(-58, -86, 116, 24, 7);
     ctx.fill(); ctx.stroke();
-    ctx.fillStyle = "#222";
-    ctx.font = "bold 11px sans-serif";
+    ctx.beginPath();
+    ctx.moveTo(-6, -62); ctx.lineTo(6, -62); ctx.lineTo(0, -54);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = "#1e272e";
+    ctx.font = "bold 11px 'Trebuchet MS', sans-serif";
     ctx.textAlign = "center";
-    ctx.fillText(`${res.progress}%`, 0, -60);
+    ctx.fillText("Project available", 0, -70);
+
+    // Completion progress bar & yellow 'Tower' label below on hover/near
+    if (res.progress > 11.4) {
+      ctx.fillStyle = "#222";
+      ctx.fillRect(-36, -24, 72, 12);
+      ctx.fillStyle = "#6db33f";
+      ctx.fillRect(-34, -22, Math.round(68 * (res.progress / 100)), 8);
+    }
+    if (isHovered) {
+      ctx.fillStyle = "rgba(0,0,0,0.75)";
+      ctx.font = "bold 13px 'Trebuchet MS', sans-serif";
+      ctx.fillText("Tower", 1, 19);
+      ctx.fillStyle = "#ffdf40";
+      ctx.fillText("Tower", 0, 18);
+    }
   } else if (res.type === "water_cooler") {
     // Office Water Cooler (Video B 03:50)
     ctx.fillStyle = "#f2f4f0";
@@ -3107,33 +3859,59 @@ function drawGlitchenAvatar(ctx, av, isSelf) {
 
   ctx.scale((av.dir || 1) * scale, scale);
 
+  // Back Cape / Cloak layer
+  if (ap.coat === "crimson_cloak" || ap.coat === "explorer_coat") {
+    ctx.fillStyle = ap.coat === "crimson_cloak" ? "#962d22" : "#1e8449";
+    ctx.beginPath();
+    ctx.moveTo(-8, -42);
+    ctx.lineTo(-20 - Math.abs(walkCycle) * 4, -8);
+    ctx.lineTo(6, -10);
+    ctx.closePath();
+    ctx.fill();
+  }
+
   // Legs & Shoes
-  ctx.strokeStyle = ap.pantsColor;
+  ctx.strokeStyle = ap.pantsColor || "#1a1d20";
   ctx.lineWidth = 6;
+  ctx.lineCap = "round";
   ctx.beginPath();
-  ctx.moveTo(-5, -18); ctx.lineTo(-5 + walkCycle * 7, 0);
-  ctx.moveTo(5, -18); ctx.lineTo(5 - walkCycle * 7, 0);
+  ctx.moveTo(-5, -18); ctx.lineTo(-5 + walkCycle * 7, -2);
+  ctx.moveTo(5, -18); ctx.lineTo(5 - walkCycle * 7, -2);
   ctx.stroke();
 
   ctx.fillStyle = ap.shoeColor || "#e74c3c";
-  ctx.fillRect(-8 + walkCycle * 7, -4, 9, 4);
-  ctx.fillRect(2 - walkCycle * 7, -4, 9, 4);
-
-  // Torso
-  ctx.fillStyle = ap.hat === "censor_bar" ? ap.skinColor : ap.shirtColor;
   ctx.beginPath();
-  ctx.roundRect(-11, -42, 22, 25, 5);
+  ctx.roundRect(-9 + walkCycle * 7, -5, 11, 5, 2);
+  ctx.roundRect(1 - walkCycle * 7, -5, 11, 5, 2);
   ctx.fill();
+
+  // Torso / Dress / Shirt
+  ctx.fillStyle = ap.hat === "censor_bar" ? ap.skinColor : (ap.dress === "sundress" ? "#f39c12" : ap.shirtColor);
+  ctx.beginPath();
+  ctx.roundRect(-12, -43, 24, 26, 6);
+  ctx.fill();
+  if (ap.shirtStyle === "striped") {
+    ctx.fillStyle = "#ecf0f1";
+    ctx.fillRect(-11, -37, 22, 4);
+    ctx.fillRect(-11, -29, 22, 4);
+  }
+  if (ap.skirt === "tartan" || ap.dress === "sundress") {
+    ctx.fillStyle = ap.dress === "sundress" ? "#f1c40f" : "#8e44ad";
+    ctx.beginPath();
+    ctx.moveTo(-12, -22); ctx.lineTo(-16, -10); ctx.lineTo(16, -10); ctx.lineTo(12, -22);
+    ctx.closePath();
+    ctx.fill();
+  }
 
   // Optional Censor Bar (Video A 17:56 & 20:43)
   if (ap.hat === "censor_bar") {
     ctx.fillStyle = "#000000";
-    ctx.fillRect(-15, -34, 30, 12);
+    ctx.fillRect(-16, -34, 32, 12);
   }
 
-  // Optional Dinosaur Ride mount (Video A 07:40 & 16:40)
-  if (ap.hat === "dino_ride") {
-    ctx.fillStyle = "#6ab04c";
+  // Optional Dinosaur or Piggy Ride mount (Video A 07:40 & 16:40)
+  if (ap.hat === "dino_ride" || ap.hat === "piggy_ride") {
+    ctx.fillStyle = ap.hat === "piggy_ride" ? "#ff9ff3" : "#6ab04c";
     ctx.beginPath();
     ctx.roundRect(-22, -28, 44, 18, 8);
     ctx.fill();
@@ -3167,57 +3945,109 @@ function drawGlitchenAvatar(ctx, av, isSelf) {
     ctx.stroke();
   }
 
-  // Head
+  // Large Cartoon Head + Customizable Ear
   ctx.fillStyle = ap.skinColor;
   ctx.beginPath();
-  ctx.ellipse(0, -58, 17, 18, 0, 0, Math.PI * 2);
+  ctx.ellipse(0, -60, 18.5, 19.5, 0, 0, Math.PI * 2);
   ctx.fill();
+  ctx.strokeStyle = "rgba(80,45,30,0.28)";
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+
+  // Ear
+  ctx.fillStyle = ap.skinColor;
+  ctx.beginPath();
+  if (ap.earType === "elf") {
+    ctx.moveTo(-14, -60); ctx.lineTo(-25, -67); ctx.lineTo(-15, -53);
+  } else {
+    ctx.arc(-16, -58, 5, 0, Math.PI * 2);
+  }
+  ctx.fill(); ctx.stroke();
 
   if (ap.hat === "caterpillar_mask") {
-    // Imperial Caterpillar Mask (Video A 07:19 & 23:44)
-    ctx.fillStyle = "#3d4a2d";
+    // Ornate Imperial Caterpillar Mask (Video A 07:19 & 23:44)
+    ctx.fillStyle = "#4a6b2f";
+    ctx.strokeStyle = "#243815";
+    ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.ellipse(0, -60, 20, 22, 0, 0, Math.PI * 2);
+    ctx.ellipse(0, -61, 21, 23, 0, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+    // Yellow-green ornamental stripes & big bug eyes
+    ctx.fillStyle = "#c4e538";
+    ctx.beginPath();
+    ctx.arc(-4, -65, 5, 0, Math.PI * 2);
+    ctx.arc(10, -65, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#c0392b";
+    ctx.beginPath();
+    ctx.arc(-4, -65, 2.2, 0, Math.PI * 2);
+    ctx.arc(10, -65, 2.2, 0, Math.PI * 2);
     ctx.fill();
     ctx.fillStyle = "#ecf0f1";
     for (let t = -10; t <= 10; t += 5) {
-      ctx.fillRect(t, -48, 3, 5);
+      ctx.fillRect(t, -49, 3.5, 6);
     }
   } else {
-    // Hair
+    // Layered Hair
     ctx.fillStyle = ap.hairColor;
     ctx.beginPath();
-    ctx.arc(0, -62, 17.5, Math.PI, Math.PI * 2);
+    ctx.arc(0, -64, 19, Math.PI * 0.95, Math.PI * 2.05);
     ctx.fill();
-    ctx.fillRect(-17, -62, 7, 22);
+    ctx.beginPath();
+    ctx.roundRect(-19, -66, 8, 25, 4);
+    ctx.fill();
 
-    // Eyes
+    // Expressive Cartoon Eyes & Eyebrows
     const es = ap.eyeScale || 1.0;
     ctx.fillStyle = "#ffffff";
     ctx.beginPath();
-    ctx.arc(5, -58, 4.2 * es, 0, Math.PI * 2);
-    ctx.arc(13, -58, 3.8 * es, 0, Math.PI * 2);
+    ctx.ellipse(4, -60, 4.6 * es, (ap.eyeType === "wink" ? 1.2 : 5.0) * es, 0, 0, Math.PI * 2);
+    ctx.ellipse(13, -60, 4.2 * es, 4.6 * es, 0, 0, Math.PI * 2);
     ctx.fill();
-    ctx.fillStyle = "#1e272e";
+    ctx.fillStyle = "#2c3e50";
     ctx.beginPath();
-    ctx.arc(6, -58, 2 * es, 0, Math.PI * 2);
-    ctx.arc(14, -58, 1.8 * es, 0, Math.PI * 2);
+    ctx.arc(5, -60, 2.3 * es, 0, Math.PI * 2);
+    ctx.arc(14, -60, 2.1 * es, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(4.2, -61.5, 0.9 * es, 0, Math.PI * 2);
+    ctx.arc(13.2, -61.5, 0.9 * es, 0, Math.PI * 2);
     ctx.fill();
 
-    // Smile
-    ctx.strokeStyle = "#6e473b";
-    ctx.lineWidth = 1.6;
+    // Sculpted Cartoon Nose
+    ctx.fillStyle = "#e8b896";
     ctx.beginPath();
-    ctx.arc(8, -51, 4, 0.1, Math.PI - 0.2);
-    ctx.stroke();
+    if (ap.noseType === "pointed") {
+      ctx.moveTo(9, -58); ctx.lineTo(16, -54); ctx.lineTo(9, -53);
+    } else {
+      ctx.arc(10, -55, 2.6, 0, Math.PI * 2);
+    }
+    ctx.fill();
+
+    // Customizable Mouth
+    ctx.strokeStyle = "#6e473b";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    if (ap.mouthType === "open" || ap.mouthType === "grin") {
+      ctx.fillStyle = "#c0392b";
+      ctx.arc(7, -49, 4.5, 0, Math.PI);
+      ctx.fill(); ctx.stroke();
+    } else {
+      ctx.arc(7, -50, 4.5, 0.15, Math.PI - 0.15);
+      ctx.stroke();
+    }
 
     // Red Top Hat (Video B 00:06)
     if (ap.hat === "top_hat") {
       ctx.fillStyle = "#b32424";
-      ctx.fillRect(-18, -73, 36, 4);
-      ctx.fillRect(-12, -93, 24, 20);
+      ctx.strokeStyle = "#5c0e0e";
+      ctx.lineWidth = 1.5;
+      ctx.fillRect(-20, -76, 40, 5);
+      ctx.fillRect(-13, -98, 26, 22);
+      ctx.strokeRect(-13, -98, 26, 22);
       ctx.fillStyle = "#111";
-      ctx.fillRect(-12, -77, 24, 4);
+      ctx.fillRect(-13, -81, 26, 5);
     }
   }
 
@@ -3247,10 +4077,34 @@ function drawGlitchenAvatar(ctx, av, isSelf) {
   ctx.fillStyle = isSelf ? "#a8e6cf" : "#ffffff";
   ctx.fillText(av.name, av.x, av.y - 82 * scale);
 
+  // Wooden Daily Hi-Sign board if active (Video A 19:37 - 19:41)
+  const hiSign = State.hiSigns[av.id];
+  if (hiSign) {
+    ctx.save();
+    const sx = av.x + (av.dir || 1) * 24;
+    const sy = av.y - 96 * scale;
+    // Wooden handle stick
+    ctx.fillStyle = "#5c3d24";
+    ctx.fillRect(sx - 2.5, sy, 5, 34);
+    // Wooden signboard plaque
+    ctx.fillStyle = "#d49b54";
+    ctx.strokeStyle = "#5c3814";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.roundRect(sx - 26, sy - 24, 52, 26, 5);
+    ctx.fill(); ctx.stroke();
+    // Wood grain & corner nails
+    ctx.fillStyle = "#3d240c";
+    ctx.font = "bold 14px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(hiSign.text, sx, sy - 6);
+    ctx.restore();
+  }
+
   // Speech bubble if active
   const bbl = State.chatBubbles[av.id];
   if (bbl) {
-    drawSpeechBubble(ctx, av.x, av.y - 105 * scale, bbl.text);
+    drawSpeechBubble(ctx, av.x, av.y - (hiSign ? 128 : 105) * scale, bbl.text);
   }
   ctx.restore();
 }
@@ -3277,27 +4131,50 @@ function drawSpeechBubble(ctx, x, y, text) {
 function drawMinimap(st) {
   const mc = document.getElementById("minimap-canvas");
   const mctx = mc.getContext("2d");
-  mctx.clearRect(0, 0, mc.width, mc.height);
-  mctx.fillStyle = "#2f383d";
-  mctx.fillRect(0, 0, mc.width, mc.height);
-  mctx.fillStyle = "#6c7a73";
-  mctx.fillRect(4, 19, mc.width - 8, 2);
+  const W = mc.width, H = mc.height;
+  mctx.clearRect(0, 0, W, H);
+  mctx.fillStyle = "#161f24";
+  mctx.fillRect(0, 0, W, H);
+
+  // Street platforms silhouette
+  mctx.fillStyle = "#4d6359";
+  (st.platforms || []).forEach(pl => {
+    const px = (pl.x / st.width) * (W - 10) + 5;
+    const pw = Math.max(4, (pl.w / st.width) * (W - 10));
+    const py = Math.max(4, Math.min(H - 8, (pl.y / st.groundY) * (H - 8)));
+    mctx.fillRect(px, py, pw, 2);
+  });
+
+  // Main ground terrain line
+  mctx.fillStyle = "#789486";
+  mctx.fillRect(5, H - 7, W - 10, 2.5);
+
+  // Resources/NPC dots
+  (st.npcs || []).forEach(n => {
+    const nx = (n.x / st.width) * (W - 10) + 5;
+    mctx.fillStyle = "#58a6b8";
+    mctx.fillRect(nx - 1, H - 11, 2, 3);
+  });
 
   // Other players dots
   Object.values(State.otherPlayers).forEach(op => {
     if (op.street === State.streetId) {
-      const mx = (op.x / st.width) * (mc.width - 8) + 4;
+      const mx = (op.x / st.width) * (W - 10) + 5;
       mctx.fillStyle = "#f1c40f";
-      mctx.fillRect(mx - 1.5, 13, 3, 5);
+      mctx.beginPath();
+      mctx.arc(mx, H - 11, 2.8, 0, Math.PI * 2);
+      mctx.fill();
     }
   });
 
-  // Self dot
-  const sx = (State.player.x / st.width) * (mc.width - 8) + 4;
-  mctx.fillStyle = "#6db33f";
+  // Self position dot
+  const sx = (State.player.x / st.width) * (W - 10) + 5;
+  mctx.fillStyle = "#8de969";
+  mctx.strokeStyle = "#ffffff";
+  mctx.lineWidth = 1.2;
   mctx.beginPath();
-  mctx.arc(sx, 14, 3.5, 0, Math.PI * 2);
-  mctx.fill();
+  mctx.arc(sx, H - 11, 3.8, 0, Math.PI * 2);
+  mctx.fill(); mctx.stroke();
 }
 
 function drawPortrait() {

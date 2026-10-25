@@ -195,10 +195,10 @@ async function loadSquad() {
 function renderSquad(st) {
   const el = document.getElementById("squad");
   if (!st) { el.textContent = "No squad run yet."; return; }
-  const now = Date.now() / 1000;
-  const until = Math.round(st.start_at - now);
-  const head = `<div style="margin-bottom:8px">Run ${esc(st.run)} · ${until > 0 ? `match starts in ${until}s` :
-      st.finished ? `finished in ${Math.round(st.finished - st.started)}s` : `playing ${Math.min(st.seconds, -until)}s / ${st.seconds}s`}</div>`;
+  const ags = Object.values(st.agents);
+  const playing = ags.filter(a => a.phase === "playing").length;
+  const head = `<div style="margin-bottom:8px">Run ${esc(st.run)} · ${st.finished ? `finished in ${Math.round(st.finished - st.started)}s` :
+      `${Math.round(Date.now() / 1000 - st.started)}s in · ${playing}/${ags.length} agents in the match`}</div>`;
   const cards = Object.values(st.agents).map(a => `
     <div style="border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:8px;color:var(--ink)">
       <div><b>${esc(a.name)}</b> <span class="stage on" style="font-size:11px">${esc(a.phase || a.status || "starting")}</span>

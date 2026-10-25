@@ -30,13 +30,34 @@ PERSONAS = {
                  "see, double messages, missing names, broken co-op bonuses.",
 }
 
-TASK = """You are playtester "{name}" in a live multiplayer match with other agent playtesters.
+TASK = """You are playtester "{name}" in a live multiplayer match with: {squad}.
 Game URL: {url}
 Persona: {persona}
-Write /workspace/bot.py for this persona (use api.look() to find things; act for the whole session; api.note()
-every problem with what/where/how). Then run exactly:
-python3 /workspace/squad/harness.py --url {url} --name {name} --bot /workspace/bot.py --seconds {seconds} --start-at {start_at} --persona "{name}"
-The match starts at unix time {start_at}; the harness waits for it. Then review the screenshots and reply with the JSON."""
+Be fast: do not explore the harness. Write /workspace/bot.py by copying this template and filling in ONLY the
+persona section (keep the wait-for-squad part):
+
+import time
+SQUAD = {squad_list}
+
+async def run(api):
+    # Wait (max 120 s) until the whole squad is in the game, so we play together.
+    t0 = time.time()
+    while time.time() - t0 < 120:
+        names = {{p["name"] for p in (await api.look()).get("players", [])}}
+        if all(n in names for n in SQUAD if n != "{name}"):
+            break
+        await api.wait(1000)
+    await api.chat("{name} ready")
+    while True:
+        seen = await api.look()   # street, x, y, energy, mood, nearby [{{id,type,name,x,y,dist}}], players, recent events
+        # --- persona section: act like your persona for one step, then api.note() anything wrong ---
+        # useful: await api.key("ArrowRight", 800); await api.key("Space"); await api.click_world(x, y - 30);
+        #         await api.click_text("Mine"); await api.chat("hi"); api.note("what is wrong, where, how", "high")
+        await api.wait(500)
+
+Then run exactly:
+python3 /workspace/squad/harness.py --url {url} --name {name} --bot /workspace/bot.py --seconds {seconds} --persona "{name}"
+Then look at 2-3 screenshots in /workspace/out/{name}/shots plus result.json and reply with the JSON."""
 
 
 def run_agent(c, name, persona, url, seconds, start_at, out, state, lock):
@@ -45,7 +66,8 @@ def run_agent(c, name, persona, url, seconds, start_at, out, state, lock):
     try:
         it = c.interactions.create(
             agent=AGENT_ID,
-            input=TASK.format(name=name, persona=persona, url=url, seconds=seconds, start_at=int(start_at)),
+            input=TASK.format(name=name, persona=persona, url=url, seconds=seconds, squad=", ".join(state["agents"]),
+                              squad_list=repr(list(state["agents"]))),
             environment={"type": "remote", "network": {"allowlist": [{"domain": host}]}},
             background=True,
         )
@@ -53,7 +75,8 @@ def run_agent(c, name, persona, url, seconds, start_at, out, state, lock):
         rec["note"] = f"allowlist rejected ({str(e)[:80]}); using default network"
         it = c.interactions.create(
             agent=AGENT_ID,
-            input=TASK.format(name=name, persona=persona, url=url, seconds=seconds, start_at=int(start_at)),
+            input=TASK.format(name=name, persona=persona, url=url, seconds=seconds, squad=", ".join(state["agents"]),
+                              squad_list=repr(list(state["agents"]))),
             environment="remote", background=True)
     rec.update(interaction=it.id, status=it.status)
     shots_seen = set()
@@ -67,12 +90,19 @@ def run_agent(c, name, persona, url, seconds, start_at, out, state, lock):
         with lock:
             rec["status"], rec["env"] = it.status, env
             rec["elapsed"] = round(time.time() - state["started"])
-            if time.time() < start_at:
-                rec["phase"] = "writing bot"
-            elif time.time() < start_at + seconds:
-                rec["phase"] = "playing"
-            else:
-                rec["phase"] = "reporting"
+        if env:
+            try:
+                ws = {f.name for f in c.environments.files.list(environment=env, path="workspace").files}
+                try:
+                    mine = {f.name for f in c.environments.files.list(environment=env, path=f"workspace/out/{name}").files}
+                except Exception:
+                    mine = set()
+                phase = ("reporting" if "result.json" in mine else "playing" if mine else
+                         "bot written" if "bot.py" in ws else "writing bot")
+                with lock:
+                    rec["phase"] = phase
+            except Exception:
+                pass
         if env:
             try:
                 files = c.environments.files.list(environment=env, path=f"workspace/out/{name}/shots").files
@@ -112,7 +142,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("url")
     ap.add_argument("--seconds", type=int, default=75)
-    ap.add_argument("--lead", type=int, default=120, help="seconds for agents to start and write bots")
+    ap.add_argument("--lead", type=int, default=0, help="unused: bots wait until the whole squad has joined")
     ap.add_argument("--names", default="Explorer,Griefer,Socialite")
     a = ap.parse_args()
     url = a.url.rstrip("/") + "/"
