@@ -54,6 +54,8 @@ def main():
     ap.add_argument("config")
     ap.add_argument("--rounds", type=int, default=3)
     ap.add_argument("--approve", action="store_true", help="show each edit and ask before applying")
+    ap.add_argument("--batch", type=int, default=8, help="failing rules to fix per round")
+    ap.add_argument("--resume", action="store_true", help="reuse an existing round_0 measurement")
     a = ap.parse_args()
     load_env()
     cfg = load_config(a.config)
@@ -66,10 +68,14 @@ def main():
 
     # Round 0: measure the build as it is.
     r0 = run / "round_0"
-    shutil.rmtree(r0, ignore_errors=True)
-    shutil.copytree(cfg["game_dir"], r0 / "game")
     t0 = time.time()
-    smoke, verdicts = evaluate(cfg, r0 / "game", scen_path, r0)
+    if a.resume and (r0 / "play" / "verdicts.json").exists():
+        smoke = json.loads((r0 / "play" / "play.json").read_text())["smoke"]
+        verdicts = json.loads((r0 / "play" / "verdicts.json").read_text())
+    else:
+        shutil.rmtree(r0, ignore_errors=True)
+        shutil.copytree(cfg["game_dir"], r0 / "game")
+        smoke, verdicts = evaluate(cfg, r0 / "game", scen_path, r0)
     best = {"round": 0, "dir": r0, "verdicts": verdicts, "smoke": smoke}
     history.append({"round": 0, "score": score(verdicts), "total": len(verdicts), "accepted": True,
                     "secs": round(time.time() - t0)})
@@ -83,7 +89,8 @@ def main():
         shutil.copytree(best["dir"] / "game", rk / "game")
         plan = json.loads(scen_path.read_text())
         print(f"ROUND {k}: asking for fixes ({len(best['verdicts']) - score(best['verdicts'])} failing)", flush=True)
-        proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions)
+        proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions,
+                               limit=a.batch, raw_path=rk / "proposal_raw.txt")
         (rk / "proposal.json").write_text(json.dumps(proposal, indent=1))
         edits = proposal.get("edits", [])
         if a.approve:

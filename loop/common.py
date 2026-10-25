@@ -55,7 +55,8 @@ def wait(c, interaction, label="", every=5):
     while interaction.status in ("in_progress", "queued"):
         time.sleep(every)
         interaction = c.interactions.get(id=interaction.id)
-    if interaction.status != "completed":
+    # "incomplete" = hit max_output_tokens; the caller may still salvage the text.
+    if interaction.status not in ("completed", "incomplete"):
         raise RuntimeError(f"{label} {interaction.status}: {getattr(interaction, 'error', None)}")
     return interaction, time.time() - t0
 

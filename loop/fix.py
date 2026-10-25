@@ -32,8 +32,10 @@ CODE:
 {code}"""
 
 
-def propose(cfg, game_dir, verdicts, smoke, plan, regressions=None):
-    failing = [v for v in verdicts if not v["pass"]]
+def propose(cfg, game_dir, verdicts, smoke, plan, regressions=None, limit=8, raw_path=None):
+    # Fix a few rules per round: smaller edits, faster rounds, fewer edits fighting each other.
+    order = {"mismatch": 0, "unclear": 1, "match": 2}
+    failing = sorted((v for v in verdicts if not v["pass"]), key=lambda v: order.get(v["verdict"], 3))[:limit]
     passing = [v["id"] for v in verdicts if v["pass"]]
     by_id = {s["id"]: s for s in plan["scenarios"]}
     fail_txt = "\n".join(
@@ -50,10 +52,15 @@ def propose(cfg, game_dir, verdicts, smoke, plan, regressions=None):
                             scenarios=json.dumps([by_id[v["id"]] for v in failing])[:30000],
                             code=code_bundle(cfg2)),
         background=True,
-        generation_config={"thinking_level": "high", "max_output_tokens": 100000},
+        generation_config={"thinking_level": "high", "max_output_tokens": 150000},
     )
     it, secs = wait(c, it, "fix")
-    out = parse_json(output_text(it))
+    text = output_text(it)
+    if raw_path:
+        Path(raw_path).write_text(text)
+    out = parse_json(text)
+    out["_status"] = it.status
+    out["_targeted"] = [v["id"] for v in failing]
     out["_usage"] = {"in": it.usage.total_input_tokens, "out": it.usage.total_output_tokens, "secs": round(secs)}
     return out
 
