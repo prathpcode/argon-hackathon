@@ -1,0 +1,3127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hatchling 2D - Creature Creator &amp; Trainer</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  html, body {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, #101b35 0%, #050811 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+    overflow: hidden;
+  }
+  #game-wrap {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    max-width: 100vw;
+    max-height: 100vh;
+    aspect-ratio: 4 / 3;
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.8), 0 0 0 2px #264d73;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+  }
+  #name-input {
+    position: absolute;
+    display: none;
+    left: 31%;
+    bottom: 2.3%;
+    width: 36%;
+    height: 5.2%;
+    background: #103252;
+    color: #ffffff;
+    border: 2px solid #75c8ff;
+    border-radius: 14px;
+    text-align: center;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div id="game-wrap">
+  <canvas id="game-canvas" width="800" height="600"></canvas>
+  <input id="name-input" type="text" maxlength="22" spellcheck="false" autocomplete="off" />
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Telemetry buffer for automated testing
+  window.__events = [];
+
+  // Fixed-timestep constants (60 Hz)
+  const W = 800;
+  const H = 600;
+  const DT = 1 / 60;
+  let simTime = 0;
+  let simTicks = 0;
+
+  function logEvent(type, data) {
+    const evt = Object.assign({ t: Math.round(simTime * 1000), type: type }, data || {});
+    window.__events.push(evt);
+  }
+
+  // Seeded RNG via ?seed= URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const seedParam = urlParams.get("seed") || "hatchling2d_2009";
+
+  function hashSeed(str) {
+    let h = 2166136261 >>> 0;
+    for (let i = 0; i < str.length; i++) {
+      h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function createRNG(seedStr) {
+    let a = hashSeed(String(seedStr)) || 1;
+    return function () {
+      let t = (a += 0x6d2b79f5);
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  const rng = createRNG(seedParam);
+  function randRange(min, max) {
+    return min + rng() * (max - min);
+  }
+  function randInt(min, max) {
+    return Math.floor(randRange(min, max + 1));
+  }
+
+  // GUESS: Original audio is covered by narration in surviving clips; synthesize playful retro WebAudio SFX
+  const Sfx = (function () {
+    let ctx = null;
+    let muted = false;
+
+    function ensureCtx() {
+      if (muted) return null;
+      if (!ctx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) ctx = new AC();
+      }
+      if (ctx && ctx.state === "suspended") {
+        ctx.resume().catch(function () {});
+      }
+      return ctx;
+    }
+
+    function playTone(freq, endFreq, dur, type, gainVal) {
+      const c = ensureCtx();
+      if (!c) return;
+      try {
+        const osc = c.createOscillator();
+        const g = c.createGain();
+        osc.type = type || "sine";
+        osc.frequency.setValueAtTime(freq, c.currentTime);
+        if (endFreq) {
+          osc.frequency.exponentialRampToValueAtTime(Math.max(20, endFreq), c.currentTime + dur);
+        }
+        g.gain.setValueAtTime(gainVal || 0.08, c.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + dur);
+        osc.connect(g);
+        g.connect(c.destination);
+        osc.start();
+        osc.stop(c.currentTime + dur);
+      } catch (e) {}
+    }
+
+    return {
+      isMuted: function () { return muted; },
+      toggleMute: function () { muted = !muted; return muted; },
+      click: function () { playTone(520, 680, 0.07, "triangle", 0.07); },
+      crack: function () { playTone(220, 95, 0.09, "sawtooth", 0.08); },
+      hatch: function () {
+        playTone(300, 720, 0.18, "sine", 0.1);
+        setTimeout(function () { playTone(520, 960, 0.22, "triangle", 0.1); }, 90);
+      },
+      attach: function () { playTone(380, 640, 0.11, "sine", 0.09); },
+      remove: function () { playTone(440, 210, 0.11, "sine", 0.08); },
+      paint: function () { playTone(600, 820, 0.1, "sine", 0.07); },
+      shoot: function () { playTone(310, 160, 0.14, "triangle", 0.08); },
+      deflect: function () { playTone(480, 880, 0.15, "square", 0.09); },
+      miss: function () { playTone(180, 90, 0.2, "sawtooth", 0.08); },
+      levelUp: function () {
+        playTone(440, 554, 0.14, "triangle", 0.1);
+        setTimeout(function () { playTone(554, 659, 0.14, "triangle", 0.1); }, 120);
+        setTimeout(function () { playTone(659, 880, 0.3, "triangle", 0.12); }, 240);
+      }
+    };
+  })();
+
+  const canvas = document.getElementById("game-canvas");
+  const ctx = canvas.getContext("2d");
+  const nameInput = document.getElementById("name-input");
+
+  // 15 Base Swatches (3x5 grid matching Paint panel in footage)
+  const BASE_COLORS = [
+    { name: "Slate", base: "#8e99a4", detail: "#cdd6df", dark: "#58626c" },
+    { name: "Crimson", base: "#e53e30", detail: "#ff9478", dark: "#961c12" },
+    { name: "Sunny", base: "#f0d838", detail: "#fff59e", dark: "#a89010" },
+    { name: "Amber", base: "#e89c28", detail: "#ffd078", dark: "#9c5c0c" },
+    { name: "Earth", base: "#9e6b43", detail: "#cfa07a", dark: "#633c1e" },
+    { name: "Lime", base: "#9be042", detail: "#d4ff94", dark: "#5b9416" },
+    { name: "Jungle", base: "#289c1e", detail: "#7ce06e", dark: "#125c0c" },
+    { name: "Mint", base: "#4cd8b0", detail: "#a6ffea", dark: "#1e876a" },
+    { name: "Sky", base: "#5ab0f2", detail: "#b0dfff", dark: "#226ca8" },
+    { name: "Cobalt", base: "#3a5ce5", detail: "#8ca8ff", dark: "#1a3099" },
+    { name: "Grape", base: "#7542e0", detail: "#b894ff", dark: "#431a99" },
+    { name: "Orchid", base: "#b44ce8", detail: "#e5a6ff", dark: "#701ea0" },
+    { name: "Magenta", base: "#d83ca8", detail: "#ff94dc", dark: "#8c1868" },
+    { name: "Coral", base: "#e07068", detail: "#ffb8b0", dark: "#943832" },
+    { name: "Ivory", base: "#dce4d8", detail: "#ffffff", dark: "#8c9688" }
+  ];
+
+  // Detail color choices when holding mouse on a swatch
+  const DETAIL_VARIATIONS = [
+    "#ffffff", "#ffe866", "#66ffcc", "#ff77aa", "#2b2b36"
+  ];
+
+  // 7 Part Categories matching the top tabs of the Build panel in the footage
+  const CATEGORIES = [
+    { id: "mouths", name: "Mouths", icon: "mouth" },
+    { id: "senses", name: "Senses", icon: "eye" },
+    { id: "arms", name: "Limbs", icon: "arm" },
+    { id: "legs", name: "Legs", icon: "leg" },
+    { id: "graspers", name: "Graspers", icon: "hand" },
+    { id: "weapons", name: "Weapons", icon: "weapon" },
+    { id: "details", name: "Details", icon: "detail" }
+  ];
+
+  // Generate 3 pages x 15 parts (3 cols x 5 rows) per category
+  // GUESS: Page 3 parts start locked and unlock as levels are completed in the totem minigame
+  const PARTS_PER_PAGE = 15;
+  const TOTAL_PAGES = 3;
+  const PART_CATALOG = {};
+
+  CATEGORIES.forEach(function (cat, cIdx) {
+    PART_CATALOG[cat.id] = [];
+    for (let page = 0; page < TOTAL_PAGES; page++) {
+      for (let slot = 0; slot < PARTS_PER_PAGE; slot++) {
+        const idx = page * PARTS_PER_PAGE + slot;
+        PART_CATALOG[cat.id].push({
+          id: cat.id + "_" + idx,
+          category: cat.id,
+          page: page + 1,
+          slot: slot,
+          variant: idx,
+          name: cat.name.slice(0, -1) + " " + (idx + 1),
+          power: 1 + page + (slot % 3)
+        });
+      }
+    }
+  });
+
+  // Background stars & clouds generated deterministically
+  const STARS = [];
+  for (let i = 0; i < 85; i++) {
+    STARS.push({
+      x: randRange(10, W - 10),
+      y: randRange(10, H - 40),
+      r: randRange(0.8, 2.3),
+      phase: randRange(0, Math.PI * 2)
+    });
+  }
+
+  const CLOUDS = [
+    { x: 140, y: 110, s: 1.1 },
+    { x: 430, y: 80, s: 0.85 },
+    { x: 660, y: 135, s: 1.2 }
+  ];
+
+  // Game State
+  const state = {
+    screen: "title", // 'title' | 'pan' | 'hatching' | 'editor' | 'minigame'
+    panY: 0,
+    eggTimer: 0,
+    eggCracks: 0,
+    eggShells: [],
+
+    // Editor state
+    editorMode: "build", // 'build' | 'paint'
+    selectedCategory: "mouths",
+    currentPage: 1,
+    unlockedPages: 2, // Page 3 unlocks on Level 1 completion
+    showSpine: true,
+    draggingSpineIdx: -1,
+    draggingScaleEnd: null, // 'top' | 'bottom'
+    draggingPart: null, // part being dragged from palette or repositioned
+    selectedPartUid: null,
+    swatchHoldTimer: 0,
+    swatchHoldIndex: -1,
+    swatchPopupIndex: -1,
+    bannerText: "Basic Building: Drag to manipulate vertebra and spine",
+    bannerSubText: "Drag parts from the left panel onto your creature",
+    editingName: false,
+    presetIndex: 0,
+
+    // Undo / Redo stacks
+    undoStack: [],
+    redoStack: [],
+
+    // Creature Data (persists between Editor and Minigame)
+    creature: {
+      name: "Choose Your Name",
+      baseColor: "#4cd8b0",
+      detailColor: "#a6ffea",
+      darkColor: "#1e876a",
+      spineScale: 1.0,
+      // 6 Spine vertebrae in local coordinates relative to pedestal center (450, 420)
+      spine: [
+        { x: 0, y: 0, r: 22 },
+        { x: 0, y: -32, r: 23 },
+        { x: 0, y: -64, r: 22 },
+        { x: 0, y: -96, r: 21 },
+        { x: 0, y: -128, r: 20 },
+        { x: 0, y: -160, r: 19 }
+      ],
+      parts: [] // [{ uid, id, category, variant, spineIdx, ox, oy, angle, scale, flipY }]
+    },
+
+    // Minigame State
+    minigame: {
+      level: 1,
+      score: 0,
+      progress: 0,
+      progressMax: 6,
+      paused: false,
+      fastForward: false,
+      levelComplete: false,
+      showHelp: false,
+      fireCooldown: 1.1,
+      nextOrbId: 1,
+      orbs: [],
+      particles: [],
+      cartX: 108,
+      cartDir: 1,
+      totemRecoil: [0, 0, 0],
+      totemOpenMouth: [0, 0, 0],
+      creatureStrikeAnim: 0,
+      creatureHurtAnim: 0,
+      reticleX: 505,
+      reticleY: 350,
+      reticleRadius: 46,
+      mouseControlledReticle: false
+    }
+  };
+
+  let nextPartUid = 1;
+
+  function cloneCreatureData(c) {
+    return JSON.parse(JSON.stringify({
+      baseColor: c.baseColor,
+      detailColor: c.detailColor,
+      darkColor: c.darkColor,
+      spineScale: c.spineScale,
+      spine: c.spine,
+      parts: c.parts
+    }));
+  }
+
+  function pushUndo() {
+    state.undoStack.push(cloneCreatureData(state.creature));
+    if (state.undoStack.length > 25) state.undoStack.shift();
+    state.redoStack.length = 0;
+  }
+
+  function applyCreatureSnapshot(snap) {
+    state.creature.baseColor = snap.baseColor;
+    state.creature.detailColor = snap.detailColor;
+    state.creature.darkColor = snap.darkColor;
+    state.creature.spineScale = snap.spineScale;
+    state.creature.spine = JSON.parse(JSON.stringify(snap.spine));
+    state.creature.parts = JSON.parse(JSON.stringify(snap.parts));
+  }
+
+  function resetCreatureToDefault() {
+    pushUndo();
+    state.creature.baseColor = "#4cd8b0";
+    state.creature.detailColor = "#a6ffea";
+    state.creature.darkColor = "#1e876a";
+    state.creature.spineScale = 1.0;
+    state.creature.spine = [
+      { x: 0, y: 0, r: 22 },
+      { x: 0, y: -32, r: 23 },
+      { x: 0, y: -64, r: 22 },
+      { x: 0, y: -96, r: 21 },
+      { x: 0, y: -128, r: 20 },
+      { x: 0, y: -160, r: 19 }
+    ];
+    while (state.creature.parts.length > 0) {
+      const removed = state.creature.parts.pop();
+      logEvent("part_removed", {
+        partType: removed.category,
+        category: removed.category,
+        partId: removed.id,
+        totalParts: state.creature.parts.length
+      });
+    }
+    state.showSpine = true;
+  }
+
+  // Iconic presets inspired by creatures seen in the footage
+  const PRESETS = [
+    {
+      name: "feroz escorpion",
+      baseColor: "#b44ce8",
+      detailColor: "#e5a6ff",
+      darkColor: "#701ea0",
+      spine: [
+        { x: 35, y: -10, r: 20 },
+        { x: 0, y: -15, r: 24 },
+        { x: -35, y: -25, r: 22 },
+        { x: 10, y: -65, r: 18 },
+        { x: 45, y: -115, r: 15 },
+        { x: 5, y: -155, r: 13 }
+      ],
+      parts: [
+        { id: "senses_1", category: "senses", variant: 1, spineIdx: 2, ox: -16, oy: -8, angle: 0, scale: 1, flipY: false },
+        { id: "graspers_0", category: "graspers", variant: 0, spineIdx: 2, ox: -34, oy: 12, angle: -0.2, scale: 1.1, flipY: false },
+        { id: "legs_2", category: "legs", variant: 2, spineIdx: 2, ox: -12, oy: 36, angle: 0, scale: 1, flipY: false },
+        { id: "legs_2", category: "legs", variant: 2, spineIdx: 1, ox: 8, oy: 38, angle: 0, scale: 1, flipY: false },
+        { id: "legs_2", category: "legs", variant: 2, spineIdx: 0, ox: 28, oy: 34, angle: 0, scale: 1, flipY: false },
+        { id: "weapons_3", category: "weapons", variant: 3, spineIdx: 5, ox: -18, oy: -8, angle: -0.5, scale: 1.1, flipY: false }
+      ]
+    },
+    {
+      name: "Tecnomon",
+      baseColor: "#e53e30",
+      detailColor: "#ff9478",
+      darkColor: "#961c12",
+      spine: [
+        { x: 25, y: -5, r: 20 },
+        { x: 0, y: -25, r: 23 },
+        { x: -10, y: -60, r: 22 },
+        { x: -12, y: -95, r: 21 },
+        { x: -15, y: -130, r: 24 },
+        { x: -22, y: -162, r: 22 }
+      ],
+      parts: [
+        { id: "mouths_2", category: "mouths", variant: 2, spineIdx: 4, ox: -25, oy: 0, angle: 0, scale: 1, flipY: false },
+        { id: "senses_0", category: "senses", variant: 0, spineIdx: 5, ox: -10, oy: -4, angle: 0, scale: 1, flipY: false },
+        { id: "arms_1", category: "arms", variant: 1, spineIdx: 3, ox: -36, oy: 5, angle: 0.1, scale: 1, flipY: false },
+        { id: "legs_0", category: "legs", variant: 0, spineIdx: 1, ox: -16, oy: 38, angle: 0, scale: 1.1, flipY: false },
+        { id: "legs_0", category: "legs", variant: 0, spineIdx: 0, ox: 22, oy: 34, angle: 0, scale: 1.1, flipY: false }
+      ]
+    },
+    {
+      name: "Gear Frog",
+      baseColor: "#289c1e",
+      detailColor: "#ffd078",
+      darkColor: "#125c0c",
+      spine: [
+        { x: 30, y: -20, r: 19 },
+        { x: 10, y: -50, r: 21 },
+        { x: -12, y: -72, r: 22 },
+        { x: -34, y: -55, r: 22 },
+        { x: -22, y: -105, r: 20 },
+        { x: 5, y: -145, r: 17 }
+      ],
+      parts: [
+        { id: "weapons_6", category: "weapons", variant: 6, spineIdx: 3, ox: -18, oy: 4, angle: 0, scale: 1.2, flipY: false },
+        { id: "senses_4", category: "senses", variant: 4, spineIdx: 4, ox: -12, oy: -12, angle: 0, scale: 1.1, flipY: false },
+        { id: "graspers_2", category: "graspers", variant: 2, spineIdx: 5, ox: -20, oy: -10, angle: 0, scale: 1, flipY: false },
+        { id: "legs_4", category: "legs", variant: 4, spineIdx: 2, ox: -8, oy: 45, angle: 0, scale: 1.1, flipY: false },
+        { id: "legs_4", category: "legs", variant: 4, spineIdx: 0, ox: 22, oy: 38, angle: 0, scale: 1.1, flipY: false }
+      ]
+    }
+  ];
+
+  function loadPreset(preset) {
+    pushUndo();
+    state.creature.name = preset.name;
+    state.creature.baseColor = preset.baseColor;
+    state.creature.detailColor = preset.detailColor;
+    state.creature.darkColor = preset.darkColor;
+    state.creature.spine = JSON.parse(JSON.stringify(preset.spine));
+    state.creature.parts = [];
+    logEvent("color_change", {
+      baseColor: state.creature.baseColor,
+      detailColor: state.creature.detailColor
+    });
+    preset.parts.forEach(function (p) {
+      const partObj = Object.assign({ uid: nextPartUid++ }, p);
+      state.creature.parts.push(partObj);
+      logEvent("part_added", {
+        partType: partObj.category,
+        category: partObj.category,
+        partId: partObj.id,
+        totalParts: state.creature.parts.length
+      });
+    });
+    state.showSpine = false;
+  }
+
+  function changeScreen(newScreen) {
+    const prev = state.screen;
+    if (prev === newScreen) return;
+    if (state.editingName) finishEditingName();
+    state.screen = newScreen;
+    logEvent("screen_change", { screen: newScreen, from: prev });
+
+    if (newScreen === "pan") {
+      state.panY = 0;
+    } else if (newScreen === "hatching") {
+      state.eggTimer = 0;
+      state.eggCracks = 0;
+      state.eggShells = [];
+    } else if (newScreen === "minigame") {
+      initMinigameLevel(state.minigame.level);
+    }
+  }
+
+  function initMinigameLevel(lvl) {
+    const mg = state.minigame;
+    mg.level = lvl;
+    // GUESS: Each level requires 6 + (lvl-1)*2 deflected orbs to complete
+    mg.progress = 0;
+    mg.progressMax = 5 + lvl;
+    mg.levelComplete = false;
+    mg.paused = false;
+    mg.orbs = [];
+    mg.particles = [];
+    mg.fireCooldown = 0.8;
+    mg.totemRecoil = [0, 0, 0];
+    mg.totemOpenMouth = [0, 0, 0];
+    mg.creatureStrikeAnim = 0;
+    mg.creatureHurtAnim = 0;
+    mg.reticleX = 505;
+    mg.reticleY = 345;
+  }
+
+  // Name editing helper
+  function startEditingName() {
+    state.editingName = true;
+    nameInput.style.display = "block";
+    nameInput.value = state.creature.name === "Choose Your Name" ? "" : state.creature.name;
+    nameInput.placeholder = "Choose Your Name";
+    nameInput.focus();
+  }
+
+  function finishEditingName() {
+    if (!state.editingName) return;
+    state.editingName = false;
+    const val = nameInput.value.trim();
+    state.creature.name = val.length > 0 ? val : "Choose Your Name";
+    nameInput.style.display = "none";
+  }
+
+  nameInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === "Escape") {
+      finishEditingName();
+    }
+  });
+  nameInput.addEventListener("blur", finishEditingName);
+
+  // Coordinate conversion
+  let mouseX = 400;
+  let mouseY = 300;
+  let mouseDown = false;
+
+  function getCanvasCoords(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.touches && e.touches[0] ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+    return {
+      x: ((clientX - rect.left) / rect.width) * W,
+      y: ((clientY - rect.top) / rect.height) * H
+    };
+  }
+
+  function dist(x1, y1, x2, y2) {
+    return Math.hypot(x2 - x1, y2 - y1);
+  }
+
+  function inRect(px, py, rx, ry, rw, rh) {
+    return px >= rx && px <= rx + rw && py >= ry && py <= ry + rh;
+  }
+
+  // Pedestal anchor in Editor vs Minigame
+  function getCreatureOrigin() {
+    if (state.screen === "minigame") {
+      return { x: 585, y: 432 };
+    }
+    return { x: 455, y: 425 };
+  }
+
+  // Get world coordinates of a spine vertebra
+  function getSpineWorldPos(idx, animTime) {
+    const orig = getCreatureOrigin();
+    const s = state.creature.spine[idx] || { x: 0, y: 0, r: 20 };
+    const scale = state.creature.spineScale || 1.0;
+    let breathX = 0;
+    let breathY = 0;
+    if (animTime !== undefined) {
+      breathY = Math.sin(animTime * 3.2 + idx * 0.5) * (idx * 0.9);
+      if (state.screen === "minigame" && state.minigame.creatureStrikeAnim > 0) {
+        const lunge = Math.sin(state.minigame.creatureStrikeAnim * Math.PI);
+        breathX -= lunge * (8 + idx * 5);
+      }
+    }
+    return {
+      x: orig.x + s.x * scale + breathX,
+      y: orig.y + s.y * scale + breathY,
+      r: s.r * scale
+    };
+  }
+
+  // Add part to creature (respecting 10-dot complexity meter limit)
+  function attachPartToCreature(partDef, worldX, worldY) {
+    if (state.creature.parts.length >= 10) {
+      state.bannerText = "Complexity Meter Full (10/10 Parts)";
+      state.bannerSubText = "Drag a part off your creature to remove it";
+      Sfx.miss();
+      return null;
+    }
+    pushUndo();
+    // Find nearest spine node
+    let bestIdx = 3;
+    let bestDist = Infinity;
+    for (let i = 0; i < state.creature.spine.length; i++) {
+      const sp = getSpineWorldPos(i);
+      const d = dist(worldX, worldY, sp.x, sp.y);
+      if (d < bestDist) {
+        bestDist = d;
+        bestIdx = i;
+      }
+    }
+    const anchor = getSpineWorldPos(bestIdx);
+    let ox = Math.max(-75, Math.min(75, worldX - anchor.x));
+    let oy = Math.max(-75, Math.min(75, worldY - anchor.y));
+
+    // If auto-placed near center, offset slightly based on category
+    if (Math.abs(ox) < 5 && Math.abs(oy) < 5) {
+      if (partDef.category === "legs") {
+        bestIdx = 1;
+        ox = (state.creature.parts.length % 2 === 0) ? -16 : 18;
+        oy = 36;
+      } else if (partDef.category === "mouths" || partDef.category === "weapons") {
+        bestIdx = 4;
+        ox = -24;
+        oy = 0;
+      } else if (partDef.category === "senses") {
+        bestIdx = 5;
+        ox = -12;
+        oy = -10;
+      } else {
+        ox = -26;
+        oy = 0;
+      }
+    }
+
+    const newPart = {
+      uid: nextPartUid++,
+      id: partDef.id,
+      category: partDef.category,
+      variant: partDef.variant,
+      spineIdx: bestIdx,
+      ox: ox,
+      oy: oy,
+      angle: 0,
+      scale: 1.0,
+      flipY: false
+    };
+    state.creature.parts.push(newPart);
+    state.selectedPartUid = newPart.uid;
+    state.showSpine = false;
+    Sfx.attach();
+    logEvent("part_added", {
+      partType: newPart.category,
+      category: newPart.category,
+      partId: newPart.id,
+      totalParts: state.creature.parts.length
+    });
+    return newPart;
+  }
+
+  function removePartByUid(uid) {
+    const idx = state.creature.parts.findIndex(function (p) { return p.uid === uid; });
+    if (idx !== -1) {
+      pushUndo();
+      const removed = state.creature.parts.splice(idx, 1)[0];
+      if (state.selectedPartUid === uid) state.selectedPartUid = null;
+      Sfx.remove();
+      logEvent("part_removed", {
+        partType: removed.category,
+        category: removed.category,
+        partId: removed.id,
+        totalParts: state.creature.parts.length
+      });
+    }
+  }
+
+  // Minigame Orb Firing & Deflection
+  function spawnTotemOrb() {
+    const mg = state.minigame;
+    const totemIdx = randInt(0, 2);
+    const totemY = [408, 336, 260][totemIdx];
+    const startX = mg.cartX + 38;
+    const startY = totemY;
+
+    // Target passes right through the creature's strike reticle zone (x ≈ 505)
+    const targetY = randRange(275, 415);
+    // GUESS: Projectile speed scales with current level
+    const speed = 185 + (mg.level - 1) * 32 + randRange(-15, 20);
+    const dx = mg.reticleX - startX;
+    const dy = targetY - startY;
+    const len = Math.hypot(dx, dy) || 1;
+
+    const orb = {
+      id: mg.nextOrbId++,
+      totemIdx: totemIdx,
+      x: startX,
+      y: startY,
+      vx: (dx / len) * speed,
+      vy: (dy / len) * speed,
+      targetY: targetY,
+      r: 13,
+      rot: 0,
+      deflected: false,
+      pattern: totemIdx
+    };
+    mg.orbs.push(orb);
+    mg.totemRecoil[totemIdx] = 1.0;
+    mg.totemOpenMouth[totemIdx] = 1.0;
+    Sfx.shoot();
+    logEvent("orb_fired", {
+      totemIndex: totemIdx,
+      orbId: orb.id,
+      level: mg.level
+    });
+  }
+
+  function attemptDeflect(clickX, clickY) {
+    const mg = state.minigame;
+    mg.creatureStrikeAnim = 1.0;
+
+    // Find any active incoming orb inside or near the green timing ring (or near click if inside ring)
+    let hitOrb = null;
+    let bestD = Infinity;
+    for (let i = 0; i < mg.orbs.length; i++) {
+      const o = mg.orbs[i];
+      if (o.deflected) continue;
+      const dToRing = dist(o.x, o.y, mg.reticleX, mg.reticleY);
+      const dToClick = dist(o.x, o.y, clickX, clickY);
+      // Generous timing window when orb is within the green ring radius
+      if (dToRing <= mg.reticleRadius + o.r + 18 || (Math.abs(o.x - mg.reticleX) < 68 && dToClick <= mg.reticleRadius + 22)) {
+        if (dToRing < bestD) {
+          bestD = dToRing;
+          hitOrb = o;
+        }
+      }
+    }
+
+    if (hitOrb) {
+      hitOrb.deflected = true;
+      hitOrb.vx = -Math.abs(hitOrb.vx) * 1.65;
+      hitOrb.vy = randRange(-90, -30);
+
+      // GUESS: Each deflected orb awards 15 points (6 orbs * 15 = 90 points on Level 1, matching "90" in the clip!)
+      const delta = 15;
+      mg.score += delta;
+      mg.progress = Math.min(mg.progressMax, mg.progress + 1);
+      Sfx.deflect();
+
+      for (let k = 0; k < 12; k++) {
+        mg.particles.push({
+          x: hitOrb.x,
+          y: hitOrb.y,
+          vx: randRange(-140, 140),
+          vy: randRange(-140, 140),
+          life: 0.45,
+          color: "#7eff55",
+          r: randRange(3, 6)
+        });
+      }
+
+      logEvent("orb_deflected", {
+        orbId: hitOrb.id,
+        score: mg.score,
+        progress: mg.progress,
+        level: mg.level
+      });
+      logEvent("score_change", {
+        score: mg.score,
+        delta: delta,
+        level: mg.level
+      });
+
+      if (mg.progress >= mg.progressMax && !mg.levelComplete) {
+        mg.levelComplete = true;
+        const unlockedBefore = state.unlockedPages;
+        state.unlockedPages = Math.min(TOTAL_PAGES, state.unlockedPages + 1);
+        Sfx.levelUp();
+        logEvent("level_complete", {
+          level: mg.level,
+          unlockedPage: state.unlockedPages > unlockedBefore ? state.unlockedPages : null,
+          score: mg.score
+        });
+      }
+      return true;
+    } else {
+      Sfx.click();
+      return false;
+    }
+  }
+
+  // Input Handling
+  function onPointerDown(e) {
+    const pt = getCanvasCoords(e);
+    mouseX = pt.x;
+    mouseY = pt.y;
+    mouseDown = true;
+
+    // Global speaker mute button (top-right corner: x: 774, y: 20, r: 15)
+    if (dist(pt.x, pt.y, 774, 20) <= 16) {
+      Sfx.toggleMute();
+      return;
+    }
+
+    if (state.screen === "title") {
+      // Start button at (330, 315, 140, 48)
+      if (inRect(pt.x, pt.y, 330, 315, 140, 48)) {
+        Sfx.click();
+        changeScreen("pan");
+      }
+      return;
+    }
+
+    if (state.screen === "pan") {
+      // Click to skip camera pan straight to hatching
+      changeScreen("hatching");
+      return;
+    }
+
+    if (state.screen === "hatching") {
+      // Click speeds up egg cracking
+      state.eggTimer += 0.65;
+      state.eggCracks++;
+      Sfx.crack();
+      return;
+    }
+
+    if (state.screen === "editor") {
+      handleEditorPointerDown(pt.x, pt.y, e.button === 2);
+      return;
+    }
+
+    if (state.screen === "minigame") {
+      handleMinigamePointerDown(pt.x, pt.y);
+      return;
+    }
+  }
+
+  function handleEditorPointerDown(px, py, isRightClick) {
+    // Close swatch hold popup if open
+    if (state.swatchPopupIndex !== -1) {
+      const popX = 568;
+      const popY = 425;
+      for (let i = 0; i < DETAIL_VARIATIONS.length; i++) {
+        const sx = popX + 18 + i * 38;
+        const sy = popY + 26;
+        if (dist(px, py, sx, sy) <= 15) {
+          pushUndo();
+          state.creature.detailColor = DETAIL_VARIATIONS[i];
+          Sfx.paint();
+          logEvent("color_change", {
+            baseColor: state.creature.baseColor,
+            detailColor: state.creature.detailColor
+          });
+          state.swatchPopupIndex = -1;
+          return;
+        }
+      }
+      state.swatchPopupIndex = -1;
+    }
+
+    // Top-center Mode Buttons: Build (372, 30) and Paint (428, 30)
+    if (dist(px, py, 372, 30) <= 23) {
+      state.editorMode = "build";
+      state.bannerText = "Anatomy Selection: Choose from a variety of creature parts";
+      state.bannerSubText = "Drag parts onto your creature or click to attach";
+      Sfx.click();
+      return;
+    }
+    if (dist(px, py, 428, 30) <= 23) {
+      state.editorMode = "paint";
+      state.bannerText = "Paint Mode: Select a base color for your creature";
+      state.bannerSubText = "Click and hold left mouse button to display more color choices";
+      Sfx.click();
+      return;
+    }
+
+    // Bottom Bar Controls (y: 540..588)
+    if (py >= 538) {
+      // Preset / Gallery cycle button (x: 128, y: 562)
+      if (dist(px, py, 128, 562) <= 20) {
+        Sfx.click();
+        loadPreset(PRESETS[state.presetIndex % PRESETS.length]);
+        state.presetIndex++;
+        state.bannerText = "Loaded Preset: " + state.creature.name;
+        state.bannerSubText = "Click the green Play creature icon to train in the arena!";
+        return;
+      }
+      // Train / Play Minigame button (x: 174, y: 562)
+      if (dist(px, py, 174, 562) <= 22) {
+        Sfx.click();
+        changeScreen("minigame");
+        return;
+      }
+      // Name input box (x: 245..535, y: 545..580)
+      if (inRect(px, py, 245, 544, 290, 38)) {
+        Sfx.click();
+        startEditingName();
+        return;
+      }
+      // Undo button (x: 575, y: 562)
+      if (dist(px, py, 575, 562) <= 18) {
+        if (state.undoStack.length > 0) {
+          state.redoStack.push(cloneCreatureData(state.creature));
+          const prev = state.undoStack.pop();
+          applyCreatureSnapshot(prev);
+          Sfx.click();
+        }
+        return;
+      }
+      // Redo button (x: 615, y: 562)
+      if (dist(px, py, 615, 562) <= 18) {
+        if (state.redoStack.length > 0) {
+          state.undoStack.push(cloneCreatureData(state.creature));
+          const next = state.redoStack.pop();
+          applyCreatureSnapshot(next);
+          Sfx.click();
+        }
+        return;
+      }
+      // Reset / Clear button (x: 660, y: 562)
+      if (dist(px, py, 660, 562) <= 18) {
+        Sfx.remove();
+        resetCreatureToDefault();
+        state.bannerText = "Creature Reset";
+        state.bannerSubText = "Drag spine vertebrae or attach new parts";
+        return;
+      }
+      // Save / Export button (x: 750, y: 562)
+      if (dist(px, py, 750, 562) <= 20) {
+        Sfx.levelUp();
+        state.bannerText = "Creature Saved: " + (state.creature.name === "Choose Your Name" ? "Hatchling" : state.creature.name);
+        state.bannerSubText = "Ready for the Totem Training Arena!";
+        return;
+      }
+      return;
+    }
+
+    if (state.editingName) {
+      finishEditingName();
+    }
+
+    // Build Mode Left Panel (x: 16..242, y: 16..526)
+    if (state.editorMode === "build" && inRect(px, py, 16, 16, 226, 510)) {
+      // 7 Category Tabs along top of panel (y: 24..56)
+      if (py >= 22 && py <= 58) {
+        const tabW = 210 / CATEGORIES.length;
+        const idx = Math.floor((px - 24) / tabW);
+        if (idx >= 0 && idx < CATEGORIES.length) {
+          state.selectedCategory = CATEGORIES[idx].id;
+          state.currentPage = 1;
+          state.bannerText = CATEGORIES[idx].name + " Selection";
+          state.bannerSubText = "Choose from a variety of creature parts";
+          Sfx.click();
+        }
+        return;
+      }
+
+      // Pagination buttons at bottom of left panel (y: 482..518)
+      if (py >= 480) {
+        // Prev page arrow
+        if (inRect(px, py, 32, 484, 30, 30)) {
+          state.currentPage = state.currentPage > 1 ? state.currentPage - 1 : TOTAL_PAGES;
+          Sfx.click();
+          return;
+        }
+        // Next page arrow
+        if (inRect(px, py, 130, 484, 30, 30)) {
+          state.currentPage = state.currentPage < TOTAL_PAGES ? state.currentPage + 1 : 1;
+          Sfx.click();
+          return;
+        }
+        return;
+      }
+
+      // 3x5 Grid of Parts (x: 26..230, y: 66..472)
+      const colW = 66;
+      const rowH = 80;
+      const col = Math.floor((px - 28) / colW);
+      const row = Math.floor((py - 66) / rowH);
+      if (col >= 0 && col < 3 && row >= 0 && row < 5) {
+        const slot = row * 3 + col;
+        const catParts = PART_CATALOG[state.selectedCategory];
+        const partDef = catParts[(state.currentPage - 1) * PARTS_PER_PAGE + slot];
+        if (partDef) {
+          if (state.currentPage > state.unlockedPages) {
+            state.bannerText = "Page " + state.currentPage + " Locked!";
+            state.bannerSubText = "Complete a level in the Totem Arena to unlock Page " + state.currentPage;
+            Sfx.miss();
+            return;
+          }
+          // Start dragging this part from palette
+          state.draggingPart = {
+            fromPalette: true,
+            partDef: partDef,
+            startX: px,
+            startY: py,
+            x: px,
+            y: py
+          };
+          Sfx.click();
+        }
+      }
+      return;
+    }
+
+    // Paint Mode Right Panel (x: 558..784, y: 65..520)
+    if (state.editorMode === "paint" && inRect(px, py, 558, 65, 226, 455)) {
+      // 3x5 Base color swatches (x: 572..770, y: 112..410)
+      const colW = 64;
+      const rowH = 58;
+      const col = Math.floor((px - 575) / colW);
+      const row = Math.floor((py - 112) / rowH);
+      if (col >= 0 && col < 3 && row >= 0 && row < 5) {
+        const sIdx = row * 3 + col;
+        const sw = BASE_COLORS[sIdx];
+        if (sw) {
+          pushUndo();
+          state.creature.baseColor = sw.base;
+          state.creature.detailColor = sw.detail;
+          state.creature.darkColor = sw.dark;
+          state.swatchHoldIndex = sIdx;
+          state.swatchHoldTimer = 0;
+          Sfx.paint();
+          logEvent("color_change", {
+            baseColor: state.creature.baseColor,
+            detailColor: state.creature.detailColor
+          });
+        }
+      }
+      return;
+    }
+
+    // Check if clicking an attached part on the creature
+    for (let i = state.creature.parts.length - 1; i >= 0; i--) {
+      const p = state.creature.parts[i];
+      const sp = getSpineWorldPos(p.spineIdx);
+      const wx = sp.x + p.ox;
+      const wy = sp.y + p.oy;
+      if (dist(px, py, wx, wy) <= 24) {
+        if (isRightClick) {
+          removePartByUid(p.uid);
+          return;
+        }
+        pushUndo();
+        state.selectedPartUid = p.uid;
+        state.showSpine = false;
+        state.draggingPart = {
+          fromPalette: false,
+          partRef: p,
+          x: px,
+          y: py
+        };
+        Sfx.click();
+        return;
+      }
+    }
+
+    // Check top/bottom spine stretch arrows when spine is visible
+    if (state.showSpine) {
+      const topSp = getSpineWorldPos(5);
+      const botSp = getSpineWorldPos(0);
+      if (dist(px, py, topSp.x, topSp.y - 34) <= 18) {
+        pushUndo();
+        state.draggingScaleEnd = "top";
+        return;
+      }
+      if (dist(px, py, botSp.x, botSp.y + 34) <= 18) {
+        pushUndo();
+        state.draggingScaleEnd = "bottom";
+        return;
+      }
+    }
+
+    // Check if clicking a spine vertebra node
+    for (let i = state.creature.spine.length - 1; i >= 0; i--) {
+      const sp = getSpineWorldPos(i);
+      if (dist(px, py, sp.x, sp.y) <= sp.r + 6) {
+        pushUndo();
+        state.showSpine = true;
+        state.selectedPartUid = null;
+        state.draggingSpineIdx = i;
+        state.bannerText = "Basic Building: Drag to manipulate vertebra and spine";
+        state.bannerSubText = "Vertebra " + (i + 1) + " selected";
+        Sfx.click();
+        return;
+      }
+    }
+  }
+
+  function handleMinigamePointerDown(px, py) {
+    const mg = state.minigame;
+
+    // Help modal close
+    if (mg.showHelp) {
+      mg.showHelp = false;
+      Sfx.click();
+      return;
+    }
+
+    // Bottom Bar Controls (y: 540..592)
+    if (py >= 540) {
+      // Pause button (x: 42, y: 566)
+      if (dist(px, py, 42, 566) <= 20) {
+        mg.paused = !mg.paused;
+        Sfx.click();
+        return;
+      }
+      // Fast-forward button (x: 86, y: 566)
+      if (dist(px, py, 86, 566) <= 20) {
+        mg.fastForward = !mg.fastForward;
+        Sfx.click();
+        return;
+      }
+      // Return to Editor button (x: 712, y: 566)
+      if (dist(px, py, 712, 566) <= 20) {
+        Sfx.click();
+        changeScreen("editor");
+        return;
+      }
+      // Help '?' button (x: 756, y: 566)
+      if (dist(px, py, 756, 566) <= 20) {
+        mg.showHelp = !mg.showHelp;
+        Sfx.click();
+        return;
+      }
+      return;
+    }
+
+    // Level Completed overlay: click anywhere to advance to next level
+    if (mg.levelComplete) {
+      Sfx.click();
+      initMinigameLevel(mg.level + 1);
+      return;
+    }
+
+    if (mg.paused) return;
+
+    // Attempt to deflect incoming totem orb
+    attemptDeflect(px, py);
+  }
+
+  function onPointerMove(e) {
+    const pt = getCanvasCoords(e);
+    mouseX = pt.x;
+    mouseY = pt.y;
+
+    if (state.screen === "editor") {
+      if (state.draggingSpineIdx !== -1) {
+        const orig = getCreatureOrigin();
+        const scale = state.creature.spineScale || 1.0;
+        const idx = state.draggingSpineIdx;
+        const node = state.creature.spine[idx];
+        node.x = Math.max(-110, Math.min(110, (pt.x - orig.x) / scale));
+        node.y = Math.max(-220, Math.min(30, (pt.y - orig.y) / scale));
+      } else if (state.draggingScaleEnd) {
+        const orig = getCreatureOrigin();
+        const dy = Math.abs(pt.y - orig.y);
+        state.creature.spineScale = Math.max(0.65, Math.min(1.35, dy / 165));
+      } else if (state.draggingPart) {
+        state.draggingPart.x = pt.x;
+        state.draggingPart.y = pt.y;
+        if (!state.draggingPart.fromPalette && state.draggingPart.partRef) {
+          // Update attached part position relative to nearest spine node
+          let bestIdx = 0;
+          let bestD = Infinity;
+          for (let i = 0; i < state.creature.spine.length; i++) {
+            const sp = getSpineWorldPos(i);
+            const d = dist(pt.x, pt.y, sp.x, sp.y);
+            if (d < bestD) {
+              bestD = d;
+              bestIdx = i;
+            }
+          }
+          const sp = getSpineWorldPos(bestIdx);
+          state.draggingPart.partRef.spineIdx = bestIdx;
+          state.draggingPart.partRef.ox = pt.x - sp.x;
+          state.draggingPart.partRef.oy = pt.y - sp.y;
+        }
+      }
+    } else if (state.screen === "minigame") {
+      // Allow player to guide the green timing reticle vertically near the creature's front
+      if (pt.y >= 180 && pt.y <= 490) {
+        state.minigame.mouseControlledReticle = true;
+        state.minigame.reticleY = Math.max(230, Math.min(440, pt.y));
+      }
+    }
+  }
+
+  function onPointerUp(e) {
+    mouseDown = false;
+    state.draggingSpineIdx = -1;
+    state.draggingScaleEnd = null;
+    state.swatchHoldIndex = -1;
+
+    if (state.screen === "editor" && state.draggingPart) {
+      const dp = state.draggingPart;
+      state.draggingPart = null;
+
+      if (dp.fromPalette) {
+        // If dragged outside left panel onto stage, attach at drop point; if clicked in palette, auto-attach
+        const clickedInPlace = dist(dp.x, dp.y, dp.startX, dp.startY) < 12;
+        if (dp.x > 250 || clickedInPlace) {
+          const dropX = clickedInPlace ? 455 : dp.x;
+          const dropY = clickedInPlace ? 340 : dp.y;
+          attachPartToCreature(dp.partDef, dropX, dropY);
+        }
+      } else if (dp.partRef) {
+        // If dragged back into the left palette or far off the creature (>130px from spine), remove part
+        const sp = getSpineWorldPos(dp.partRef.spineIdx);
+        const dFromSpine = dist(dp.x, dp.y, sp.x, sp.y);
+        if (dp.x < 242 || dFromSpine > 125) {
+          removePartByUid(dp.partRef.uid);
+        } else {
+          Sfx.attach();
+        }
+      }
+    }
+  }
+
+  canvas.addEventListener("mousedown", onPointerDown);
+  window.addEventListener("mousemove", onPointerMove);
+  window.addEventListener("mouseup", onPointerUp);
+  canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+
+  // Keyboard shortcuts for rotating/flipping/deleting selected part
+  window.addEventListener("keydown", function (e) {
+    if (state.editingName) return;
+    if (state.screen === "editor" && state.selectedPartUid) {
+      const p = state.creature.parts.find(function (item) { return item.uid === state.selectedPartUid; });
+      if (!p) return;
+      if (e.key === "Delete" || e.key === "Backspace") {
+        removePartByUid(p.uid);
+      } else if (e.key === "q" || e.key === "ArrowLeft") {
+        p.angle -= 0.2;
+      } else if (e.key === "e" || e.key === "ArrowRight") {
+        p.angle += 0.2;
+      } else if (e.key === "f") {
+        p.flipY = !p.flipY;
+      }
+    } else if (state.screen === "minigame" && e.key === " ") {
+      attemptDeflect(state.minigame.reticleX, state.minigame.reticleY);
+    }
+  });
+
+  // Simulation Step (60 Hz)
+  function stepSimulation(dt) {
+    simTime += dt;
+    simTicks++;
+
+    if (state.screen === "pan") {
+      state.panY = Math.min(1, state.panY + dt * 0.65);
+      if (state.panY >= 1) {
+        changeScreen("hatching");
+      }
+    } else if (state.screen === "hatching") {
+      state.eggTimer += dt;
+      if (state.eggTimer > 0.6 && state.eggCracks < 1) {
+        state.eggCracks = 1;
+        Sfx.crack();
+      }
+      if (state.eggTimer > 1.2 && state.eggCracks < 2) {
+        state.eggCracks = 2;
+        Sfx.crack();
+      }
+      if (state.eggTimer > 1.8 && state.eggCracks < 3) {
+        state.eggCracks = 3;
+        Sfx.hatch();
+        for (let i = 0; i < 10; i++) {
+          state.eggShells.push({
+            x: 455 + randRange(-25, 25),
+            y: 365 + randRange(-35, 25),
+            vx: randRange(-140, 140),
+            vy: randRange(-180, -40),
+            rot: randRange(0, Math.PI * 2),
+            vrot: randRange(-6, 6)
+          });
+        }
+      }
+      for (let i = 0; i < state.eggShells.length; i++) {
+        const sh = state.eggShells[i];
+        sh.x += sh.vx * dt;
+        sh.y += sh.vy * dt;
+        sh.vy += 420 * dt;
+        sh.rot += sh.vrot * dt;
+      }
+      if (state.eggTimer > 2.45) {
+        changeScreen("editor");
+      }
+    } else if (state.screen === "editor") {
+      // Check hold-on-swatch for secondary detail color popup
+      if (mouseDown && state.swatchHoldIndex !== -1) {
+        state.swatchHoldTimer += dt;
+        if (state.swatchHoldTimer >= 0.38) {
+          state.swatchPopupIndex = state.swatchHoldIndex;
+          state.swatchHoldIndex = -1;
+          Sfx.click();
+        }
+      }
+    } else if (state.screen === "minigame") {
+      const mg = state.minigame;
+      if (mg.paused || mg.levelComplete || mg.showHelp) return;
+
+      const mult = mg.fastForward ? 1.8 : 1.0;
+      const effDt = dt * mult;
+
+      // Subtle totem cart wheeling motion
+      mg.cartX += mg.cartDir * 14 * effDt;
+      if (mg.cartX > 118) mg.cartDir = -1;
+      if (mg.cartX < 92) mg.cartDir = 1;
+
+      for (let i = 0; i < 3; i++) {
+        mg.totemRecoil[i] = Math.max(0, mg.totemRecoil[i] - effDt * 3.5);
+        mg.totemOpenMouth[i] = Math.max(0, mg.totemOpenMouth[i] - effDt * 2.5);
+      }
+      mg.creatureStrikeAnim = Math.max(0, mg.creatureStrikeAnim - effDt * 4.2);
+      mg.creatureHurtAnim = Math.max(0, mg.creatureHurtAnim - effDt * 3.0);
+
+      // Spawn orbs periodically
+      mg.fireCooldown -= effDt;
+      if (mg.fireCooldown <= 0) {
+        spawnTotemOrb();
+        // GUESS: Fire interval shortens as level increases
+        mg.fireCooldown = Math.max(0.65, 1.55 - (mg.level - 1) * 0.14);
+      }
+
+      // Update orbs
+      let nearestIncoming = null;
+      let nearestDist = Infinity;
+
+      for (let i = mg.orbs.length - 1; i >= 0; i--) {
+        const o = mg.orbs[i];
+        o.x += o.vx * effDt;
+        o.y += o.vy * effDt;
+        o.rot += (o.deflected ? -8 : 5) * effDt;
+
+        if (!o.deflected) {
+          const distToRingX = mg.reticleX - o.x;
+          if (distToRingX > -45 && distToRingX < nearestDist) {
+            nearestDist = distToRingX;
+            nearestIncoming = o;
+          }
+          // Missed orb if it passes the creature
+          if (o.x > 615) {
+            mg.orbs.splice(i, 1);
+            mg.creatureHurtAnim = 1.0;
+            Sfx.miss();
+            logEvent("orb_missed", {
+              orbId: o.id,
+              level: mg.level
+            });
+          }
+        } else {
+          // Deflected orb hits totem pole
+          if (o.x < mg.cartX + 35) {
+            mg.totemRecoil[o.totemIdx] = 1.0;
+            for (let k = 0; k < 8; k++) {
+              mg.particles.push({
+                x: o.x,
+                y: o.y,
+                vx: randRange(-90, 90),
+                vy: randRange(-90, 90),
+                life: 0.35,
+                color: "#ffd84d",
+                r: randRange(2, 5)
+              });
+            }
+            mg.orbs.splice(i, 1);
+          }
+        }
+      }
+
+      // Smoothly align green reticle Y with nearest incoming orb if player isn't actively dragging mouse
+      if (nearestIncoming && !mg.mouseControlledReticle) {
+        mg.reticleY += (nearestIncoming.targetY - mg.reticleY) * Math.min(1, effDt * 7);
+      }
+
+      // Update particles
+      for (let i = mg.particles.length - 1; i >= 0; i--) {
+        const p = mg.particles[i];
+        p.x += p.vx * effDt;
+        p.y += p.vy * effDt;
+        p.life -= effDt;
+        if (p.life <= 0) mg.particles.splice(i, 1);
+      }
+    }
+  }
+
+  // ==================== DRAWING FUNCTIONS ====================
+
+  function drawRoundedRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function drawSpiralTree(x, y, scale, trunkColor, leafColor, highlightColor) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+
+    // Trunk with V-branch
+    ctx.fillStyle = trunkColor || "#7a5848";
+    ctx.strokeStyle = "#4d3428";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(-14, 0);
+    ctx.lineTo(-9, -95);
+    ctx.lineTo(-24, -125);
+    ctx.lineTo(-14, -128);
+    ctx.lineTo(-2, -100);
+    ctx.lineTo(14, -125);
+    ctx.lineTo(22, -118);
+    ctx.lineTo(9, -90);
+    ctx.lineTo(14, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Canopy puffs with spiral details (matching footage's distinct storybook trees)
+    const puffs = [
+      { cx: -28, cy: -135, r: 34 },
+      { cx: 26, cy: -132, r: 32 },
+      { cx: 0, cy: -162, r: 40 },
+      { cx: -12, cy: -122, r: 28 },
+      { cx: 14, cy: -120, r: 26 }
+    ];
+    puffs.forEach(function (pf) {
+      const grad = ctx.createRadialGradient(pf.cx - 8, pf.cy - 8, 4, pf.cx, pf.cy, pf.r);
+      grad.addColorStop(0, highlightColor || "#9be37b");
+      grad.addColorStop(1, leafColor || "#4f9e46");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(pf.cx, pf.cy, pf.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#2f6b28";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Little leaf dots
+      ctx.fillStyle = "#d9ffab";
+      for (let d = 0; d < 4; d++) {
+        const ang = d * 1.6;
+        ctx.beginPath();
+        ctx.arc(pf.cx + Math.cos(ang) * (pf.r * 0.55), pf.cy + Math.sin(ang) * (pf.r * 0.55), 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+
+    ctx.restore();
+  }
+
+  function drawForestStage(offsetY) {
+    ctx.save();
+    ctx.translate(0, offsetY || 0);
+
+    // Sky gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+    skyGrad.addColorStop(0, "#7ec4e8");
+    skyGrad.addColorStop(0.55, "#bce8f7");
+    skyGrad.addColorStop(1, "#a2d88b");
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Fluffy clouds
+    CLOUDS.forEach(function (c) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.scale(c.s, c.s);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.86)";
+      ctx.beginPath();
+      ctx.arc(0, 0, 34, 0, Math.PI * 2);
+      ctx.arc(32, -6, 28, 0, Math.PI * 2);
+      ctx.arc(-32, 4, 24, 0, Math.PI * 2);
+      ctx.arc(58, 6, 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+
+    // Distant rounded mountains
+    ctx.fillStyle = "#9ac7d9";
+    ctx.strokeStyle = "#7aa8bd";
+    ctx.lineWidth = 2;
+    const peaks = [
+      { x: 290, w: 120, h: 250 },
+      { x: 370, w: 150, h: 310 },
+      { x: 540, w: 160, h: 270 }
+    ];
+    peaks.forEach(function (pk) {
+      ctx.beginPath();
+      ctx.moveTo(pk.x - pk.w / 2, 410);
+      ctx.quadraticCurveTo(pk.x, 410 - pk.h, pk.x + pk.w / 2, 410);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    });
+
+    // Rolling hills
+    const hillGrad = ctx.createLinearGradient(0, 350, 0, 560);
+    hillGrad.addColorStop(0, "#8ccf72");
+    hillGrad.addColorStop(1, "#4c9438");
+    ctx.fillStyle = hillGrad;
+    ctx.beginPath();
+    ctx.moveTo(0, 410);
+    ctx.quadraticCurveTo(220, 365, 450, 400);
+    ctx.quadraticCurveTo(640, 425, W, 385);
+    ctx.lineTo(W, H);
+    ctx.lineTo(0, H);
+    ctx.closePath();
+    ctx.fill();
+
+    // Background & foreground trees matching footage
+    drawSpiralTree(315, 415, 0.55, "#6e5a4f", "#6eb86e", "#a2e096");
+    drawSpiralTree(590, 420, 0.62, "#6e5a4f", "#6eb86e", "#a2e096");
+    drawSpiralTree(210, 460, 0.92, "#7a5240", "#4f9e46", "#9be37b");
+    drawSpiralTree(695, 470, 1.05, "#7a5240", "#4f9e46", "#9be37b");
+
+    // Stone Pedestal at (455, 445)
+    const px = 455;
+    const py = 445;
+    // Shadow
+    ctx.fillStyle = "rgba(20, 50, 15, 0.35)";
+    ctx.beginPath();
+    ctx.ellipse(px, py + 22, 130, 26, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Pedestal base rim
+    ctx.fillStyle = "#8a99a8";
+    ctx.strokeStyle = "#4d5966";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.ellipse(px, py + 14, 118, 22, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Pedestal upper tier
+    ctx.fillStyle = "#b0c0cf";
+    ctx.beginPath();
+    ctx.ellipse(px, py, 104, 19, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Inner ring on pedestal
+    ctx.fillStyle = "#6c7d8c";
+    ctx.beginPath();
+    ctx.ellipse(px, py - 2, 76, 13, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  function drawTitleAndPanScreen() {
+    const panPixels = state.screen === "pan" ? state.panY * H : 0;
+
+    // Draw forest below title screen during pan
+    if (state.screen === "pan") {
+      drawForestStage(H - panPixels);
+    }
+
+    ctx.save();
+    ctx.translate(0, -panPixels);
+
+    // Night sky background
+    const nightGrad = ctx.createLinearGradient(0, 0, 0, H);
+    nightGrad.addColorStop(0, "#050b1c");
+    nightGrad.addColorStop(0.55, "#153259");
+    nightGrad.addColorStop(1, "#7ec4e8");
+    ctx.fillStyle = nightGrad;
+    ctx.fillRect(0, 0, W, H + 2);
+
+    // Twinkling stars
+    STARS.forEach(function (st) {
+      const alpha = 0.4 + 0.6 * Math.abs(Math.sin(simTime * 2 + st.phase));
+      ctx.fillStyle = "rgba(255, 255, 255, " + alpha.toFixed(2) + ")";
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Crescent Moon
+    ctx.save();
+    ctx.translate(650, 220);
+    ctx.fillStyle = "rgba(215, 235, 255, 0.85)";
+    ctx.beginPath();
+    ctx.arc(0, 0, 38, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#122b4d";
+    ctx.beginPath();
+    ctx.arc(-12, -8, 33, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+
+    // Subtitle badge: "Presented By HATCHLING HERO"
+    ctx.textAlign = "center";
+    ctx.font = "bold 18px 'Trebuchet MS', sans-serif";
+    ctx.strokeStyle = "#081c38";
+    ctx.lineWidth = 4;
+    ctx.strokeText("Presented By HATCHLING HERO", W / 2, 132);
+    ctx.fillStyle = "#a8d8ff";
+    ctx.fillText("Presented By HATCHLING HERO", W / 2, 132);
+
+    // Main Bubbly Logo: "HATCHLING"
+    ctx.save();
+    ctx.font = "900 68px 'Trebuchet MS', sans-serif";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 12;
+    ctx.strokeText("HATCHLING", W / 2, 212);
+    ctx.strokeStyle = "#0b2e59";
+    ctx.lineWidth = 6;
+    ctx.strokeText("HATCHLING", W / 2, 212);
+    const logoGrad = ctx.createLinearGradient(0, 155, 0, 220);
+    logoGrad.addColorStop(0, "#63c5ff");
+    logoGrad.addColorStop(0.5, "#1974d2");
+    logoGrad.addColorStop(1, "#0a3b78");
+    ctx.fillStyle = logoGrad;
+    ctx.fillText("HATCHLING", W / 2, 212);
+    ctx.restore();
+
+    // Swirl Galaxy Icon inside logo area
+    ctx.save();
+    ctx.translate(W / 2, 252);
+    ctx.rotate(simTime * 0.8);
+    for (let arm = 0; arm < 5; arm++) {
+      ctx.rotate((Math.PI * 2) / 5);
+      ctx.fillStyle = "#8ce8ff";
+      ctx.beginPath();
+      ctx.arc(8, 0, 5, 0, Math.PI);
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // "creature creator 2D"
+    ctx.font = "bold 30px 'Trebuchet MS', sans-serif";
+    ctx.strokeStyle = "#09254a";
+    ctx.lineWidth = 6;
+    ctx.strokeText("creature creator 2D", W / 2, 286);
+    ctx.fillStyle = "#7fd0ff";
+    ctx.fillText("creature creator 2D", W / 2, 286);
+
+    // Glossy Blue "Start" Button
+    const bx = 330, by = 315, bw = 140, bh = 48;
+    const hovered = inRect(mouseX, mouseY, bx, by, bw, bh);
+    const btnGrad = ctx.createLinearGradient(bx, by, bx, by + bh);
+    btnGrad.addColorStop(0, hovered ? "#6fd0ff" : "#4aa8eb");
+    btnGrad.addColorStop(0.5, hovered ? "#2c8ce0" : "#1d6fb8");
+    btnGrad.addColorStop(1, "#104780");
+    drawRoundedRect(bx, by, bw, bh, 12);
+    ctx.fillStyle = btnGrad;
+    ctx.fill();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = "#bce6ff";
+    ctx.stroke();
+
+    ctx.font = "bold 24px 'Trebuchet MS', sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("Start", W / 2, by + 32);
+
+    ctx.font = "13px 'Trebuchet MS', sans-serif";
+    ctx.fillStyle = "rgba(200, 225, 255, 0.75)";
+    ctx.fillText("2009 Promotional 2D Creature Creator & Totem Trainer Reconstruction", W / 2, 565);
+
+    ctx.restore();
+  }
+
+  function drawHatchingScreen() {
+    drawForestStage(0);
+
+    const px = 455;
+    const py = 395;
+
+    if (state.eggCracks < 3) {
+      ctx.save();
+      const wobble = Math.sin(simTime * 14) * (0.06 + state.eggCracks * 0.08);
+      ctx.translate(px, py + 35);
+      ctx.rotate(wobble);
+      ctx.translate(0, -35);
+
+      // Spotted Egg
+      const eggGrad = ctx.createRadialGradient(-18, -20, 10, 0, 0, 68);
+      eggGrad.addColorStop(0, "#f5fbff");
+      eggGrad.addColorStop(0.7, "#c6dcf0");
+      eggGrad.addColorStop(1, "#85a5c2");
+      ctx.fillStyle = eggGrad;
+      ctx.strokeStyle = "#53708a";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 48, 64, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Purple/blue spots
+      ctx.fillStyle = "rgba(110, 120, 175, 0.55)";
+      const spots = [
+        { x: -18, y: -25, rx: 12, ry: 16 },
+        { x: 18, y: -10, rx: 14, ry: 18 },
+        { x: -10, y: 20, rx: 15, ry: 12 },
+        { x: 20, y: 28, rx: 10, ry: 13 },
+        { x: 0, y: -44, rx: 10, ry: 8 }
+      ];
+      spots.forEach(function (sp) {
+        ctx.beginPath();
+        ctx.ellipse(sp.x, sp.y, sp.rx, sp.ry, 0.3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // Cracks
+      if (state.eggCracks >= 1) {
+        ctx.strokeStyle = "#2b3e52";
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(-32, -5);
+        ctx.lineTo(-12, 8);
+        ctx.lineTo(4, -8);
+        ctx.lineTo(22, 6);
+        if (state.eggCracks >= 2) {
+          ctx.lineTo(38, -4);
+          ctx.moveTo(-12, 8);
+          ctx.lineTo(-20, 32);
+          ctx.moveTo(4, -8);
+          ctx.lineTo(12, -36);
+        }
+        ctx.stroke();
+      }
+      ctx.restore();
+    } else {
+      // Emerging creature + flying egg shell fragments
+      drawCreature(false, simTime);
+      state.eggShells.forEach(function (sh) {
+        ctx.save();
+        ctx.translate(sh.x, sh.y);
+        ctx.rotate(sh.rot);
+        ctx.fillStyle = "#d8ecff";
+        ctx.strokeStyle = "#5c7a96";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-14, -8);
+        ctx.lineTo(12, -12);
+        ctx.lineTo(16, 10);
+        ctx.lineTo(-8, 14);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      });
+    }
+  }
+
+  // Procedural drawing for each part category & variant
+  function drawPartShape(category, variant, baseColor, detailColor, darkColor, isIcon) {
+    const v = variant % 5;
+    ctx.save();
+    if (isIcon) {
+      ctx.scale(0.75, 0.75);
+    }
+
+    ctx.fillStyle = baseColor;
+    ctx.strokeStyle = darkColor;
+    ctx.lineWidth = 2.2;
+
+    if (category === "mouths") {
+      // Various beaks, jaws, and chompers facing left
+      ctx.beginPath();
+      if (v === 0) {
+        // Curved raptor beak
+        ctx.moveTo(8, -12);
+        ctx.quadraticCurveTo(-28, -16, -34, 4);
+        ctx.quadraticCurveTo(-16, 6, 8, 4);
+      } else if (v === 1) {
+        // Wide alligator snout with teeth
+        ctx.roundRect ? ctx.roundRect(-34, -12, 42, 22, 8) : ctx.rect(-34, -12, 42, 22);
+      } else if (v === 2) {
+        // Duckbill / trumpet mouth
+        ctx.moveTo(8, -8);
+        ctx.lineTo(-32, -16);
+        ctx.quadraticCurveTo(-38, 0, -32, 16);
+        ctx.lineTo(8, 8);
+      } else if (v === 3) {
+        //Tusks / mandibles
+        ctx.arc(-10, 0, 16, 0, Math.PI * 2);
+      } else {
+        // Carnivore open jaw
+        ctx.moveTo(10, -14);
+        ctx.lineTo(-32, -8);
+        ctx.lineTo(-10, 0);
+        ctx.lineTo(-30, 12);
+        ctx.lineTo(10, 14);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Teeth & spots
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.moveTo(-24, 2);
+      ctx.lineTo(-20, 10);
+      ctx.lineTo(-15, 2);
+      ctx.moveTo(-14, 2);
+      ctx.lineTo(-10, 9);
+      ctx.lineTo(-6, 2);
+      ctx.fill();
+
+      ctx.fillStyle = detailColor;
+      ctx.beginPath();
+      ctx.arc(-10, -5, 3, 0, Math.PI * 2);
+      ctx.arc(-18, -4, 2, 0, Math.PI * 2);
+      ctx.fill();
+
+    } else if (category === "senses") {
+      // Eyes, stalks, and ears
+      if (v === 0 || v === 2) {
+        // Big expressive eye
+        ctx.fillStyle = baseColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(-2, 0, 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = v === 2 ? "#d92b2b" : "#1b2838";
+        ctx.beginPath();
+        ctx.arc(-4, 0, 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(-6, -2, 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (v === 1) {
+        // Eyestalk
+        ctx.strokeStyle = baseColor;
+        ctx.lineWidth = 7;
+        ctx.beginPath();
+        ctx.moveTo(6, 12);
+        ctx.quadraticCurveTo(-8, -4, -12, -14);
+        ctx.stroke();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(-12, -14, 9, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = darkColor;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.fillStyle = "#111";
+        ctx.beginPath();
+        ctx.arc(-14, -14, 4, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Fin / rabbit ear
+        ctx.fillStyle = baseColor;
+        ctx.beginPath();
+        ctx.ellipse(-6, -12, 9, 20, -0.35, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = detailColor;
+        ctx.beginPath();
+        ctx.ellipse(-6, -12, 4, 13, -0.35, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+    } else if (category === "arms") {
+      // Jointed 2D arms
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      const bendY = (v % 2 === 0) ? 14 : -12;
+      ctx.strokeStyle = darkColor;
+      ctx.lineWidth = 15;
+      ctx.beginPath();
+      ctx.moveTo(12, 0);
+      ctx.lineTo(-8, bendY);
+      ctx.lineTo(-28, bendY * 0.4);
+      ctx.stroke();
+
+      ctx.strokeStyle = baseColor;
+      ctx.lineWidth = 11;
+      ctx.beginPath();
+      ctx.moveTo(12, 0);
+      ctx.lineTo(-8, bendY);
+      ctx.lineTo(-28, bendY * 0.4);
+      ctx.stroke();
+
+      ctx.fillStyle = detailColor;
+      ctx.beginPath();
+      ctx.arc(-28, bendY * 0.4, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+    } else if (category === "legs") {
+      // Jointed legs with feet facing left
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      const kneeX = (v % 2 === 0) ? -14 : 10;
+      ctx.strokeStyle = darkColor;
+      ctx.lineWidth = 16;
+      ctx.beginPath();
+      ctx.moveTo(0, -18);
+      ctx.lineTo(kneeX, 4);
+      ctx.lineTo(-4, 24);
+      ctx.stroke();
+
+      ctx.strokeStyle = baseColor;
+      ctx.lineWidth = 12;
+      ctx.beginPath();
+      ctx.moveTo(0, -18);
+      ctx.lineTo(kneeX, 4);
+      ctx.lineTo(-4, 24);
+      ctx.stroke();
+
+      // Foot pad
+      ctx.fillStyle = detailColor;
+      ctx.strokeStyle = darkColor;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(-10, 27, 14, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+    } else if (category === "graspers") {
+      // Claws, pincers, and hands
+      ctx.fillStyle = baseColor;
+      ctx.beginPath();
+      ctx.arc(4, 0, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = detailColor;
+      // Upper pincer
+      ctx.beginPath();
+      ctx.moveTo(0, -6);
+      ctx.quadraticCurveTo(-24, -22, -30, -4);
+      ctx.quadraticCurveTo(-16, -2, 0, -2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      // Lower pincer
+      ctx.beginPath();
+      ctx.moveTo(0, 6);
+      ctx.quadraticCurveTo(-24, 22, -30, 4);
+      ctx.quadraticCurveTo(-16, 2, 0, 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+    } else if (category === "weapons") {
+      if (v === 1 || v === 3) {
+        // Curved scorpion stinger / horn
+        ctx.fillStyle = detailColor;
+        ctx.beginPath();
+        ctx.moveTo(10, 8);
+        ctx.quadraticCurveTo(-18, -26, -34, -6);
+        ctx.quadraticCurveTo(-12, -4, 6, 12);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      } else {
+        // Circular buzzsaw / spiked gear (matching green frog creature in clip!)
+        const teeth = 8 + v * 2;
+        ctx.fillStyle = detailColor;
+        ctx.beginPath();
+        for (let i = 0; i < teeth * 2; i++) {
+          const r = i % 2 === 0 ? 20 : 13;
+          const a = (i * Math.PI) / teeth;
+          const gx = Math.cos(a) * r;
+          const gy = Math.sin(a) * r;
+          if (i === 0) ctx.moveTo(gx, gy);
+          else ctx.lineTo(gx, gy);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = baseColor;
+        ctx.beginPath();
+        ctx.arc(0, 0, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+    } else if (category === "details") {
+      // Flowers, crests, feathers, and shells
+      if (v === 0 || v === 2) {
+        // 5-petal tropical flower (seen in Video 1 22:00!)
+        for (let p = 0; p < 5; p++) {
+          const a = (p * Math.PI * 2) / 5;
+          ctx.fillStyle = detailColor;
+          ctx.beginPath();
+          ctx.arc(Math.cos(a) * 10, Math.sin(a) * 10, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+        ctx.fillStyle = "#ffe066";
+        ctx.beginPath();
+        ctx.arc(0, 0, 6, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        // Crest fin / feather plume
+        ctx.fillStyle = detailColor;
+        ctx.beginPath();
+        ctx.moveTo(10, 12);
+        ctx.quadraticCurveTo(-22, -18, -8, -24);
+        ctx.quadraticCurveTo(8, -10, 14, 8);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+
+    ctx.restore();
+  }
+
+  function drawCreature(showSpineOverlay, animTime) {
+    const c = state.creature;
+    const spinePts = [];
+    for (let i = 0; i < c.spine.length; i++) {
+      spinePts.push(getSpineWorldPos(i, animTime));
+    }
+
+    ctx.save();
+    if (state.screen === "minigame" && state.minigame.creatureHurtAnim > 0) {
+      ctx.globalAlpha = 0.65 + 0.35 * Math.sin(simTime * 40);
+    }
+
+    // 1. Draw back-layer limbs/legs
+    c.parts.forEach(function (p, idx) {
+      if (p.category === "legs" || p.category === "arms") {
+        const sp = spinePts[p.spineIdx] || spinePts[0];
+        ctx.save();
+        let walkSwing = 0;
+        if (animTime !== undefined && p.category === "legs") {
+          walkSwing = Math.sin(animTime * 4 + idx) * 0.12;
+        }
+        ctx.translate(sp.x + p.ox, sp.y + p.oy);
+        ctx.rotate(p.angle + walkSwing);
+        ctx.scale(p.scale, p.flipY ? -p.scale : p.scale);
+        drawPartShape(p.category, p.variant, c.baseColor, c.detailColor, c.darkColor, false);
+        ctx.restore();
+      }
+    });
+
+    // 2. Draw smooth connected metaball/capsule body along spine
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    // Outer dark outline
+    for (let i = 0; i < spinePts.length - 1; i++) {
+      const a = spinePts[i];
+      const b = spinePts[i + 1];
+      ctx.strokeStyle = c.darkColor;
+      ctx.lineWidth = (a.r + b.r) + 5;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    // Main base color body
+    for (let i = 0; i < spinePts.length - 1; i++) {
+      const a = spinePts[i];
+      const b = spinePts[i + 1];
+      ctx.strokeStyle = c.baseColor;
+      ctx.lineWidth = a.r + b.r;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    // Soft highlight stripe along upper spine
+    for (let i = 0; i < spinePts.length - 1; i++) {
+      const a = spinePts[i];
+      const b = spinePts[i + 1];
+      ctx.strokeStyle = c.detailColor;
+      ctx.globalAlpha = 0.35;
+      ctx.lineWidth = (a.r + b.r) * 0.45;
+      ctx.beginPath();
+      ctx.moveTo(a.x - 3, a.y - 3);
+      ctx.lineTo(b.x - 3, b.y - 3);
+      ctx.stroke();
+      ctx.globalAlpha = 1.0;
+    }
+
+    // 3. Draw front-layer parts (mouths, senses, graspers, weapons, details)
+    c.parts.forEach(function (p) {
+      if (p.category !== "legs" && p.category !== "arms") {
+        const sp = spinePts[p.spineIdx] || spinePts[0];
+        ctx.save();
+        let strikeRot = 0;
+        if (state.screen === "minigame" && state.minigame.creatureStrikeAnim > 0) {
+          strikeRot = -Math.sin(state.minigame.creatureStrikeAnim * Math.PI) * 0.45;
+        }
+        ctx.translate(sp.x + p.ox, sp.y + p.oy);
+        ctx.rotate(p.angle + strikeRot);
+        ctx.scale(p.scale, p.flipY ? -p.scale : p.scale);
+        drawPartShape(p.category, p.variant, c.baseColor, c.detailColor, c.darkColor, false);
+        ctx.restore();
+      }
+
+      // Selection ring in editor
+      if (state.screen === "editor" && state.selectedPartUid === p.uid) {
+        const sp = spinePts[p.spineIdx] || spinePts[0];
+        ctx.save();
+        ctx.strokeStyle = "#fff066";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.arc(sp.x + p.ox, sp.y + p.oy, 24, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    });
+
+    // 4. Spine & Vertebrae Overlay (matching Video 2 18:31-18:36)
+    if (showSpineOverlay && state.screen === "editor") {
+      ctx.save();
+      // White translucent border highlight around spine
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(spinePts[0].x, spinePts[0].y);
+      for (let i = 1; i < spinePts.length; i++) {
+        ctx.lineTo(spinePts[i].x, spinePts[i].y);
+      }
+      ctx.stroke();
+
+      // Numbered vertebra boxes
+      for (let i = 0; i < spinePts.length; i++) {
+        const pt = spinePts[i];
+        const active = state.draggingSpineIdx === i;
+        ctx.fillStyle = active ? "#ffe666" : "rgba(180, 235, 255, 0.88)";
+        ctx.strokeStyle = "#1d5273";
+        ctx.lineWidth = 2;
+        drawRoundedRect(pt.x - 12, pt.y - 11, 24, 22, 5);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = "#0e3147";
+        ctx.font = "bold 12px 'Trebuchet MS', sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(String(i + 1), pt.x, pt.y + 4);
+      }
+
+      // Top & Bottom resize arrows
+      const topPt = spinePts[spinePts.length - 1];
+      const botPt = spinePts[0];
+      ctx.fillStyle = "#d9f2ff";
+      ctx.strokeStyle = "#2b5c80";
+      ctx.lineWidth = 2;
+
+      // Top up-arrow
+      ctx.beginPath();
+      ctx.moveTo(topPt.x, topPt.y - 44);
+      ctx.lineTo(topPt.x - 9, topPt.y - 26);
+      ctx.lineTo(topPt.x + 9, topPt.y - 26);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Bottom down-arrow
+      ctx.beginPath();
+      ctx.moveTo(botPt.x, botPt.y + 44);
+      ctx.lineTo(botPt.x - 9, botPt.y + 26);
+      ctx.lineTo(botPt.x + 9, botPt.y + 26);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    ctx.restore();
+  }
+
+  function drawEditorUI() {
+    // 1. Top-Center Mode Bezel (Build Hammer & Paint Brush)
+    ctx.save();
+    ctx.fillStyle = "rgba(25, 78, 128, 0.85)";
+    ctx.strokeStyle = "#8cd2ff";
+    ctx.lineWidth = 2.5;
+    drawRoundedRect(338, 4, 124, 52, 26);
+    ctx.fill();
+    ctx.stroke();
+
+    // Build button (372, 30)
+    const isBuild = state.editorMode === "build";
+    ctx.fillStyle = isBuild ? "#4eb5f7" : "#164673";
+    ctx.strokeStyle = isBuild ? "#ffffff" : "#68a8d9";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(372, 30, 20, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Hammer icon
+    ctx.save();
+    ctx.translate(372, 30);
+    ctx.rotate(-0.6);
+    ctx.fillStyle = "#e8c07d";
+    ctx.fillRect(-3, -2, 6, 16);
+    ctx.fillStyle = "#d9e6f2";
+    ctx.fillRect(-10, -10, 20, 9);
+    ctx.restore();
+
+    // Paint button (428, 30)
+    const isPaint = state.editorMode === "paint";
+    ctx.fillStyle = isPaint ? "#4eb5f7" : "#164673";
+    ctx.strokeStyle = isPaint ? "#ffffff" : "#68a8d9";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(428, 30, 20, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    // Paintbrush icon
+    ctx.save();
+    ctx.translate(428, 30);
+    ctx.rotate(0.6);
+    ctx.fillStyle = "#d99b52";
+    ctx.fillRect(-2.5, 0, 5, 14);
+    ctx.fillStyle = "#7eff8a";
+    ctx.beginPath();
+    ctx.arc(0, -6, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+    ctx.restore();
+
+    // 2. Top-Right 10-Dot Complexity Meter (matching footage!)
+    ctx.save();
+    const usedDots = state.creature.parts.length;
+    for (let i = 0; i < 10; i++) {
+      const dx = 635 + i * 12;
+      const dy = (i % 2 === 0) ? 18 : 26;
+      const r = (i % 3 === 0) ? 4.8 : 3.6;
+      ctx.fillStyle = i < usedDots ? "#ffffff" : "rgba(18, 52, 86, 0.7)";
+      ctx.strokeStyle = "#8cd2ff";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(dx, dy, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // 3. Left Build Panel (when in Build Mode)
+    if (state.editorMode === "build") {
+      ctx.save();
+      const grad = ctx.createLinearGradient(16, 16, 242, 526);
+      grad.addColorStop(0, "rgba(72, 152, 212, 0.92)");
+      grad.addColorStop(1, "rgba(32, 92, 148, 0.94)");
+      drawRoundedRect(16, 16, 226, 510, 22);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#16426b";
+      ctx.stroke();
+
+      // Inner frame for parts grid
+      drawRoundedRect(25, 62, 208, 412, 14);
+      ctx.fillStyle = "rgba(115, 182, 232, 0.65)";
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#256094";
+      ctx.stroke();
+
+      // 7 Category Tabs along top
+      const tabW = 210 / CATEGORIES.length;
+      CATEGORIES.forEach(function (cat, idx) {
+        const tx = 24 + idx * tabW + tabW / 2;
+        const ty = 40;
+        const active = state.selectedCategory === cat.id;
+        ctx.fillStyle = active ? "#ffe04d" : "#225c8f";
+        ctx.strokeStyle = active ? "#ffffff" : "#7cc4f5";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(tx, ty, 12.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Tiny category glyph
+        ctx.fillStyle = active ? "#6e3b00" : "#bce6ff";
+        ctx.font = "bold 11px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(cat.name[0], tx, ty + 4);
+      });
+
+      // 3x5 Grid of Parts for current page
+      const catParts = PART_CATALOG[state.selectedCategory];
+      const pageLocked = state.currentPage > state.unlockedPages;
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 3; col++) {
+          const slot = row * 3 + col;
+          const partDef = catParts[(state.currentPage - 1) * PARTS_PER_PAGE + slot];
+          if (!partDef) continue;
+          const cx = 60 + col * 68;
+          const cy = 102 + row * 78;
+
+          const cellHover = inRect(mouseX, mouseY, cx - 30, cy - 32, 60, 64);
+          if (cellHover) {
+            ctx.strokeStyle = "#ffe855";
+            ctx.lineWidth = 2.5;
+            drawRoundedRect(cx - 28, cy - 30, 56, 60, 8);
+            ctx.stroke();
+          }
+
+          ctx.save();
+          ctx.translate(cx, cy);
+          if (pageLocked) ctx.globalAlpha = 0.35;
+          drawPartShape(
+            partDef.category,
+            partDef.variant,
+            state.creature.baseColor,
+            state.creature.detailColor,
+            state.creature.darkColor,
+            true
+          );
+          if (pageLocked) {
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = "#ffd24d";
+            ctx.font = "bold 12px sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("LOCKED", 0, 6);
+          }
+          ctx.restore();
+        }
+      }
+
+      // Pagination pill at bottom of left panel (e.g. "1/3")
+      drawRoundedRect(30, 482, 132, 32, 16);
+      ctx.fillStyle = "#5ba8e0";
+      ctx.fill();
+      ctx.strokeStyle = "#1b4f7d";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Left arrow
+      ctx.fillStyle = "#ff9c38";
+      ctx.beginPath();
+      ctx.moveTo(40, 498);
+      ctx.lineTo(52, 490);
+      ctx.lineTo(52, 506);
+      ctx.closePath();
+      ctx.fill();
+
+      // Right arrow
+      ctx.beginPath();
+      ctx.moveTo(152, 498);
+      ctx.lineTo(140, 490);
+      ctx.lineTo(140, 506);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 15px 'Trebuchet MS', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(state.currentPage + "/" + TOTAL_PAGES, 96, 504);
+
+      ctx.restore();
+    }
+
+    // 4. Right Paint Panel (when in Paint Mode, matching Video 2 18:37)
+    if (state.editorMode === "paint") {
+      ctx.save();
+      const grad = ctx.createLinearGradient(558, 65, 784, 520);
+      grad.addColorStop(0, "rgba(72, 152, 212, 0.92)");
+      grad.addColorStop(1, "rgba(32, 92, 148, 0.94)");
+      drawRoundedRect(558, 65, 226, 455, 22);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#16426b";
+      ctx.stroke();
+
+      // "Base" header bar
+      drawRoundedRect(570, 76, 202, 26, 12);
+      ctx.fillStyle = "#ffe855";
+      ctx.fill();
+      ctx.fillStyle = "#1b446b";
+      ctx.font = "bold 14px 'Trebuchet MS', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Base", 671, 94);
+
+      // 3x5 Grid of creature-shaped color swatches
+      for (let row = 0; row < 5; row++) {
+        for (let col = 0; col < 3; col++) {
+          const idx = row * 3 + col;
+          const sw = BASE_COLORS[idx];
+          const sx = 605 + col * 64;
+          const sy = 136 + row * 58;
+
+          const active = state.creature.baseColor === sw.base;
+          if (active) {
+            ctx.strokeStyle = "#ffe855";
+            ctx.lineWidth = 2.5;
+            drawRoundedRect(sx - 27, sy - 24, 54, 48, 8);
+            ctx.stroke();
+          }
+
+          // Cute little creature-blob swatch icon
+          ctx.fillStyle = sw.base;
+          ctx.strokeStyle = sw.dark;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(sx, sy - 5, 13, 0, Math.PI * 2);
+          ctx.arc(sx - 8, sy + 9, 8, 0, Math.PI * 2);
+          ctx.arc(sx + 8, sy + 9, 8, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        }
+      }
+
+      // Instruction text at bottom of Paint panel
+      ctx.fillStyle = "#0e2b47";
+      ctx.font = "bold 11px 'Trebuchet MS', sans-serif";
+      ctx.fillText("Click and hold left mouse button", 671, 434);
+      ctx.fillText("to display more color choices", 671, 448);
+
+      // "Detail" bar
+      drawRoundedRect(570, 464, 202, 24, 10);
+      ctx.fillStyle = "rgba(25, 68, 110, 0.65)";
+      ctx.fill();
+      ctx.fillStyle = "#bce6ff";
+      ctx.font = "bold 13px 'Trebuchet MS', sans-serif";
+      ctx.fillText("Detail", 671, 481);
+
+      // Secondary popup when swatch held
+      if (state.swatchPopupIndex !== -1) {
+        drawRoundedRect(568, 415, 206, 52, 12);
+        ctx.fillStyle = "#103252";
+        ctx.fill();
+        ctx.strokeStyle = "#ffe855";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        for (let i = 0; i < DETAIL_VARIATIONS.length; i++) {
+          const vx = 586 + i * 38;
+          const vy = 441;
+          ctx.fillStyle = DETAIL_VARIATIONS[i];
+          ctx.beginPath();
+          ctx.arc(vx, vy, 13, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = "#fff";
+          ctx.lineWidth = 1.5;
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    // 5. Semi-transparent Tutorial Banner above Bottom Bar
+    ctx.save();
+    drawRoundedRect(248, 472, 305, 54, 14);
+    ctx.fillStyle = "rgba(230, 245, 255, 0.78)";
+    ctx.fill();
+    ctx.strokeStyle = "rgba(70, 135, 190, 0.8)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.fillStyle = "#223b54";
+    ctx.font = "bold 15px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(state.bannerText.split(":")[0], 400, 494);
+    ctx.font = "12px 'Trebuchet MS', sans-serif";
+    ctx.fillText(state.bannerText.includes(":") ? state.bannerText.split(":")[1].trim() : state.bannerSubText, 400, 514);
+    ctx.restore();
+
+    // 6. Bottom Navigation Bar
+    ctx.save();
+    const barGrad = ctx.createLinearGradient(0, 538, 0, 592);
+    barGrad.addColorStop(0, "rgba(55, 130, 195, 0.92)");
+    barGrad.addColorStop(1, "rgba(22, 68, 115, 0.96)");
+    drawRoundedRect(14, 538, 772, 50, 20);
+    ctx.fillStyle = barGrad;
+    ctx.fill();
+    ctx.strokeStyle = "#8cd2ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Left badge: "HATCHLING"
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "900 14px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("HATCHLING", 66, 562);
+    ctx.fillStyle = "#ffe04d";
+    ctx.font = "bold 11px 'Trebuchet MS', sans-serif";
+    ctx.fillText("HERO 2D", 66, 576);
+
+    // Preset / Gallery button (128, 562)
+    drawCircleButton(128, 563, 18, "#2979bf", "Presets");
+    ctx.fillStyle = "#fff";
+    for (let gx = -5; gx <= 5; gx += 5) {
+      for (let gy = -5; gy <= 5; gy += 5) {
+        ctx.fillRect(128 + gx - 1.5, 563 + gy - 1.5, 3, 3);
+      }
+    }
+
+    // Play / Train Minigame button (174, 563)
+    const pulse = 1 + 0.06 * Math.sin(simTime * 5);
+    drawCircleButton(174, 563, 19 * pulse, "#34b850", "Train");
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.moveTo(169, 554);
+    ctx.lineTo(183, 563);
+    ctx.lineTo(169, 572);
+    ctx.closePath();
+    ctx.fill();
+
+    // Center Name Box (245..535)
+    drawRoundedRect(245, 545, 290, 36, 16);
+    ctx.fillStyle = "rgba(18, 56, 94, 0.85)";
+    ctx.fill();
+    ctx.strokeStyle = "#7cc8ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    if (!state.editingName) {
+      ctx.fillStyle = "#d9f0ff";
+      ctx.font = "bold 15px 'Trebuchet MS', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(state.creature.name, 390, 568);
+    }
+
+    // Undo button (575, 563)
+    drawCircleButton(575, 563, 16, state.undoStack.length ? "#2979bf" : "#1a466e");
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 15px sans-serif";
+    ctx.fillText("↶", 575, 568);
+
+    // Redo button (615, 563)
+    drawCircleButton(615, 563, 16, state.redoStack.length ? "#2979bf" : "#1a466e");
+    ctx.fillStyle = "#fff";
+    ctx.fillText("↷", 615, 568);
+
+    // Reset button (660, 563)
+    drawCircleButton(660, 563, 16, "#b84b3e");
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 14px sans-serif";
+    ctx.fillText("✕", 660, 568);
+
+    // Save button (750, 563)
+    drawCircleButton(750, 563, 19, "#34a853");
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 14px sans-serif";
+    ctx.fillText("✓", 750, 568);
+
+    ctx.restore();
+
+    // 7. Currently dragged part preview
+    if (state.draggingPart && state.draggingPart.fromPalette) {
+      ctx.save();
+      ctx.translate(state.draggingPart.x, state.draggingPart.y);
+      drawPartShape(
+        state.draggingPart.partDef.category,
+        state.draggingPart.partDef.variant,
+        state.creature.baseColor,
+        state.creature.detailColor,
+        state.creature.darkColor,
+        false
+      );
+      ctx.restore();
+    }
+  }
+
+  function drawCircleButton(x, y, r, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = "#bce6ff";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ==================== MINIGAME RENDERING ====================
+
+  function drawMinigameScreen() {
+    const mg = state.minigame;
+
+    // 1. Tribal Arena Sky & Giant Moon (matching Video 1 21:47-22:38)
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+    skyGrad.addColorStop(0, "#75afd6");
+    skyGrad.addColorStop(0.6, "#b5dcf0");
+    skyGrad.addColorStop(1, "#82b89a");
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Giant pale moon in center background
+    const moonGrad = ctx.createRadialGradient(385, 265, 20, 395, 275, 165);
+    moonGrad.addColorStop(0, "#eef9ff");
+    moonGrad.addColorStop(0.75, "#cce8f8");
+    moonGrad.addColorStop(1, "rgba(180, 222, 245, 0)");
+    ctx.fillStyle = moonGrad;
+    ctx.beginPath();
+    ctx.arc(395, 275, 160, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Left & Right Tribal Cliffs with Tents and Torches
+    ctx.fillStyle = "#6c9c8c";
+    ctx.beginPath();
+    ctx.moveTo(0, 160);
+    ctx.lineTo(190, 190);
+    ctx.lineTo(235, 455);
+    ctx.lineTo(0, 455);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(W, 175);
+    ctx.lineTo(595, 205);
+    ctx.lineTo(555, 455);
+    ctx.lineTo(W, 455);
+    ctx.closePath();
+    ctx.fill();
+
+    // Tribal Tents
+    drawTribalTent(135, 225, 0.85);
+    drawTribalTent(675, 240, 0.9);
+
+    // Flickering Torches
+    drawTorch(62, 265);
+    drawTorch(205, 275);
+    drawTorch(595, 275);
+    drawTorch(748, 260);
+
+    // Stone & Sand Arena Floor
+    ctx.fillStyle = "#8a7968";
+    ctx.fillRect(0, 450, W, 95);
+    ctx.fillStyle = "#c9b38c";
+    ctx.strokeStyle = "#6b5847";
+    ctx.lineWidth = 3;
+    drawRoundedRect(145, 455, 530, 32, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    // 2. Wheeled Totem Cart on Left
+    drawTotemCart(mg.cartX, 452);
+
+    // 3. Player Creature on Right
+    drawCreature(false, simTime);
+
+    // 4. Green Circular Target Reticle over creature's strike zone (Video 1 22:26-22:38)
+    ctx.save();
+    const strikeGlow = mg.creatureStrikeAnim > 0 ? 1.18 : 1.0;
+    ctx.translate(mg.reticleX, mg.reticleY);
+    ctx.scale(strikeGlow, strikeGlow);
+
+    ctx.strokeStyle = "rgba(50, 235, 65, 0.85)";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.arc(0, 0, mg.reticleRadius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#b8ff9e";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.arc(0, 0, mg.reticleRadius - 5, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+
+    // 5. Projectiles (Orbs)
+    mg.orbs.forEach(function (o) {
+      ctx.save();
+      ctx.translate(o.x, o.y);
+      ctx.rotate(o.rot);
+
+      // Highlight ring when orb is inside deflection zone!
+      const inZone = !o.deflected && dist(o.x, o.y, mg.reticleX, mg.reticleY) <= mg.reticleRadius + o.r + 12;
+      if (inZone) {
+        ctx.strokeStyle = "#ffff55";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(0, 0, o.r + 6, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = o.deflected ? "#7eff66" : "#e8d8b0";
+      ctx.strokeStyle = "#5c4938";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, o.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      // Tribal pattern inside orb
+      ctx.strokeStyle = "#8c6d46";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-o.r + 3, 0);
+      ctx.lineTo(o.r - 3, 0);
+      ctx.moveTo(0, -o.r + 3);
+      ctx.lineTo(0, o.r - 3);
+      ctx.stroke();
+      ctx.restore();
+    });
+
+    // 6. Particles
+    mg.particles.forEach(function (p) {
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 7. Top Minigame HUD Bar (Level, Segmented Progress Bar + Flag, Score)
+    ctx.save();
+    const topGrad = ctx.createLinearGradient(0, 0, 0, 48);
+    topGrad.addColorStop(0, "rgba(75, 150, 215, 0.92)");
+    topGrad.addColorStop(1, "rgba(35, 88, 145, 0.88)");
+    ctx.fillStyle = topGrad;
+    ctx.fillRect(0, 0, W, 46);
+    ctx.strokeStyle = "#8cd2ff";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(0, 46);
+    ctx.lineTo(W, 46);
+    ctx.stroke();
+
+    // Left: "Level X"
+    ctx.font = "bold 20px 'Trebuchet MS', sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "left";
+    ctx.fillText("Level " + mg.level, 22, 30);
+
+    // Center: Segmented Progress Bar + Flag Circle
+    const barW = 240;
+    const barH = 22;
+    const barX = W / 2 - barW / 2;
+    const barY = 10;
+    drawRoundedRect(barX, barY, barW, barH, 11);
+    ctx.fillStyle = "#163d66";
+    ctx.fill();
+    ctx.strokeStyle = "#bce6ff";
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    const segW = (barW - 8) / mg.progressMax;
+    for (let s = 0; s < mg.progressMax; s++) {
+      if (s < mg.progress) {
+        ctx.fillStyle = "#5ad460";
+        drawRoundedRect(barX + 4 + s * segW + 1, barY + 3, segW - 2, barH - 6, 5);
+        ctx.fill();
+      }
+    }
+
+    // Flag circle below progress bar
+    ctx.fillStyle = "#70b858";
+    ctx.strokeStyle = "#d9f2ff";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(W / 2, 46, 17, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 13px 'Trebuchet MS', sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("⚑" + mg.level, W / 2, 51);
+
+    // Right: Numeric Score
+    ctx.font = "bold 20px 'Trebuchet MS', sans-serif";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "right";
+    ctx.fillText(String(mg.score), 735, 30);
+    ctx.restore();
+
+    // 8. Bottom Minigame Bar
+    ctx.save();
+    const botGrad = ctx.createLinearGradient(0, 540, 0, H);
+    botGrad.addColorStop(0, "rgba(55, 130, 195, 0.92)");
+    botGrad.addColorStop(1, "rgba(22, 68, 115, 0.96)");
+    drawRoundedRect(10, 542, 780, 48, 18);
+    ctx.fillStyle = botGrad;
+    ctx.fill();
+    ctx.strokeStyle = "#8cd2ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Pause button (42, 566)
+    drawCircleButton(42, 566, 18, mg.paused ? "#e89c28" : "#2979bf");
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 14px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("||", 42, 571);
+
+    // Fast-forward button (86, 566)
+    drawCircleButton(86, 566, 18, mg.fastForward ? "#e89c28" : "#2979bf");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("»", 86, 571);
+
+    // Center Creature Name Banner
+    drawRoundedRect(255, 548, 290, 34, 15);
+    ctx.fillStyle = "rgba(18, 56, 94, 0.85)";
+    ctx.fill();
+    ctx.strokeStyle = "#7cc8ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 15px 'Trebuchet MS', sans-serif";
+    ctx.fillText(
+      state.creature.name === "Choose Your Name" ? "feroz escorpion" : state.creature.name,
+      400,
+      570
+    );
+
+    // Return to Editor button (712, 566)
+    drawCircleButton(712, 566, 18, "#2979bf");
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 16px sans-serif";
+    ctx.fillText("↺", 712, 572);
+
+    // Help '?' button (756, 566)
+    drawCircleButton(756, 566, 18, "#2979bf");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("?", 756, 572);
+    ctx.restore();
+
+    // 9. Level Completed Overlay (matching Video 1 22:14!)
+    if (mg.levelComplete) {
+      ctx.save();
+      ctx.textAlign = "center";
+      ctx.font = "900 58px 'Trebuchet MS', sans-serif";
+      ctx.lineJoin = "round";
+      ctx.strokeStyle = "#3b2314";
+      ctx.lineWidth = 10;
+      ctx.strokeText("Level Completed", W / 2, 245);
+      const lvlGrad = ctx.createLinearGradient(0, 195, 0, 255);
+      lvlGrad.addColorStop(0, "#ffffff");
+      lvlGrad.addColorStop(1, "#a6c8e0");
+      ctx.fillStyle = lvlGrad;
+      ctx.fillText("Level Completed", W / 2, 245);
+
+      ctx.font = "bold 24px 'Trebuchet MS', sans-serif";
+      ctx.strokeStyle = "#3b2314";
+      ctx.lineWidth = 5;
+      ctx.strokeText("Click To Continue", W / 2, 295);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillText("Click To Continue", W / 2, 295);
+
+      ctx.font = "bold 16px 'Trebuchet MS', sans-serif";
+      ctx.fillStyle = "#ffe866";
+      ctx.fillText("Page 3 Editor Parts Unlocked! (Click ↺ at bottom-right to return to Editor)", W / 2, 332);
+      ctx.restore();
+    }
+
+    // 10. Help Overlay
+    if (mg.showHelp) {
+      ctx.save();
+      ctx.fillStyle = "rgba(8, 24, 48, 0.85)";
+      drawRoundedRect(180, 140, 440, 260, 20);
+      ctx.fill();
+      ctx.strokeStyle = "#8cd2ff";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.textAlign = "center";
+      ctx.font = "bold 24px 'Trebuchet MS', sans-serif";
+      ctx.fillText("Totem Trainer Instructions", W / 2, 185);
+      ctx.font = "16px 'Trebuchet MS', sans-serif";
+      ctx.fillStyle = "#cce8ff";
+      ctx.fillText("The Totem Pole shoots orbs at your creature!", W / 2, 230);
+      ctx.fillText("Click (or press Space) when an orb enters the", W / 2, 260);
+      ctx.fillText("green target ring to deflect it back!", W / 2, 290);
+      ctx.fillText("Fill the top bar to complete the level & unlock parts.", W / 2, 325);
+      ctx.fillStyle = "#ffe855";
+      ctx.fillText("Click anywhere to close", W / 2, 370);
+      ctx.restore();
+    }
+  }
+
+  function drawTribalTent(x, y, scale) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(scale, scale);
+    ctx.fillStyle = "#a38d68";
+    ctx.strokeStyle = "#594832";
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(0, -65);
+    ctx.lineTo(-42, 20);
+    ctx.lineTo(42, 20);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#3d2f22";
+    ctx.beginPath();
+    ctx.moveTo(0, -15);
+    ctx.lineTo(-16, 20);
+    ctx.lineTo(16, 20);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawTorch(x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.strokeStyle = "#4d3622";
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, 180);
+    ctx.stroke();
+
+    const flick = Math.sin(simTime * 18 + x) * 3;
+    ctx.fillStyle = "#ff9922";
+    ctx.beginPath();
+    ctx.moveTo(-9, 0);
+    ctx.quadraticCurveTo(flick, -28, 9, 0);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = "#fff066";
+    ctx.beginPath();
+    ctx.arc(0, -6, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawTotemCart(x, y) {
+    const mg = state.minigame;
+    ctx.save();
+    ctx.translate(x, y);
+
+    // 3 Stacked Totem Heads:
+    // Bottom (Purple), Middle (Teal), Top (Yellow Horned) - matching Video 1 22:26!
+    const heads = [
+      { y: -48, color: "#9c62b8", rim: "#e0b054", horn: false },
+      { y: -120, color: "#5cb8b2", rim: "#e0b054", horn: false },
+      { y: -192, color: "#d9a84e", rim: "#8ab85c", horn: true }
+    ];
+
+    heads.forEach(function (hd, idx) {
+      ctx.save();
+      const recoilX = -mg.totemRecoil[idx] * 10;
+      ctx.translate(recoilX, hd.y);
+
+      // Head block
+      ctx.fillStyle = hd.color;
+      ctx.strokeStyle = "#4d3826";
+      ctx.lineWidth = 2.5;
+      drawRoundedRect(-36, -34, 72, 68, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      // Top/bottom decorative rim
+      ctx.fillStyle = hd.rim;
+      ctx.fillRect(-38, -36, 76, 8);
+      ctx.fillRect(-38, 28, 76, 8);
+
+      // Horn on top totem
+      if (hd.horn) {
+        ctx.fillStyle = "#f2e2c4";
+        ctx.beginPath();
+        ctx.moveTo(-25, -36);
+        ctx.quadraticCurveTo(-45, -62, -18, -58);
+        ctx.lineTo(-10, -36);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      // Eye
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(6, -10, 10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#222";
+      ctx.beginPath();
+      ctx.arc(9, -10, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Mouth / Beak on right side
+      const open = mg.totemOpenMouth[idx] * 6;
+      ctx.fillStyle = "#f0c46c";
+      ctx.beginPath();
+      ctx.ellipse(34, 8, 12, 8 + open, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.restore();
+    });
+
+    // Wooden Cart Base
+    ctx.fillStyle = "#b88c58";
+    ctx.strokeStyle = "#593e22";
+    ctx.lineWidth = 2.5;
+    drawRoundedRect(-48, -14, 96, 22, 6);
+    ctx.fill();
+    ctx.stroke();
+
+    // Two Wooden Wheels
+    [-26, 26].forEach(function (wx) {
+      ctx.save();
+      ctx.translate(wx, 10);
+      ctx.rotate(x * 0.05);
+      ctx.fillStyle = "#9e7344";
+      ctx.strokeStyle = "#4d3319";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(0, 0, 16, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#d9b88c";
+      ctx.beginPath();
+      ctx.arc(0, 0, 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    });
+
+    ctx.restore();
+  }
+
+  function drawSpeakerIcon() {
+    ctx.save();
+    ctx.translate(774, 20);
+    ctx.fillStyle = "rgba(18, 52, 88, 0.75)";
+    ctx.strokeStyle = "#8cd2ff";
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(0, 0, 13, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.moveTo(-6, -3);
+    ctx.lineTo(-2, -3);
+    ctx.lineTo(3, -7);
+    ctx.lineTo(3, 7);
+    ctx.lineTo(-2, 3);
+    ctx.lineTo(-6, 3);
+    ctx.closePath();
+    ctx.fill();
+
+    if (Sfx.isMuted()) {
+      ctx.strokeStyle = "#ff5555";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(-7, -7);
+      ctx.lineTo(7, 7);
+      ctx.stroke();
+    } else {
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(3, 0, 4, -0.6, 0.6);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function render() {
+    ctx.clearRect(0, 0, W, H);
+
+    if (state.screen === "title" || state.screen === "pan") {
+      drawTitleAndPanScreen();
+    } else if (state.screen === "hatching") {
+      drawHatchingScreen();
+    } else if (state.screen === "editor") {
+      drawForestStage(0);
+      drawCreature(state.showSpine, simTime);
+      drawEditorUI();
+    } else if (state.screen === "minigame") {
+      drawMinigameScreen();
+    }
+
+    drawSpeakerIcon();
+  }
+
+  // Expose deterministic step & state hooks for automated testing
+  window.__step = function (frames) {
+    const n = frames || 1;
+    for (let i = 0; i < n; i++) {
+      stepSimulation(DT);
+    }
+    render();
+  };
+  window.__game = {
+    state: state,
+    changeScreen: changeScreen,
+    attachPartToCreature: attachPartToCreature,
+    removePartByUid: removePartByUid,
+    attemptDeflect: attemptDeflect,
+    loadPreset: loadPreset,
+    PART_CATALOG: PART_CATALOG,
+    BASE_COLORS: BASE_COLORS
+  };
+
+  // Emit initial screen_change telemetry event
+  logEvent("screen_change", { screen: "title", from: null });
+
+  // Main 60Hz Fixed-Timestep Loop
+  let lastRAF = performance.now();
+  let accumulator = 0;
+
+  function loop(now) {
+    const elapsed = Math.min(0.1, Math.max(0, (now - lastRAF) / 1000));
+    lastRAF = now;
+    accumulator += elapsed;
+
+    while (accumulator >= DT) {
+      stepSimulation(DT);
+      accumulator -= DT;
+    }
+
+    render();
+    requestAnimationFrame(loop);
+  }
+
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

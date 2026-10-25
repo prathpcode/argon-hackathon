@@ -1,0 +1,118 @@
+{
+ "footage": [
+  {
+   "video": "Video 1 (Spore lost media video)",
+   "ranges": [
+    "21:22-22:52"
+   ],
+   "what": "Still screenshots and gameplay footage of Spore Creature Creator 2D showing the creature editor (parts palette, spine/body manipulation, creature naming) and the totem-pole training minigame (Level 1 completion, projectile deflection with a green targeting ring)."
+  },
+  {
+   "video": "Video 2 (Wii lost media video)",
+   "ranges": [
+    "18:21-18:52"
+   ],
+   "what": "Continuous gameplay capture of Spore Creature Creator 2D from the title screen ('Start' button), camera pan down to a hatching egg on a pedestal, spine/vertebra manipulation tutorial, color palette selection, and attaching mouths/eyes from the parts menu."
+  }
+ ],
+ "found": true,
+ "rules": [
+  {
+   "area": "Screens & Flow",
+   "rule": "The game begins on a title screen featuring the 'Presented By Spore Hero / Spore Creature Creator 2D' logo over a starry night sky with a crescent moon and a 'Start' button. Clicking 'Start' pans the camera vertically down through clouds into a daytime forest clearing with a circular stone pedestal.",
+   "evidence": "Video 2 18:21-18:25",
+   "confidence": "seen"
+  },
+  {
+   "area": "Screens & Flow",
+   "rule": "On the pedestal, a spotted egg appears, rocks back and forth, cracks, and hatches into an initial vertical cyan/green blob (the base spine/torso) to begin creature creation.",
+   "evidence": "Video 2 18:26-18:30",
+   "confidence": "seen"
+  },
+  {
+   "area": "Screens & Flow",
+   "rule": "The game has two primary modes: 'Build/Paint' (Creature Editor) and 'Play/Train' (Totem Minigame), toggled via top-center circular mode buttons or bottom bar navigation.",
+   "evidence": "Video 1 21:35, 21:47; Video 2 18:30, 18:37",
+   "confidence": "seen"
+  },
+  {
+   "area": "Camera & Perspective",
+   "rule": "The entire game (both editor and minigame) is rendered from a fixed 2D side-view (profile) perspective with layered 2D background art.",
+   "evidence": "Video 1 21:22-22:52; Video 2 18:25-18:48",
+   "confidence": "seen"
+  },
+  {
+   "area": "Creature Editor - Spine & Body",
+   "rule": "Clicking the creature's body reveals a segmented spine with numbered vertebrae (1 to 6+) and directional arrows at the top and bottom. The player drags vertebrae and arrows to bend, curve, and resize the torso ('Basic Building: Drag to manipulate vertebra and spine').",
+   "evidence": "Video 2 18:31-18:36",
+   "confidence": "seen"
+  },
+  {
+   "area": "Creature Editor - Parts & Categories",
+   "rule": "In 'Build' mode (hammer icon at top-center), a left-hand vertical panel displays creature parts in a 3-column grid (up to 6 rows per page, 18 parts per page) with pagination controls at the bottom (e.g., '1/3', '1/2') and 7 category tabs along the top of the panel: Mouths, Senses (eyes/ears/noses), Limbs/Arms, Legs/Feet, Graspers/Hands, Weapons/Horns/Spikes, and Details/Accessories.",
+   "evidence": "Video 1 21:22, 21:35, 22:00; Video 2 18:30, 18:40-18:48",
+   "confidence": "seen"
+  },
+  {
+   "area": "Creature Editor - Part Placement & Complexity",
+   "rule": "Parts are dragged from the left palette onto the 2D creature body. There is no DNA budget or currency cost shown; instead, a 10-dot meter in the top-right corner tracks complexity or part count (dots fill in white as parts are added).",
+   "evidence": "Video 1 21:35, 21:44 (narrator notes no DNA limitations); Video 2 18:30, 18:41-18:48",
+   "confidence": "seen"
+  },
+  {
+   "area": "Creature Editor - Paint Mode",
+   "rule": "Clicking the top-center Paintbrush icon switches to 'Paint' mode, opening a right-hand panel ('Base') with a 3x5 grid of 15 color swatches. Holding the left mouse button on a swatch displays additional color/detail choices ('Click and hold left mouse button to display more color choices'). Selecting a swatch immediately recolors the creature's body and attached parts.",
+   "evidence": "Video 2 18:36-18:39",
+   "confidence": "seen"
+  },
+  {
+   "area": "Creature Editor - UI & Naming",
+   "rule": "The bottom bar of the editor contains: a 'Spore Hero' logo link (left), a grid/gallery icon, a creature/play icon, a central text input box ('Choose Your Name' where players type names like 'Tecnomon' or 'feroz escorpion'), Undo/Redo curved arrows, a Reset/Clear icon, and a Save/Shopping cart icon (right).",
+   "evidence": "Video 1 21:22, 21:35, 21:47; Video 2 18:30-18:48",
+   "confidence": "seen"
+  },
+  {
+   "area": "Minigame - Arena & Setup",
+   "rule": "In the training minigame, the player's 2D creature stands on the right side of a stone platform in a tribal/jungle arena. On the left side sits a wheeled wooden cart carrying a stack of three colorful tiki/totem pole heads (purple bottom, teal middle, yellow/horned top).",
+   "evidence": "Video 1 21:47-21:59, 22:26-22:39",
+   "confidence": "seen"
+  },
+  {
+   "area": "Minigame - Mechanics & Controls",
+   "rule": "The totem pole heads shoot small patterned orbs/projectiles across the screen toward the creature. A green circular target reticle appears over the creature's weapon/mouth part; the player clicks (or positions the cursor and clicks) when the orb enters the green ring to strike/deflect it.",
+   "evidence": "Video 1 21:50-21:55, 22:26-22:38",
+   "confidence": "seen"
+  },
+  {
+   "area": "Minigame - Scoring, Levelling & Progression",
+   "rule": "The top UI bar in the minigame displays the current level on the left ('Level 1'), a segmented progress bar in the center with a flag icon below it showing a level number (e.g., '1', '2', '3'), and a numeric score on the right (e.g., '0', '90'). Filling the progress bar triggers a 'Level Completed - Click To Continue' overlay.",
+   "evidence": "Video 1 21:47-21:59, 22:13-22:38",
+   "confidence": "seen"
+  },
+  {
+   "area": "Minigame - UI Controls",
+   "rule": "The bottom bar of the minigame features Pause ('||') and Play/Fast-forward ('>>') buttons on the left, the creature's name in a banner in the center, and a Return/Replay arrow and Help ('?') button on the right. A speaker mute toggle sits in the top-right corner across all screens.",
+   "evidence": "Video 1 21:47-21:59, 22:13-22:38; Video 2 18:22-18:48",
+   "confidence": "seen"
+  },
+  {
+   "area": "Unlocks",
+   "rule": "Completing levels in the totem minigame likely unlocks additional part categories or pages in the creature editor, or advances the flag tier.",
+   "evidence": "Video 1 22:13-22:38",
+   "confidence": "inferred"
+  },
+  {
+   "area": "Audio",
+   "rule": "Original game audio is not audible in either clip (covered by narrator voiceovers and background music), though a speaker mute icon in the top-right corner confirms the game had sound effects and/or music.",
+   "evidence": "Video 1 21:35; Video 2 18:22",
+   "confidence": "seen"
+  }
+ ],
+ "unknowns": [
+  "Exact contents and structure of the missing XML configuration file required to get past the title/loading screen.",
+  "Original sound effects and background music (muted/talked over in all surviving footage).",
+  "Exact scoring math per orb hit, whether missed orbs deal damage or reduce progress, and how many total levels exist in the totem minigame.",
+  "Whether parts can be rotated or scaled individually once attached, and whether limb animations in the minigame are procedural or pre-baked per part.",
+  "What the gallery, save/cart, and help buttons specifically do when clicked."
+ ]
+}
