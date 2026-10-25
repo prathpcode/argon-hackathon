@@ -1,1 +1,16 @@
 setup interaction: v1_ChdkSEhlYXFLdUVZNnc5TW9QOXJQOXNBOBIXZEhIZWFxS3VFWTZ3OU1vUDlyUDlzQTg
+setup completed in 214s, env c8ec90204064b249f7b67181dd89a743
+The sandbox has been configured and verified for game playtesting:
+
+1. **Playwright & Chromium**: Installed `playwright` (v1.64.1) and downloaded Chromium with system dependencies (`python3 -m playwright install --with-deps chromium`).
+2. **FFmpeg**: Verified pre-installed at `/usr/bin/ffmpeg` (v6.1.1).
+3. **Smoke Test**: Started the background HTTP server for `/workspace/squad/testgame`, executed `harness.py` with `example_bot.py` for 20 seconds, verified output generation, and stopped the background HTTP server.
+
+### Results
+- **Playwright version**: `1.64.1`
+- **Chromium version**: `156.0.8078.4` (Playwright Chromium v1248)
+- **Harness reported FPS**: `59.0`
+- **`session.mp4` exists**: Yes (created at `/workspace/out/SetupTest/session.mp4`, alongside `/workspace/out/SetupTest/result.json`)
+/Users/prathyekpoojary/Desktop/projects/argon-hackathon/squad/setup_agent.py:52: UserWarning: Agents usage is experimental and may change in future versions.
+  c.agents.delete(id=AGENT_ID)
+agent: glitch-playtester | total 224 s

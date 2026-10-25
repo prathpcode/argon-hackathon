@@ -1,0 +1,943 @@
+{
+ "name": "Griefer",
+ "persona": "Griefer",
+ "seconds": 70.2,
+ "fps": 59.6,
+ "notes": [
+  {
+   "t": 7.8,
+   "severity": "high",
+   "finding": "Emote spam exploit: Clicking '#btn-hi-emote' 8 times in rapid succession increased mood by +60 with zero cooldown or rate limiting. Repro: spam-click '#btn-hi-emote'."
+  },
+  {
+   "t": 12.3,
+   "severity": "low",
+   "finding": "Chat has no client-side rate limit or throttling, permitting immediate message flooding."
+  },
+  {
+   "t": 12.8,
+   "severity": "high",
+   "finding": "Instant teleportation exploit: Clicking on distant object '' (thing) at x=480 instantly warped the player from x=620 to x=480 across 140px. Repro: click any distant quoin or world object on canvas."
+  }
+ ],
+ "errors": [],
+ "final": {
+  "street": "beau_home",
+  "street_width": 2400,
+  "x": 725,
+  "y": 460,
+  "energy": 435,
+  "mood": 500,
+  "img": 26004,
+  "currants": 1441,
+  "nearby": [
+   {
+    "id": "wood_1",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 890,
+    "y": 460,
+    "dist": 165
+   },
+   {
+    "id": "butler_roy",
+    "type": "butler",
+    "name": "Roy (Beau)",
+    "x": 560,
+    "y": 460,
+    "dist": 165
+   },
+   {
+    "id": "q_bh_1",
+    "type": "thing",
+    "name": "",
+    "x": 480,
+    "y": 155,
+    "dist": 245
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Beau's House (Andra Hall Link)",
+    "x": 470,
+    "y": 460,
+    "dist": 255
+   },
+   {
+    "id": "q_bh_2",
+    "type": "thing",
+    "name": "",
+    "x": 1000,
+    "y": 370,
+    "dist": 275
+   },
+   {
+    "id": "magic_rock_home",
+    "type": "magic_rock",
+    "name": "Magic Rock",
+    "x": 418,
+    "y": 460,
+    "dist": 307
+   },
+   {
+    "id": "gas_1",
+    "type": "gas_plant",
+    "name": "Gas Plant",
+    "x": 355,
+    "y": 460,
+    "dist": 370
+   },
+   {
+    "id": "wood_2",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 1120,
+    "y": 460,
+    "dist": 395
+   },
+   {
+    "id": "beryl_1",
+    "type": "beryl_rock",
+    "name": "Beryl Rock",
+    "x": 275,
+    "y": 460,
+    "dist": 450
+   },
+   {
+    "id": "fruit_1",
+    "type": "fruit_tree",
+    "name": "Fruit Tree",
+    "x": 180,
+    "y": 460,
+    "dist": 545
+   },
+   {
+    "id": "wood_3",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 1310,
+    "y": 460,
+    "dist": 585
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Chego Chase / Paluol Peak",
+    "x": 60,
+    "y": 460,
+    "dist": 665
+   },
+   {
+    "id": "tower_1",
+    "type": "tower_project",
+    "name": "Tower Project",
+    "x": 1520,
+    "y": 460,
+    "dist": 795
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Goli Grabs",
+    "x": 2320,
+    "y": 460,
+    "dist": 1595
+   }
+  ],
+  "players": [
+   {
+    "name": "DeadSparrow",
+    "street": "beau_home",
+    "x": 180,
+    "bot": true
+   },
+   {
+    "name": "stormoffara",
+    "street": "beau_home",
+    "x": 815,
+    "bot": true
+   },
+   {
+    "name": "Artichoke",
+    "street": "beau_home",
+    "x": 972,
+    "bot": true
+   },
+   {
+    "name": "Draron",
+    "street": "beau_home",
+    "x": 1330,
+    "bot": true
+   },
+   {
+    "name": "Aris",
+    "street": "chego_chase",
+    "x": 830,
+    "bot": true
+   },
+   {
+    "name": "Spectator",
+    "street": "beau_home",
+    "x": 620,
+    "bot": false
+   }
+  ],
+  "recent": [
+   {
+    "t": 62333,
+    "type": "meter_change",
+    "energy": 435,
+    "mood": 500,
+    "img": 26004,
+    "currants": 1441
+   },
+   {
+    "t": 63094,
+    "type": "chat",
+    "sender": "Griefer",
+    "text": "GRIEFER: Can't stop won't stop!",
+    "street": "beau_home"
+   },
+   {
+    "t": 66655,
+    "type": "emote",
+    "verb": "Greeting Sign ('hi'/'bye')",
+    "target": "DeadSparrow",
+    "street": "beau_home"
+   },
+   {
+    "t": 66656,
+    "type": "meter_change",
+    "energy": 435,
+    "mood": 500,
+    "img": 26004,
+    "currants": 1441
+   },
+   {
+    "t": 67431,
+    "type": "chat",
+    "sender": "Griefer",
+    "text": "GRIEFER: Can't stop won't stop!",
+    "street": "beau_home"
+   },
+   {
+    "t": 71051,
+    "type": "emote",
+    "verb": "Greeting Sign ('hi'/'bye')",
+    "target": "DeadSparrow",
+    "street": "beau_home"
+   },
+   {
+    "t": 71051,
+    "type": "meter_change",
+    "energy": 435,
+    "mood": 500,
+    "img": 26004,
+    "currants": 1441
+   },
+   {
+    "t": 71890,
+    "type": "chat",
+    "sender": "Griefer",
+    "text": "GRIEFER: Can't stop won't stop!",
+    "street": "beau_home"
+   }
+  ]
+ },
+ "events": [
+  {
+   "t": 1681,
+   "type": "player_join",
+   "id": "p_e9067f68-58ca-4fad-b80a-07b8a57468f1",
+   "street": "beau_home",
+   "online": true
+  },
+  {
+   "t": 4739,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 4877,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 450,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 5581,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 5582,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 460,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 6463,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 6464,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 470,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 7270,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 7271,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 480,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 8148,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 8148,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 490,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 9066,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 9067,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 9923,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 9923,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 10813,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 10814,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 11873,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "Griefer spam test 1 - hello world!",
+   "street": "beau_home"
+  },
+  {
+   "t": 12881,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "Griefer spam test 2 - hello world!",
+   "street": "beau_home"
+  },
+  {
+   "t": 13668,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "Griefer spam test 3 - hello world!",
+   "street": "beau_home"
+  },
+  {
+   "t": 14524,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "Griefer spam test 4 - hello world!",
+   "street": "beau_home"
+  },
+  {
+   "t": 15339,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "Griefer spam test 5 - hello world!",
+   "street": "beau_home"
+  },
+  {
+   "t": 18891,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 25992,
+   "currants": 1441
+  },
+  {
+   "t": 18891,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18909,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18924,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18940,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18957,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18974,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 18991,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19007,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19024,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19040,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19058,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19074,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19090,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19107,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19124,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19140,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19157,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19173,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19190,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19207,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19223,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19241,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19258,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19274,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19290,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 19307,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 23675,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23690,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23707,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23724,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23740,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23757,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23773,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23790,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23807,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23824,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23841,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23857,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23874,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23890,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23907,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23923,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23940,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23957,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23973,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 23990,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24007,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24024,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24041,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24058,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24074,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 24091,
+   "type": "street_change",
+   "street": "beau_home",
+   "name": "Beau's Home Street"
+  },
+  {
+   "t": 31539,
+   "type": "item_use",
+   "item": "watering_can",
+   "verb": "Use",
+   "street": "beau_home"
+  },
+  {
+   "t": 33693,
+   "type": "item_use",
+   "item": "pickaxe",
+   "verb": "Mine",
+   "street": "beau_home"
+  },
+  {
+   "t": 35333,
+   "type": "item_use",
+   "item": "shovel",
+   "verb": "Dig",
+   "street": "beau_home"
+  },
+  {
+   "t": 37583,
+   "type": "item_use",
+   "item": "random_kindness",
+   "verb": "Bestow",
+   "street": "beau_home"
+  },
+  {
+   "t": 37586,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 42055,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 42055,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 42575,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 45952,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 45953,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 46614,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 50081,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 50082,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 50654,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 53993,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 53993,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 54747,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 58150,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 58151,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 58933,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 62332,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 62333,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 63094,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 66655,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 66656,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 67431,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  },
+  {
+   "t": 71051,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 71051,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 500,
+   "img": 26004,
+   "currants": 1441
+  },
+  {
+   "t": 71890,
+   "type": "chat",
+   "sender": "Griefer",
+   "text": "GRIEFER: Can't stop won't stop!",
+   "street": "beau_home"
+  }
+ ]
+}

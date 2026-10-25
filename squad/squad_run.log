@@ -1,0 +1,6 @@
+/Users/prathyekpoojary/Desktop/projects/argon-hackathon/squad/squad.py:78: UserWarning: Environments usage is experimental and may change in future versions.
+  files = c.environments.files.list(environment=env, path=f"workspace/out/{name}/shots").files
+squad 142345 done in 1188s: 13 findings
+  Explorer: done  findings 4  Successfully explored all five streets in Ur (Beau's Home Street, Chego Chase, Andra Bureaucratic Hall, Bongul Beat, and
+  Griefer: done  findings 4  Played as Griefer testing edge boundaries, rapid object interactions, emote and chat flooding, and player collisions. Di
+  Socialite: done  findings 5  Tested multiplayer social interactions as Socialite on beau_home with remote players and bots. Gifting items and the 'Sa

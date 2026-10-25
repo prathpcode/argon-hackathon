@@ -1,0 +1,93 @@
+[
+ {
+  "t": 4.9,
+  "severity": "low",
+  "finding": "House platforms on Beau's Home Street lack dedicated rendered platform art or border sprites, relying solely on the background house vector graphic.",
+  "repro": "Spawn in Beau's Home Street, walk to Beau's House at x=470, and jump up the Porch Roof (y=370) and upper roof ledges. Collision works but no platform sprites are drawn.",
+  "agent": "Explorer"
+ },
+ {
+  "t": 29.0,
+  "severity": "medium",
+  "finding": "Invisible wall at the right boundary of Andra Bureaucratic Hall at x=1465 (street width 1500) with no signpost, doorway, or transition out.",
+  "repro": "Enter Andra Bureaucratic Hall via the Ministry door or house link, then walk continuously right until stopped at x=1465 against an invisible barrier.",
+  "agent": "Explorer"
+ },
+ {
+  "t": 40.5,
+  "severity": "medium",
+  "finding": "Edge transition fails at the left boundary of Andra Bureaucratic Hall: walking into x=35 does not transition out, requiring players to manually click the exit door at x=110.",
+  "repro": "Inside Andra Bureaucratic Hall, walk past the door to the left edge at x=35. Unlike other streets where walking past the end triggers the edge exit, this boundary stops the player with no transition.",
+  "agent": "Explorer"
+ },
+ {
+  "t": 60.4,
+  "severity": "medium",
+  "finding": "Chat input retains active focus after text submission, capturing all subsequent movement keystrokes (a/d/w/s/Space) as chat text and preventing character movement.",
+  "repro": "Type and submit a message into the chat input, then attempt to walk using keyboard controls without first clicking back onto the game canvas.",
+  "agent": "Explorer"
+ },
+ {
+  "t": 7.8,
+  "severity": "high",
+  "finding": "Infinite mood exploit via emote button spam: '#btn-hi-emote' has no cooldown or rate limit, repeatedly awarding +10 mood per click when other players are on the street regardless of distance, allowing players to instantly cap mood to 100% (500/500).",
+  "repro": "Click the 'Say hi Sign' button (#btn-hi-emote) on the inventory bar multiple times in rapid succession while other players are on the same street.",
+  "agent": "Griefer"
+ },
+ {
+  "t": 12.3,
+  "severity": "medium",
+  "finding": "Chat input lacks rate-limiting, message throttling, or duplicate detection, allowing rapid message flooding in both the chat panel and world speech bubbles.",
+  "repro": "Submit multiple messages into '#chat-input' back-to-back without delay; all messages are accepted and displayed immediately.",
+  "agent": "Griefer"
+ },
+ {
+  "t": 12.8,
+  "severity": "high",
+  "finding": "Instant world-object teleportation exploit: Clicking on distant interactive objects or quoins anywhere on the canvas immediately warps the player's avatar across the map without distance validation.",
+  "repro": "From any position (e.g., x=620), click on a distant quoin or world object at x=480; the player immediately snaps to the clicked coordinates.",
+  "agent": "Griefer"
+ },
+ {
+  "t": 51.3,
+  "severity": "low",
+  "finding": "Absence of player-to-player collision allows avatars to phase directly through each other and stand completely overlapping in the exact same coordinates.",
+  "repro": "Walk directly toward another player until reaching their exact horizontal coordinate (e.g., x=725).",
+  "agent": "Griefer"
+ },
+ {
+  "t": 6.4,
+  "severity": "high",
+  "finding": "Social emotes and 'Say hi Sign' are local-only and not transmitted to remote players over the network.",
+  "repro": "Click 'Say hi Sign' on the inventory tab. A speech bubble and local mood gain are triggered locally, but no WebSocket packet is sent to other players in the session, so remote players never see the greeting sign or matching bonus.",
+  "agent": "Socialite"
+ },
+ {
+  "t": 8.0,
+  "severity": "medium",
+  "finding": "Player nameplates overlap and become completely illegible when characters stand close together.",
+  "repro": "Stand near another player (e.g., Spectator at x=620). Both player names are rendered at av.y - 82 without collision avoidance or stacking, creating scrambled text overlays like 'Speptatotmoffara'.",
+  "agent": "Socialite"
+ },
+ {
+  "t": 14.9,
+  "severity": "medium",
+  "finding": "Follow (Conga Line) does not function when targeting remote players.",
+  "repro": "Click a remote player avatar and choose 'Follow (Conga Line)'. The system prints 'You are now following <Player>' and sets State.player.followingId, but the simulation loop lacks follow logic for remote player IDs, leaving the player stationary.",
+  "agent": "Socialite"
+ },
+ {
+  "t": 18.5,
+  "severity": "high",
+  "finding": "Item gifting ('Give Pumpkin Ale') is client-side only; items are neither deducted nor sent to the recipient.",
+  "repro": "Open the player interaction menu on another player and select 'Give Pumpkin Ale'. Local floating text 'Received Pumpkin Ale!' appears, but Pumpkin Ale inventory count remains unchanged at 5, and no network packet is dispatched to transfer the item to the other player.",
+  "agent": "Socialite"
+ },
+ {
+  "t": 22.0,
+  "severity": "low",
+  "finding": "Interactive object context menus do not dismiss automatically on movement.",
+  "repro": "Click on Magic Rock to open its action menu ('Change style', 'Skills & Quests', 'Customize Home'), then walk away or type in chat. The menu overlay remains pinned to the screen indefinitely.",
+  "agent": "Socialite"
+ }
+]

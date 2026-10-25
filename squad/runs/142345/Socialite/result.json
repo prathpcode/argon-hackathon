@@ -1,0 +1,353 @@
+{
+ "name": "Socialite",
+ "persona": "Socialite",
+ "seconds": 74.6,
+ "fps": 44.6,
+ "notes": [
+  {
+   "t": 7.2,
+   "severity": "high",
+   "finding": "Other players cannot see Hi Sign: Clicking 'Say hi Sign' only displays a local speech bubble and plays local audio without sending any network packet to other players."
+  },
+  {
+   "t": 14.9,
+   "severity": "medium",
+   "finding": "Follow (Conga Line) broken for other players: State.player.followingId is assigned when selecting Follow, but no logic in the simulation loop updates player position to follow non-bot players."
+  },
+  {
+   "t": 18.5,
+   "severity": "high",
+   "finding": "Gift items not seen or received by other players: 'Give Pumpkin Ale' displays a local float text and chat line, but does not deduct inventory or send any network message to the recipient."
+  }
+ ],
+ "errors": [],
+ "final": {
+  "street": "beau_home",
+  "street_width": 2400,
+  "x": 231,
+  "y": 460,
+  "energy": 435,
+  "mood": 480,
+  "img": 25990,
+  "currants": 1441,
+  "nearby": [
+   {
+    "id": "beryl_1",
+    "type": "beryl_rock",
+    "name": "Beryl Rock",
+    "x": 275,
+    "y": 460,
+    "dist": 44
+   },
+   {
+    "id": "fruit_1",
+    "type": "fruit_tree",
+    "name": "Fruit Tree",
+    "x": 180,
+    "y": 460,
+    "dist": 51
+   },
+   {
+    "id": "gas_1",
+    "type": "gas_plant",
+    "name": "Gas Plant",
+    "x": 355,
+    "y": 460,
+    "dist": 124
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Chego Chase / Paluol Peak",
+    "x": 60,
+    "y": 460,
+    "dist": 171
+   },
+   {
+    "id": "magic_rock_home",
+    "type": "magic_rock",
+    "name": "Magic Rock",
+    "x": 418,
+    "y": 460,
+    "dist": 187
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Beau's House (Andra Hall Link)",
+    "x": 470,
+    "y": 460,
+    "dist": 239
+   },
+   {
+    "id": "q_bh_1",
+    "type": "thing",
+    "name": "",
+    "x": 480,
+    "y": 155,
+    "dist": 249
+   },
+   {
+    "id": "butler_roy",
+    "type": "butler",
+    "name": "Roy (Beau)",
+    "x": 560,
+    "y": 460,
+    "dist": 329
+   },
+   {
+    "id": "wood_1",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 890,
+    "y": 460,
+    "dist": 659
+   },
+   {
+    "id": "q_bh_2",
+    "type": "thing",
+    "name": "",
+    "x": 1000,
+    "y": 370,
+    "dist": 769
+   },
+   {
+    "id": "wood_2",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 1120,
+    "y": 460,
+    "dist": 889
+   },
+   {
+    "id": "wood_3",
+    "type": "wood_tree",
+    "name": "Wood Tree",
+    "x": 1310,
+    "y": 460,
+    "dist": 1079
+   },
+   {
+    "id": "tower_1",
+    "type": "tower_project",
+    "name": "Tower Project",
+    "x": 1520,
+    "y": 460,
+    "dist": 1289
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Goli Grabs",
+    "x": 2320,
+    "y": 460,
+    "dist": 2089
+   }
+  ],
+  "players": [
+   {
+    "name": "DeadSparrow",
+    "street": "beau_home",
+    "x": 609,
+    "bot": true
+   },
+   {
+    "name": "stormoffara",
+    "street": "beau_home",
+    "x": 616,
+    "bot": true
+   },
+   {
+    "name": "Artichoke",
+    "street": "beau_home",
+    "x": 884,
+    "bot": true
+   },
+   {
+    "name": "Draron",
+    "street": "beau_home",
+    "x": 1218,
+    "bot": true
+   },
+   {
+    "name": "Aris",
+    "street": "chego_chase",
+    "x": 840,
+    "bot": true
+   },
+   {
+    "name": "Spectator",
+    "street": "beau_home",
+    "x": 620,
+    "bot": false
+   }
+  ],
+  "recent": [
+   {
+    "t": 19990,
+    "type": "emote",
+    "verb": "Give Pumpkin Ale",
+    "target": "Spectator",
+    "street": "beau_home"
+   },
+   {
+    "t": 29127,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Great job mining everyone!",
+    "street": "beau_home"
+   },
+   {
+    "t": 35422,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Who wants to dance? /thriller",
+    "street": "beau_home"
+   },
+   {
+    "t": 42277,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Saying hi to all my fellow reverie travelers!",
+    "street": "beau_home"
+   },
+   {
+    "t": 49188,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Follow me if you want to explore together!",
+    "street": "beau_home"
+   },
+   {
+    "t": 56201,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Thanks for playing together!",
+    "street": "beau_home"
+   },
+   {
+    "t": 63189,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Great job mining everyone!",
+    "street": "beau_home"
+   },
+   {
+    "t": 69982,
+    "type": "chat",
+    "sender": "Socialite",
+    "text": "Who wants to dance? /thriller",
+    "street": "beau_home"
+   }
+  ]
+ },
+ "events": [
+  {
+   "t": 1529,
+   "type": "player_join",
+   "id": "p_3e530d07-7f3f-471a-b300-1889f1547eac",
+   "street": "beau_home",
+   "online": true
+  },
+  {
+   "t": 5822,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Hello everyone! Socialite is here to play and explore together!",
+   "street": "beau_home"
+  },
+  {
+   "t": 8075,
+   "type": "emote",
+   "verb": "Greeting Sign ('hi'/'bye')",
+   "target": "DeadSparrow",
+   "street": "beau_home"
+  },
+  {
+   "t": 8192,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 450,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 12894,
+   "type": "emote",
+   "verb": "High five (+30 Mood)",
+   "target": "Spectator",
+   "street": "beau_home"
+  },
+  {
+   "t": 12896,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 480,
+   "img": 25990,
+   "currants": 1441
+  },
+  {
+   "t": 16216,
+   "type": "emote",
+   "verb": "Follow (Conga Line)",
+   "target": "Spectator",
+   "street": "beau_home"
+  },
+  {
+   "t": 19990,
+   "type": "emote",
+   "verb": "Give Pumpkin Ale",
+   "target": "Spectator",
+   "street": "beau_home"
+  },
+  {
+   "t": 29127,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Great job mining everyone!",
+   "street": "beau_home"
+  },
+  {
+   "t": 35422,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Who wants to dance? /thriller",
+   "street": "beau_home"
+  },
+  {
+   "t": 42277,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Saying hi to all my fellow reverie travelers!",
+   "street": "beau_home"
+  },
+  {
+   "t": 49188,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Follow me if you want to explore together!",
+   "street": "beau_home"
+  },
+  {
+   "t": 56201,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Thanks for playing together!",
+   "street": "beau_home"
+  },
+  {
+   "t": 63189,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Great job mining everyone!",
+   "street": "beau_home"
+  },
+  {
+   "t": 69982,
+   "type": "chat",
+   "sender": "Socialite",
+   "text": "Who wants to dance? /thriller",
+   "street": "beau_home"
+  }
+ ]
+}

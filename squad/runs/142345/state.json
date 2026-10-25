@@ -1,0 +1,145 @@
+{
+ "run": "142345",
+ "url": "https://marvel-plugins-petersburg-pavilion.trycloudflare.com/",
+ "started": 1792963425.065453,
+ "start_at": 1792963575.065452,
+ "seconds": 75,
+ "agents": {
+  "Explorer": {
+   "name": "Explorer",
+   "persona": "Visit every street through signposts and doors, walk to both ends of each street, climb platforms. Report street transitions that fail, invisible walls, falling out of the world, missing art, places you can't leave.",
+   "phase": "done",
+   "interaction": "v1_ChdqWFBlYW9feEVjcWcxTWtQMGF6ZThBVRIXalhQZWFvX3hFY3FnMU1rUDBhemU4QVU",
+   "status": "completed",
+   "env": "68d3976bdc8ac81b8706b346f21d04ea",
+   "elapsed": 1175,
+   "latest_shot": "runs/142345/Explorer/shots/0072.6_13_goli_grabs_arrived.png",
+   "findings": [
+    {
+     "t": 4.9,
+     "severity": "low",
+     "finding": "House platforms on Beau's Home Street lack dedicated rendered platform art or border sprites, relying solely on the background house vector graphic.",
+     "repro": "Spawn in Beau's Home Street, walk to Beau's House at x=470, and jump up the Porch Roof (y=370) and upper roof ledges. Collision works but no platform sprites are drawn."
+    },
+    {
+     "t": 29.0,
+     "severity": "medium",
+     "finding": "Invisible wall at the right boundary of Andra Bureaucratic Hall at x=1465 (street width 1500) with no signpost, doorway, or transition out.",
+     "repro": "Enter Andra Bureaucratic Hall via the Ministry door or house link, then walk continuously right until stopped at x=1465 against an invisible barrier."
+    },
+    {
+     "t": 40.5,
+     "severity": "medium",
+     "finding": "Edge transition fails at the left boundary of Andra Bureaucratic Hall: walking into x=35 does not transition out, requiring players to manually click the exit door at x=110.",
+     "repro": "Inside Andra Bureaucratic Hall, walk past the door to the left edge at x=35. Unlike other streets where walking past the end triggers the edge exit, this boundary stops the player with no transition."
+    },
+    {
+     "t": 60.4,
+     "severity": "medium",
+     "finding": "Chat input retains active focus after text submission, capturing all subsequent movement keystrokes (a/d/w/s/Space) as chat text and preventing character movement.",
+     "repro": "Type and submit a message into the chat input, then attempt to walk using keyboard controls without first clicking back onto the game canvas."
+    }
+   ],
+   "summary": "Successfully explored all five streets in Ur (Beau's Home Street, Chego Chase, Andra Bureaucratic Hall, Bongul Beat, and Goli Grabs) across 75 seconds at 59.8 FPS. Climbed house roof platforms in Beau's Home, floating platforms in Chego Chase and Bongul Beat, and ladders in Goli Grabs. Verified door transitions between Beau's House/Chego Chase and Andra Bureaucratic Hall, along with boundary signpost transitions across all outdoor streets. Noted missing platform artwork on Beau's House, an invisible wall and missing edge transition in Andra Bureaucratic Hall, and movement lockup caused by sticky chat input focus.",
+   "session": "runs/142345/Explorer/session.mp4",
+   "result": "runs/142345/Explorer/result.json",
+   "usage": {
+    "in": 3099404,
+    "out": 10849
+   }
+  },
+  "Griefer": {
+   "name": "Griefer",
+   "persona": "Try to break the game: run off both edges, jump spam on platform edges, click objects rapidly, spam chat and emotes, use items repeatedly, stand inside other players. Report exploits (infinite resources/xp), stuck states, crashes, desync.",
+   "phase": "done",
+   "interaction": "v1_ChdmblBlYXVTX0RveWQxTWtQNXAycm9BYxIXZm5QZWF1U19Eb3lkMU1rUDVwMnJvQWM",
+   "status": "completed",
+   "env": "b6756e7100f7664f7522fd7537145d54",
+   "elapsed": 730,
+   "latest_shot": "runs/142345/Griefer/shots/0069.7_final.png",
+   "findings": [
+    {
+     "t": 7.8,
+     "severity": "high",
+     "finding": "Infinite mood exploit via emote button spam: '#btn-hi-emote' has no cooldown or rate limit, repeatedly awarding +10 mood per click when other players are on the street regardless of distance, allowing players to instantly cap mood to 100% (500/500).",
+     "repro": "Click the 'Say hi Sign' button (#btn-hi-emote) on the inventory bar multiple times in rapid succession while other players are on the same street."
+    },
+    {
+     "t": 12.3,
+     "severity": "medium",
+     "finding": "Chat input lacks rate-limiting, message throttling, or duplicate detection, allowing rapid message flooding in both the chat panel and world speech bubbles.",
+     "repro": "Submit multiple messages into '#chat-input' back-to-back without delay; all messages are accepted and displayed immediately."
+    },
+    {
+     "t": 12.8,
+     "severity": "high",
+     "finding": "Instant world-object teleportation exploit: Clicking on distant interactive objects or quoins anywhere on the canvas immediately warps the player's avatar across the map without distance validation.",
+     "repro": "From any position (e.g., x=620), click on a distant quoin or world object at x=480; the player immediately snaps to the clicked coordinates."
+    },
+    {
+     "t": 51.3,
+     "severity": "low",
+     "finding": "Absence of player-to-player collision allows avatars to phase directly through each other and stand completely overlapping in the exact same coordinates.",
+     "repro": "Walk directly toward another player until reaching their exact horizontal coordinate (e.g., x=725)."
+    }
+   ],
+   "summary": "Played as Griefer testing edge boundaries, rapid object interactions, emote and chat flooding, and player collisions. Discovered two high-severity exploits: an unthrottled emote button that grants unlimited mood (+10 per rapid click up to max capacity) and instant coordinate teleportation triggered by clicking distant world objects/quoins. Additionally verified chat spamming with zero rate throttling and complete lack of avatar collision clipping.",
+   "session": "runs/142345/Griefer/session.mp4",
+   "result": "runs/142345/Griefer/result.json",
+   "usage": {
+    "in": 927238,
+    "out": 5247
+   }
+  },
+  "Socialite": {
+   "name": "Socialite",
+   "persona": "Play with the other players: say hi, use emotes and the hi sign, follow another player (conga), mine the same rock as someone else, gift items. Report anything that the other players don't see, double messages, missing names, broken co-op bonuses.",
+   "phase": "done",
+   "interaction": "v1_ChdtWFBlYXNQektkUzAxTWtQbmZUTWlRYxIXbVhQZWFzUHpLZFMwMU1rUG5mVE1pUWM",
+   "status": "completed",
+   "env": "caef6f8e6c9e7cc0aa3ec3edcbe3ecdb",
+   "elapsed": 981,
+   "latest_shot": "runs/142345/Socialite/shots/0073.8_final.png",
+   "findings": [
+    {
+     "t": 6.4,
+     "severity": "high",
+     "finding": "Social emotes and 'Say hi Sign' are local-only and not transmitted to remote players over the network.",
+     "repro": "Click 'Say hi Sign' on the inventory tab. A speech bubble and local mood gain are triggered locally, but no WebSocket packet is sent to other players in the session, so remote players never see the greeting sign or matching bonus."
+    },
+    {
+     "t": 8.0,
+     "severity": "medium",
+     "finding": "Player nameplates overlap and become completely illegible when characters stand close together.",
+     "repro": "Stand near another player (e.g., Spectator at x=620). Both player names are rendered at av.y - 82 without collision avoidance or stacking, creating scrambled text overlays like 'Speptatotmoffara'."
+    },
+    {
+     "t": 14.9,
+     "severity": "medium",
+     "finding": "Follow (Conga Line) does not function when targeting remote players.",
+     "repro": "Click a remote player avatar and choose 'Follow (Conga Line)'. The system prints 'You are now following <Player>' and sets State.player.followingId, but the simulation loop lacks follow logic for remote player IDs, leaving the player stationary."
+    },
+    {
+     "t": 18.5,
+     "severity": "high",
+     "finding": "Item gifting ('Give Pumpkin Ale') is client-side only; items are neither deducted nor sent to the recipient.",
+     "repro": "Open the player interaction menu on another player and select 'Give Pumpkin Ale'. Local floating text 'Received Pumpkin Ale!' appears, but Pumpkin Ale inventory count remains unchanged at 5, and no network packet is dispatched to transfer the item to the other player."
+    },
+    {
+     "t": 22.0,
+     "severity": "low",
+     "finding": "Interactive object context menus do not dismiss automatically on movement.",
+     "repro": "Click on Magic Rock to open its action menu ('Change style', 'Skills & Quests', 'Customize Home'), then walk away or type in chat. The menu overlay remains pinned to the screen indefinitely."
+    }
+   ],
+   "summary": "Tested multiplayer social interactions as Socialite on beau_home with remote players and bots. Gifting items and the 'Say hi' sign emote are purely client-side and do not broadcast over WebSocket to other players or deduct items. Following remote players in a conga line sets followingId but does not move the player. Close-proximity nameplates collide into unreadable text, and object context menus fail to dismiss upon movement.",
+   "session": "runs/142345/Socialite/session.mp4",
+   "result": "runs/142345/Socialite/result.json",
+   "usage": {
+    "in": 1686223,
+    "out": 9854
+   }
+  }
+ },
+ "finished": 1792964612.802943
+}

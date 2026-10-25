@@ -1,0 +1,813 @@
+{
+ "name": "Explorer",
+ "persona": "Explorer",
+ "seconds": 75.6,
+ "fps": 59.8,
+ "notes": [
+  {
+   "t": 1.3,
+   "severity": "medium",
+   "finding": "Spawned on street 'beau_home' at x=620, y=460"
+  },
+  {
+   "t": 4.0,
+   "severity": "medium",
+   "finding": "Beau Home house platform climb step 1: x=313, y=422"
+  },
+  {
+   "t": 4.9,
+   "severity": "medium",
+   "finding": "Beau Home house platform climb step 2: x=458, y=370"
+  },
+  {
+   "t": 4.9,
+   "severity": "low",
+   "finding": "Missing art: House platforms on Beau's Home lack standalone platform art/borders, relying entirely on house silhouette"
+  },
+  {
+   "t": 5.3,
+   "severity": "medium",
+   "finding": "Walking to left end of Beau's Home to trigger Chego Chase transition via boundary/signpost (x=60)"
+  },
+  {
+   "t": 9.2,
+   "severity": "medium",
+   "finding": "Transition result: current street 'chego_chase' at x=2150"
+  },
+  {
+   "t": 9.6,
+   "severity": "medium",
+   "finding": "Walking to Ministry of Departments door at x=420 in Chego Chase"
+  },
+  {
+   "t": 19.2,
+   "severity": "medium",
+   "finding": "Clicking Ministry of Departments door at x=420, y=420 to enter Andra Hall"
+  },
+  {
+   "t": 21.0,
+   "severity": "medium",
+   "finding": "Current street: 'andra_hall' at x=150"
+  },
+  {
+   "t": 21.4,
+   "severity": "medium",
+   "finding": "Walking to right end of Andra Hall (width 1500) to test street boundary"
+  },
+  {
+   "t": 29.0,
+   "severity": "medium",
+   "finding": "Invisible wall: In Andra Bureaucratic Hall right boundary blocks at x=1465, with no exit signpost or transition to other streets"
+  },
+  {
+   "t": 29.3,
+   "severity": "medium",
+   "finding": "Walking left towards exit door at x=110 in Andra Hall"
+  },
+  {
+   "t": 40.5,
+   "severity": "medium",
+   "finding": "Street transition fails: Walking into left edge at x=35 in Andra Hall does not transition; street has no edge exit triggers"
+  },
+  {
+   "t": 40.5,
+   "severity": "medium",
+   "finding": "Clicking exit door at x=110, y=420 in Andra Hall to return to Chego Chase"
+  },
+  {
+   "t": 42.9,
+   "severity": "medium",
+   "finding": "Current street: 'chego_chase' at x=450"
+  },
+  {
+   "t": 48.5,
+   "severity": "medium",
+   "finding": "Chego Chase platform climb: x=1450, y=375"
+  },
+  {
+   "t": 48.9,
+   "severity": "medium",
+   "finding": "Walking to left end of Chego Chase (x=90) to transition to Bongul Beat"
+  },
+  {
+   "t": 58.0,
+   "severity": "medium",
+   "finding": "Current street: 'bongul_beat' at x=2080"
+  },
+  {
+   "t": 66.1,
+   "severity": "medium",
+   "finding": "Bongul Beat platform climbed at x=856, y=375"
+  },
+  {
+   "t": 66.5,
+   "severity": "medium",
+   "finding": "Walking to left end of Bongul Beat (x=90) to transition to Goli Grabs"
+  },
+  {
+   "t": 72.6,
+   "severity": "medium",
+   "finding": "Current street: 'goli_grabs' at x=160"
+  }
+ ],
+ "errors": [],
+ "final": {
+  "street": "goli_grabs",
+  "street_width": 2200,
+  "x": 414,
+  "y": 470,
+  "energy": 435,
+  "mood": 440,
+  "img": 25998,
+  "currants": 1442,
+  "nearby": [
+   {
+    "id": "green_bag_ground",
+    "type": "ground_bag",
+    "name": "Generic Green Bag",
+    "x": 410,
+    "y": 470,
+    "dist": 4
+   },
+   {
+    "id": "shrine_lem",
+    "type": "shrine",
+    "name": "Shrine to Lem",
+    "x": 640,
+    "y": 470,
+    "dist": 226
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Beau's Home Street",
+    "x": 80,
+    "y": 470,
+    "dist": 334
+   },
+   {
+    "id": "beryl_gg_1",
+    "type": "beryl_rock",
+    "name": "Beryl Rock",
+    "x": 760,
+    "y": 290,
+    "dist": 346
+   },
+   {
+    "id": "q_gg_qurazy",
+    "type": "thing",
+    "name": "",
+    "x": 820,
+    "y": 210,
+    "dist": 406
+   },
+   {
+    "id": "butterfly_gg_1",
+    "type": "butterfly",
+    "name": "Butterfly",
+    "x": 880,
+    "y": 230,
+    "dist": 466
+   },
+   {
+    "id": "q_gg_2",
+    "type": "thing",
+    "name": "",
+    "x": 1280,
+    "y": 280,
+    "dist": 866
+   },
+   {
+    "id": "dirt_gg_1",
+    "type": "dirt_pile",
+    "name": "Dirt Pile",
+    "x": 1290,
+    "y": 470,
+    "dist": 876
+   },
+   {
+    "id": "piggy_gg_1",
+    "type": "piggy",
+    "name": "Piggy",
+    "x": 1420,
+    "y": 470,
+    "dist": 1006
+   },
+   {
+    "id": "vendor_kitchen",
+    "type": "vendor",
+    "name": "Street Spirit (Kitchen Tools Vendor)",
+    "x": 1560,
+    "y": 470,
+    "dist": 1146
+   },
+   {
+    "id": null,
+    "type": "thing",
+    "name": "Vaila Vincta / Chego Chase",
+    "x": 2100,
+    "y": 470,
+    "dist": 1686
+   }
+  ],
+  "players": [
+   {
+    "name": "DeadSparrow",
+    "street": "beau_home",
+    "x": 346,
+    "bot": true
+   },
+   {
+    "name": "stormoffara",
+    "street": "beau_home",
+    "x": 754,
+    "bot": true
+   },
+   {
+    "name": "Artichoke",
+    "street": "beau_home",
+    "x": 1001,
+    "bot": true
+   },
+   {
+    "name": "Draron",
+    "street": "beau_home",
+    "x": 1066,
+    "bot": true
+   },
+   {
+    "name": "Aris",
+    "street": "chego_chase",
+    "x": 827,
+    "bot": true
+   }
+  ],
+  "recent": [
+   {
+    "t": 73954,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 73972,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 73988,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 74005,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 74023,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 74038,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 74054,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   },
+   {
+    "t": 74071,
+    "type": "street_change",
+    "street": "goli_grabs",
+    "name": "Goli Grabs in Kalavana"
+   }
+  ]
+ },
+ "events": [
+  {
+   "t": 990,
+   "type": "player_join",
+   "id": "p_55d48874-1208-46aa-982c-2eb21218b418",
+   "street": "beau_home",
+   "online": true
+  },
+  {
+   "t": 10558,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 440,
+   "img": 25992,
+   "currants": 1441
+  },
+  {
+   "t": 10559,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10577,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10591,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10608,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10624,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10641,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10658,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10674,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10690,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10708,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10724,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10742,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10761,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10773,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10791,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10808,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10824,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10840,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10859,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10874,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10890,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10907,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10925,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10941,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10957,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 10974,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 22577,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 440,
+   "img": 25994,
+   "currants": 1441
+  },
+  {
+   "t": 22577,
+   "type": "street_change",
+   "street": "andra_hall",
+   "name": "Andra Bureaucratic Hall"
+  },
+  {
+   "t": 44499,
+   "type": "street_change",
+   "street": "chego_chase",
+   "name": "Chego Chase in Andra"
+  },
+  {
+   "t": 59055,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 440,
+   "img": 25996,
+   "currants": 1441
+  },
+  {
+   "t": 59056,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59072,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59088,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59105,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59122,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59138,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59156,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59172,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59188,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59205,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59222,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59239,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59256,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59272,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59289,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59306,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59322,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59339,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59356,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59388,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59407,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59423,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59438,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59455,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 59472,
+   "type": "street_change",
+   "street": "bongul_beat",
+   "name": "Bongul Beat in Andra"
+  },
+  {
+   "t": 70006,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 440,
+   "img": 25996,
+   "currants": 1442
+  },
+  {
+   "t": 73654,
+   "type": "meter_change",
+   "energy": 435,
+   "mood": 440,
+   "img": 25998,
+   "currants": 1442
+  },
+  {
+   "t": 73656,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73671,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73702,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73705,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73721,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73738,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73755,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73772,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73788,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73806,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73822,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73838,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73854,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73872,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73888,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73905,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73922,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73954,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73972,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 73988,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 74005,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 74023,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 74038,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 74054,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  },
+  {
+   "t": 74071,
+   "type": "street_change",
+   "street": "goli_grabs",
+   "name": "Goli Grabs in Kalavana"
+  }
+ ]
+}
