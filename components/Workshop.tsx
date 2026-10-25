@@ -194,7 +194,7 @@ export function Workshop({ initial }: { initial: RunState }) {
                 const Icon = agentIcon(a);
                 return (
                   <button key={a.id} className={`tab-agent ${a.status}`} aria-pressed={focus?.id === a.id} onClick={() => setPinned(a.id)}>
-                    <Icon aria-hidden /> {a.name}{a.round ? ` · ${a.round}` : ""}
+                    <Icon aria-hidden /> {a.name}{a.round && run.rounds.length > 1 ? ` · ${a.round}` : ""}
                   </button>
                 );
               })}
@@ -281,7 +281,7 @@ function Desk({ run, agent: a, now, following, onFollow }: { run: RunState; agen
       <div className="desk-head">
         <span className="desk-icon"><Icon aria-hidden /></span>
         <div className="desk-who">
-          <b>{a.name}{a.round ? <i> · round {a.round}</i> : null}</b>
+          <b>{a.name}{a.round && run.rounds.length > 1 ? <i> · round {a.round}</i> : null}</b>
           <span>{a.brief}</span>
         </div>
         <div className="desk-state">
@@ -664,7 +664,7 @@ function ParityView({ run, check }: { run: RunState; check: Verify }) {
           <p>{r.original_shows}</p>
         </figure>
         <figure>
-          <figcaption>Revival<span>round {check.round}</span></figcaption>
+          <figcaption>Revival{run.rounds.length > 1 && <span>round {check.round}</span>}</figcaption>
           <div className="pair-screen">
             {r.video ? <video src={file(run, r.video)} autoPlay muted loop playsInline controls /> : <span className="pair-empty">No recording</span>}
           </div>
