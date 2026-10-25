@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import time
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import compare
@@ -49,6 +50,30 @@ def score(verdicts):
     return sum(v["pass"] for v in verdicts)
 
 
+def confirm_flips(cfg, scen_path, rdir, verdicts, best_verdicts, extra=2):
+    """A single model verdict can flip between runs. Re-judge every rule whose pass/fail changed against the
+    best round `extra` more times on the same recording; the majority of all judgements decides."""
+    before = {v["id"]: v["pass"] for v in best_verdicts}
+    flips = [v for v in verdicts if v["id"] in before and v["pass"] != before[v["id"]]]
+    if not flips:
+        return verdicts
+    plan = {s["id"]: s for s in json.loads(Path(scen_path).read_text())["scenarios"]}
+    played = {r["id"]: r for r in json.loads((rdir / "play" / "play.json").read_text())["results"]}
+    c = compare.client()
+    print(f"confirm: re-judging {len(flips)} flipped rules x{extra}", flush=True)
+    jobs = [(v, n) for v in flips for n in range(extra)]
+    with ThreadPoolExecutor(8) as ex:
+        again = list(ex.map(lambda job: compare.judge(c, plan[job[0]["id"]], played[job[0]["id"]],
+                                                      cfg["sources"], rdir / "play")["pass"], jobs))
+    for v in flips:
+        votes = [v["pass"]] + [ok for (w, _), ok in zip(jobs, again) if w is v]
+        v["votes"] = votes
+        v["pass"] = sum(votes) * 2 > len(votes)
+        print(f"  {v['id']:40} votes {votes} -> {'PASS' if v['pass'] else 'FAIL'}", flush=True)
+    (rdir / "play" / "verdicts.json").write_text(json.dumps(verdicts, indent=1))
+    return verdicts
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("config")
@@ -85,29 +110,37 @@ def main():
     for k in range(1, a.rounds + 1):
         t0 = time.time()
         rk = run / f"round_{k}"
-        shutil.rmtree(rk, ignore_errors=True)
-        shutil.copytree(best["dir"] / "game", rk / "game")
         plan = json.loads(scen_path.read_text())
-        print(f"ROUND {k}: asking for fixes ({len(best['verdicts']) - score(best['verdicts'])} failing)", flush=True)
-        proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions,
-                               limit=a.batch, raw_path=rk / "proposal_raw.txt")
-        (rk / "proposal.json").write_text(json.dumps(proposal, indent=1))
-        edits = proposal.get("edits", [])
-        if a.approve:
-            for e in edits:
-                print(f"\n--- {e['file']} ({', '.join(e.get('rule_ids') or [])}): {e.get('why')}\n- {e['old'][:400]}\n+ {e['new'][:400]}")
-            if input("apply these edits? [y/N] ").strip().lower() != "y":
-                print("rejected by user; stopping")
-                break
-        applied, failed = fix.apply_edits(rk / "game", edits)
-        for u in proposal.get("scenario_updates", []):
-            for s in plan["scenarios"]:
-                if s["id"] == u["id"]:
-                    s["steps"] = u["steps"]
-        scen_path.write_text(json.dumps(plan, indent=1))
-        print(f"  edits applied {len(applied)}, failed {len(failed)}, scenario updates {len(proposal.get('scenario_updates', []))}", flush=True)
+        if a.resume and (rk / "play" / "verdicts.json").exists() and (rk / "proposal.json").exists():
+            print(f"ROUND {k}: reusing measured round", flush=True)
+            proposal = json.loads((rk / "proposal.json").read_text())
+            applied, failed = proposal.get("edits", []), []
+            smoke = json.loads((rk / "play" / "play.json").read_text())["smoke"]
+            verdicts = json.loads((rk / "play" / "verdicts.json").read_text())
+        if not (a.resume and (rk / "play" / "verdicts.json").exists() and (rk / "proposal.json").exists()):
+            shutil.rmtree(rk, ignore_errors=True)
+            shutil.copytree(best["dir"] / "game", rk / "game")
+            print(f"ROUND {k}: asking for fixes ({len(best['verdicts']) - score(best['verdicts'])} failing)", flush=True)
+            proposal = fix.propose(cfg, rk / "game", best["verdicts"], best["smoke"], plan, regressions,
+                                   limit=a.batch, raw_path=rk / "proposal_raw.txt")
+            (rk / "proposal.json").write_text(json.dumps(proposal, indent=1))
+            edits = proposal.get("edits", [])
+            if a.approve:
+                for e in edits:
+                    print(f"\n--- {e['file']} ({', '.join(e.get('rule_ids') or [])}): {e.get('why')}\n- {e['old'][:400]}\n+ {e['new'][:400]}")
+                if input("apply these edits? [y/N] ").strip().lower() != "y":
+                    print("rejected by user; stopping")
+                    break
+            applied, failed = fix.apply_edits(rk / "game", edits)
+            for u in proposal.get("scenario_updates", []):
+                for s in plan["scenarios"]:
+                    if s["id"] == u["id"]:
+                        s["steps"] = u["steps"]
+            scen_path.write_text(json.dumps(plan, indent=1))
+            print(f"  edits applied {len(applied)}, failed {len(failed)}, scenario updates {len(proposal.get('scenario_updates', []))}", flush=True)
 
-        smoke, verdicts = evaluate(cfg, rk / "game", scen_path, rk)
+            smoke, verdicts = evaluate(cfg, rk / "game", scen_path, rk)
+        verdicts = confirm_flips(cfg, scen_path, rk, verdicts, best["verdicts"])
         was = {v["id"] for v in best["verdicts"] if v["pass"]}
         now = {v["id"] for v in verdicts if v["pass"]}
         lost = sorted(was - now)

@@ -1,2 +1,47 @@
 ROUND 0: 11/41 rules match
-ROUND 1: asking for fixes (30 failing)
+ROUND 1: reusing measured round
+confirm: re-judging 14 flipped rules x2
+  first_street_visit_xp_bonus              match     expects_ok=True  PASS
+  first_street_visit_xp_bonus              match     expects_ok=True  PASS
+  minimap_strip_and_world_map_button       match     expects_ok=True  PASS
+  minimap_strip_and_world_map_button       match     expects_ok=True  PASS
+  world_regions_and_interconnected_streets mismatch  expects_ok=True  
+  world_map_teleport_and_go_home           match     expects_ok=True  PASS
+  world_map_teleport_and_go_home           match     expects_ok=True  PASS
+  world_regions_and_interconnected_streets mismatch  expects_ok=True  
+  magic_rock_change_street_style           match     expects_ok=True  PASS
+  bureaucrat_waiting_room_qualification    mismatch  expects_ok=True  
+  giant_shrines_and_visage_overlay         match     expects_ok=True  PASS
+  giant_shrines_and_visage_overlay         mismatch  expects_ok=True  
+  floating_quoins_jump_collection          match     expects_ok=True  PASS
+  bureaucrat_waiting_room_qualification    match     expects_ok=True  PASS
+  floating_quoins_jump_collection          match     expects_ok=True  PASS
+  magic_rock_change_street_style           match     expects_ok=True  PASS
+  inventory_16_slots_bag_and_search        mismatch  expects_ok=True  
+  inventory_16_slots_bag_and_search        mismatch  expects_ok=True  
+  tower_construction_project_contribution  mismatch  expects_ok=True  
+  tower_construction_project_contribution  mismatch  expects_ok=True  
+  daily_hi_sign_match_bonus                mismatch  expects_ok=True  
+  mood_energy_img_meters_and_restoration   match     expects_ok=True  PASS
+  mood_energy_img_meters_and_restoration   match     expects_ok=True  PASS
+  building_door_interior_transition        unclear   expects_ok=True  
+  inventory_item_context_menu_verbs        match     expects_ok=True  PASS
+  building_door_interior_transition        unclear   expects_ok=True  
+  daily_hi_sign_match_bonus                mismatch  expects_ok=True  
+  inventory_item_context_menu_verbs        match     expects_ok=True  PASS
+  minimap_strip_and_world_map_button       votes [True, True, True] -> PASS
+  world_regions_and_interconnected_streets votes [True, False, False] -> FAIL
+  building_door_interior_transition        votes [False, False, False] -> FAIL
+  first_street_visit_xp_bonus              votes [True, True, True] -> PASS
+  world_map_teleport_and_go_home           votes [True, True, True] -> PASS
+  magic_rock_change_street_style           votes [True, True, True] -> PASS
+  bureaucrat_waiting_room_qualification    votes [True, False, True] -> PASS
+  giant_shrines_and_visage_overlay         votes [False, False, True] -> FAIL
+  floating_quoins_jump_collection          votes [True, True, True] -> PASS
+  inventory_16_slots_bag_and_search        votes [True, False, False] -> FAIL
+  inventory_item_context_menu_verbs        votes [True, True, True] -> PASS
+  mood_energy_img_meters_and_restoration   votes [True, True, True] -> PASS
+  tower_construction_project_contribution  votes [False, False, False] -> FAIL
+  daily_hi_sign_match_bonus                votes [False, False, False] -> FAIL
+ROUND 1: 15/41  new ['bureaucrat_waiting_room_qualification', 'first_street_visit_xp_bonus', 'floating_quoins_jump_collection', 'inventory_item_context_menu_verbs', 'magic_rock_change_street_style', 'minimap_strip_and_world_map_button', 'mood_energy_img_meters_and_restoration', 'world_map_teleport_and_go_home']  regressions ['building_door_interior_transition', 'daily_hi_sign_match_bonus', 'giant_shrines_and_visage_overlay', 'tower_construction_project_contribution']  REVERTED
+ROUND 2: asking for fixes (30 failing)
