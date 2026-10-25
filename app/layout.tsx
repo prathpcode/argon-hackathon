@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Argon",
+  title: "Revive",
   description: "Lost games, played again. Agents rebuild shut-down games from their surviving footage.",
 };
 

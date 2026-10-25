@@ -1,4 +1,4 @@
-/* Argon: a teletext service for lost games. Black ground, the eight broadcast colours doing jobs,
+/* Revive: a teletext service for lost games. Black ground, the eight broadcast colours doing jobs,
    Bedstead (SAA5050) for anything set like a teletext page, Atkinson Hyperlegible Mono for reading. */
 
 @font-face {
@@ -303,6 +303,11 @@ h1, h2, h3, p { margin: 0; }
 .phase.done::after { opacity: 1; }
 .phase.error { --c: var(--red); }
 .phase.error .phase-no { background: var(--red); color: var(--black); }
+.phases.with-parity { grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 0.9fr); }
+.phase:has(+ .parity)::after { display: none; }
+.phase.parity { --c: var(--cyan); padding-left: 2ch; border-left: 2px solid var(--blue-line); }
+.phase.parity .phase-no svg { width: 18px; height: 18px; stroke-width: 2.4; }
+.phase.parity[aria-selected="true"] .phase-no { background: var(--cyan); color: var(--black); }
 
 .error-card { display: flex; align-items: center; gap: 1.2ch; padding: 10px 10px 10px 1.6ch; margin-bottom: 24px; background: var(--red); color: var(--black); font-family: var(--tt); font-size: 15px; }
 .error-card > svg { width: 18px; height: 18px; flex: none; animation: flash 1s steps(1) infinite; }
@@ -465,6 +470,14 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .mate-shot { width: 56px; aspect-ratio: 16 / 9; object-fit: cover; flex: none; background: #050505; }
 .mate-dot { width: 8px; height: 8px; flex: none; background: var(--c); }
 
+.review .report-scores { margin-bottom: 12px; }
+.review-parity { width: 100%; display: flex; align-items: center; gap: 1ch; padding: 8px; margin-bottom: 8px; border: 0; background: #0b0b2a; color: #d6d6d6; font-size: 13px; text-align: left; transition: background-color 90ms linear; }
+.review-parity:hover { background: #12123a; color: var(--white); }
+.review-parity svg { width: 15px; height: 15px; color: var(--cyan); }
+.review-parity span { flex: 1; }
+.review-parity b { font-family: var(--tt); font-weight: 400; color: var(--cyan); }
+.review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.review-list p { margin: 2px 0 8px calc(28px + 1.2ch + 6px); font-size: 12.5px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .issues ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .issues summary { display: flex; align-items: baseline; gap: 1ch; padding: 6px 0; cursor: pointer; list-style: none; font-size: 13px; color: #d6d6d6; transition: color 90ms linear; }
 .issues summary::-webkit-details-marker { display: none; }
@@ -585,14 +598,6 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 @media (max-width: 760px) { .players button { width: 64px; } }
 
 /* Footage check: rules played in the rebuild and judged against the original footage */
-.footage-check ul { list-style: none; margin: 8px 0 0; padding: 0; max-height: 420px; overflow: auto; }
-.footage-check li summary { display: grid; grid-template-columns: 2ch 1fr auto; gap: 1ch; align-items: baseline; cursor: pointer; padding: 3px 0; }
-.footage-check li summary a { color: var(--cyan); font-size: 13px; white-space: nowrap; }
-.footage-check li p { margin: 4px 0 4px 3ch; font-size: 14px; }
-.footage-check video { display: block; width: calc(100% - 3ch); margin: 6px 0 8px 3ch; }
-.footage-check .fc-ok { color: var(--green); font-style: normal; }
-.footage-check .fc-no { color: var(--red); font-style: normal; }
-.fc-trend { font-family: var(--tt); color: var(--yellow); margin: 6px 0; }
 
 /* Managed Agent squad */
 .squad details { margin-top: 10px; }
@@ -600,3 +605,44 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .squad img { display: block; width: 100%; margin: 6px 0; outline: 2px solid var(--blue-line); }
 .squad ul { list-style: none; margin: 4px 0 0; padding: 0; font-size: 14px; }
 .squad li { margin: 3px 0; }
+
+/* ------------------------------------------------------------ parity: original footage beside the revival */
+.parity-view { animation: rise 0.4s var(--ease) both; }
+.parity-head { display: flex; align-items: center; gap: 2ch; margin-bottom: 16px; }
+.parity-pct { font-family: var(--tt); font-weight: 400; font-size: 34px; line-height: 1; color: var(--yellow); }
+.parity-meter { flex: 1; display: flex; gap: 3px; min-width: 0; }
+.parity-meter button { flex: 1; height: 26px; min-width: 6px; padding: 0; border: 0; background: var(--c); opacity: 0.45;
+  transition: opacity 160ms linear, transform 200ms var(--ease); animation: rise 0.4s var(--ease) both; }
+.parity-meter button:hover { opacity: 0.8; transform: translateY(-2px); }
+.parity-meter button[aria-selected="true"] { opacity: 1; transform: translateY(-4px); box-shadow: 0 4px 0 0 var(--white); }
+.parity-meter .ok, .parity-rule.ok { --c: var(--green); }
+.parity-meter .no, .parity-rule.no { --c: var(--red); }
+.parity-meter .unsure, .parity-rule.unsure { --c: var(--yellow); }
+.parity-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.parity-pair figure { margin: 0; min-width: 0; animation: rise 0.45s var(--ease) both; }
+.parity-pair figure + figure { animation-delay: 70ms; }
+.parity-pair figcaption { display: flex; align-items: baseline; gap: 1.2ch; margin-bottom: 8px; font-family: var(--tt); font-size: 16px; color: var(--white); }
+.parity-pair figcaption span { font-size: 13px; color: var(--cyan); }
+.pair-screen { position: relative; aspect-ratio: 16 / 9; background: #0a0a0a; outline: 2px solid var(--blue-line); outline-offset: -2px; overflow: hidden; }
+.pair-screen iframe, .pair-screen video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
+.pair-empty { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--tt); font-size: 14px; color: var(--cyan); }
+.parity-pair p { margin-top: 8px; font-size: 13.5px; color: var(--dim); }
+.parity-rule { position: relative; margin-top: 20px; padding: 14px 1.6ch 14px 2.2ch; border-left: 4px solid var(--c); background: color-mix(in srgb, var(--c) 7%, var(--black));
+  animation: rise 0.4s var(--ease) 120ms both; }
+.parity-verdict { display: inline-flex; align-items: center; gap: 0.6ch; height: 24px; padding: 0 1ch; font-family: var(--tt); font-size: 13px; background: var(--c); color: var(--black); }
+.parity-verdict svg { width: 14px; height: 14px; stroke-width: 3; }
+.parity-rule h3 { margin: 10px 0 0; padding-right: 15ch; font-family: var(--tt); font-weight: 400; font-size: 18px; line-height: 1.35; color: var(--white); }
+.parity-rule p { margin-top: 8px; font-size: 14px; color: var(--white); opacity: 0.8; }
+.parity-step { position: absolute; top: 12px; right: 1.6ch; display: flex; align-items: center; gap: 1ch; font-family: var(--tt); font-size: 14px; color: var(--cyan); }
+.parity-step .btn-ghost { width: 34px; height: 34px; padding: 0; display: grid; place-items: center; }
+.parity-step svg { width: 18px; height: 18px; }
+@media (max-width: 760px) {
+  .phases.with-parity { grid-template-columns: 1fr; }
+  .phase.parity { padding-left: 0; border-left: 0; }
+  .parity-pair { grid-template-columns: 1fr; }
+  .parity-rule h3 { padding-right: 0; }
+  .parity-step { position: static; margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parity-view, .parity-pair figure, .parity-rule, .parity-meter button { animation: none; transition: none; }
+}

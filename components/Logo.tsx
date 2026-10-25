@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-/** Argon's mark: four fastext keys, red green yellow cyan, the way a teletext remote lays them out. */
+/** Revive's mark: four fastext keys, red green yellow cyan, the way a teletext remote lays them out. */
 export function Mark({ size = 22 }: { size?: number }) {
   return (
     <svg viewBox="0 0 22 22" width={size} height={size} aria-hidden="true" className="mark-svg" shapeRendering="crispEdges">
@@ -14,9 +14,9 @@ export function Mark({ size = 22 }: { size?: number }) {
 
 export function Logo() {
   return (
-    <Link href="/" className="brand" aria-label="Argon home">
+    <Link href="/" className="brand" aria-label="Revive home">
       <Mark />
-      <span>ARGON</span>
+      <span>REVIVE</span>
     </Link>
   );
 }

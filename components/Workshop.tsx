@@ -2,12 +2,12 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
-  AlertTriangle, Braces, Brain, Check, ClipboardList, Eye, FilePen, FilePlus, FileText, Film, FolderSearch, Gamepad2, Globe, Hammer,
+  AlertTriangle, Braces, Brain, Check, ChevronLeft, ChevronRight, ClipboardList, Eye, FilePen, FilePlus, FileText, Film, FolderSearch, Gamepad2, Globe, Hammer,
   Keyboard, ListPlus, MessageSquare, Search, Video, Pause, Play, RotateCw, Scale, ShieldCheck, Sparkles, Users, Wrench, X, type LucideIcon,
 } from "lucide-react";
 import { clock, compact, duration } from "@/lib/format";
 import { youtubeId } from "@/lib/links";
-import type { Act, Agent, Issue, Round, RunState, StageState } from "@/lib/run-types";
+import type { Act, Agent, RunState, StageState, Verify, VerifyRule } from "@/lib/run-types";
 
 const TOOL_ICON: Record<string, LucideIcon> = {
   read: FileText, write: FilePlus, edit: FilePen, ls: FolderSearch, find: FolderSearch, grep: FolderSearch,
@@ -44,7 +44,7 @@ function phases(run: RunState) {
     : find.status === "waiting" ? { status: "waiting" }
     : { status: "running", detail: find.status === "running" ? "Finding footage" : "Watching the footage", startedAt: find.startedAt };
   const r = run.rounds.at(-1);
-  const playDetail = playtest.status === "running" && r ? `Round ${r.round} · ${r.status === "fixing" ? "fixing" : r.status === "testing" ? "playing" : "scored"}` : playtest.detail;
+  const playDetail = playtest.status === "running" && r ? `${r.status === "fixing" ? "Fixing" : r.status === "testing" ? "Agents reviewing" : "Reviewed"}${run.rounds.length > 1 ? ` · ${r.round}` : ""}` : playtest.detail;
   return [
     { key: "collect", name: "Collect", state: collect },
     { key: "remake", name: "Remake", state: build },
@@ -60,7 +60,7 @@ export function Workshop({ initial }: { initial: RunState }) {
   const [run, setRun] = useState(initial);
   const [now, setNow] = useState(() => Date.now() / 1000);
   const [pinned, setPinned] = useState<string | null>(null);
-  const [tab, setTab] = useState<PhaseKey | null>(null);
+  const [tab, setTab] = useState<PhaseKey | "parity" | null>(null);
   const [busy, setBusy] = useState(false);
   const live = run.status === "running";
 
@@ -98,6 +98,7 @@ export function Workshop({ initial }: { initial: RunState }) {
     setTab(null);
   };
   const working = run.agents.filter((a) => a.status === "running");
+  const check = parityCheck(run);
   const tokens = run.agents.reduce((n, a) => n + (a.tokens_in ?? 0) + (a.tokens_out ?? 0), 0);
   // A paused run's clocks stop at its last event; the log still says its agents are running.
   const clockAt = live ? now : (run.updatedAt ?? now);
@@ -138,7 +139,7 @@ export function Workshop({ initial }: { initial: RunState }) {
         </div>
       </header>
 
-      <div className="phases" role="tablist" aria-label="Phases">
+      <div className={`phases${check ? " with-parity" : ""}`} role="tablist" aria-label="Phases">
         {phases(run).map((p, i) => {
           const t = p.state.startedAt ? (p.state.endedAt && p.state.status !== "running" ? p.state.endedAt : clockAt) - p.state.startedAt : null;
           const has = run.agents.some((a) => phaseOf(a) === p.key);
@@ -154,6 +155,15 @@ export function Workshop({ initial }: { initial: RunState }) {
             </button>
           );
         })}
+        {check && (
+          <button role="tab" aria-selected={tab === "parity"} className="phase parity" onClick={() => { setPinned(null); setTab("parity"); }}>
+            <span className="phase-no"><Scale aria-hidden /></span>
+            <div>
+              <b>Parity</b>
+              <span>{check.matched} of {check.total} match the footage</span>
+            </div>
+          </button>
+        )}
       </div>
 
       {run.error && !live && (
@@ -166,6 +176,7 @@ export function Workshop({ initial }: { initial: RunState }) {
 
       <div className="ws-grid">
         <div className="ws-main">
+          {tab === "parity" && check ? <ParityView key={check.round} run={run} check={check} /> : <>
           {working.filter((a) => a.shot).length > 1 && (
             <div className="wall">
               {working.filter((a) => a.shot).map((a) => (
@@ -189,13 +200,11 @@ export function Workshop({ initial }: { initial: RunState }) {
             </div>
           )}
           {focus ? <Desk key={focus.id} run={run} agent={focus} now={clockAt} following={!pinned && !tab} onFollow={followLive} /> : <p className="empty-note">The agents start in a moment.</p>}
+          </>}
         </div>
         <aside className="ws-side">
           <Roster run={run} focus={focus?.id ?? null} now={clockAt} onPick={pick} />
-          <FootageCheck run={run} />
-          <SquadPanel run={run} />
-          <Scores run={run} />
-          <Issues run={run} />
+          <AgentReview run={run} onPick={pick} onParity={check ? () => { setPinned(null); setTab("parity"); } : undefined} />
           <FootageList run={run} />
         </aside>
       </div>
@@ -501,7 +510,7 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
     add("Collect", run.agents.filter((a) => a.stage === "find" || a.stage === "watch"));
     add("Remake", run.agents.filter((a) => a.stage === "build"));
     const rounds = [...new Set(run.agents.filter((a) => a.stage === "playtest").map((a) => a.round ?? 0))].sort((a, b) => a - b);
-    for (const r of rounds) add(`Round ${r}`, run.agents.filter((a) => a.stage === "playtest" && a.round === r).sort((a, b) => (a.role === "fixer" ? 1 : 0) - (b.role === "fixer" ? 1 : 0)));
+    for (const r of rounds) add(rounds.length > 1 ? `Agent review ${r}` : "Agent review", run.agents.filter((a) => a.stage === "playtest" && a.round === r).sort((a, b) => (a.role === "fixer" ? 1 : 0) - (b.role === "fixer" ? 1 : 0)));
     return out;
   }, [run.agents]);
   if (!groups.length) return null;
@@ -531,17 +540,24 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
   );
 }
 
-function Scores({ run }: { run: RunState }) {
+/** How the agents reviewed the latest round: the overall scores, then each reviewer's own scores and verdict. */
+function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: string) => void; onParity?: () => void }) {
   const scored = run.rounds.filter((r) => r.fun !== undefined);
-  if (!scored.length) return null;
-  const latest = scored.at(-1)!;
+  const latest = scored.at(-1);
+  const round = latest ?? run.rounds.at(-1);
+  const check = parityCheck(run);
+  const reviewers = run.agents.filter((a) => a.role === "tester" && a.round === round?.round);
+  const squad = Object.entries(round?.squad?.agents ?? {});
+  if (!latest && !check && !reviewers.length && !squad.length) return null;
   return (
-    <section className="panel scores">
-      <h2>How it plays</h2>
-      <div className="report-scores">
-        <Score label="Fun" value={latest.fun} />
-        <Score label="Faithful" value={latest.faithful} />
-      </div>
+    <section className="panel review">
+      <h2>Agent review</h2>
+      {latest && (
+        <div className="report-scores">
+          <Score label="Fun" value={latest.fun} />
+          <Score label="Faithful" value={latest.faithful} />
+        </div>
+      )}
       {scored.length > 1 && (
         <div className="trend">
           {scored.map((r) => (
@@ -555,95 +571,116 @@ function Scores({ run }: { run: RunState }) {
           ))}
         </div>
       )}
+      {check && (
+        <button className="review-parity" onClick={onParity}>
+          <Scale aria-hidden /> <span>Matches the footage</span> <b>{check.matched} / {check.total}</b>
+        </button>
+      )}
+      {(reviewers.length > 0 || squad.length > 0) && (
+        <ul className="review-list">
+          {reviewers.map((a) => {
+            const Icon = agentIcon(a);
+            const rep = round?.reports.find((r) => r.tester === a.focus);
+            return (
+              <li key={a.id}>
+                <button className={`mate ${a.status}`} onClick={() => onPick(a.id)}>
+                  <span className="mate-icon"><Icon aria-hidden /></span>
+                  <span className="mate-text">
+                    <b>{a.name}</b>
+                    <small>{rep ? `Fun ${rep.fun} · Faithful ${rep.faithful}` : a.status === "running" ? "Playing" : "No score"}</small>
+                  </span>
+                </button>
+                {rep?.summary && <p>{rep.summary}</p>}
+              </li>
+            );
+          })}
+          {squad.map(([name, a]) => (
+            <li key={name}>
+              <div className="mate done">
+                <span className="mate-icon"><Gamepad2 aria-hidden /></span>
+                <span className="mate-text">
+                  <b>{name}</b>
+                  <small>{a.findings.length} found</small>
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }
 
 /** Every footage rule, played in the rebuild and judged against its moment in the original footage. */
-function FootageCheck({ run }: { run: RunState }) {
+/** The footage check people judge a revival by: the best round's, else the latest round that has one. */
+function parityCheck(run: RunState) {
   const checked = run.rounds.filter((r) => r.verify);
-  if (!checked.length) return null;
-  const v = checked.at(-1)!.verify!;
-  const rules = [...v.rules].sort((a, b) => Number(b.pass) - Number(a.pass));
+  return (checked.find((r) => r.round === run.best?.round) ?? checked.at(-1))?.verify ?? null;
+}
+
+const VERDICT = { ok: "Match", no: "Differs", unsure: "Unclear" } as const;
+const verdictOf = (r: VerifyRule): keyof typeof VERDICT => (r.pass ? "ok" : r.verdict === "mismatch" ? "no" : "unsure");
+
+/** Each footage rule as a pair: the moment in the original video beside the same moment played in the revival. */
+function ParityView({ run, check }: { run: RunState; check: Verify }) {
+  const [i, setI] = useState(0);
+  const rules = check.rules;
+  const r = rules[Math.min(i, rules.length - 1)];
+  const yt = youtubeId(r.original_url);
+  const v = verdictOf(r);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLElement && e.target.closest("input, textarea, select")) return;
+      if (e.key === "ArrowRight") setI((n) => Math.min(n + 1, rules.length - 1));
+      else if (e.key === "ArrowLeft") setI((n) => Math.max(n - 1, 0));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [rules.length]);
+
   return (
-    <section className="panel footage-check">
-      <h2>Footage check<span>{v.matched} of {v.total} rules match the original</span></h2>
-      <p className="muted small">Each rule was played in the rebuild and compared with its moment in the original footage.</p>
-      {checked.length > 1 && (
-        <p className="fc-trend">
-          {checked.map((r, n) => (
-            <span key={r.round}>{n ? " → " : ""}<b>R{r.round}</b> {r.verify!.matched}</span>
+    <section className="parity-view">
+      <header className="parity-head">
+        <b className="parity-pct">{Math.round((check.matched / check.total) * 100)}%</b>
+        <div className="parity-meter" role="tablist" aria-label="Footage rules">
+          {rules.map((x, n) => (
+            <button key={x.id} role="tab" aria-selected={n === i} aria-label={`${VERDICT[verdictOf(x)]}: ${x.rule}`} title={x.rule}
+              className={verdictOf(x)} onClick={() => setI(n)} />
           ))}
-        </p>
-      )}
-      <ul>
-        {rules.map((r) => (
-          <li key={r.id}>
-            <details>
-              <summary>
-                <i className={r.pass ? "fc-ok" : "fc-no"} aria-label={r.pass ? "matches" : "differs"}>{r.pass ? "✓" : "✗"}</i>
-                <span>{r.rule}</span>
-                <a href={r.original_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
-                  {r.original.video} {clock(r.original.start)}
-                </a>
-              </summary>
-              <p><b>Original:</b> {r.original_shows}</p>
-              <p><b>Rebuild:</b> {r.rebuild_shows}</p>
-              {!r.pass && r.difference && <p><b>Difference:</b> {r.difference}</p>}
-              {r.video && <video src={file(run, r.video)} controls muted playsInline preload="none" />}
-            </details>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
+        </div>
+      </header>
 
-/** Managed Agents (each in its own Google-hosted sandbox) that played the round together over the internet. */
-function SquadPanel({ run }: { run: RunState }) {
-  const round = run.rounds.filter((r) => r.squad && Object.keys(r.squad.agents).length).at(-1);
-  if (!round) return null;
-  const agents = Object.entries(round.squad!.agents);
-  const total = agents.reduce((n, [, a]) => n + a.findings.length, 0);
-  return (
-    <section className="panel squad">
-      <h2>Managed Agents<span>{agents.length} played round {round.round} together · {total} found</span></h2>
-      <p className="muted small">Gemini Managed Agents, each in its own cloud sandbox, joined one match over the internet.</p>
-      {agents.map(([name, a]) => (
-        <details key={name} open={agents.length < 4}>
-          <summary><b>{name}</b> <span className="muted small">{a.findings.length} found{a.secs ? ` · ${Math.round(a.secs / 60)} min` : ""}</span></summary>
-          {a.shots?.length ? <img src={file(run, a.shots.at(-1)!)} alt={`${name} playing`} /> : null}
-          <ul>
-            {[...a.findings].sort((x, y) => (SEV_ORDER[x.severity as keyof typeof SEV_ORDER] ?? 3) - (SEV_ORDER[y.severity as keyof typeof SEV_ORDER] ?? 3)).map((f, n) => (
-              <li key={n}><i className={`sev ${f.severity}`} aria-label={f.severity} /> {f.finding}</li>
-            ))}
-          </ul>
-        </details>
-      ))}
-    </section>
-  );
-}
+      <div className="parity-pair" key={r.id}>
+        <figure>
+          <figcaption>Original<span>{r.original.video} · {clock(r.original.start)}</span></figcaption>
+          <div className="pair-screen">
+            {yt ? (
+              <iframe src={`https://www.youtube-nocookie.com/embed/${yt}?start=${r.original.start}&end=${r.original.end}&autoplay=1&mute=1&rel=0&playsinline=1`}
+                title="Original footage" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
+            ) : <a href={r.original_url} target="_blank" rel="noreferrer" className="pair-empty">Open the original</a>}
+          </div>
+          <p>{r.original_shows}</p>
+        </figure>
+        <figure>
+          <figcaption>Revival<span>round {check.round}</span></figcaption>
+          <div className="pair-screen">
+            {r.video ? <video src={file(run, r.video)} autoPlay muted loop playsInline controls /> : <span className="pair-empty">No recording</span>}
+          </div>
+          <p>{r.rebuild_shows}</p>
+        </figure>
+      </div>
 
-const SEV_ORDER = { high: 0, medium: 1, low: 2 };
-
-function Issues({ run }: { run: RunState }) {
-  const round: Round | undefined = run.rounds.filter((r) => r.issues.length).at(-1);
-  if (!round) return null;
-  const issues = [...round.issues].sort((a, b) => (SEV_ORDER[a.severity] ?? 3) - (SEV_ORDER[b.severity] ?? 3));
-  return (
-    <section className="panel issues">
-      <h2>Found in round {round.round}<span>{issues.length}</span></h2>
-      <ul>
-        {issues.slice(0, 24).map((i: Issue, n) => (
-          <li key={n}>
-            <details>
-              <summary><i className={`sev ${i.severity}`} aria-label={i.severity} /> <span>{i.title}</span> <em>{i.kind}</em></summary>
-              <p>{i.detail}</p>
-              {i.evidence && <p className="ev">{i.evidence}</p>}
-            </details>
-          </li>
-        ))}
-      </ul>
+      <div className={`parity-rule ${v}`} key={`${r.id}-rule`}>
+        <span className="parity-verdict">{v === "ok" ? <Check aria-hidden /> : v === "no" ? <X aria-hidden /> : null}{VERDICT[v]}</span>
+        <h3>{r.rule}</h3>
+        {v !== "ok" && r.difference && <p>{r.difference}</p>}
+        <nav className="parity-step">
+          <button className="btn-ghost" onClick={() => setI(i - 1)} disabled={i === 0} aria-label="Previous rule"><ChevronLeft aria-hidden /></button>
+          <span>{i + 1} / {rules.length}</span>
+          <button className="btn-ghost" onClick={() => setI(i + 1)} disabled={i === rules.length - 1} aria-label="Next rule"><ChevronRight aria-hidden /></button>
+        </nav>
+      </div>
     </section>
   );
 }
