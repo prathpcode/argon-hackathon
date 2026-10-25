@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Improvement Loop</title>
+<style>
+  :root { --bg:#f6f7f5; --panel:#fff; --ink:#1d2421; --muted:#6b7570; --line:#dde2de;
+          --pass:#2f9e5a; --fail:#d0483f; --unclear:#c9a227; --accent:#2d6cdf; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121514; --panel:#1b201e; --ink:#e7ece9; --muted:#97a19c; --line:#2c3330;
+            --pass:#3fbf73; --fail:#e5645a; --unclear:#d8b43a; --accent:#6c9cff; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; font:14px/1.45 system-ui, -apple-system, sans-serif; background:var(--bg); color:var(--ink); }
+  header { padding:16px 20px; border-bottom:1px solid var(--line); display:flex; gap:16px; align-items:baseline; flex-wrap:wrap; }
+  h1 { font-size:18px; margin:0; }
+  h2 { font-size:14px; margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
+  .muted { color:var(--muted); }
+  main { display:grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap:16px; padding:16px 20px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:14px; }
+  .stages { display:flex; gap:6px; flex-wrap:wrap; }
+  .stage { padding:4px 10px; border-radius:99px; border:1px solid var(--line); color:var(--muted); font-size:12px; }
+  .stage.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .bars { display:flex; gap:10px; align-items:flex-end; height:140px; margin-top:8px; }
+  .bar { flex:0 0 56px; display:flex; flex-direction:column; align-items:center; gap:4px; font-size:12px; }
+  .bar .fill { width:100%; border-radius:6px 6px 0 0; background:var(--pass); }
+  .bar.rev .fill { background:var(--muted); opacity:.5; }
+  table { width:100%; border-collapse:collapse; font-size:12.5px; }
+  td, th { padding:4px 6px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  th.r, td.r { text-align:center; width:34px; }
+  tr.rule { cursor:pointer; }
+  tr.rule:hover, tr.rule.sel { background: color-mix(in srgb, var(--accent) 10%, transparent); }
+  .dot { display:inline-block; width:14px; height:14px; border-radius:4px; }
+  .pass { background:var(--pass); } .fail { background:var(--fail); } .unclear { background:var(--unclear); } .none { background:var(--line); }
+  .vids { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .vids iframe, .vids video { width:100%; aspect-ratio:16/9; border:0; border-radius:6px; background:#000; }
+  .kv { margin:6px 0; } .kv b { display:block; font-size:11px; text-transform:uppercase; color:var(--muted); }
+  pre { white-space:pre-wrap; font-size:12px; margin:0; max-height:180px; overflow:auto; }
+  .edit { border-left:3px solid var(--accent); padding:2px 8px; margin:6px 0; font-size:12.5px; }
+  .tabs button { font:inherit; font-size:12px; padding:3px 9px; border-radius:6px; border:1px solid var(--line);
+                 background:transparent; color:var(--ink); cursor:pointer; margin-right:4px; }
+  .tabs button.on { background:var(--ink); color:var(--bg); }
+  .stack > .panel + .panel { margin-top:16px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Improvement Loop — <span id="game">…</span></h1>
+  <span id="phase" class="muted">loading…</span>
+  <span id="updated" class="muted"></span>
+</header>
+<main>
+  <div class="stack">
+    <div class="panel">
+      <h2>Pipeline</h2>
+      <div class="stages" id="stages"></div>
+      <h2 style="margin-top:14px">Rules matching the original, per round</h2>
+      <div class="bars" id="bars"></div>
+      <p class="muted" style="font-size:12px;margin:8px 0 0">Grey = round reverted (a rule that passed before failed after the edit).</p>
+    </div>
+    <div class="panel">
+      <h2>Rules × rounds</h2>
+      <table><thead id="thead"></thead><tbody id="tbody"></tbody></table>
+    </div>
+  </div>
+  <div class="stack">
+    <div class="panel" id="detail"><h2>Rule detail</h2><p class="muted">Click a rule to compare the original footage with the rebuild.</p></div>
+    <div class="panel"><h2>Fixes proposed</h2><div id="edits" class="muted">No fix round yet.</div></div>
+    <div class="panel">
+      <h2>Agent squad</h2>
+      <p class="muted" style="margin:0">Not running yet. Today the scenarios are played by scripted bots (up to 3 players per
+      scenario on one server). Next: Managed Agents join the same server, play freely with personas, and their recordings
+      feed this same compare → fix loop.</p>
+    </div>
+    <div class="panel"><h2>Log</h2><pre id="log"></pre></div>
+  </div>
+</main>
+<script>
+const RUN = "runs/giants-reverie";
+let selected = null, selRound = null, cache = {};
+
+async function j(url) { try { const r = await fetch(url + "?t=" + Date.now()); return r.ok ? r.json() : null; } catch { return null; } }
+async function t(url) { try { const r = await fetch(url + "?t=" + Date.now()); return r.ok ? r.text() : ""; } catch { return ""; } }
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ytId = u => (u.match(/[?&]v=([\w-]{11})/) || [])[1];
+
+async function load() {
+  const cfg = cache.cfg || (cache.cfg = await j("glitch.json"));
+  const plan = await j(`${RUN}/scenarios.json`);
+  const history = await j(`${RUN}/history.json`) || [];
+  const rounds = [];
+  for (let k = 0; k < 30; k++) {
+    const [verdicts, proposal, played] = await Promise.all([
+      j(`${RUN}/round_${k}/play/verdicts.json`), j(`${RUN}/round_${k}/proposal.json`), j(`${RUN}/round_${k}/play/play.json`)]);
+    if (!verdicts && !proposal && !played && k > 0) { if (k > rounds.length) break; }
+    if (!verdicts && !proposal && !played) break;
+    rounds.push({ k, verdicts, proposal, played, hist: history.find(h => h.round === k) });
+  }
+  const log = await t("runs_glitch.log");
+  return { cfg, plan, rounds, log };
+}
+
+function phaseOf(log) {
+  const lines = log.trim().split("\n").filter(Boolean);
+  const last = [...lines].reverse().find(l => /ROUND|play:|compare:|edits applied|best:|Traceback/.test(l)) || "";
+  let stage = "play";
+  if (/compare:/.test(last)) stage = "compare";
+  else if (/asking for fixes/.test(last)) stage = "fix";
+  else if (/edits applied|play:/.test(last)) stage = "play";
+  else if (/best:|round  score/.test(log.slice(-400))) stage = "done";
+  if (/Traceback/.test(last)) stage = "error";
+  return { last, stage };
+}
+
+function render({ cfg, plan, rounds, log }) {
+  document.getElementById("game").textContent = "Giants' Reverie (rebuilt Glitch)";
+  const ph = phaseOf(log);
+  document.getElementById("phase").textContent = ph.last || "starting…";
+  document.getElementById("updated").textContent = "updated " + new Date().toLocaleTimeString();
+  document.getElementById("stages").innerHTML = ["Quick checks", "Play scenarios", "Compare with footage", "Fix", "Done"]
+    .map((n, i) => `<span class="stage ${["play","play","compare","fix","done"][i] === ph.stage && (i !== 0) ? "on" : ""}">${n}</span>`).join("");
+  document.getElementById("log").textContent = log.trim().split("\n").slice(-14).join("\n");
+
+  const scored = rounds.filter(r => r.verdicts);
+  const total = plan ? plan.scenarios.filter(s => s.testable).length : 41;
+  document.getElementById("bars").innerHTML = scored.map(r => {
+    const s = r.verdicts.filter(v => v.pass).length;
+    const rev = r.hist && r.hist.accepted === false;
+    return `<div class="bar ${rev ? "rev" : ""}"><b>${s}/${total}</b><div class="fill" style="height:${Math.max(4, 110 * s / total)}px"></div>R${r.k}</div>`;
+  }).join("") || '<span class="muted">Round 0 running…</span>';
+
+  document.getElementById("thead").innerHTML = `<tr><th>Rule</th>${scored.map(r => `<th class="r">R${r.k}</th>`).join("")}</tr>`;
+  const ids = plan ? plan.scenarios.filter(s => s.testable) : [];
+  document.getElementById("tbody").innerHTML = ids.map(s => {
+    const cells = scored.map(r => {
+      const v = r.verdicts.find(x => x.id === s.id);
+      const cls = !v ? "none" : v.pass ? "pass" : v.verdict === "unclear" ? "unclear" : "fail";
+      return `<td class="r"><span class="dot ${cls}" title="${v ? esc(v.verdict) : "not run"}"></span></td>`;
+    }).join("");
+    return `<tr class="rule ${selected === s.id ? "sel" : ""}" data-id="${s.id}"><td>${esc(s.id.replaceAll("_", " "))}</td>${cells}</tr>`;
+  }).join("");
+  document.querySelectorAll("tr.rule").forEach(tr => tr.onclick = () => { selected = tr.dataset.id; selRound = null; render(window.__state); });
+
+  document.getElementById("edits").innerHTML = rounds.filter(r => r.proposal).map(r => {
+    const h = r.hist;
+    const head = `<b>Round ${r.k}</b> — ${(r.proposal.edits || []).length} edits proposed` +
+      (h ? `, ${h.edits_applied} applied, score ${h.score}/${h.total}, ${h.accepted ? "accepted" : "reverted"}` : ", testing…");
+    const items = (r.proposal.edits || []).slice(0, 25).map(e =>
+      `<div class="edit">${esc(e.file)} · ${esc((e.rule_ids || []).join(", "))}<br><span class="muted">${esc(e.why)}</span></div>`).join("");
+    return `<div style="margin-bottom:10px">${head}${items}</div>`;
+  }).join("") || "No fix round yet.";
+
+  if (selected && plan) renderDetail(cfg, plan, scored);
+}
+
+function renderDetail(cfg, plan, scored) {
+  const s = plan.scenarios.find(x => x.id === selected);
+  if (!s || !scored.length) return;
+  const r = scored.find(x => x.k === selRound) || scored[scored.length - 1];
+  const v = r.verdicts.find(x => x.id === s.id) || {};
+  // Only redraw when something changed, or the 5 s refresh would restart the videos.
+  const key = `${s.id}|${r.k}|${scored.length}|${v.verdict}`;
+  if (renderDetail.key === key) return;
+  renderDetail.key = key;
+  const o = s.original, vid = ytId(cfg.sources[o.video]);
+  const tabs = scored.map(x => `<button class="${x.k === r.k ? "on" : ""}" data-k="${x.k}">R${x.k}</button>`).join("");
+  document.getElementById("detail").innerHTML = `
+    <h2>Rule detail</h2>
+    <div style="font-weight:600;margin-bottom:6px">${esc(s.rule)}</div>
+    <div class="tabs" style="margin-bottom:8px">${tabs}</div>
+    <div class="vids">
+      <div><div class="muted" style="font-size:12px">Original (video ${o.video}, ${o.start}–${o.end}s)</div>
+        <iframe src="https://www.youtube-nocookie.com/embed/${vid}?start=${o.start}&end=${o.end}" allowfullscreen></iframe></div>
+      <div><div class="muted" style="font-size:12px">Rebuild, round ${r.k}</div>
+        <video src="${RUN}/round_${r.k}/play/${s.id}_p0.mp4" controls muted playsinline></video></div>
+    </div>
+    <div class="kv"><b>Verdict</b>${esc(v.verdict)} ${v.pass ? "· PASS" : ""} · assertions ${v.expects_ok === null ? "none" : v.expects_ok ? "ok" : "failed"}</div>
+    <div class="kv"><b>Original shows</b>${esc(v.original_shows)}</div>
+    <div class="kv"><b>Rebuild shows</b>${esc(v.rebuild_shows)}</div>
+    <div class="kv"><b>Difference</b>${esc(v.difference)}</div>
+    ${v.test_problem && v.test_problem !== "None" ? `<div class="kv"><b>Test problem</b>${esc(v.test_problem)}</div>` : ""}`;
+  document.querySelectorAll("#detail .tabs button").forEach(b => b.onclick = () => { selRound = +b.dataset.k; renderDetail(cfg, plan, scored); });
+}
+
+async function tick() { window.__state = await load(); render(window.__state); }
+tick(); setInterval(tick, 5000);
+</script>
+</body>
+</html>
