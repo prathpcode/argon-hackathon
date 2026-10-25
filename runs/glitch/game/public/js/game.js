@@ -47,7 +47,7 @@
   initialInventory[13] = { id: "emblem_of_friendly", count: 1 };
 
   const State = {
-    started: false,
+    started: true,
     area: "chego_chase",
     score: 120, // Mirrors iMG / Experience for test contract
     health: 100, // Mirrors Mood for test contract
@@ -134,17 +134,29 @@
         "system"
       );
 
-      // Dismiss Title Splash on any key or click (Rule: Play starts within seconds)
+      // Start directly in street view; unlock audio & emit game_start on init / first input
       const startOverlay = document.getElementById("title-splash-overlay");
+      if (startOverlay) {
+        startOverlay.classList.add("hidden");
+        startOverlay.style.display = "none";
+      }
+      let audioUnlocked = false;
       const enterPlay = () => {
-        if (State.started) return;
         State.started = true;
-        startOverlay?.classList.add("hidden");
-        window.AudioEngine.init();
-        window.AudioEngine.playPop();
-        window.AudioEngine.setTheme(window.GameData.STREETS[State.area].theme);
-        pushEvent("game_start", { area: State.area, name: State.player.name });
+        if (startOverlay) {
+          startOverlay.classList.add("hidden");
+          startOverlay.style.display = "none";
+        }
+        if (!audioUnlocked) {
+          audioUnlocked = true;
+          window.AudioEngine.init();
+          window.AudioEngine.setTheme(window.GameData.STREETS[State.area].theme);
+        }
+        if (!window.__events.some((ev) => ev.type === "game_start")) {
+          pushEvent("game_start", { area: State.area, name: State.player.name });
+        }
       };
+      pushEvent("game_start", { area: State.area, name: State.player.name });
       startOverlay?.addEventListener("click", enterPlay);
 
       window.addEventListener("keydown", (e) => {
@@ -223,22 +235,43 @@
       // Connect Multiplayer via Net
       this.initMultiplayer();
 
-      // Start Fixed-Timestep 60Hz Loop
+      // Start Fixed-Timestep 60Hz Loop with multi-tab background fallback
       let last = performance.now();
+      let lastRafRender = last;
       let acc = 0;
       const dt = 1 / 60;
-      const frame = (now) => {
-        const elapsed = Math.min(0.1, (now - last) / 1000);
+      const advanceSim = (now, doRender) => {
+        const elapsed = Math.min(0.25, Math.max(0, (now - last) / 1000));
         last = now;
         acc += elapsed;
-        while (acc >= dt) {
+        let stepped = false;
+        let steps = 0;
+        while (acc >= dt && steps < 18) {
           this.update(dt, now / 1000);
           acc -= dt;
+          stepped = true;
+          steps++;
         }
-        this.render(now / 1000);
+        if (doRender || (stepped && now - lastRafRender > 45)) {
+          lastRafRender = now;
+          this.render(now / 1000);
+        }
+      };
+      const frame = (now) => {
+        advanceSim(now, true);
         requestAnimationFrame(frame);
       };
+      // Initial synchronous render so first frame is immediately ready
+      this.update(dt, last / 1000);
+      this.render(last / 1000);
       requestAnimationFrame(frame);
+      // Fallback interval when requestAnimationFrame is throttled in multi-tab background tabs
+      setInterval(() => {
+        const now = performance.now();
+        if (now - last >= 22) {
+          advanceSim(now, false);
+        }
+      }, 16);
     },
 
     resizeCanvas() {

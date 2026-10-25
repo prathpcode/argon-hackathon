@@ -1,6 +1,6 @@
 // Procedural gem & creator skin renderer for GEMBLOX.IO
 (function () {
-  // 6 signature gem palettes matching original footage (cyan, magenta, orange, yellow, lime, royal blue/purple)
+  // 7 signature gem palettes matching original footage (cyan, magenta, orange, yellow, lime, royal blue/purple, ruby red)
   const GEM_PALETTES = [
     { id: "cyan", name: "Cyan Gem", base: "#19c5e8", top: "#6fe7ff", left: "#41d8f5", right: "#0f94b5", bottom: "#0a6f8a", border: "#063a4a", center: "#28d2f4" },
     { id: "magenta", name: "Magenta Gem", base: "#e62e8a", top: "#ff7bc0", left: "#f452a3", right: "#b81d6a", bottom: "#8c114e", border: "#4a0627", center: "#f03d96" },
@@ -20,10 +20,14 @@
     { id: "gem_purple", name: "Amethyst", paletteIndex: 5, emblem: null },
     { id: "gem_magenta", name: "Rose Quartz", paletteIndex: 1, emblem: null },
     { id: "gem_yellow", name: "Solar Gold", paletteIndex: 3, emblem: null },
-    { id: "kops_flame", name: "Blaze K", paletteIndex: 2, emblem: "kops" },
+    { id: "masterov_m", name: "MasterOv", paletteIndex: 0, emblem: "masterov" },
+    { id: "kops_flame", name: "Kwebbelkop", paletteIndex: 2, emblem: "kops" },
     { id: "green_jelly", name: "Happy Jelly", paletteIndex: 4, emblem: "jelly" },
-    { id: "shark_diamond", name: "Cyber Diamond", paletteIndex: 5, emblem: "diamond" },
-    { id: "king_crown", name: "Royal Crown", paletteIndex: 3, emblem: "crown" },
+    { id: "slogoman_red", name: "Slogoman", paletteIndex: 6, emblem: "slogoman" },
+    { id: "azzyland_pink", name: "AzzyLand", paletteIndex: 1, emblem: "azzyland" },
+    { id: "faze_mojo", name: "FaZe Mojo", paletteIndex: 6, emblem: "faze" },
+    { id: "shark_diamond", name: "M7mdShaRK", paletteIndex: 5, emblem: "diamond" },
+    { id: "king_crown", name: "KingMuqeem", paletteIndex: 3, emblem: "crown" },
     { id: "holiday_bear", name: "Winter Bear", paletteIndex: 2, emblem: "bear" }
   ];
 
@@ -119,14 +123,11 @@
     ctx.closePath();
     ctx.fill();
 
-    // Draw custom skin emblem if active
-    if (o.emblem && fw > 8) {
-      drawEmblem(ctx, cx, cy, fw, o.emblem);
-    }
-
-    // Draw Heart icon if this is a Heart Core block
+    // Draw Heart icon if this is a Heart Core block; otherwise draw custom skin emblem if active (never overlap both)
     if (o.isHeart && fw > 8) {
       drawHeartIcon(ctx, cx, cy, fw * 0.76);
+    } else if (o.emblem && fw > 8) {
+      drawEmblem(ctx, cx, cy, fw, o.emblem);
     }
 
     // Draw 4-point sparkle if this is a Giant Food Gem
@@ -218,7 +219,6 @@
       ctx.arc(-r * 0.5, -r * 0.26, eyeR * 0.42, 0, Math.PI * 2);
       ctx.arc(r * 0.4, -r * 0.26, eyeR * 0.42, 0, Math.PI * 2);
       ctx.fill();
-      // Smile mouth
       ctx.strokeStyle = "#0a3311";
       ctx.lineWidth = Math.max(1.5, r * 0.18);
       ctx.lineCap = "round";
@@ -271,6 +271,76 @@
       ctx.beginPath();
       ctx.arc(0, -r * 0.92, r * 0.2, 0, Math.PI * 2);
       ctx.fill();
+    } else if (type === "masterov") {
+      // Bold stylized golden-white 'M' crest for MasterOv
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#083040";
+      ctx.lineWidth = Math.max(1.2, fw * 0.055);
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.85, r * 0.8);
+      ctx.lineTo(-r * 0.65, -r * 0.8);
+      ctx.lineTo(-r * 0.22, -r * 0.8);
+      ctx.lineTo(0, -r * 0.1);
+      ctx.lineTo(r * 0.22, -r * 0.8);
+      ctx.lineTo(r * 0.65, -r * 0.8);
+      ctx.lineTo(r * 0.85, r * 0.8);
+      ctx.lineTo(r * 0.42, r * 0.8);
+      ctx.lineTo(r * 0.32, -r * 0.12);
+      ctx.lineTo(0, r * 0.55);
+      ctx.lineTo(-r * 0.32, -r * 0.12);
+      ctx.lineTo(-r * 0.42, r * 0.8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (type === "slogoman") {
+      // Stylized 'S' shield emblem for Slogoman
+      ctx.fillStyle = "#ffe033";
+      ctx.strokeStyle = "#470404";
+      ctx.lineWidth = Math.max(1.2, fw * 0.055);
+      ctx.beginPath();
+      ctx.arc(0, 0, r * 0.78, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = "#b51818";
+      ctx.font = `900 ${Math.max(8, Math.round(r * 1.15))}px "Trebuchet MS", sans-serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("S", 0, r * 0.06);
+    } else if (type === "azzyland") {
+      // Stylized 'A' star crest for AzzyLand
+      ctx.fillStyle = "#70f5ff";
+      ctx.strokeStyle = "#4a0627";
+      ctx.lineWidth = Math.max(1.2, fw * 0.055);
+      ctx.beginPath();
+      ctx.moveTo(0, -r * 0.85);
+      ctx.lineTo(r * 0.78, r * 0.8);
+      ctx.lineTo(r * 0.35, r * 0.8);
+      ctx.lineTo(r * 0.18, r * 0.35);
+      ctx.lineTo(-r * 0.18, r * 0.35);
+      ctx.lineTo(-r * 0.35, r * 0.8);
+      ctx.lineTo(-r * 0.78, r * 0.8);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    } else if (type === "faze") {
+      // Stylized 'F' geometric emblem for FaZe Mojo
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = "#2b0303";
+      ctx.lineWidth = Math.max(1.2, fw * 0.055);
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.7, -r * 0.8);
+      ctx.lineTo(r * 0.75, -r * 0.8);
+      ctx.lineTo(r * 0.55, -r * 0.38);
+      ctx.lineTo(-r * 0.22, -r * 0.38);
+      ctx.lineTo(-r * 0.22, -r * 0.08);
+      ctx.lineTo(r * 0.45, -r * 0.08);
+      ctx.lineTo(r * 0.28, r * 0.32);
+      ctx.lineTo(-r * 0.22, r * 0.32);
+      ctx.lineTo(-r * 0.22, r * 0.82);
+      ctx.lineTo(-r * 0.7, r * 0.82);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
     }
     ctx.restore();
   }

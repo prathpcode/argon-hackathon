@@ -97,7 +97,6 @@ html, body {
 
 .pill-fill {
   height: 100%;
-  transition: width 0.2s ease;
 }
 
 .pill-fill.energy {
@@ -146,7 +145,6 @@ html, body {
   font-weight: 700;
   font-size: 12px;
   color: #2C4A5E;
-  transition: transform 0.12s;
 }
 #btn-magic-rock:hover {
   transform: scale(1.04);
@@ -362,7 +360,6 @@ html, body {
   width: 0%;
   height: 100%;
   background: #5C9E31;
-  transition: width 0.1s linear;
 }
 .waiting-sub {
   font-size: 10px;
@@ -596,7 +593,6 @@ html, body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color 0.12s, transform 0.1s;
 }
 .inv-slot:hover {
   border-color: #5C9E31;

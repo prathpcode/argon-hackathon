@@ -21,22 +21,24 @@
   }
 
   const BOT_PROFILES = [
-    { name: "MasterOv", skinId: "gem_cyan", starter: 3 },
+    { name: "MasterOv", skinId: "masterov_m", starter: 3 },
     { name: "Kwebbelkop", skinId: "kops_flame", starter: 4 },
     { name: "Jelly", skinId: "green_jelly", starter: 3 },
-    { name: "AzzyLand", skinId: "gem_red", starter: 2 },
+    { name: "AzzyLand", skinId: "azzyland_pink", starter: 2 },
     { name: "M7mdShaRK", skinId: "shark_diamond", starter: 3 },
     { name: "KingMuqeem", skinId: "king_crown", starter: 2 },
-    { name: "Slogoman", skinId: "gem_orange", starter: 2 },
+    { name: "Slogoman", skinId: "slogoman_red", starter: 2 },
     { name: "ZephPlayz", skinId: "gem_purple", starter: 2 },
-    { name: "FaZe_Mojo", skinId: "gem_magenta", starter: 1 },
+    { name: "FaZe_Mojo", skinId: "faze_mojo", starter: 2 },
     { name: "PerolaPro", skinId: "holiday_bear", starter: 3 },
     { name: "Pop_SK", skinId: "gem_yellow", starter: 1 }
   ];
 
-  // Offscreen pattern tile cache for crisp 60fps diamond grid rendering
+  // Offscreen pattern tile & CanvasPattern cache for zero-stall 60fps diamond grid rendering
   let lightTile = null;
   let darkTile = null;
+  const lightPatternCache = new WeakMap();
+  const darkPatternCache = new WeakMap();
 
   function buildDiamondTile(isDark) {
     const size = 88; // Repeat period of rotated diamond pattern
@@ -49,7 +51,6 @@
     g.fillRect(0, 0, size, size);
 
     const half = size * 0.5;
-    // Subtle checkerboard diamond fill in dark mode
     if (isDark) {
       g.fillStyle = "#1c1f28";
       g.beginPath();
@@ -117,6 +118,18 @@
     return c;
   }
 
+  function getCachedPattern(ctx, isDark) {
+    if (!lightTile) lightTile = buildDiamondTile(false);
+    if (!darkTile) darkTile = buildDiamondTile(true);
+    const cache = isDark ? darkPatternCache : lightPatternCache;
+    let pat = cache.get(ctx);
+    if (!pat) {
+      pat = ctx.createPattern(isDark ? darkTile : lightTile, "repeat");
+      if (pat) cache.set(ctx, pat);
+    }
+    return pat;
+  }
+
   class World {
     constructor(seedStr) {
       this.rng = createRng(seedStr);
@@ -128,8 +141,37 @@
       this.floatTexts = [];  // { x, y, text, color, life, maxLife }
       this.bots = [];
       this.nextEntityId = 1;
+      this.pvpHitCooldowns = new Map(); // key -> timestamp
 
       this.initWorld();
+    }
+
+    // Check if (x, y) is within `minDist` of any interior obstacle
+    isNearObstacle(x, y, minDist = OBSTACLE_SIZE * 1.35) {
+      const minSq = minDist * minDist;
+      for (const obs of this.obstacles) {
+        if (obs.respawnTimer > 0) continue;
+        const dx = x - obs.x;
+        const dy = y - obs.y;
+        if (dx * dx + dy * dy < minSq) return true;
+      }
+      return false;
+    }
+
+    // Pick a random coordinate inside the arena that does not overlap any obstacle
+    findSafeCoord(margin = 160, minDistObs = OBSTACLE_SIZE * 1.4, minDistOrigin = 0) {
+      for (let attempt = 0; attempt < 24; attempt++) {
+        const x = (this.rng() * 2 - 1) * (ARENA_HALF - margin);
+        const y = (this.rng() * 2 - 1) * (ARENA_HALF - margin);
+        if (minDistOrigin > 0 && Math.hypot(x, y) < minDistOrigin) continue;
+        if (!this.isNearObstacle(x, y, minDistObs)) {
+          return { x, y };
+        }
+      }
+      return {
+        x: (this.rng() * 2 - 1) * (ARENA_HALF - margin),
+        y: (this.rng() * 2 - 1) * (ARENA_HALF - margin)
+      };
     }
 
     initWorld() {
@@ -138,44 +180,105 @@
       this.foodGems = [];
       this.bots = [];
 
-      // 1. Scattered interior white obstacle blocks (Rules 17, 18, 19)
-      const obsCount = 46;
+      // 1. Scattered interior white obstacle blocks without overlapping each other or the spawn zone (Rules 17, 18, 19)
+      const obsCount = 44;
       for (let i = 0; i < obsCount; i++) {
-        const angle = this.rng() * Math.PI * 2;
-        const dist = 280 + this.rng() * (ARENA_HALF - 420);
-        const ox = Math.round((Math.cos(angle) * dist) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
-        const oy = Math.round((Math.sin(angle) * dist) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
-        this.obstacles.push({
-          id: this.nextEntityId++,
-          x: ox,
-          y: oy,
-          hp: 3,
-          maxHp: 3,
-          respawnTimer: 0
-        });
+        let placed = false;
+        for (let attempt = 0; attempt < 30; attempt++) {
+          const angle = this.rng() * Math.PI * 2;
+          const dist = 340 + this.rng() * (ARENA_HALF - 500);
+          const ox = Math.round((Math.cos(angle) * dist) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
+          const oy = Math.round((Math.sin(angle) * dist) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
+          if (!this.isNearObstacle(ox, oy, OBSTACLE_SIZE * 2.5)) {
+            this.obstacles.push({
+              id: this.nextEntityId++,
+              x: ox,
+              y: oy,
+              hp: 3,
+              maxHp: 3,
+              respawnTimer: 0
+            });
+            placed = true;
+            break;
+          }
+        }
+        if (!placed) {
+          const ox = Math.round(((this.rng() * 2 - 1) * (ARENA_HALF - 480)) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
+          const oy = Math.round(((this.rng() * 2 - 1) * (ARENA_HALF - 480)) / OBSTACLE_SIZE) * OBSTACLE_SIZE;
+          if (Math.hypot(ox, oy) > 340 && !this.isNearObstacle(ox, oy, OBSTACLE_SIZE * 1.8)) {
+            this.obstacles.push({
+              id: this.nextEntityId++,
+              x: ox,
+              y: oy,
+              hp: 3,
+              maxHp: 3,
+              respawnTimer: 0
+            });
+          }
+        }
       }
 
-      // 2. Large neutral glossy Food Gems (Rule 20 - Video D pink & green 4x4/5x5 gems)
+      // 2. Large neutral glossy Food Gems placed safely away from obstacles (Rule 20)
       const foodGemCount = 18;
       for (let i = 0; i < foodGemCount; i++) {
         this.spawnFoodGem();
       }
 
-      // 3. Abundant stray 1x1 gem blocks across the arena (Rule 2)
-      const initialStrays = 520;
+      // 3. Abundant stray 1x1 gem blocks across the arena away from obstacles (Rule 2)
+      const initialStrays = 500;
       for (let i = 0; i < initialStrays; i++) {
         this.spawnStrayBlock();
       }
 
       // 4. Populate initial starter ring near origin (0,0) so the player can immediately collect & merge in the first 5 seconds!
+      this.spawnStarterRingAround(0, 0);
+
+      // 5. Spawn active AI rival block clusters
+      for (let i = 0; i < BOT_PROFILES.length; i++) {
+        const prof = BOT_PROFILES[i];
+        const a = (i / BOT_PROFILES.length) * Math.PI * 2 + 0.35;
+        const dist = 540 + (i % 3) * 440;
+        let bx = Math.cos(a) * dist;
+        let by = Math.sin(a) * dist;
+        if (this.isNearObstacle(bx, by, OBSTACLE_SIZE * 2.2)) {
+          const safe = this.findSafeCoord(350, OBSTACLE_SIZE * 2.4, 480);
+          bx = safe.x;
+          by = safe.y;
+        }
+        const bot = new window.Cluster.BlockCluster({
+          id: `bot_${i + 1}`,
+          name: prof.name,
+          skinId: prof.skinId,
+          isBot: true,
+          x: bx,
+          y: by,
+          starterSize: prof.starter
+        });
+        const extra = Math.floor(this.rng() * 4);
+        for (let e = 0; e < extra; e++) {
+          bot.attachAtLocal((this.rng() - 0.5) * 2.5, (this.rng() - 0.5) * 2.5);
+        }
+        bot.aiTargetX = bot.x;
+        bot.aiTargetY = bot.y;
+        bot.aiTimer = 0;
+        bot.decayTimer = 0;
+        bot.respawnTimer = 0;
+        this.bots.push(bot);
+      }
+    }
+
+    spawnStarterRingAround(cx, cy) {
       const nearColors = [0, 1, 2, 3, 4, 5];
-      for (let i = 0; i < 24; i++) {
-        const a = (i / 24) * Math.PI * 2;
-        const r = 95 + (i % 3) * 42;
+      for (let i = 0; i < 20; i++) {
+        const a = (i / 20) * Math.PI * 2;
+        const r = 82 + (i % 3) * 34;
+        const sx = cx + Math.cos(a) * r;
+        const sy = cy + Math.sin(a) * r;
+        if (this.isNearObstacle(sx, sy, OBSTACLE_SIZE * 1.1)) continue;
         this.strayBlocks.push({
           id: this.nextEntityId++,
-          x: Math.cos(a) * r,
-          y: Math.sin(a) * r,
+          x: sx,
+          y: sy,
           vx: 0,
           vy: 0,
           colorIdx: nearColors[i % nearColors.length],
@@ -183,38 +286,17 @@
           cooldown: 0
         });
       }
-
-      // 5. Spawn active AI rival block clusters
-      for (let i = 0; i < BOT_PROFILES.length; i++) {
-        const prof = BOT_PROFILES[i];
-        const a = (i / BOT_PROFILES.length) * Math.PI * 2 + 0.35;
-        const dist = 480 + (i % 3) * 440;
-        const bot = new window.Cluster.BlockCluster({
-          id: `bot_${i + 1}`,
-          name: prof.name,
-          skinId: prof.skinId,
-          isBot: true,
-          x: Math.cos(a) * dist,
-          y: Math.sin(a) * dist,
-          starterSize: prof.starter
-        });
-        // Add a few extra attached 1x1 blocks so bots have interesting composite shapes
-        const extra = Math.floor(this.rng() * 6);
-        for (let e = 0; e < extra; e++) {
-          bot.attachAtLocal((this.rng() - 0.5) * 3, (this.rng() - 0.5) * 3, i % 6);
-        }
-        bot.aiTargetX = bot.x;
-        bot.aiTargetY = bot.y;
-        bot.aiTimer = 0;
-        bot.respawnTimer = 0;
-        this.bots.push(bot);
-      }
     }
 
     spawnStrayBlock(x, y, vx = 0, vy = 0, colorIdx = null, cooldown = 0) {
       const margin = 120;
-      const sx = typeof x === "number" ? x : (this.rng() * 2 - 1) * (ARENA_HALF - margin);
-      const sy = typeof y === "number" ? y : (this.rng() * 2 - 1) * (ARENA_HALF - margin);
+      let sx = x;
+      let sy = y;
+      if (typeof sx !== "number" || typeof sy !== "number") {
+        const pt = this.findSafeCoord(margin, OBSTACLE_SIZE * 1.25, 0);
+        sx = pt.x;
+        sy = pt.y;
+      }
       const cIdx = colorIdx !== null ? colorIdx : Math.floor(this.rng() * 6);
       const blk = {
         id: this.nextEntityId++,
@@ -231,14 +313,14 @@
     }
 
     spawnFoodGem() {
-      const margin = 260;
-      // Color index 1 (magenta/pink) or 4 (bright green) as seen in Video D
+      const margin = 280;
       const colorIdx = this.rng() < 0.55 ? 1 : 4;
       const size = this.rng() < 0.65 ? 3 : 4; // 3x3 or 4x4 gem
+      const pt = this.findSafeCoord(margin, OBSTACLE_SIZE * 2.1, 220);
       this.foodGems.push({
         id: this.nextEntityId++,
-        x: (this.rng() * 2 - 1) * (ARENA_HALF - margin),
-        y: (this.rng() * 2 - 1) * (ARENA_HALF - margin),
+        x: pt.x,
+        y: pt.y,
         vx: 0,
         vy: 0,
         size,
@@ -248,6 +330,7 @@
     }
 
     addParticles(x, y, color, count = 10, speed = 180) {
+      if (this.particles.length > 180) return;
       for (let i = 0; i < count; i++) {
         const a = Math.random() * Math.PI * 2;
         const s = (0.3 + Math.random() * 0.7) * speed;
@@ -265,6 +348,7 @@
     }
 
     addFloatText(x, y, text, color = "#ffffff") {
+      if (this.floatTexts.length > 24) this.floatTexts.shift();
       this.floatTexts.push({
         x,
         y,
@@ -275,31 +359,114 @@
       });
     }
 
-    // Scatter a list of dropped 1x1 cells into collectible blocks on the map
-    scatterDroppedCells(dropped, originX, originY) {
-      const cap = Math.min(dropped.length, 48); // Prevent lag spikes when huge blocks shatter
+    // Scatter a list of dropped 1x1 cells into collectible blocks on the map, pushing clear of obstacles if needed
+    scatterDroppedCells(dropped, originX, originY, minClearDist = 0) {
+      const cap = Math.min(dropped.length, 36);
       for (let i = 0; i < cap; i++) {
         const d = dropped[i];
-        const a = Math.atan2(d.wy - originY, d.wx - originX) + (Math.random() - 0.5) * 0.8;
-        const spd = 90 + Math.random() * 190;
+        const a = Math.atan2(d.wy - originY, d.wx - originX) + (Math.random() - 0.5) * 0.7;
+        const spd = 95 + Math.random() * 185;
+        let sx = d.wx;
+        let sy = d.wy;
+        if (minClearDist > 0) {
+          const distFromOrigin = Math.hypot(sx - originX, sy - originY);
+          if (distFromOrigin < minClearDist) {
+            sx = originX + Math.cos(a) * (minClearDist + 8);
+            sy = originY + Math.sin(a) * (minClearDist + 8);
+          }
+        }
         this.spawnStrayBlock(
-          d.wx,
-          d.wy,
+          sx,
+          sy,
           Math.cos(a) * spd,
           Math.sin(a) * spd,
           d.colorIdx,
-          0.35
+          0.38
         );
       }
     }
 
-    update(dt, localPlayer, callbacks = {}) {
-      // Keep stray block count healthy
-      while (this.strayBlocks.length < 480) {
+    // Host serialization of AI bots so all multiplayer clients in the same room share identical bots & leaderboard
+    serializeBots() {
+      return this.bots.map((b) => ({
+        id: b.id,
+        n: b.name,
+        sk: b.skinId,
+        x: Math.round(b.x),
+        y: Math.round(b.y),
+        vx: Math.round(b.vx),
+        vy: Math.round(b.vy),
+        a: Number(b.angle.toFixed(3)),
+        sc: b.score,
+        sp: b.spinning ? 1 : 0,
+        al: b.alive ? 1 : 0,
+        sq: b.squares.map((s) => [s.gx, s.gy, s.size, s.isCore ? 1 : 0, s.isHeart ? 1 : 0])
+      }));
+    }
+
+    // Non-host clients sync bot positions, scores, and squares from the room host
+    applyHostBots(hostBots, dt) {
+      if (!Array.isArray(hostBots)) return;
+      for (let i = 0; i < hostBots.length && i < this.bots.length; i++) {
+        const hb = hostBots[i];
+        const bot = this.bots[i];
+        if (!hb || !bot) continue;
+        bot.name = hb.n || bot.name;
+        bot.skinId = hb.sk || bot.skinId;
+        bot.alive = !!hb.al;
+        bot.spinning = !!hb.sp;
+        if (bot.alive) {
+          const dist = Math.hypot(hb.x - bot.x, hb.y - bot.y);
+          if (dist > 300) {
+            bot.x = hb.x;
+            bot.y = hb.y;
+          } else {
+            bot.x += (hb.x - bot.x) * Math.min(1, 10 * dt);
+            bot.y += (hb.y - bot.y) * Math.min(1, 10 * dt);
+          }
+          bot.angle = hb.a || 0;
+          if (Array.isArray(hb.sq) && hb.sq.length > 0) {
+            bot.squares = hb.sq.map((item) => ({
+              gx: item[0],
+              gy: item[1],
+              size: item[2],
+              isCore: !!item[3],
+              isHeart: !!item[4]
+            }));
+            // Keep bot.cells count synced to host score so bot.score matches host leaderboard
+            const targetSc = Math.max(1, hb.sc || 1);
+            if (bot.cells.size !== targetSc) {
+              bot.cells.clear();
+              const cIdx = bot.getSkinColorIdx();
+              for (let c = 0; c < targetSc; c++) {
+                bot.cells.set(`${c},0`, { colorIdx: cIdx, addedAt: 0 });
+              }
+            }
+            let maxR = UNIT * 0.75;
+            let maxSz = 1;
+            for (const sq of bot.squares) {
+              if (sq.size > maxSz) maxSz = sq.size;
+              const d = (Math.hypot(sq.gx + sq.size * 0.5, sq.gy + sq.size * 0.5) + sq.size * 0.75) * UNIT;
+              if (d > maxR) maxR = d;
+            }
+            bot.radius = maxR;
+            bot.maxSquareSize = maxSz;
+          }
+        }
+      }
+    }
+
+    update(dt, localPlayer, callbacks = {}, net = null) {
+      const isMultiplayerClient = !!(net && net.online && !net.isHost && net.shared && Array.isArray(net.shared.bots));
+
+      // Keep stray block count healthy without overflowing
+      while (this.strayBlocks.length < 440) {
         this.spawnStrayBlock();
       }
+      if (this.strayBlocks.length > 620) {
+        this.strayBlocks.splice(0, this.strayBlocks.length - 620);
+      }
 
-      // Update stray blocks (velocity damping & magnetic pull toward nearby clusters)
       const activeClusters = [];
       if (localPlayer && localPlayer.alive) activeClusters.push(localPlayer);
       for (const b of this.bots) {
@@ -316,7 +483,7 @@
         sb.vy *= Math.pow(0.04, dt);
 
         // Clamp within arena
-        const lim = ARENA_HALF - UNIT;
+        const lim = ARENA_HALF - UNIT * 1.5;
         if (sb.x < -lim) { sb.x = -lim; sb.vx = Math.abs(sb.vx); }
         if (sb.x > lim) { sb.x = lim; sb.vx = -Math.abs(sb.vx); }
         if (sb.y < -lim) { sb.y = -lim; sb.vy = Math.abs(sb.vy); }
@@ -327,18 +494,20 @@
         // Check attachment against active clusters
         let attached = false;
         for (const cl of activeClusters) {
+          // Cap AI bot size at 72 blocks so bots never balloon into 150-cell lag monsters
+          if (cl.isBot && (isMultiplayerClient || cl.score >= 72)) continue;
+
           const dx = sb.x - cl.x;
           const dy = sb.y - cl.y;
-          const maxCheck = cl.radius + UNIT * 2.2;
+          const maxCheck = cl.radius + UNIT * 2.0;
           if (dx * dx + dy * dy > maxCheck * maxCheck) continue;
 
           const loc = cl.worldToLocal(sb.x, sb.y);
-          // Gentle magnetic attraction when very close to a cell
           const snap = cl.findSnapCell(loc.lx, loc.ly);
           if (snap) {
             const wSnap = cl.localToWorld(snap.gx, snap.gy);
             const distSnap = Math.hypot(sb.x - wSnap.wx, sb.y - wSnap.wy);
-            if (distSnap < UNIT * 1.18) {
+            if (distSnap < UNIT * 1.12) {
               const res = cl.attachAtLocal(loc.lx, loc.ly, sb.colorIdx);
               if (res) {
                 this.strayBlocks.splice(i, 1);
@@ -348,10 +517,10 @@
                 }
                 break;
               }
-            } else if (distSnap < UNIT * 2.1) {
-              // Magnetic pull toward snap slot
-              sb.vx += ((wSnap.wx - sb.x) / distSnap) * 520 * dt;
-              sb.vy += ((wSnap.wy - sb.y) / distSnap) * 520 * dt;
+            } else if (distSnap < UNIT * 1.65) {
+              // Gentle magnetic pull toward the best pocket snap slot
+              sb.vx += ((wSnap.wx - sb.x) / distSnap) * 440 * dt;
+              sb.vy += ((wSnap.wy - sb.y) / distSnap) * 440 * dt;
             }
           }
         }
@@ -370,33 +539,47 @@
         }
 
         for (const cl of activeClusters) {
+          if (cl.isBot && isMultiplayerClient) continue;
           if (!cl.alive || cl.invuln > 0) continue;
           const distCenter = Math.hypot(cl.x - obs.x, cl.y - obs.y);
           if (distCenter > cl.radius + OBSTACLE_SIZE) continue;
 
-          // Check each merged square of the cluster
-          for (let sIdx = cl.squares.length - 1; sIdx >= 0; sIdx--) {
-            const sq = cl.squares[sIdx];
+          // Check outer/non-core squares first so brushing an obstacle sheds outer blocks before threatening core
+          const orderedSquares = [...cl.squares].sort((a, b) => (a.isCore ? 1 : 0) - (b.isCore ? 1 : 0));
+
+          for (const sq of orderedSquares) {
             const b = cl.getSquareWorldBounds(sq);
-            const hitDist = b.half + OBSTACLE_SIZE * 0.44;
+            const hitDist = b.half + OBSTACLE_SIZE * 0.42;
             if (Math.abs(b.wx - obs.x) < hitDist && Math.abs(b.wy - obs.y) < hitDist) {
-              // If player only has a single 1x1 block, bounce off obstacle forgivingly instead of instant frustrating death
-              if (cl.cells.size <= 2 && sq.isCore) {
-                const pushA = Math.atan2(cl.y - obs.y, cl.x - obs.x);
-                cl.vx = Math.cos(pushA) * 260;
-                cl.vy = Math.sin(pushA) * 260;
-                cl.x += Math.cos(pushA) * 10;
-                cl.y += Math.sin(pushA) * 10;
+              // Forgiving obstacle bounce for small 1x1 and 2x2 core squares (Video C 03:28-03:34, Video E 01:40)
+              if ((sq.isCore || sq.isHeart) && sq.size <= 2) {
+                const outerSq = cl.squares.find((s) => !s.isCore && !s.isHeart);
+                if (outerSq) {
+                  const sh = cl.shatterSquare(outerSq);
+                  this.scatterDroppedCells(sh.dropped, obs.x, obs.y, OBSTACLE_SIZE * 0.95);
+                }
+                const coreWorld = cl.getCoreWorldCenter();
+                const pushA = Math.atan2(coreWorld.wy - obs.y, coreWorld.wx - obs.x);
+                cl.vx = Math.cos(pushA) * 280;
+                cl.vy = Math.sin(pushA) * 280;
+                cl.x += Math.cos(pushA) * 14;
+                cl.y += Math.sin(pushA) * 14;
+                cl.invuln = Math.max(cl.invuln, 0.35);
+                this.addParticles(b.wx, b.wy, "#ffffff", 8, 180);
                 break;
               }
 
               const sh = cl.shatterSquare(sq);
-              this.scatterDroppedCells(sh.dropped, obs.x, obs.y);
+              this.scatterDroppedCells(sh.dropped, obs.x, obs.y, OBSTACLE_SIZE * 0.95);
               this.addParticles(b.wx, b.wy, "#ffffff", 14, 240);
 
               obs.hp -= 1;
               if (obs.hp <= 0) {
                 obs.respawnTimer = 18;
+              }
+
+              if (!cl.alive && cl.isBot) {
+                cl.respawnTimer = 5;
               }
 
               if (cl === localPlayer && callbacks.onLocalHitObstacle) {
@@ -414,9 +597,9 @@
           fg.respawnTimer -= dt;
           if (fg.respawnTimer <= 0) {
             fg.respawnTimer = 0;
-            const margin = 260;
-            fg.x = (this.rng() * 2 - 1) * (ARENA_HALF - margin);
-            fg.y = (this.rng() * 2 - 1) * (ARENA_HALF - margin);
+            const pt = this.findSafeCoord(280, OBSTACLE_SIZE * 2.1, 220);
+            fg.x = pt.x;
+            fg.y = pt.y;
           }
           continue;
         }
@@ -430,6 +613,7 @@
         const fgHalf = fgSide * 0.5;
 
         for (const cl of activeClusters) {
+          if (cl.isBot && isMultiplayerClient) continue;
           if (!cl.alive) continue;
           if (Math.hypot(cl.x - fg.x, cl.y - fg.y) > cl.radius + fgSide) continue;
 
@@ -437,7 +621,6 @@
             const b = cl.getSquareWorldBounds(sq);
             const overlap = b.half + fgHalf * 0.88;
             if (Math.abs(b.wx - fg.x) < overlap && Math.abs(b.wy - fg.y) < overlap) {
-              // If player's hitting square is at least size 2 (or total score >= 6), shatter the food gem into a feast of 1x1s!
               if (sq.size >= 2 || cl.score >= 6) {
                 const count = fg.size * fg.size + 4;
                 for (let k = 0; k < count; k++) {
@@ -453,16 +636,15 @@
                   );
                 }
                 const pal = window.Skins.getPalette(fg.colorIdx);
-                this.addParticles(fg.x, fg.y, pal.top, 20, 260);
+                this.addParticles(fg.x, fg.y, pal.top, 18, 250);
                 fg.respawnTimer = 14;
-                // Slight tilt/recoil on impact as seen in Video D 02:53
                 cl.angle += (Math.random() - 0.5) * 0.35;
                 if (cl === localPlayer && callbacks.onLocalShatterFoodGem) {
                   callbacks.onLocalShatterFoodGem(fg.x, fg.y, count);
                 }
               } else {
-                // Too small: bump the food gem slightly without breaking it (Video D 01:29)
-                const pushA = Math.atan2(fg.y - cl.y, fg.x - cl.x);
+                const coreWorld = cl.getCoreWorldCenter();
+                const pushA = Math.atan2(fg.y - coreWorld.wy, fg.x - coreWorld.wx);
                 fg.vx = Math.cos(pushA) * 140;
                 fg.vy = Math.sin(pushA) * 140;
                 cl.vx = -Math.cos(pushA) * 160;
@@ -474,77 +656,100 @@
         }
       }
 
-      // Update AI Bots & AI behavior
-      for (const bot of this.bots) {
-        if (!bot.alive) {
-          bot.respawnTimer -= dt;
-          if (bot.respawnTimer <= 0) {
-            const a = this.rng() * Math.PI * 2;
-            const d = 600 + this.rng() * (ARENA_HALF - 800);
-            bot.x = Math.cos(a) * d;
-            bot.y = Math.sin(a) * d;
-            bot.vx = 0;
-            bot.vy = 0;
-            bot.alive = true;
-            bot.invuln = 2.0;
-            bot.initStarter(1 + Math.floor(this.rng() * 2));
+      // Update AI Bots (Host runs AI simulation; non-host clients sync from net.shared.bots)
+      if (isMultiplayerClient) {
+        this.applyHostBots(net.shared.bots, dt);
+      } else {
+        for (const bot of this.bots) {
+          if (!bot.alive) {
+            bot.respawnTimer -= dt;
+            if (bot.respawnTimer <= 0) {
+              const pt = this.findSafeCoord(400, OBSTACLE_SIZE * 2.3, 520);
+              bot.x = pt.x;
+              bot.y = pt.y;
+              bot.vx = 0;
+              bot.vy = 0;
+              bot.alive = true;
+              bot.invuln = 2.0;
+              bot.initStarter(1 + Math.floor(this.rng() * 2));
+            }
+            continue;
           }
-          continue;
-        }
 
-        bot.aiTimer -= dt;
-        let rotLeft = false;
-        let rotRight = false;
-
-        if (bot.aiTimer <= 0) {
-          bot.aiTimer = 0.65 + this.rng() * 0.9;
-          // Look for nearest food gem, smaller player, or cluster of stray blocks
-          let bestX = bot.x + (this.rng() - 0.5) * 700;
-          let bestY = bot.y + (this.rng() - 0.5) * 700;
-
-          // Avoid obstacles
-          for (const obs of this.obstacles) {
-            if (obs.respawnTimer > 0) continue;
-            const d = Math.hypot(bot.x - obs.x, bot.y - obs.y);
-            if (d < bot.radius + OBSTACLE_SIZE * 2.2) {
-              bestX = bot.x + (bot.x - obs.x) * 2.5;
-              bestY = bot.y + (bot.y - obs.y) * 2.5;
-              break;
+          // Apply score decay to large AI bots (> 68 cells) just like large players so bots stay compact & fast
+          if (bot.score > 68) {
+            bot.decayTimer = (bot.decayTimer || 0) + dt;
+            if (bot.decayTimer >= 1.1) {
+              bot.decayTimer = 0;
+              bot.detachOuterUnmerged();
             }
           }
 
-          bot.aiTargetX = Math.max(-ARENA_HALF + 250, Math.min(ARENA_HALF - 250, bestX));
-          bot.aiTargetY = Math.max(-ARENA_HALF + 250, Math.min(ARENA_HALF - 250, bestY));
-          bot.aiSpin = this.rng() < 0.22 && bot.energy > 45 ? (this.rng() < 0.5 ? -1 : 1) : 0;
-        }
+          bot.aiTimer -= dt;
+          let rotLeft = false;
+          let rotRight = false;
 
-        if (bot.aiSpin < 0) rotLeft = true;
-        if (bot.aiSpin > 0) rotRight = true;
+          if (bot.aiTimer <= 0) {
+            bot.aiTimer = 0.65 + this.rng() * 0.9;
+            let bestX = bot.x + (this.rng() - 0.5) * 700;
+            let bestY = bot.y + (this.rng() - 0.5) * 700;
 
-        const res = bot.update(dt, {
-          targetX: bot.aiTargetX,
-          targetY: bot.aiTargetY,
-          rotLeft,
-          rotRight
-        }, ARENA_HALF);
+            for (const obs of this.obstacles) {
+              if (obs.respawnTimer > 0) continue;
+              const d = Math.hypot(bot.x - obs.x, bot.y - obs.y);
+              if (d < bot.radius + OBSTACLE_SIZE * 2.2) {
+                bestX = bot.x + (bot.x - obs.x) * 2.5;
+                bestY = bot.y + (bot.y - obs.y) * 2.5;
+                break;
+              }
+            }
 
-        if (res.detachedBlock) {
-          const d = res.detachedBlock;
-          this.spawnStrayBlock(d.wx, d.wy, d.vx, d.vy, d.colorIdx, 0.45);
+            bot.aiTargetX = Math.max(-ARENA_HALF + 250, Math.min(ARENA_HALF - 250, bestX));
+            bot.aiTargetY = Math.max(-ARENA_HALF + 250, Math.min(ARENA_HALF - 250, bestY));
+            bot.aiSpin = this.rng() < 0.2 && bot.energy > 45 ? (this.rng() < 0.5 ? -1 : 1) : 0;
+          }
+
+          if (bot.aiSpin < 0) rotLeft = true;
+          if (bot.aiSpin > 0) rotRight = true;
+
+          const res = bot.update(
+            dt,
+            {
+              targetX: bot.aiTargetX,
+              targetY: bot.aiTargetY,
+              rotLeft,
+              rotRight
+            },
+            ARENA_HALF
+          );
+
+          if (res.detachedBlock && this.strayBlocks.length < 480) {
+            const d = res.detachedBlock;
+            this.spawnStrayBlock(d.wx, d.wy, d.vx, d.vy, d.colorIdx, 0.45);
+          }
         }
       }
 
-      // Player-vs-Player / Bot-vs-Player Block Combat (Rules 14, 15, 16)
+      // Bot-vs-Player & Bot-vs-Bot Block Combat (Rules 14, 15, 16)
       for (let i = 0; i < activeClusters.length; i++) {
         const a = activeClusters[i];
         if (!a.alive || a.invuln > 0) continue;
         for (let j = i + 1; j < activeClusters.length; j++) {
           const b = activeClusters[j];
           if (!b.alive || b.invuln > 0) continue;
+          if (isMultiplayerClient && a.isBot && b.isBot) continue;
           const dist = Math.hypot(a.x - b.x, a.y - b.y);
           if (dist > a.radius + b.radius) continue;
 
           this.resolveClusterCollision(a, b, localPlayer, callbacks);
+        }
+      }
+
+      // Real Multiplayer Player-vs-Player (PvP) Block Combat against net.players (Rules 14, 15, 26)
+      if (net && net.players && localPlayer && localPlayer.alive && localPlayer.invuln <= 0) {
+        for (const rp of net.players.values()) {
+          if (!rp || !rp.s || !rp.s.al || rp.s.iv || !Array.isArray(rp.s.sq)) continue;
+          this.resolveRemotePlayerCollision(localPlayer, rp, callbacks, net);
         }
       }
 
@@ -567,6 +772,108 @@
       }
     }
 
+    // Resolve direct block-vs-block combat between localPlayer and a remote human player in net.players
+    resolveRemotePlayerCollision(localPlayer, rp, callbacks, net) {
+      const s = rp.s;
+      const distCenters = Math.hypot(localPlayer.x - s.x, localPlayer.y - s.y);
+      if (distCenters > localPlayer.radius + 450) return;
+
+      const c = Math.cos(s.a || 0);
+      const sn = Math.sin(s.a || 0);
+      const now = performance.now();
+
+      for (let ia = localPlayer.squares.length - 1; ia >= 0; ia--) {
+        const sqA = localPlayer.squares[ia];
+        if (!sqA) continue;
+        const ba = localPlayer.getSquareWorldBounds(sqA);
+
+        for (let ib = s.sq.length - 1; ib >= 0; ib--) {
+          const item = s.sq[ib];
+          if (!item) continue;
+          const [gx, gy, sizeB, isCoreB, isHeartB] = item;
+          const lx = (gx + (sizeB - 1) * 0.5) * UNIT;
+          const ly = (gy + (sizeB - 1) * 0.5) * UNIT;
+          const bwx = s.x + (lx * c - ly * sn);
+          const bwy = s.y + (lx * sn + ly * c);
+          const bHalf = (sizeB * UNIT) * 0.5;
+
+          const overlap = (ba.half + bHalf) * 0.88;
+          if (Math.abs(ba.wx - bwx) < overlap && Math.abs(ba.wy - bwy) < overlap) {
+            const effA = sqA.size + (localPlayer.spinning ? 0.35 : 0);
+            const effB = sizeB + (s.sp ? 0.35 : 0);
+            const remoteName = s.n || rp.name || "Player";
+
+            if (effA > effB) {
+              // Local player's block is larger: shatter remote player's block!
+              const hitKey = `${rp.id}:${gx},${gy},${sizeB}`;
+              const lastHit = this.pvpHitCooldowns.get(hitKey) || 0;
+              if (now - lastHit > 320) {
+                this.pvpHitCooldowns.set(hitKey, now);
+                const fatal = !!(isCoreB || isHeartB || s.sq.length <= 1);
+                const rSkin = window.Skins.getSkin(s.sk || "gem_cyan");
+                const rPal = window.Skins.getPalette(rSkin.paletteIndex);
+                this.addParticles(bwx, bwy, rPal.top, 14, 240);
+                // Optimistically remove shattered square from remote snapshot until next state packet
+                s.sq.splice(ib, 1);
+                if (fatal) s.al = 0;
+                net.send("pvp_hit", {
+                  targetId: rp.id,
+                  gx,
+                  gy,
+                  size: sizeB,
+                  fatal,
+                  attackerName: localPlayer.name,
+                  wx: Math.round(bwx),
+                  wy: Math.round(bwy)
+                });
+                if (callbacks.onLocalCombatHit) {
+                  callbacks.onLocalCombatHit(true, fatal, remoteName, bwx, bwy);
+                }
+              }
+              return;
+            } else if (effB > effA) {
+              // Remote player's block is larger: shatter local player's block!
+              const sh = localPlayer.shatterSquare(sqA);
+              this.scatterDroppedCells(sh.dropped, bwx, bwy);
+              const pal = window.Skins.getPalette(localPlayer.getSkinColorIdx());
+              this.addParticles(ba.wx, ba.wy, pal.top, 14, 240);
+              net.send("pvp_shatter", {
+                attackerId: rp.id,
+                victimName: localPlayer.name,
+                fatal: sh.fatal,
+                wx: Math.round(ba.wx),
+                wy: Math.round(ba.wy),
+                colorIdx: localPlayer.getSkinColorIdx(),
+                count: Math.min(16, sh.dropped.length)
+              });
+              if (callbacks.onLocalCombatHit) {
+                callbacks.onLocalCombatHit(false, sh.fatal, remoteName, ba.wx, ba.wy);
+              }
+              return;
+            } else {
+              // Equal-size blocks: crisp physical ricochet between both players!
+              const pushA = Math.atan2(ba.wy - bwy, ba.wx - bwx);
+              localPlayer.vx = Math.cos(pushA) * 230;
+              localPlayer.vy = Math.sin(pushA) * 230;
+              localPlayer.x += Math.cos(pushA) * 8;
+              localPlayer.y += Math.sin(pushA) * 8;
+              this.addParticles((ba.wx + bwx) * 0.5, (ba.wy + bwy) * 0.5, "#ffffff", 6, 130);
+              const bumpKey = `bump:${rp.id}`;
+              if (now - (this.pvpHitCooldowns.get(bumpKey) || 0) > 180) {
+                this.pvpHitCooldowns.set(bumpKey, now);
+                net.send("pvp_bump", {
+                  targetId: rp.id,
+                  vx: Math.round(-Math.cos(pushA) * 230),
+                  vy: Math.round(-Math.sin(pushA) * 230)
+                });
+              }
+              return;
+            }
+          }
+        }
+      }
+    }
+
     resolveClusterCollision(a, b, localPlayer, callbacks) {
       for (let ia = a.squares.length - 1; ia >= 0; ia--) {
         const sqA = a.squares[ia];
@@ -580,7 +887,6 @@
 
           const overlap = (ba.half + bb.half) * 0.88;
           if (Math.abs(ba.wx - bb.wx) < overlap && Math.abs(ba.wy - bb.wy) < overlap) {
-            // Larger square destroys smaller square! Tie broken by total cluster score if spinning
             const effA = sqA.size + (a.spinning ? 0.35 : 0);
             const effB = sqB.size + (b.spinning ? 0.35 : 0);
 
@@ -609,8 +915,7 @@
               }
               return;
             } else {
-              // Equal size blocks bounce off each other with a crisp clack
-              const pushA = Math.atan2(a.y - b.y, a.x - b.x);
+              const pushA = Math.atan2(ba.wy - bb.wy, ba.wx - bb.wx);
               a.vx = Math.cos(pushA) * 210;
               a.vy = Math.sin(pushA) * 210;
               b.vx = -Math.cos(pushA) * 210;
@@ -624,9 +929,6 @@
     }
 
     draw(ctx, camera, isDark, localPlayer, remotePlayersMap, leaderId) {
-      if (!lightTile) lightTile = buildDiamondTile(false);
-      if (!darkTile) darkTile = buildDiamondTile(true);
-
       const vw = camera.width / camera.zoom;
       const vh = camera.height / camera.zoom;
       const left = camera.x - vw * 0.55;
@@ -638,14 +940,13 @@
       ctx.fillStyle = isDark ? "#0d0f14" : "#d8dce6";
       ctx.fillRect(left, top, right - left, bottom - top);
 
-      // 2. Arena background with repeating diamond grid pattern
-      const tile = isDark ? darkTile : lightTile;
-      const pattern = ctx.createPattern(tile, "repeat");
+      // 2. Arena background with cached repeating diamond grid pattern
+      const pattern = getCachedPattern(ctx, isDark);
       ctx.save();
       ctx.beginPath();
       ctx.rect(-ARENA_HALF, -ARENA_HALF, ARENA_HALF * 2, ARENA_HALF * 2);
       ctx.clip();
-      ctx.fillStyle = pattern;
+      ctx.fillStyle = pattern || (isDark ? "#171920" : "#f3f4f7");
       ctx.fillRect(
         Math.max(-ARENA_HALF, left),
         Math.max(-ARENA_HALF, top),
@@ -734,6 +1035,18 @@
       ctx.translate(s.x, s.y);
       ctx.rotate(s.a || 0);
 
+      if (s.sp) {
+        ctx.strokeStyle = "rgba(255, 244, 130, 0.85)";
+        ctx.lineWidth = 3;
+        for (const item of s.sq) {
+          const [gx, gy, size] = item;
+          const cx = (gx + (size - 1) * 0.5) * UNIT;
+          const cy = (gy + (size - 1) * 0.5) * UNIT;
+          const w = size * UNIT;
+          ctx.strokeRect(cx - w * 0.5 - 1.5, cy - w * 0.5 - 1.5, w + 3, w + 3);
+        }
+      }
+
       let coreSq = s.sq[0];
       for (const item of s.sq) {
         const [gx, gy, size, isCore, isHeart] = item;
@@ -776,7 +1089,6 @@
       const step = OBSTACLE_SIZE;
       const b = ARENA_HALF;
 
-      // Top & Bottom horizontal walls if visible
       if (top < -b + step) {
         const startX = Math.max(-b, Math.floor(left / step) * step);
         const endX = Math.min(b, Math.ceil(right / step) * step);
@@ -791,7 +1103,6 @@
           window.Skins.drawObstacleBlock(ctx, x, b, step, 0);
         }
       }
-      // Left & Right vertical walls if visible
       if (left < -b + step) {
         const startY = Math.max(-b + step, Math.floor(top / step) * step);
         const endY = Math.min(b - step, Math.ceil(bottom / step) * step);

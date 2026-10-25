@@ -6,6 +6,57 @@
     searchFilter: "",
     bagExpanded: false,
     lastMiniMapTime: 0,
+    _hudCache: {},
+    _els: null,
+
+    _getEls() {
+      if (this._els) return this._els;
+      this._els = {
+        moodEl: document.getElementById("hud-mood-val"),
+        moodBadge: document.getElementById("hud-mood-badge"),
+        enFill: document.getElementById("hud-energy-fill"),
+        enText: document.getElementById("hud-energy-val"),
+        xpFill: document.getElementById("hud-xp-fill"),
+        xpText: document.getElementById("hud-xp-val"),
+        lvlEl: document.getElementById("hud-level-val"),
+        curEl: document.getElementById("hud-currants-val"),
+        nameEl: document.getElementById("hud-player-name"),
+        streetLabel: document.getElementById("minimap-street-name"),
+        skillBadge: document.getElementById("hud-skill-active"),
+        waitBox: document.getElementById("waiting-timer-box"),
+        waitFill: document.getElementById("waiting-timer-fill"),
+        waitLabel: document.getElementById("waiting-timer-label"),
+        qurazyBanner: document.getElementById("qurazy-banner"),
+      };
+      return this._els;
+    },
+
+    _setText(el, key, val) {
+      if (!el) return;
+      const str = String(val);
+      if (this._hudCache[key] !== str) {
+        this._hudCache[key] = str;
+        el.textContent = str;
+      }
+    },
+
+    _setWidth(el, key, pct) {
+      if (!el) return;
+      const str = `${Math.round(pct * 10) / 10}%`;
+      if (this._hudCache[key] !== str) {
+        this._hudCache[key] = str;
+        el.style.width = str;
+      }
+    },
+
+    _setHidden(el, key, isHidden) {
+      if (!el) return;
+      const flag = Boolean(isHidden);
+      if (this._hudCache[key] !== flag) {
+        this._hudCache[key] = flag;
+        el.classList.toggle("hidden", flag);
+      }
+    },
 
     init() {
       // Top Header Buttons
@@ -137,85 +188,74 @@
     updateHUD() {
       const S = window.State;
       if (!S || !S.player) return;
+      const els = this._getEls();
 
       // Mood Circle Badge
       const moodVal = Math.round(S.player.mood);
-      const moodEl = document.getElementById("hud-mood-val");
-      const moodBadge = document.getElementById("hud-mood-badge");
-      if (moodEl) moodEl.textContent = moodVal;
-      if (moodBadge) {
-        moodBadge.title = `${moodVal} of ${S.player.maxMood} Mood (${moodVal >= 80 ? "1.5x iMG Bonus" : "Normal iMG"})`;
+      this._setText(els.moodEl, "moodVal", moodVal);
+      const moodTitle = `${moodVal} of ${S.player.maxMood} Mood (${moodVal >= 80 ? "1.5x iMG Bonus" : "Normal iMG"})`;
+      if (els.moodBadge && this._hudCache.moodTitle !== moodTitle) {
+        this._hudCache.moodTitle = moodTitle;
+        els.moodBadge.title = moodTitle;
       }
 
       // Energy Pill Bar
       const enVal = Math.round(S.player.energy);
       const enPct = Math.max(0, Math.min(100, (enVal / S.player.maxEnergy) * 100));
-      const enFill = document.getElementById("hud-energy-fill");
-      const enText = document.getElementById("hud-energy-val");
-      if (enFill) enFill.style.width = `${enPct}%`;
-      if (enText) enText.textContent = `${enVal}/${S.player.maxEnergy}`;
+      this._setWidth(els.enFill, "enFill", enPct);
+      this._setText(els.enText, "enText", `${enVal}/${S.player.maxEnergy}`);
 
       // XP / iMG Progress & Level
       const imgVal = Math.round(S.player.img);
       const lvl = S.player.level || 1;
       const imgPct = Math.max(6, Math.min(100, ((imgVal % 150) / 150) * 100));
-      const xpFill = document.getElementById("hud-xp-fill");
-      const xpText = document.getElementById("hud-xp-val");
-      const lvlEl = document.getElementById("hud-level-val");
-      if (xpFill) xpFill.style.width = `${imgPct}%`;
-      if (xpText) xpText.textContent = `${imgVal} iMG`;
-      if (lvlEl) lvlEl.textContent = lvl;
+      this._setWidth(els.xpFill, "xpFill", imgPct);
+      this._setText(els.xpText, "xpText", `${imgVal} iMG`);
+      this._setText(els.lvlEl, "lvlEl", lvl);
 
       // Currants Counter (Bottom-Left)
-      const curEl = document.getElementById("hud-currants-val");
-      if (curEl) curEl.textContent = Number(S.player.currants || 0).toLocaleString();
+      this._setText(els.curEl, "curEl", Number(S.player.currants || 0).toLocaleString());
 
       // Player Name & Street Name
-      const nameEl = document.getElementById("hud-player-name");
-      if (nameEl) nameEl.textContent = S.player.name;
-      const streetLabel = document.getElementById("minimap-street-name");
+      this._setText(els.nameEl, "nameEl", S.player.name);
       const curStreet = window.GameData.STREETS[S.area];
-      if (streetLabel && curStreet) streetLabel.textContent = curStreet.name;
+      if (curStreet) this._setText(els.streetLabel, "streetLabel", curStreet.name);
 
       // Active Skill Header Indicator
-      const skillBadge = document.getElementById("hud-skill-active");
-      if (skillBadge) {
+      if (els.skillBadge) {
         if (S.activeSkill) {
           const sk = window.GameData.SKILLS.find((s) => s.id === S.activeSkill.id);
           const rem = Math.max(0, Math.ceil((S.activeSkill.finishAt - Date.now()) / 1000));
-          skillBadge.textContent = `Learning: ${sk ? sk.name : S.activeSkill.id} (${rem}s)`;
-          skillBadge.classList.remove("hidden");
+          this._setText(els.skillBadge, "skillText", `Learning: ${sk ? sk.name : S.activeSkill.id} (${rem}s)`);
+          this._setHidden(els.skillBadge, "skillHidden", false);
         } else {
-          skillBadge.textContent = "Skills (Idle)";
+          this._setText(els.skillBadge, "skillText", "Skills (Idle)");
         }
       }
 
       // 15-Second Bureaucratic Waiting Timer (Rule 17 & Footage B 04:45)
-      const waitBox = document.getElementById("waiting-timer-box");
-      if (waitBox) {
-        if (S.area === "bureaucratic_hall" && S.waitingTimer > 0 && !S.waitingQualified) {
-          waitBox.classList.remove("hidden");
+      if (els.waitBox) {
+        const showWait = S.area === "bureaucratic_hall" && S.waitingTimer > 0 && !S.waitingQualified;
+        this._setHidden(els.waitBox, "waitHidden", !showWait);
+        if (showWait) {
           const pct = Math.min(100, (S.waitingTimer / 15) * 100);
-          document.getElementById("waiting-timer-fill").style.width = `${pct}%`;
+          this._setWidth(els.waitFill, "waitFill", pct);
           const rem = Math.max(0, Math.ceil(15 - S.waitingTimer));
-          document.getElementById("waiting-timer-label").textContent = `Please Wait (${rem}s)`;
-        } else {
-          waitBox.classList.add("hidden");
+          this._setText(els.waitLabel, "waitLabel", `Please Wait (${rem}s)`);
         }
       }
 
       // Qurazy Quoin Top Banner on Goli Grabs (Footage A 24:39)
-      const qurazyBanner = document.getElementById("qurazy-banner");
-      if (qurazyBanner && curStreet) {
+      if (els.qurazyBanner && curStreet) {
         const hasActiveQurazy = curStreet.quoins.some(
           (q) => q.type === "qurazy" && (!q.collectedUntil || q.collectedUntil < performance.now())
         );
-        qurazyBanner.classList.toggle("hidden", !hasActiveQurazy);
+        this._setHidden(els.qurazyBanner, "qurazyHidden", !hasActiveQurazy);
       }
 
-      // Update Mini-Map Canvas at ~10fps
+      // Update Mini-Map Canvas at ~4fps
       const now = performance.now();
-      if (now - this.lastMiniMapTime > 100) {
+      if (now - this.lastMiniMapTime > 250) {
         this.lastMiniMapTime = now;
         this.drawMiniMap();
       }

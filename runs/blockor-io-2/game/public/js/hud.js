@@ -82,11 +82,11 @@
     const fillRatio = Math.max(0, Math.min(1, energyPct / 100));
 
     ctx.save();
-    // Tiny percentage readout above bar (Video A 00:53)
+    // Plain numeric readout above bar matching original footage (Video A 00:53)
     ctx.font = '800 12px "Trebuchet MS", sans-serif';
-    ctx.textAlign = "left";
+    ctx.textAlign = "center";
     ctx.fillStyle = isDark ? "#e8f0ff" : "#1d2430";
-    ctx.fillText(`${energyPct}%`, barX - 2, barY - 8);
+    ctx.fillText(`${energyPct}`, barX + barW * 0.5, barY - 8);
 
     // Outer pill border (thick black border + dark gray background)
     const r = barW * 0.5;
@@ -132,7 +132,9 @@
     for (let i = 0; i < top10.length; i++) {
       const entry = top10[i];
       const y = lbY + i * rowH + 10;
-      const col = ROW_COLORS[i % ROW_COLORS.length];
+      const skin = entry.skinId ? window.Skins.getSkin(entry.skinId) : null;
+      const pal = skin ? window.Skins.getPalette(skin.paletteIndex) : null;
+      const col = pal ? pal.top : ROW_COLORS[i % ROW_COLORS.length];
       const isMe = localPlayer && entry.id === localPlayer.id;
 
       // Subtle dark backing for readability on light grid
@@ -141,23 +143,16 @@
         ctx.fillRect(lbX - 6, y - 9, lbW + 8, rowH - 1);
       }
 
-      ctx.strokeStyle = "rgba(8, 10, 15, 0.85)";
+      ctx.strokeStyle = "rgba(8, 10, 15, 0.88)";
       ctx.lineWidth = 3;
 
-      // Rank & Name
+      // Rank & Name colored by that player's block color (Video A 00:37, 00:41)
       ctx.textAlign = "left";
       const rankStr = `#${i + 1} `;
-      const maxName = String(entry.name || "Player").slice(0, 12);
+      const maxName = String(entry.name || "Player").slice(0, 14);
       ctx.strokeText(rankStr + maxName, lbX, y);
       ctx.fillStyle = col;
       ctx.fillText(rankStr + maxName, lbX, y);
-
-      // Tiny colored gem square icon between name and score (Video A 00:37)
-      const sqX = lbX + lbW - 52;
-      ctx.fillStyle = "#0b0d12";
-      ctx.fillRect(sqX - 1, y - 5, 10, 10);
-      ctx.fillStyle = col;
-      ctx.fillRect(sqX, y - 4, 8, 8);
 
       // Score
       ctx.textAlign = "right";
@@ -170,11 +165,13 @@
     // If local player is outside Top 10, show their row directly underneath
     if (localPlayer && myRank > 10) {
       const y = lbY + top10.length * rowH + 16;
-      const col = "#ffffff";
+      const mySkin = window.Skins.getSkin(localPlayer.skinId);
+      const myPal = mySkin ? window.Skins.getPalette(mySkin.paletteIndex) : null;
+      const col = myPal ? myPal.top : "#ffffff";
       ctx.strokeStyle = "rgba(8, 10, 15, 0.9)";
       ctx.lineWidth = 3;
       ctx.textAlign = "left";
-      const txt = `#${myRank} ${String(localPlayer.name).slice(0, 12)}`;
+      const txt = `#${myRank} ${String(localPlayer.name).slice(0, 14)}`;
       ctx.strokeText(txt, lbX, y);
       ctx.fillStyle = col;
       ctx.fillText(txt, lbX, y);

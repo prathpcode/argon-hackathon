@@ -29,3 +29,7 @@ TypeError: create() got unexpected keyword argument(s): round, targets. Use extr
 [build] running
 [build] done: Built “Whim — A World of Eleven Giants”
 [playtest] running
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] done: kept from the last run
+[playtest] running

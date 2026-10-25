@@ -1,0 +1,9 @@
+{
+ "path": "public/index.html",
+ "edits": [
+  {
+   "oldText": "  <!-- Single-Click/Key Title Splash Overlay -->\n  <div id=\"title-splash-overlay\">\n    <div class=\"splash-card\">\n      <div class=\"splash-title\">Whim</div>\n      <div class=\"splash-sub\">Explore the interconnected streets of Andra, Kalavana, and Beau's Home Street inside the minds of the Eleven Giants.</div>\n      <div class=\"splash-cta\">Press Any Key or Click to Play</div>\n    </div>\n  </div>",
+   "newText": "  <!-- Single-Click/Key Title Splash Overlay (hidden on load so play starts immediately in street view) -->\n  <div id=\"title-splash-overlay\" class=\"hidden\">\n    <div class=\"splash-card\">\n      <div class=\"splash-title\">Ur</div>\n      <div class=\"splash-sub\">Explore the interconnected streets of Andra, Kalavana, and Beau's Home Street inside the minds of the Eleven Giants.</div>\n      <div class=\"splash-cta\">Press Any Key or Click to Play</div>\n    </div>\n  </div>"
+  }
+ ]
+}

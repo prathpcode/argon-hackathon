@@ -1,0 +1,21 @@
+{
+ "path": "public/style.css",
+ "edits": [
+  {
+   "oldText": ".pill-fill {\n  height: 100%;\n  transition: width 0.2s ease;\n}",
+   "newText": ".pill-fill {\n  height: 100%;\n}"
+  },
+  {
+   "oldText": "#btn-magic-rock {\n  position: relative;\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: #DCE8EC;\n  border: 2px solid #FFFFFF;\n  border-radius: 18px;\n  padding: 4px 12px;\n  cursor: pointer;\n  font-weight: 700;\n  font-size: 12px;\n  color: #2C4A5E;\n  transition: transform 0.12s;\n}",
+   "newText": "#btn-magic-rock {\n  position: relative;\n  display: flex;\n  align-items: center;\n  gap: 6px;\n  background: #DCE8EC;\n  border: 2px solid #FFFFFF;\n  border-radius: 18px;\n  padding: 4px 12px;\n  cursor: pointer;\n  font-weight: 700;\n  font-size: 12px;\n  color: #2C4A5E;\n}"
+  },
+  {
+   "oldText": "#waiting-timer-fill {\n  width: 0%;\n  height: 100%;\n  background: #5C9E31;\n  transition: width 0.1s linear;\n}",
+   "newText": "#waiting-timer-fill {\n  width: 0%;\n  height: 100%;\n  background: #5C9E31;\n}"
+  },
+  {
+   "oldText": ".inv-slot {\n  height: 44px;\n  background: #DFE8EC;\n  border: 1.5px solid #B8C8D1;\n  border-radius: 5px;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n  transition: border-color 0.12s, transform 0.1s;\n}",
+   "newText": ".inv-slot {\n  height: 44px;\n  background: #DFE8EC;\n  border: 1.5px solid #B8C8D1;\n  border-radius: 5px;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  cursor: pointer;\n}"
+  }
+ ]
+}

@@ -1,0 +1,224 @@
+{
+ "round": 1,
+ "fun": 5,
+ "faithful": 6.3,
+ "reports": [
+  {
+   "tester": "fun",
+   "fun": 2,
+   "faithful": 6,
+   "summary": "The rebuild sets up a very faithful Glitch UI shell (top Mood/Energy/iMG HUD, Magic Rock quest counter, 16-slot bottom inventory with authentic items, right-hand Local/Global/Party chat panel, and background skill timers), but a critical render/main-thread loop freeze prevents the game from actually being played. Opening the game fails the frame-draw check, every interaction takes 20+ seconds to respond, floating canvas text smears without clearing properly, and the 'Press Any Key or Click to Play' splash overlay remains visually stuck on screen even after window.State.started becomes true.",
+   "best": [
+    "Authentic Glitch UI chrome layout (#EBF2F5 outer frame, #5C9E31 circular Mood badge, Energy/iMG pill bars, Magic Rock notification button, right-hand Local/Global/Party chat sidebar, and 16-slot bottom inventory bar with authentic starter items).",
+    "Rich game state and systems wired up in State (real-time skill learning with Soil Appreciation I completing and awarding +25 iMG, multiplayer arrival events in chat, Giant favor, and multiple streets)."
+   ],
+   "issues": [
+    {
+     "title": "Render loop freezes / fails to advance frames and Title Splash Overlay stays stuck on screen after starting play",
+     "severity": "high",
+     "detail": "When opening the game, open_game fails with 'The page did not draw a frame. It may be stuck in a loop', and each subsequent input/look call takes ~20-45 seconds to return a frame. On top of that, clicking 'Press Any Key or Click to Play' or pressing Space sets window.State.started = true and emits game_start, yet #title-splash-overlay remains painted on screen blocking the entire viewport, and floating canvas text ('Skill Learned') smears/ghosts over previous frames on the street canvas.",
+     "kind": "bug",
+     "evidence": "Called open_game({players: 2}) which returned 'The page did not draw a frame'; then clicked (500, 568) and pressed Space/ArrowRight. window.State.started became true and game_start fired at t=68109, but the screenshot still shows the 'Whim - Press Any Key or Click to Play' modal covering the game and smeared 'Skill Learned' text on the canvas behind it.",
+     "by": "fun"
+    },
+    {
+     "detail": "Because the main loop or WebGL/Canvas rendering stalls the browser main thread for tens of seconds per tick, keyboard movement (holding ArrowRight and Space) does not visibly move the player or update the viewport after starting.",
+     "severity": "high",
+     "kind": "bug",
+     "evidence": "Sent hold ArrowRight (1200ms) and hold ArrowRight+Space (600ms) after game_start; player position and screen remained frozen behind the splash overlay.",
+     "title": "Main thread hang prevents real-time player movement and responsive input",
+     "by": "fun"
+    },
+    {
+     "severity": "low",
+     "title": "Header and title splash use placeholder name 'Whim' instead of Glitch",
+     "kind": "faithful",
+     "evidence": "Top-left brand logo (#top-header .brand-logo) and #title-splash-overlay display 'Whim'.",
+     "detail": "The top-left header logo and splash screen title say 'Whim' instead of 'Glitch' or jumping straight into the street view as seen in the original Glitch footage.",
+     "by": "fun"
+    }
+   ]
+  },
+  {
+   "tester": "faithful",
+   "fun": 7,
+   "faithful": 6,
+   "summary": "This rebuild of Glitch captures the spirit and signature UI structure of the original game remarkably well—featuring the iconic top-left Mood/Energy/XP bars, top-right minimap strip, 16-slot bottom inventory bar with Currants counter, right-hand Local Chat/Activity panel, real-time skill learning countdowns, and multiplayer street presence. However, pressing a key on the initial splash screen sets the game state to started without properly hiding the splash overlay DOM element, and the street/character art on Chego Chase relies on simple geometric primitives rather than the ornate silhouettes of the original Flash art.",
+   "best": [
+    "Comprehensive HUD layout closely mirroring the original Glitch interface: top-left Mood circular gauge, Energy and iMG bars, Level display, top-right street minimap strip with World button, right-hand Local/Global/Party chat & activity feed, and bottom 16-slot inventory bar with Currants counter.",
+    "Rich set of Glitch mechanics implemented across interconnected streets: real-time skill learning with completion rewards, floating Quoins (+iMG, +Mood, +Energy, +Currants, Qurazy quoins), multiplayer sync with live arrival logs, and interactive street objects.",
+    "Smooth movement physics with acceleration, friction, jump buffering, coyote time, and squash-and-stretch landing feedback."
+   ],
+   "issues": [
+    {
+     "kind": "bug",
+     "evidence": "Pressed Space and ArrowRight on both Player 0 and Player 1 after open_game; State.started became true and Player 1 collected a quoin, while the 'Whim - Press Any Key or Click to Play' overlay remained visible on screen.",
+     "detail": "When the game loads, the '#title-splash-overlay' ('Press Any Key or Click to Play') is shown. Pressing Space or Arrow keys triggers 'enterPlay()' and sets 'State.started = true' (allowing the player avatar to walk, jump, and collect quoins in the background), but the CSS rule for '#title-splash-overlay.hidden' fails to hide the splash overlay until a mouse click occurs or a subsequent redraw, leaving the modal covering the screen during initial keyboard play.",
+     "severity": "high",
+     "title": "Title splash overlay remains visible on screen when dismissed via keyboard",
+     "by": "faithful"
+    },
+    {
+     "detail": "In the original footage of Chego Chase in Andra (B 00:06–00:45, B 02:20–03:33), the Bureau of Administrative Affairs / Ministry of Departments is a trapezoid-shaped bunker-like stone building with sloped sides, a recessed circular quill emblem, a small 4-pane window, and serif text reading 'Bureau of Administrative Affairs / Ministry of Departments' next to a gnarled leafless brown tree. In the rebuild, the building is rendered as a stepped grey rectangle with cut-off text, and a bright pink-blossomed fruit tree is placed in the middle of Chego Chase (whereas the pink-blossomed fruit tree belongs on Bongul Beat at B 06:04).",
+     "title": "Chego Chase Ministry building silhouette and tree types differ from footage",
+     "kind": "faithful",
+     "severity": "medium",
+     "evidence": "Compared Chego Chase screenshot on Player 0/1 with footage B 00:06–00:45 and B 02:20–03:33.",
+     "by": "faithful"
+    },
+    {
+     "evidence": "Compared Player1 and Player2 avatars and the left pedestal on Chego Chase against footage B 00:06–00:45.",
+     "kind": "faithful",
+     "detail": "In the original footage (B 00:06–00:45, A 07:16), Glitch avatars have characteristic oversized cartoon heads with detailed cutout facial features, pointed ears, and expressive limb animations, and the Shrine to Grendaline is an ornate stepped stone birdbath/fountain basin with a hovering sprite. In the rebuild, avatars and the shrine are rendered with basic geometric circles and rectangles that look flat compared to the original art style.",
+     "severity": "medium",
+     "title": "Avatar proportions and Shrine to Grendaline use simplified geometric primitives",
+     "by": "faithful"
+    },
+    {
+     "detail": "In the original footage (B 00:06, B 00:33), the top-left logo reads 'Glitch' and the blue progress bar next to Level 3 is labeled 'XP' (Experience), whereas the rebuild rebrands the top-left header and splash screen to 'Whim' and labels the bar 'iMG'.",
+     "title": "Top-left HUD branding and XP bar label differ from original UI",
+     "evidence": "Top-left HUD header in rebuild screenshot compared with footage B 00:06–00:38.",
+     "kind": "faithful",
+     "severity": "low",
+     "by": "faithful"
+    }
+   ]
+  },
+  {
+   "tester": "together",
+   "fun": 6,
+   "faithful": 7,
+   "summary": "This Glitch rebuild ('Whim') captures the iconic UI layout and systems of the original game remarkably well—from the top HUD bar (Mood sunburst, Energy, iMG, Quests, real-time Skill learning countdown, Ur calendar date/time) to the 16-slot bottom inventory bar, right-hand chat/activity feed, floating Quoins, and multi-player avatars with distinct outfits. However, playtesting with 3 players revealed a critical responsiveness issue where `requestAnimationFrame` throttling in multi-tab environments causes player movement and jump physics to barely advance during held inputs, as well as a lingering start modal after clicking to play and overly geometric street environment art compared to the original's hand-crafted vector illustrations.",
+   "best": [
+    "Faithful HUD layout matching Glitch's 2011/2012 interface: top-left Mood circle, Energy bar, iMG bar, Level & Quests counter, real-time Skill learning timer ('Learning: Soil Appreciation I'), top-right Ur calendar date/time ('4:52 pm, Primday, 23rd of Recurse'), minimap preview, bottom 16-slot inventory bar with item counts and currants, and right-hand Local/Global/Party chat & activity feed.",
+    "Multiplayer presence works out of the box: all 3 players spawn on Chego Chase with distinct custom procedural avatar looks (hats, hair, coats, skirts/pants), name tags above their heads, and join logs in the Local Chat / Activity panel.",
+    "Real-time skill learning completion ('Soil Appreciation I') ticks down in the header and awards +25 iMG with an activity log notification when finished.",
+    "Rich system coverage in the codebase including street transitions, floating Quoins, Home Street cultivation/butler interactions, quests, conga-line following, daily sign greetings ('o/'), and WebAudio procedural sound effects."
+   ],
+   "issues": [
+    {
+     "detail": "When the game opens, the 'Whim - Press Any Key or Click to Play' overlay (#title-splash-overlay) is shown. Even after clicking the 'Press Any Key or Click to Play' button at (640, 570) and holding movement keys, where `State.started` becomes `true` and the `game_start` event fires, the splash modal remained visually rendered over the viewport in the post-input screenshot (likely due to a CSS opacity transition or repaint delay on `.hidden`) before finally disappearing on a subsequent look call. It should disappear instantaneously on the first click or key press, or better yet start directly in the street without a blocking modal.",
+     "kind": "fun",
+     "title": "Title splash modal lingers visually after click-to-start triggers game_start",
+     "severity": "medium",
+     "evidence": "Called `input` with click at (640, 570) on Player 0; `window.State.started` became `true` and `game_start` fired, but the screenshot still showed the white 'Whim' modal covering the center of the screen.",
+     "by": "together"
+    },
+    {
+     "kind": "bug",
+     "title": "requestAnimationFrame throttling causes sluggish physics/movement during multi-tab playtesting",
+     "severity": "high",
+     "evidence": "Held `ArrowRight` (300ms), `ArrowRight+Space` (600ms), and `ArrowRight` (800ms) on Player 0; `window.State.player` only moved ~61px to `x: 581.36, y: 568.8, grounded: false`.",
+     "detail": "Because the game loop relies solely on `requestAnimationFrame` with `Math.min(0.1, (now - last) / 1000)` and does not have a fallback timer when a browser tab is throttled in multi-tab/multi-player environments, holding `ArrowRight` and `Space` for 1.7 seconds only advanced Player 1 from x=520 to x=581.36 and left the player mid-air (`y: 568.8, vy: 514, grounded: false`) across two separate input batches. Adding a visibility-aware fallback interval or higher max catch-up step ensures responsive movement and physics when multiple player tabs are open simultaneously.",
+     "by": "together"
+    },
+    {
+     "detail": "When 3 players join the room, Player 1 (x=520), Player 2 (x=582), and Player 3 (x=644) spawn very close together on Chego Chase, causing the dark pill name tags ('Player1' and 'Player2') to overlap so 'Player2' reads as 'yer2'. Spacing spawn offsets slightly wider or staggering name tag vertical offsets when avatars are close would keep names readable.",
+     "title": "Adjacent player name tags overlap on spawn ('Player1' covers 'Player2')",
+     "severity": "low",
+     "evidence": "In the 3-player screenshot on Chego Chase, 'Player1' badge overlaps 'Player2' badge so only 'yer2' is visible.",
+     "kind": "multiplayer",
+     "by": "together"
+    },
+    {
+     "title": "Street environment art on Chego Chase uses flat geometric shapes compared to Glitch's illustrative vector art",
+     "kind": "faithful",
+     "evidence": "Compare Chego Chase screenshot against Footage B (00:06, 05:44) where Chego Chase / Bongul Beat have terraced rock ledges, olive hills, detailed shrines, and animated critters.",
+     "detail": "In the original Glitch footage (Video A 00:01–02:00, Video B 00:06, 05:44), streets feature rich layered vector illustrations: organic curved terrain mounds, gnarled or veined trees with detailed canopies, textured shrines, and expressive avatar proportions. In the rebuild, the ground is a flat brown rectangle with uniform dark ovals, the Ministry building is stacked grey rectangles, and the shrine is a simple grey geometric pedestal. Adding curved bezier hills, richer tree/building details, and subtle gradients would bring the street closer to the original's charm.",
+     "severity": "medium",
+     "by": "together"
+    }
+   ]
+  }
+ ],
+ "issues": [
+  {
+   "title": "Render loop freezes / fails to advance frames and Title Splash Overlay stays stuck on screen after starting play",
+   "severity": "high",
+   "detail": "When opening the game, open_game fails with 'The page did not draw a frame. It may be stuck in a loop', and each subsequent input/look call takes ~20-45 seconds to return a frame. On top of that, clicking 'Press Any Key or Click to Play' or pressing Space sets window.State.started = true and emits game_start, yet #title-splash-overlay remains painted on screen blocking the entire viewport, and floating canvas text ('Skill Learned') smears/ghosts over previous frames on the street canvas.",
+   "kind": "bug",
+   "evidence": "Called open_game({players: 2}) which returned 'The page did not draw a frame'; then clicked (500, 568) and pressed Space/ArrowRight. window.State.started became true and game_start fired at t=68109, but the screenshot still shows the 'Whim - Press Any Key or Click to Play' modal covering the game and smeared 'Skill Learned' text on the canvas behind it.",
+   "by": "fun"
+  },
+  {
+   "detail": "Because the main loop or WebGL/Canvas rendering stalls the browser main thread for tens of seconds per tick, keyboard movement (holding ArrowRight and Space) does not visibly move the player or update the viewport after starting.",
+   "severity": "high",
+   "kind": "bug",
+   "evidence": "Sent hold ArrowRight (1200ms) and hold ArrowRight+Space (600ms) after game_start; player position and screen remained frozen behind the splash overlay.",
+   "title": "Main thread hang prevents real-time player movement and responsive input",
+   "by": "fun"
+  },
+  {
+   "kind": "bug",
+   "evidence": "Pressed Space and ArrowRight on both Player 0 and Player 1 after open_game; State.started became true and Player 1 collected a quoin, while the 'Whim - Press Any Key or Click to Play' overlay remained visible on screen.",
+   "detail": "When the game loads, the '#title-splash-overlay' ('Press Any Key or Click to Play') is shown. Pressing Space or Arrow keys triggers 'enterPlay()' and sets 'State.started = true' (allowing the player avatar to walk, jump, and collect quoins in the background), but the CSS rule for '#title-splash-overlay.hidden' fails to hide the splash overlay until a mouse click occurs or a subsequent redraw, leaving the modal covering the screen during initial keyboard play.",
+   "severity": "high",
+   "title": "Title splash overlay remains visible on screen when dismissed via keyboard",
+   "by": "faithful"
+  },
+  {
+   "kind": "bug",
+   "title": "requestAnimationFrame throttling causes sluggish physics/movement during multi-tab playtesting",
+   "severity": "high",
+   "evidence": "Held `ArrowRight` (300ms), `ArrowRight+Space` (600ms), and `ArrowRight` (800ms) on Player 0; `window.State.player` only moved ~61px to `x: 581.36, y: 568.8, grounded: false`.",
+   "detail": "Because the game loop relies solely on `requestAnimationFrame` with `Math.min(0.1, (now - last) / 1000)` and does not have a fallback timer when a browser tab is throttled in multi-tab/multi-player environments, holding `ArrowRight` and `Space` for 1.7 seconds only advanced Player 1 from x=520 to x=581.36 and left the player mid-air (`y: 568.8, vy: 514, grounded: false`) across two separate input batches. Adding a visibility-aware fallback interval or higher max catch-up step ensures responsive movement and physics when multiple player tabs are open simultaneously.",
+   "by": "together"
+  },
+  {
+   "detail": "In the original footage of Chego Chase in Andra (B 00:06–00:45, B 02:20–03:33), the Bureau of Administrative Affairs / Ministry of Departments is a trapezoid-shaped bunker-like stone building with sloped sides, a recessed circular quill emblem, a small 4-pane window, and serif text reading 'Bureau of Administrative Affairs / Ministry of Departments' next to a gnarled leafless brown tree. In the rebuild, the building is rendered as a stepped grey rectangle with cut-off text, and a bright pink-blossomed fruit tree is placed in the middle of Chego Chase (whereas the pink-blossomed fruit tree belongs on Bongul Beat at B 06:04).",
+   "title": "Chego Chase Ministry building silhouette and tree types differ from footage",
+   "kind": "faithful",
+   "severity": "medium",
+   "evidence": "Compared Chego Chase screenshot on Player 0/1 with footage B 00:06–00:45 and B 02:20–03:33.",
+   "by": "faithful"
+  },
+  {
+   "evidence": "Compared Player1 and Player2 avatars and the left pedestal on Chego Chase against footage B 00:06–00:45.",
+   "kind": "faithful",
+   "detail": "In the original footage (B 00:06–00:45, A 07:16), Glitch avatars have characteristic oversized cartoon heads with detailed cutout facial features, pointed ears, and expressive limb animations, and the Shrine to Grendaline is an ornate stepped stone birdbath/fountain basin with a hovering sprite. In the rebuild, avatars and the shrine are rendered with basic geometric circles and rectangles that look flat compared to the original art style.",
+   "severity": "medium",
+   "title": "Avatar proportions and Shrine to Grendaline use simplified geometric primitives",
+   "by": "faithful"
+  },
+  {
+   "detail": "When the game opens, the 'Whim - Press Any Key or Click to Play' overlay (#title-splash-overlay) is shown. Even after clicking the 'Press Any Key or Click to Play' button at (640, 570) and holding movement keys, where `State.started` becomes `true` and the `game_start` event fires, the splash modal remained visually rendered over the viewport in the post-input screenshot (likely due to a CSS opacity transition or repaint delay on `.hidden`) before finally disappearing on a subsequent look call. It should disappear instantaneously on the first click or key press, or better yet start directly in the street without a blocking modal.",
+   "kind": "fun",
+   "title": "Title splash modal lingers visually after click-to-start triggers game_start",
+   "severity": "medium",
+   "evidence": "Called `input` with click at (640, 570) on Player 0; `window.State.started` became `true` and `game_start` fired, but the screenshot still showed the white 'Whim' modal covering the center of the screen.",
+   "by": "together"
+  },
+  {
+   "title": "Street environment art on Chego Chase uses flat geometric shapes compared to Glitch's illustrative vector art",
+   "kind": "faithful",
+   "evidence": "Compare Chego Chase screenshot against Footage B (00:06, 05:44) where Chego Chase / Bongul Beat have terraced rock ledges, olive hills, detailed shrines, and animated critters.",
+   "detail": "In the original Glitch footage (Video A 00:01–02:00, Video B 00:06, 05:44), streets feature rich layered vector illustrations: organic curved terrain mounds, gnarled or veined trees with detailed canopies, textured shrines, and expressive avatar proportions. In the rebuild, the ground is a flat brown rectangle with uniform dark ovals, the Ministry building is stacked grey rectangles, and the shrine is a simple grey geometric pedestal. Adding curved bezier hills, richer tree/building details, and subtle gradients would bring the street closer to the original's charm.",
+   "severity": "medium",
+   "by": "together"
+  },
+  {
+   "severity": "low",
+   "title": "Header and title splash use placeholder name 'Whim' instead of Glitch",
+   "kind": "faithful",
+   "evidence": "Top-left brand logo (#top-header .brand-logo) and #title-splash-overlay display 'Whim'.",
+   "detail": "The top-left header logo and splash screen title say 'Whim' instead of 'Glitch' or jumping straight into the street view as seen in the original Glitch footage.",
+   "by": "fun"
+  },
+  {
+   "detail": "In the original footage (B 00:06, B 00:33), the top-left logo reads 'Glitch' and the blue progress bar next to Level 3 is labeled 'XP' (Experience), whereas the rebuild rebrands the top-left header and splash screen to 'Whim' and labels the bar 'iMG'.",
+   "title": "Top-left HUD branding and XP bar label differ from original UI",
+   "evidence": "Top-left HUD header in rebuild screenshot compared with footage B 00:06–00:38.",
+   "kind": "faithful",
+   "severity": "low",
+   "by": "faithful"
+  },
+  {
+   "detail": "When 3 players join the room, Player 1 (x=520), Player 2 (x=582), and Player 3 (x=644) spawn very close together on Chego Chase, causing the dark pill name tags ('Player1' and 'Player2') to overlap so 'Player2' reads as 'yer2'. Spacing spawn offsets slightly wider or staggering name tag vertical offsets when avatars are close would keep names readable.",
+   "title": "Adjacent player name tags overlap on spawn ('Player1' covers 'Player2')",
+   "severity": "low",
+   "evidence": "In the 3-player screenshot on Chego Chase, 'Player1' badge overlaps 'Player2' badge so only 'yer2' is visible.",
+   "kind": "multiplayer",
+   "by": "together"
+  }
+ ]
+}

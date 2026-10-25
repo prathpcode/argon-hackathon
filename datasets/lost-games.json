@@ -1,7 +1,7 @@
 {
   "generated": "2026-10-25",
   "scoring": "2*argon_fit + footage(h3/m2/l1) + 1 if footage links + (6-difficulty) + confidence(h2/m1/l0) + status(lost2/mostly1/uncertain0); revived = null",
-  "count": 142,
+  "count": 166,
   "games": [
     {
       "id": "pacman99",
@@ -200,6 +200,72 @@
       "confidence": "high"
     },
     {
+      "id": "finalfantasyrecordkeeper",
+      "score": 21,
+      "name": "Final Fantasy Record Keeper",
+      "year_released": 2014,
+      "year_lost": 2022,
+      "developer": "DeNA / Square Enix",
+      "platform": "iOS / Android",
+      "category": "mobile",
+      "genre": "Role-playing (ATB / Gacha)",
+      "how_lost": "The global English version shut down its servers on September 29, 2022, though the original Japanese version continues to operate as of 2026.",
+      "status": "lost",
+      "revival_check": "The global version is completely unplayable with no fan servers or offline client available, although the official Japanese servers remain active and accessible via Japanese app stores or AndApp.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=FCAGH8Q7tNA",
+        "https://www.youtube.com/watch?v=cYNJcdJFEG8",
+        "https://www.youtube.com/watch?v=qGWgJB-jWbg",
+        "https://www.youtube.com/watch?v=8EUpqHN6YKI",
+        "https://www.youtube.com/watch?v=ztHuv5xNag8",
+        "https://www.youtube.com/watch?v=NbGj8MSnCPc"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 5,
+      "why_interesting": "Final Fantasy Record Keeper's nostalgic 16-bit ATB combat and clean 2D UI make it an ideal candidate for a one-day browser reconstruction from video footage. Rebuilding a slice of its iconic boss raids with co-op multiplayer brings a beloved lost global mobile title back to life.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Final_Fantasy_Record_Keeper",
+        "https://finalfantasy.fandom.com/wiki/Final_Fantasy_Record_Keeper",
+        "https://www.siliconera.com/final-fantasy-record-keeper-shutting-down-outside-japan/",
+        "https://ffrkstrategy.gamematome.jp/game/951/wiki/Home"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "legominifiguresonline",
+      "score": 21,
+      "name": "LEGO Minifigures Online",
+      "year_released": 2014,
+      "year_lost": 2016,
+      "developer": "Funcom",
+      "platform": "PC / iOS / Android",
+      "category": "cloud-online",
+      "genre": "Action MMORPG",
+      "how_lost": "Funcom permanently shut down the game's servers on September 30, 2016, due to poor financial performance and the expiration of their licensing agreement with The Lego Group.",
+      "status": "lost",
+      "revival_check": null,
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=S7xh17tt5Tg",
+        "https://www.youtube.com/watch?v=ioNay3Oq8V0",
+        "https://www.youtube.com/watch?v=voU91q5U0sg",
+        "https://www.youtube.com/watch?v=B39GkzsEM-Q",
+        "https://www.youtube.com/watch?v=FfVzmPBIBMY",
+        "https://www.youtube.com/watch?v=UX0Xig3vvRQ"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 5,
+      "why_interesting": "LEGO Minifigures Online was a server-dependent isometric action RPG shut down in 2016, making it completely unplayable today. Rebuilding a cooperative dungeon slice from abundant walkthrough footage showcases how AI can resurrect lost multiplayer worlds and character-swapping mechanics directly in the browser.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lego_Minifigures_Online",
+        "https://brickipedia.fandom.com/wiki/LEGO_Minifigures_Online",
+        "https://mmos.com/news/lego-minifigures-online-to-be-shut-down-on-september-30th",
+        "https://www.gamesindustry.biz/funcom-reboots-lego-minifigures-online-as-pay-to-play"
+      ],
+      "confidence": "high"
+    },
+    {
       "id": "piratesofthecaribbeanbattleforbuccaneergold",
       "score": 20,
       "name": "Pirates of the Caribbean: Battle for Buccaneer Gold",
@@ -369,6 +435,106 @@
       "confidence": "high"
     },
     {
+      "id": "ourworld",
+      "score": 20,
+      "name": "ourWorld",
+      "year_released": 2008,
+      "year_lost": 2021,
+      "developer": "FlowPlay",
+      "platform": "Browser (Flash)",
+      "category": "web",
+      "genre": "Virtual world / Social MMO",
+      "how_lost": "Despite transitioning to a downloadable client in October 2020 ahead of Adobe Flash's discontinuation, FlowPlay permanently shut down the game's servers on October 24, 2021, citing security exploits and \"bad actors.\"",
+      "status": "lost",
+      "revival_check": "No playable fan server or preservation exists; a few solo fan rewrite attempts (such as POWR and Requiem World) have been in development or on hiatus, but none have released a playable server.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=exhrn_F38SI",
+        "https://www.youtube.com/watch?v=txQjGw6Y65A",
+        "https://www.youtube.com/watch?v=t0t8xGshUYg",
+        "https://www.youtube.com/watch?v=v7bsApOHdIo",
+        "https://www.youtube.com/watch?v=GGs5WZmsHYQ",
+        "https://www.youtube.com/watch?v=bnWF9rvkivY"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 5,
+      "why_interesting": "Rebuild a nostalgic slice of the lost 2D social MMO ourWorld, allowing players to customize avatars, hang out on the Boardwalk, and earn 'Flow' together in real time. With no surviving fan servers, reviving its iconic Flash-era social spaces and mini-games from gameplay footage is an immediate crowd-pleaser.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/OurWorld",
+        "https://virtual-worlds.fandom.com/wiki/OurWorld",
+        "https://ourworld.fandom.com/wiki/OurWorld_Wiki",
+        "https://www.geekwire.com/2021/seattle-gaming-startup-flowplay-acquired-by-casino-and-resort-operator-wind-creek-hospitality/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "armiesofgielinor",
+      "score": 20,
+      "name": "Armies of Gielinor",
+      "year_released": 2009,
+      "year_lost": 2018,
+      "developer": "Jagex",
+      "platform": "Browser (Java, FunOrb)",
+      "category": "web",
+      "genre": "Turn-based strategy",
+      "how_lost": "The game was officially shut down on August 7, 2018, when Jagex closed its Java-based gaming portal FunOrb after modern web browsers dropped support for Java applets.",
+      "status": "mostly-lost",
+      "revival_check": "Single-player campaigns and local modes are preserved and playable via the Kosmos FunOrb Launcher and the AlterOrb preservation project; additionally, an unofficial fan remake/server exists at AoG.gg (also rebranded as Age of Gods on Steam).",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=8lojVbGxR8U",
+        "https://www.youtube.com/watch?v=_odN-M1E35w",
+        "https://www.youtube.com/watch?v=Dce3wXtIvHo",
+        "https://www.youtube.com/watch?v=-WOXnW3_Lps",
+        "https://www.youtube.com/watch?v=DsMyCd4rwF8",
+        "https://www.youtube.com/watch?v=A8N5N7KJEmo"
+      ],
+      "rebuild_difficulty": 1,
+      "argon_fit": 4,
+      "why_interesting": "Armies of Gielinor is a beloved 2D turn-based strategy spin-off of RuneScape that was lost when Jagex shut down the FunOrb Java portal. Its clear grid-based tactics and distinct unit rosters make it ideal for extracting game rules from video footage and pitting AI agents against each other in multiplayer matches.",
+      "sources": [
+        "https://funorb.fandom.com/wiki/Armies_of_Gielinor",
+        "https://armiesofgielinor.fandom.com/wiki/General_Info",
+        "https://en.wikipedia.org/wiki/FunOrb",
+        "https://en.wikipedia.org/wiki/Jagex",
+        "https://www.gamesindustry.biz/jagex-shutting-down-online-game-portal-funorb-after-ten-years"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "rockmanxover",
+      "score": 20,
+      "name": "Rockman Xover",
+      "year_released": 2012,
+      "year_lost": 2015,
+      "developer": "Capcom",
+      "platform": "iOS / Android",
+      "category": "mobile",
+      "genre": "Social RPG / Auto-runner",
+      "how_lost": "The Korean and Chinese servers shut down in April and August 2014 respectively, while the original Japanese service terminated on March 31, 2015.",
+      "status": "lost",
+      "revival_check": "The original server-dependent game is unplayable and has no private server revival, though loose fan-made tributes/reimaginings using ripped sprites exist (such as UltimateMaverickX's 'Rockman Xover Reborn' and PressSelect's 'Rockman Xover HTML5').",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=ERslvt6UOR4",
+        "https://www.youtube.com/watch?v=mO-u8LuvIGY",
+        "https://www.youtube.com/watch?v=q-035gzCDz8",
+        "https://www.youtube.com/watch?v=hwDJJEjPLQQ",
+        "https://www.youtube.com/watch?v=At9KoEzXtAc"
+      ],
+      "rebuild_difficulty": 1,
+      "argon_fit": 4,
+      "why_interesting": "Rockman Xover combines simple 2D auto-runner mechanics with automated RPG boss battles, making its core gameplay loop highly achievable to recreate in a browser from video footage. Rebuilding this infamous lost Mega Man mobile title showcases how server-bound social games can be rescued as standalone playable experiences.",
+      "sources": [
+        "https://megaman.fandom.com/wiki/Rockman_Xover",
+        "https://tcrf.net/Rockman_Xover",
+        "https://themmnetwork.com/2014/10/21/rockman-xover-is-over/",
+        "https://themmnetwork.com/2012/11/29/rockman-xover-first-impressions-yeah-it-sucks/",
+        "https://www.rockman-corner.com/2012/10/several-new-rockman-xover-details-emerge.html"
+      ],
+      "confidence": "high"
+    },
+    {
       "id": "clashquest",
       "score": 19,
       "name": "Clash Quest",
@@ -473,6 +639,72 @@
         "https://hypixel.net/threads/removed-games-in-order.3160778/"
       ],
       "confidence": "medium"
+    },
+    {
+      "id": "thesimssocial",
+      "score": 19,
+      "name": "The Sims Social",
+      "year_released": 2011,
+      "year_lost": 2013,
+      "developer": "Playfish / EA",
+      "platform": "Facebook (Flash)",
+      "category": "web",
+      "genre": "Social life simulation",
+      "how_lost": "EA shut it down on June 14, 2013 because too few people were playing.",
+      "status": "lost",
+      "revival_check": "Targeted searches found no Sims Social emulator or fan server (FreeSO and NewSO are for The Sims Online, a different game). Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=V7vv_D4m878",
+        "https://www.youtube.com/watch?v=sW68p7QQG1s",
+        "https://www.youtube.com/watch?v=BmieW7EE9CU",
+        "https://www.youtube.com/watch?v=KsC9Ska0lAU",
+        "https://www.youtube.com/watch?v=_Sc4x4IYUVM",
+        "https://www.youtube.com/watch?v=-EIhVrwt4p4"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "A huge 2011 hit with no revival at all, and its isometric house and neighbor loop is easy to rebuild.",
+      "sources": [
+        "https://sims.fandom.com/wiki/The_Sims_Social",
+        "https://www.nbcnews.com/tech/tech-news/ea-shuts-down-some-facebook-games-including-simcity-social-flna1c9355682",
+        "https://www.destructoid.com/ea-scrapping-the-sims-social-simcity-social/",
+        "https://en.wikipedia.org/wiki/The_Sims_Social",
+        "https://en.wikipedia.org/wiki/The_Sims"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ravenwoodfair",
+      "score": 19,
+      "name": "Ravenwood Fair",
+      "year_released": 2010,
+      "year_lost": 2013,
+      "developer": "LOLapps / 6waves",
+      "platform": "Facebook (Flash)",
+      "category": "web",
+      "genre": "Business simulation / Role-playing game (Social network game)",
+      "how_lost": "Parent company 6waves permanently shut down the game's servers on July 18, 2013, due to a dwindling player base after maintenance was handed off to a third-party studio in 2012.",
+      "status": "lost",
+      "revival_check": "As a server-dependent Facebook social game, it is not playable in Flashpoint or other archives, and a fan attempt to remake it as a browser game was shut down by 6waves.",
+      "footage_volume": "low",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=NUtUNOd5Rxk",
+        "https://www.youtube.com/watch?v=be6fJXD6bQc",
+        "https://www.youtube.com/watch?v=PllE3qkOmwg",
+        "https://www.youtube.com/watch?v=QKPHx4g9lig",
+        "https://www.youtube.com/watch?v=ST0M7DjrcFQ",
+        "https://www.youtube.com/watch?v=XH6zOWnl0Fw"
+      ],
+      "rebuild_difficulty": 1,
+      "argon_fit": 4,
+      "why_interesting": "Ravenwood Fair is an iconic, John Romero-designed Facebook game that vanished when its servers shut down in 2013. Its charming 2.5D isometric fairground-building and monster-whacking gameplay loop is simple enough to faithfully reconstruct in a browser from surviving gameplay videos.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Ravenwood_Fair",
+        "https://en.wikipedia.org/wiki/Lolapps",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/RavenwoodFair"
+      ],
+      "confidence": "high"
     },
     {
       "id": "nintendobadgearcade",
@@ -855,31 +1087,6 @@
       "confidence": "high"
     },
     {
-      "id": "thesimssocial",
-      "score": 18,
-      "name": "The Sims Social",
-      "year_released": 2011,
-      "year_lost": 2013,
-      "developer": "Playfish / EA",
-      "platform": "Facebook (Flash)",
-      "category": "web",
-      "genre": "Social life simulation",
-      "how_lost": "EA shut it down on June 14, 2013 because too few people were playing.",
-      "status": "lost",
-      "revival_check": "Targeted searches found no Sims Social emulator or fan server (FreeSO and NewSO are for The Sims Online, a different game). Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "high",
-      "footage_examples": [],
-      "rebuild_difficulty": 3,
-      "argon_fit": 4,
-      "why_interesting": "A huge 2011 hit with no revival at all, and its isometric house and neighbor loop is easy to rebuild.",
-      "sources": [
-        "https://sims.fandom.com/wiki/The_Sims_Social",
-        "https://www.nbcnews.com/tech/tech-news/ea-shuts-down-some-facebook-games-including-simcity-social-flna1c9355682",
-        "https://www.destructoid.com/ea-scrapping-the-sims-social-simcity-social/"
-      ],
-      "confidence": "high"
-    },
-    {
       "id": "theville",
       "score": 18,
       "name": "The Ville",
@@ -902,6 +1109,77 @@
       "sources": [
         "https://en.wikipedia.org/wiki/The_Ville_(video_game)",
         "https://venturebeat.com/2013/04/24/zynga-to-shut-four-more-weak-games-including-the-ville/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "simcitysocial",
+      "score": 18,
+      "name": "SimCity Social",
+      "year_released": 2012,
+      "year_lost": 2013,
+      "developer": "Maxis / Playfish / EA",
+      "platform": "Facebook (Flash)",
+      "category": "web",
+      "genre": "Social city builder",
+      "how_lost": "EA took it offline on June 14, 2013, less than a year after launch.",
+      "status": "lost",
+      "revival_check": "No fan server or revival found. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=fzsLygVnREE",
+        "https://www.youtube.com/watch?v=dPZI-pfrMug",
+        "https://www.youtube.com/watch?v=VNjuoDS2prA",
+        "https://www.youtube.com/watch?v=-CMDDPLl8f4",
+        "https://www.youtube.com/watch?v=sgqgkQ4j4xw",
+        "https://www.youtube.com/watch?v=uLrGJE9yv9Q"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "A short-lived Maxis city builder that no one has preserved.",
+      "sources": [
+        "https://simcity.fandom.com/wiki/SimCity_Social",
+        "https://www.forbes.com/sites/danielnyegriffiths/2013/04/15/anti-social-behavior-ea-closes-sim-city-sims-social-limits-facebook-exposure/",
+        "https://www.themarysue.com/ea-kills-simcity-social/",
+        "https://en.wikipedia.org/wiki/SimCity_Social",
+        "https://en.wikipedia.org/wiki/Playfish",
+        "https://simcitysocial.fandom.com/wiki/SimCity_Social_Wiki"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "faunasphere",
+      "score": 18,
+      "name": "Faunasphere",
+      "year_released": null,
+      "year_lost": 2011,
+      "developer": "Big Fish Games",
+      "platform": "Browser",
+      "category": "web",
+      "genre": "Casual creature-raising MMO",
+      "how_lost": "Big Fish Games shut the servers on March 15, 2011, saying the cost of running it was not sustainable.",
+      "status": "lost",
+      "revival_check": "No revival found. Only petitions and Facebook groups (e.g. Faunasphere Resurrection) exist. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=KRkfjNKUhHI",
+        "https://www.youtube.com/watch?v=B_yL5FV1BcA",
+        "https://www.youtube.com/watch?v=A8AruFJdPe4",
+        "https://www.youtube.com/watch?v=9q7bhLtZJTg",
+        "https://www.youtube.com/watch?v=50b1YdE6oFw",
+        "https://www.youtube.com/watch?v=DmCEk9X1hlM"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "A non-violent pet MMO that was studied academically after it closed (Consalvo & Begy, 2015).",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Faunasphere",
+        "https://www.mmorpg.com/faunasphere",
+        "https://www.researchgate.net/publication/286949702_What_Happens_at_the_End_of_the_World_An_MMOG's_Closure_and_Player_Responses",
+        "https://en.wikipedia.org/wiki/Big_Fish_Games",
+        "https://strategywiki.org/wiki/Faunasphere",
+        "https://www.mmorpg.com/reviews/faunasphere-review-2000000067",
+        "https://www.pocketgamer.biz/aristocrat-leisure-sells-off-big-fish-games-assets/"
       ],
       "confidence": "high"
     },
@@ -1105,27 +1383,103 @@
       "confidence": "medium"
     },
     {
-      "id": "simcitysocial",
+      "id": "petpetpark",
       "score": 17,
-      "name": "SimCity Social",
-      "year_released": 2012,
-      "year_lost": 2013,
-      "developer": "Maxis / Playfish / EA",
-      "platform": "Facebook (Flash)",
+      "name": "Petpet Park",
+      "year_released": 2008,
+      "year_lost": 2014,
+      "developer": "Neopets / Nickelodeon (Viacom)",
+      "platform": "Browser",
       "category": "web",
-      "genre": "Social city builder",
-      "how_lost": "EA took it offline on June 14, 2013, less than a year after launch.",
+      "genre": "Kids virtual world / MMO",
+      "how_lost": "It closed on September 18, 2014, after JumpStart bought Neopets, and no playable build has surfaced since.",
       "status": "lost",
-      "revival_check": "No fan server or revival found. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "medium",
-      "footage_examples": [],
+      "revival_check": "Lost Media Wiki: no playable version. Two fan efforts (Petpet Project X, Petpet Park Rebuild) are restoring cache files but have not released anything playable. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=mDUttcxuGPo",
+        "https://www.youtube.com/watch?v=fOXd8WtNyn0",
+        "https://www.youtube.com/watch?v=t5OXb05jaJg",
+        "https://www.youtube.com/watch?v=_Qur7MNYIAk",
+        "https://www.youtube.com/watch?v=RSdP4NJrxgs",
+        "https://www.youtube.com/watch?v=yw07xaGyKtg"
+      ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
-      "why_interesting": "A short-lived Maxis city builder that no one has preserved.",
+      "argon_fit": 3,
+      "why_interesting": "A Neopets spinoff world with a loyal fanbase, and fans are still asking for old cache files.",
       "sources": [
-        "https://simcity.fandom.com/wiki/SimCity_Social",
-        "https://www.forbes.com/sites/danielnyegriffiths/2013/04/15/anti-social-behavior-ea-closes-sim-city-sims-social-limits-facebook-exposure/",
-        "https://www.themarysue.com/ea-kills-simcity-social/"
+        "https://lostmediawiki.com/PetPet_Park_(lost_online_MMO_game_based_on_Neopets;_2008-2014)",
+        "https://bookofages.jellyneo.net/history/petpet-park/",
+        "https://tvtropes.org/pmwiki/pmwiki.php/Trivia/PetpetPark",
+        "https://petpetpark.fandom.com/wiki/Petpet_Park_Wiki",
+        "https://en.wikipedia.org/wiki/Neopets",
+        "https://www.gamedeveloper.com/business/neopets-developers-spin-off-into-independent-company-ditch-crypto"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "sonicjumpfever",
+      "score": 17,
+      "name": "Sonic Jump Fever",
+      "year_released": 2014,
+      "year_lost": 2018,
+      "developer": "Hardlight / Sega",
+      "platform": "iOS / Android",
+      "category": "mobile",
+      "genre": "Vertical platformer",
+      "how_lost": "The game was delisted from the iOS App Store and Google Play Store in November 2018, and its backend servers (which controlled zone rotations and online leaderboards) were shut down in late 2020.",
+      "status": "mostly-lost",
+      "revival_check": "Preserved Android APKs and iOS IPAs are hosted on the Internet Archive, along with the fan-made 'Sonic Jump Fever - Android Archive Mods' on itch.io which bypasses the server shutdown to restore all zones, characters, and audio.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=R3jU80YCBKE",
+        "https://www.youtube.com/watch?v=ILt7OR5wst8",
+        "https://www.youtube.com/watch?v=YR3KHDkYJqA",
+        "https://www.youtube.com/watch?v=7ELifUEP0ZQ",
+        "https://www.youtube.com/watch?v=qRvqP0Uqtm8",
+        "https://www.youtube.com/watch?v=JGp5r5umOsI"
+      ],
+      "rebuild_difficulty": 1,
+      "argon_fit": 3,
+      "why_interesting": "Sonic Jump Fever is an arcade-style 2D vertical platformer that was lost when its stage-rotation and leaderboard servers shut down. Its tight, single-screen gameplay loop and vibrant visual cues make it ideal for an AI to reconstruct directly from gameplay footage into a snappy browser game.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sonic_Jump_Fever",
+        "https://sonic.fandom.com/wiki/Sonic_Jump_Fever",
+        "https://archive.org/details/sonic-jump-2.0.3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "cityofsteamarkadia",
+      "score": 17,
+      "name": "City of Steam: Arkadia",
+      "year_released": 2013,
+      "year_lost": 2016,
+      "developer": "Mechanist Games",
+      "platform": "Browser (Unity Web Player)",
+      "category": "web",
+      "genre": "MMORPG",
+      "how_lost": "After its initial R2Games-published open beta version shut down in October 2013 and relaunched independently as City of Steam: Arkadia in December 2013, Mechanist Games permanently closed the game's servers in early 2016 due to declining player numbers and the deprecation of the Unity Web Player plugin in modern browsers.",
+      "status": "lost",
+      "revival_check": null,
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=v7MlgGWA8Js",
+        "https://www.youtube.com/watch?v=kOfgoqaEaz8",
+        "https://www.youtube.com/watch?v=YWr9gAcq13c",
+        "https://www.youtube.com/watch?v=6lKqJYS2FsE",
+        "https://www.youtube.com/watch?v=enD2iAPI-Og",
+        "https://www.youtube.com/watch?v=g_J8_zXwGHQ"
+      ],
+      "rebuild_difficulty": 5,
+      "argon_fit": 4,
+      "why_interesting": "City of Steam: Arkadia was an ambitious steampunk 3D browser MMORPG lost to the deprecation of the Unity Web Player and server shutdowns. Rebuilding a playable slice of its instanced co-op dungeon crawler combat from hours of preserved walkthrough footage would resurrect a visually unique piece of browser gaming history.",
+      "sources": [
+        "https://steampunk.fandom.com/wiki/City_of_Steam",
+        "https://www.mobygames.com/game/71888/city-of-steam-arkadia/",
+        "https://steamdb.info/app/266070/",
+        "https://mmofallout.com/city-of-steam-arkadia-coming-december-4th/",
+        "https://steamcommunity.com/app/266070/discussions/0/451850849181506466/"
       ],
       "confidence": "high"
     },
@@ -1274,31 +1628,6 @@
       "confidence": "medium"
     },
     {
-      "id": "faunasphere",
-      "score": 16,
-      "name": "Faunasphere",
-      "year_released": null,
-      "year_lost": 2011,
-      "developer": "Big Fish Games",
-      "platform": "Browser",
-      "category": "web",
-      "genre": "Casual creature-raising MMO",
-      "how_lost": "Big Fish Games shut the servers on March 15, 2011, saying the cost of running it was not sustainable.",
-      "status": "lost",
-      "revival_check": "No revival found. Only petitions and Facebook groups (e.g. Faunasphere Resurrection) exist. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "low",
-      "footage_examples": [],
-      "rebuild_difficulty": 3,
-      "argon_fit": 4,
-      "why_interesting": "A non-violent pet MMO that was studied academically after it closed (Consalvo & Begy, 2015).",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Faunasphere",
-        "https://www.mmorpg.com/faunasphere",
-        "https://www.researchgate.net/publication/286949702_What_Happens_at_the_End_of_the_World_An_MMOG's_Closure_and_Player_Responses"
-      ],
-      "confidence": "high"
-    },
-    {
       "id": "cityville",
       "score": 16,
       "name": "CityVille",
@@ -1313,9 +1642,12 @@
       "revival_check": "A GitHub preservation project, CityVille-Reboot, exists, but I could not confirm it runs a playable server. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
       "footage_volume": "high",
       "footage_examples": [
-        "https://www.youtube.com/watch?v=29JpuotmSgM",
-        "https://www.youtube.com/watch?v=tdMcJAuKlHM",
-        "https://www.youtube.com/watch?v=G2zymQX7BGg"
+        "https://www.youtube.com/watch?v=gYvHC-dG5Aw",
+        "https://www.youtube.com/watch?v=SPHpS4Azfaw",
+        "https://www.youtube.com/watch?v=DZyCKymB2zY",
+        "https://www.youtube.com/watch?v=NdH8GGJfzpA",
+        "https://www.youtube.com/watch?v=Nv9915YO-Cc",
+        "https://www.youtube.com/watch?v=eoayKeousJc"
       ],
       "rebuild_difficulty": 3,
       "argon_fit": 4,
@@ -1323,7 +1655,43 @@
       "sources": [
         "https://en.wikipedia.org/wiki/CityVille",
         "https://github.com/T-Tron/CityVille-Reboot",
-        "https://www.valuewalk.com/zynga-closing-down-cityville-april/"
+        "https://www.valuewalk.com/zynga-closing-down-cityville-april/",
+        "https://en.wikipedia.org/wiki/Zynga",
+        "https://cityville.fandom.com/wiki/CityVille_Wiki",
+        "https://github.com/Antonio225t/cityville"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "legolegendsofchimaonline",
+      "score": 16,
+      "name": "LEGO Legends of Chima Online",
+      "year_released": 2013,
+      "year_lost": 2015,
+      "developer": "WB Games Montreal",
+      "platform": "Browser (Windows/OS X) + iOS",
+      "category": "web",
+      "genre": "Kids action MMORPG",
+      "how_lost": "Servers went offline on June 1, 2015 because of low revenue.",
+      "status": "mostly-lost",
+      "revival_check": "A fan revival, LOCO Online, is reported to be in development (TV Tropes, Chima wiki), but I could not confirm a playable release. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=7T1s9q8vF7s",
+        "https://www.youtube.com/watch?v=KvorXkBFbVA",
+        "https://www.youtube.com/watch?v=WaTXrPTZau8",
+        "https://www.youtube.com/watch?v=OLlH364a9XY",
+        "https://www.youtube.com/watch?v=kY27hH9-q3k",
+        "https://www.youtube.com/watch?v=Y92PTVzcFvU"
+      ],
+      "rebuild_difficulty": 4,
+      "argon_fit": 4,
+      "why_interesting": "A real 3D LEGO MMO with no official way to play, and a LEGO art style that suits low-poly Three.js.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lego_Legends_of_Chima_Online",
+        "https://thebrickblogger.com/2015/04/lego-legends-of-chima-online-shutting-down/",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/LEGOLegendsOfChimaOnline",
+        "https://www.pcgamingwiki.com/wiki/Lego_Legends_of_Chima_Online"
       ],
       "confidence": "medium"
     },
@@ -1572,6 +1940,43 @@
       "confidence": "medium"
     },
     {
+      "id": "dizzywood",
+      "score": 15,
+      "name": "Dizzywood",
+      "year_released": null,
+      "year_lost": 2010,
+      "developer": "Rocket Paper Scissors",
+      "platform": "Browser",
+      "category": "web",
+      "genre": "Kids virtual world",
+      "how_lost": "The studio closed it on December 31, 2010 for financial reasons, and SecretBuilders bought the assets.",
+      "status": "lost",
+      "revival_check": "A fan project, Dizzywood: Rediscovered (started 2020), says it is in development but has no public release. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=J54rJ7orDgQ",
+        "https://www.youtube.com/watch?v=z48BnPpVmSo",
+        "https://www.youtube.com/watch?v=qqEn-880MWQ",
+        "https://www.youtube.com/watch?v=SJrQsgllLr0",
+        "https://www.youtube.com/watch?v=X86gJ3bDN98",
+        "https://www.youtube.com/watch?v=WDIVLvwQTRY"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 3,
+      "why_interesting": "A 1.5M-player kids' world, and its assets are held by a company that never reused them.",
+      "sources": [
+        "https://delistedgames.com/dizzywood/",
+        "https://forums.lostmediawiki.com/thread/5501/dizzywood-lost-browser-based-mmo",
+        "https://gamesbeat.com/consolidation-comes-to-kids-casual-game-sites-as-secretbuilders-buys-dizzywoods-assets-exclusive/",
+        "https://en.wikipedia.org/wiki/Dizzywood",
+        "https://www.gamedeveloper.com/business/secretbuilders-acquires-dizzywood-absorbing-users",
+        "https://www.gamedeveloper.com/pc/exploring-online-worlds-rocket-paper-scissors-i-dizzywood-i-",
+        "https://dizzywood.fandom.com/wiki/Dizzywood_Wiki",
+        "https://www.dizzywood.com/"
+      ],
+      "confidence": "medium"
+    },
+    {
       "id": "harrypotterwizardsunite",
       "score": 14,
       "name": "Harry Potter: Wizards Unite",
@@ -1697,52 +2102,37 @@
       "confidence": "medium"
     },
     {
-      "id": "petpetpark",
+      "id": "barbiegirlscom",
       "score": 14,
-      "name": "Petpet Park",
-      "year_released": 2008,
-      "year_lost": 2014,
-      "developer": "Neopets / Nickelodeon (Viacom)",
+      "name": "BarbieGirls.com",
+      "year_released": null,
+      "year_lost": 2011,
+      "developer": "Mattel",
       "platform": "Browser",
       "category": "web",
-      "genre": "Kids virtual world / MMO",
-      "how_lost": "It closed on September 18, 2014, after JumpStart bought Neopets, and no playable build has surfaced since.",
-      "status": "lost",
-      "revival_check": "Lost Media Wiki: no playable version. Two fan efforts (Petpet Project X, Petpet Park Rebuild) are restoring cache files but have not released anything playable. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "low",
-      "footage_examples": [],
+      "genre": "Kids virtual world / dress-up MMO",
+      "how_lost": "Mattel closed BarbieGirls.com on June 1, 2011 and never reopened it.",
+      "status": "mostly-lost",
+      "revival_check": "Mattel never announced a reopening. A fan project, Barbie Girls Rewritten, says it is recreating the world, but I could not verify whether it is playable. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=gDyQbLvsiTc",
+        "https://www.youtube.com/watch?v=3BTYNKQ_2aA",
+        "https://www.youtube.com/watch?v=Z4CkjQUTGqg",
+        "https://www.youtube.com/watch?v=kfSUKpSdcxA",
+        "https://www.youtube.com/watch?v=JWuF-nszNCU",
+        "https://www.youtube.com/watch?v=p23Suth1UXI"
+      ],
       "rebuild_difficulty": 3,
       "argon_fit": 3,
-      "why_interesting": "A Neopets spinoff world with a loyal fanbase, and fans are still asking for old cache files.",
+      "why_interesting": "A large mainstream kids' world, and footage of it is the main surviving record.",
       "sources": [
-        "https://lostmediawiki.com/PetPet_Park_(lost_online_MMO_game_based_on_Neopets;_2008-2014)",
-        "https://bookofages.jellyneo.net/history/petpet-park/",
-        "https://tvtropes.org/pmwiki/pmwiki.php/Trivia/PetpetPark"
-      ],
-      "confidence": "high"
-    },
-    {
-      "id": "legolegendsofchimaonline",
-      "score": 14,
-      "name": "LEGO Legends of Chima Online",
-      "year_released": 2013,
-      "year_lost": 2015,
-      "developer": "WB Games Montreal",
-      "platform": "Browser (Windows/OS X) + iOS",
-      "category": "web",
-      "genre": "Kids action MMORPG",
-      "how_lost": "Servers went offline on June 1, 2015 because of low revenue.",
-      "status": "mostly-lost",
-      "revival_check": "A fan revival, LOCO Online, is reported to be in development (TV Tropes, Chima wiki), but I could not confirm a playable release. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "medium",
-      "footage_examples": [],
-      "rebuild_difficulty": 4,
-      "argon_fit": 4,
-      "why_interesting": "A real 3D LEGO MMO with no official way to play, and a LEGO art style that suits low-poly Three.js.",
-      "sources": [
-        "https://en.wikipedia.org/wiki/Lego_Legends_of_Chima_Online",
-        "https://thebrickblogger.com/2015/04/lego-legends-of-chima-online-shutting-down/",
-        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/LEGOLegendsOfChimaOnline"
+        "https://en.wikipedia.org/wiki/BarbieGirls.com",
+        "https://service.mattel.com/us/technicalproductdetail.aspx?prodno=M8700&siteid=27",
+        "https://www.youtube.com/@BarbieGirlsRewritten",
+        "https://en.wikipedia.org/wiki/List_of_Barbie_video_games",
+        "https://service.mattel.com/us/productDetail.aspx?prodno=M8700&siteid=27",
+        "https://barbiegirlsblog.wixsite.com/blog/history"
       ],
       "confidence": "medium"
     },
@@ -1849,31 +2239,6 @@
       "confidence": "medium"
     },
     {
-      "id": "dizzywood",
-      "score": 13,
-      "name": "Dizzywood",
-      "year_released": null,
-      "year_lost": 2010,
-      "developer": "Rocket Paper Scissors",
-      "platform": "Browser",
-      "category": "web",
-      "genre": "Kids virtual world",
-      "how_lost": "The studio closed it on December 31, 2010 for financial reasons, and SecretBuilders bought the assets.",
-      "status": "lost",
-      "revival_check": "A fan project, Dizzywood: Rediscovered (started 2020), says it is in development but has no public release. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "low",
-      "footage_examples": [],
-      "rebuild_difficulty": 3,
-      "argon_fit": 3,
-      "why_interesting": "A 1.5M-player kids' world, and its assets are held by a company that never reused them.",
-      "sources": [
-        "https://delistedgames.com/dizzywood/",
-        "https://forums.lostmediawiki.com/thread/5501/dizzywood-lost-browser-based-mmo",
-        "https://gamesbeat.com/consolidation-comes-to-kids-casual-game-sites-as-secretbuilders-buys-dizzywoods-assets-exclusive/"
-      ],
-      "confidence": "medium"
-    },
-    {
       "id": "marvelavengersacademy",
       "score": 12,
       "name": "Marvel Avengers Academy",
@@ -1920,31 +2285,6 @@
         "https://toucharcade.com/2023/11/29/dissidia-final-fantasy-opera-omnia-server-shut-down-date-february-2024-iphone-android-free/",
         "https://en.wikipedia.org/wiki/Dissidia_Final_Fantasy_Opera_Omnia",
         "https://www.resetera.com/threads/dissidia-opera-omnia-ceasing-service-on-feb-29-2024.789714/"
-      ],
-      "confidence": "medium"
-    },
-    {
-      "id": "barbiegirlscom",
-      "score": 12,
-      "name": "BarbieGirls.com",
-      "year_released": null,
-      "year_lost": 2011,
-      "developer": "Mattel",
-      "platform": "Browser",
-      "category": "web",
-      "genre": "Kids virtual world / dress-up MMO",
-      "how_lost": "Mattel closed BarbieGirls.com on June 1, 2011 and never reopened it.",
-      "status": "mostly-lost",
-      "revival_check": "Mattel never announced a reopening. A fan project, Barbie Girls Rewritten, says it is recreating the world, but I could not verify whether it is playable. Flashpoint not individually verified (search budget ran out); game is server-dependent so a client archive alone would not make it playable.",
-      "footage_volume": "low",
-      "footage_examples": [],
-      "rebuild_difficulty": 3,
-      "argon_fit": 3,
-      "why_interesting": "A large mainstream kids' world, and footage of it is the main surviving record.",
-      "sources": [
-        "https://en.wikipedia.org/wiki/BarbieGirls.com",
-        "https://service.mattel.com/us/technicalproductdetail.aspx?prodno=M8700&siteid=27",
-        "https://www.youtube.com/@BarbieGirlsRewritten"
       ],
       "confidence": "medium"
     },
@@ -2703,13 +3043,23 @@
       "status": "revived",
       "revival_check": "Fan projects Rising Hub and Phoenix Heroes run revival servers.",
       "footage_volume": "high",
-      "footage_examples": [],
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=rggcB44DqG0",
+        "https://www.youtube.com/watch?v=8egG0h8opE8",
+        "https://www.youtube.com/watch?v=mDuoZ8QwLYM",
+        "https://www.youtube.com/watch?v=O-O5XsP4mww",
+        "https://www.youtube.com/watch?v=5zwa4wlwAhI",
+        "https://www.youtube.com/watch?v=40aQ3MSEUhE"
+      ],
       "rebuild_difficulty": 3,
       "argon_fit": 4,
       "why_interesting": "Revived; exclude.",
       "sources": [
         "https://risinghub.net/",
-        "https://phoenixheroes.net/"
+        "https://phoenixheroes.net/",
+        "https://en.wikipedia.org/wiki/Battlefield_Heroes",
+        "https://battlefield.fandom.com/wiki/Battlefield_Heroes",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BattlefieldHeroes"
       ],
       "confidence": "medium"
     },
@@ -3308,7 +3658,12 @@
       "revival_check": "A fan preservation project, farmvillage, runs FarmVille 1 locally, and FV Replowed calls itself a revival. Flashpoint does not cover server games like this.",
       "footage_volume": "high",
       "footage_examples": [
-        "https://www.youtube.com/watch?v=OevhtTH-fOQ"
+        "https://www.youtube.com/watch?v=RfjfhuyKOFw",
+        "https://www.youtube.com/watch?v=Rvwlpiy9o4A",
+        "https://www.youtube.com/watch?v=EpJNNGlnDpk",
+        "https://www.youtube.com/watch?v=lJyizvQs0d8",
+        "https://www.youtube.com/watch?v=0uPDmJm-xv8",
+        "https://www.youtube.com/watch?v=0qr0ZIttCRk"
       ],
       "rebuild_difficulty": 2,
       "argon_fit": 3,
@@ -3316,7 +3671,10 @@
       "sources": [
         "https://delistedgames.com/after-11-years-the-original-farmville-shuts-down-on-december-31st/",
         "https://github.com/AcidCaos/farmvillage",
-        "https://www.fv-replowed.com/"
+        "https://www.fv-replowed.com/",
+        "https://en.wikipedia.org/wiki/FarmVille",
+        "https://en.wikipedia.org/wiki/Zynga",
+        "https://farmville.fandom.com/wiki/FarmVille_Wiki"
       ],
       "confidence": "high"
     },
@@ -3382,15 +3740,24 @@
       "how_lost": "Nickelodeon took the servers offline on September 26, 2014.",
       "status": "revived",
       "revival_check": "MQReborn private server launched in September 2024 (4000+ community). An earlier Monkey Quest Reborn got a cease-and-desist in 2021.",
-      "footage_volume": "medium",
-      "footage_examples": [],
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=TUktgRsnlFo",
+        "https://www.youtube.com/watch?v=5uAbYKI5EUM",
+        "https://www.youtube.com/watch?v=yzePoOhTuuQ",
+        "https://www.youtube.com/watch?v=GMynTQW5mBc",
+        "https://www.youtube.com/watch?v=K0_p4zj6nhg",
+        "https://www.youtube.com/watch?v=bXtxYVGxsX0"
+      ],
       "rebuild_difficulty": 4,
       "argon_fit": 3,
       "why_interesting": "A good 3D Unity kids' MMO, but a working private server now exists.",
       "sources": [
         "https://en.wikipedia.org/wiki/Monkey_Quest",
         "https://lostmediawiki.com/Monkey_Quest_(partially_found_online_multiplayer_game;_2011-2014)",
-        "https://mqreborn.com/"
+        "https://mqreborn.com/",
+        "https://monkeyquest.fandom.com/wiki/Monkey_Quest_Wiki",
+        "https://nickelodeon.fandom.com/wiki/Monkey_Quest"
       ],
       "confidence": "high"
     },
@@ -3490,13 +3857,24 @@
       "status": "revived",
       "revival_check": "OpenFusion (open-source server) and Retrobution are active in 2026.",
       "footage_volume": "high",
-      "footage_examples": [],
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=VWfLi1cQS5A",
+        "https://www.youtube.com/watch?v=V9YUzk2LNjE",
+        "https://www.youtube.com/watch?v=7N76tjaGNW0",
+        "https://www.youtube.com/watch?v=3Pyi2z2idSY",
+        "https://www.youtube.com/watch?v=8UhYxD2gXm8",
+        "https://www.youtube.com/watch?v=EQuY4Qkqh9E"
+      ],
       "rebuild_difficulty": 5,
       "argon_fit": 2,
       "why_interesting": "An iconic Unity web MMO, already well revived by fans.",
       "sources": [
         "https://fusionfall.org/play-fusionfall/",
-        "https://fusionfall.fandom.com/wiki/Portal:Retrobution"
+        "https://fusionfall.fandom.com/wiki/Portal:Retrobution",
+        "https://en.wikipedia.org/wiki/FusionFall",
+        "https://fusionfall.fandom.com/wiki/Cartoon_Network_Universe:_FusionFall",
+        "https://fusionfall.fandom.com/wiki/OpenFusion",
+        "https://github.com/OpenFusionProject/OpenFusion"
       ],
       "confidence": "high"
     },
@@ -3514,13 +3892,24 @@
       "status": "revived",
       "revival_check": "OSFR Sanctuary open-source server emulator and launcher are on GitHub. I could not confirm a public server is running.",
       "footage_volume": "high",
-      "footage_examples": [],
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=V_ty2SeVC08",
+        "https://www.youtube.com/watch?v=A_LhgXB7bS4",
+        "https://www.youtube.com/watch?v=n8cBp-LftgA",
+        "https://www.youtube.com/watch?v=2D2sAfglR4E",
+        "https://www.youtube.com/watch?v=GbqcHyj4J48",
+        "https://www.youtube.com/watch?v=mrqhoesLKI0"
+      ],
       "rebuild_difficulty": 5,
       "argon_fit": 2,
       "why_interesting": "A big minigame-filled MMO, but an emulator exists.",
       "sources": [
         "https://github.com/Open-Source-Free-Realms/Sanctuary",
-        "https://github.com/Open-Source-Free-Realms/OpenSourceFreeRealms"
+        "https://github.com/Open-Source-Free-Realms/OpenSourceFreeRealms",
+        "https://en.wikipedia.org/wiki/Free_Realms",
+        "https://en.wikipedia.org/wiki/Daybreak_Game_Company",
+        "https://freerealms.fandom.com/wiki/Free_Realms",
+        "https://www.reddit.com/r/freerealms/wiki/index/"
       ],
       "confidence": "medium"
     },
@@ -3614,16 +4003,21 @@
       "revival_check": "Nicktropolis Timewarp is an open-source fan rewrite built from screen-capture footage, with multiplayer and Ruffle minigames.",
       "footage_volume": "medium",
       "footage_examples": [
-        "https://www.youtube.com/watch?v=yy2PSgaR_Y0",
-        "https://www.youtube.com/watch?v=lFuT8TZb3KM",
-        "https://www.youtube.com/watch?v=8-mZPie6_uo"
+        "https://www.youtube.com/watch?v=9dRuy1MknZI",
+        "https://www.youtube.com/watch?v=rVAor3yJnDw",
+        "https://www.youtube.com/watch?v=-eETjhedWyA",
+        "https://www.youtube.com/watch?v=w4kOJfVI5U0",
+        "https://www.youtube.com/watch?v=g0vCD1JbLqU",
+        "https://www.youtube.com/watch?v=v-E3M4i_2bQ"
       ],
       "rebuild_difficulty": 3,
       "argon_fit": 3,
       "why_interesting": "A precedent for Argon, since fans already rebuilt this game from footage alone.",
       "sources": [
         "https://lostmediawiki.com/Nicktropolis_(partially_found_Nickelodeon_massively_multiplayer_online_role-playing_game;_2007-2010)",
-        "https://timewarp-molly.itch.io/nicktropolis-timewarp"
+        "https://timewarp-molly.itch.io/nicktropolis-timewarp",
+        "https://en.wikipedia.org/wiki/Nick.com",
+        "https://spongebob.fandom.com/wiki/Nicktropolis"
       ],
       "confidence": "high"
     },
@@ -3665,15 +4059,26 @@
       "how_lost": "EA retired it on June 29, 2012.",
       "status": "revived",
       "revival_check": "Restaurant City Reborn (rc-reborn.uk) runs the original client via Ruffle with a fan backend (GitHub Dippys/Restaurant-City-Server).",
-      "footage_volume": "medium",
-      "footage_examples": [],
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=ZiSvSYIwUeY",
+        "https://www.youtube.com/watch?v=ZbsgoZwEyvw",
+        "https://www.youtube.com/watch?v=hTLrhQG5DHU",
+        "https://www.youtube.com/watch?v=iTDM4UYzszA",
+        "https://www.youtube.com/watch?v=-FeauSDJEkQ",
+        "https://www.youtube.com/watch?v=5icMz45rBM0"
+      ],
       "rebuild_difficulty": 2,
       "argon_fit": 3,
       "why_interesting": "A beloved Playfish game, but now playable again.",
       "sources": [
         "https://restaurantcity.fandom.com/wiki/Restaurant_City",
         "https://rc-reborn.uk/",
-        "https://github.com/Dippys/Restaurant-City-Server"
+        "https://github.com/Dippys/Restaurant-City-Server",
+        "https://en.wikipedia.org/wiki/Playfish",
+        "https://zh.wikipedia.org/wiki/Restaurant_City",
+        "https://restaurantcity.fandom.com/wiki/Restaurant_City_Wiki",
+        "https://restaurantcity.fandom.com/wiki/Fanmade"
       ],
       "confidence": "high"
     },
@@ -3692,7 +4097,12 @@
       "revival_check": "The mascotsociety server emulator runs locally, and an itch.io browser revival and the Paw Society rebuild are in progress.",
       "footage_volume": "medium",
       "footage_examples": [
-        "https://www.youtube.com/watch?v=ixCOr_FHMHg"
+        "https://www.youtube.com/watch?v=dK8ViRKbsFA",
+        "https://www.youtube.com/watch?v=rb8uv3LTIYs",
+        "https://www.youtube.com/watch?v=fkc8oiiPNiw",
+        "https://www.youtube.com/watch?v=9OaNIo2Cnnw",
+        "https://www.youtube.com/watch?v=31w1fEsW3CI",
+        "https://www.youtube.com/watch?v=vcHnx53Al3Q"
       ],
       "rebuild_difficulty": 2,
       "argon_fit": 3,
@@ -3700,7 +4110,10 @@
       "sources": [
         "https://en.wikipedia.org/wiki/Pet_Society",
         "https://github.com/DexterX12/mascotsociety",
-        "https://pawsociety.app/"
+        "https://pawsociety.app/",
+        "https://en.wikipedia.org/wiki/Playfish",
+        "https://petpedia.fandom.com/wiki/Playfish",
+        "https://www.reddit.com/r/petsociety/"
       ],
       "confidence": "high"
     },
@@ -3718,13 +4131,20 @@
       "status": "revived",
       "revival_check": "The fan revivals Eleven and Children of Ur merged in 2019, and Odd Giants is a separate Unity remake. Their release status is unclear.",
       "footage_volume": "medium",
-      "footage_examples": [],
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=VfzE_fIxEVg",
+        "https://www.youtube.com/watch?v=5yDUo41IQls"
+      ],
       "rebuild_difficulty": 4,
       "argon_fit": 3,
       "why_interesting": "Its public-domain assets make it legally clean, though fan revivals already exist.",
       "sources": [
         "https://en.wikipedia.org/wiki/Glitch_(video_game)",
-        "https://massivelyop.com/2019/03/21/children-of-ur-and-eleven-join-forces-to-create-the-ultimate-glitch-revival/"
+        "https://massivelyop.com/2019/03/21/children-of-ur-and-eleven-join-forces-to-create-the-ultimate-glitch-revival/",
+        "https://en.wikipedia.org/wiki/Slack_Technologies",
+        "https://www.cnet.com/tech/gaming/tiny-speck-releases-entire-glitch-art-archives-into-public-domain/",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Glitch2011",
+        "https://oddgiants.com/"
       ],
       "confidence": "medium"
     },
@@ -3779,6 +4199,537 @@
         "https://www.spin.ph/life/cars-and-tech/what-happened-to-uberstrike-a4349-20230803"
       ],
       "confidence": "medium"
+    },
+    {
+      "id": "arcanists",
+      "score": null,
+      "name": "Arcanists",
+      "year_released": 2008,
+      "year_lost": 2018,
+      "developer": "Jagex",
+      "platform": "Browser (Java, FunOrb)",
+      "category": "web",
+      "genre": "Turn-based artillery strategy",
+      "how_lost": "The original Java browser version became unplayable when Jagex permanently shut down its FunOrb gaming portal and servers on August 7, 2018.",
+      "status": "revived",
+      "revival_check": "Remade from the ground up in Unity by fan developer 'pur3 extreme' and team (originally titled Arcanists 2); in 2024 the team signed an official licensing agreement with Jagex and released it for free on Steam as 'Arcanists'.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=z9GhYg6cKT8",
+        "https://www.youtube.com/watch?v=jXVv9vqPeKE",
+        "https://www.youtube.com/watch?v=ZWgcgBpZ_Fg",
+        "https://www.youtube.com/watch?v=x8EL6_2hfrI",
+        "https://www.youtube.com/watch?v=b2otrSSLyEE",
+        "https://www.youtube.com/watch?v=rWiWMN1qNN4"
+      ],
+      "rebuild_difficulty": 1,
+      "argon_fit": 5,
+      "why_interesting": "Arcanists is a beloved lost Java browser game whose 2D turn-based artillery combat and destructible terrain translate cleanly to an HTML5 canvas. With hours of raw gameplay footage available, a model can readily extract the spell projectile physics, UI, and arena layouts to build a playable multiplayer slice.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/FunOrb",
+        "https://funorb.fandom.com/wiki/Arcanists",
+        "https://funorb.fandom.com/wiki/FunOrb_Wiki",
+        "https://store.steampowered.com/app/2901550/Arcanists/",
+        "https://www.arcanists.com/about-us"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grandchase",
+      "score": null,
+      "name": "Grand Chase",
+      "year_released": 2003,
+      "year_lost": 2015,
+      "developer": "KOG Studios",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "Side-scrolling action MMORPG",
+      "how_lost": "The original game ceased development and shut down all official regional servers throughout 2015 (including North America in April 2015 and South Korea at the end of 2015) before being officially relaunched by KOG in July 2021.",
+      "status": "revived",
+      "revival_check": "Officially relaunched by KOG in July 2021 as Grand Chase Classic (listed as GrandChase on Steam and Epic Games Store); unofficial fan servers such as Grand Chase History also exist.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=ET7fdDzVdmI",
+        "https://www.youtube.com/watch?v=RGZHSF2wKmk",
+        "https://www.youtube.com/watch?v=ehBDnwLoKnE",
+        "https://www.youtube.com/watch?v=4-ndZ02DqE8",
+        "https://www.youtube.com/watch?v=039QmjMY7Zw",
+        "https://www.youtube.com/watch?v=NbjS4IokEKs"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Rebuilding a classic room-based 2D side-scrolling brawler from extensive longplay footage showcases the AI's ability to extract tight combat mechanics, platforming layouts, and distinct character classes. Multi-agent parties can immediately jump into the reconstructed stages for real-time 4-player co-op dungeon runs or competitive PvP arena brawls.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Grand_Chase",
+        "https://en.wikipedia.org/wiki/KOG_Studios",
+        "https://grandchase.fandom.com/wiki/Grand_Chase_Wiki",
+        "https://store.steampowered.com/app/985810/GrandChase/",
+        "https://www.koggames.com/game/grandchaseclassic"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "dragonica",
+      "score": null,
+      "name": "Dragonica",
+      "year_released": 2009,
+      "year_lost": 2014,
+      "developer": "Barunson / Gravity",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "Action MMORPG",
+      "how_lost": "Official regional Dragonica servers were shut down in South Korea (July 2011), Southeast Asia (May 2012), and Europe under Webzen/gPotato (April 30, 2014), though the North American version (rebranded as Dragon Saga in 2010) continues to operate under Gravity Interactive's WarpPortal.",
+      "status": "revived",
+      "revival_check": "Multiple private/fan servers remain active (such as Dragonica: Volia, Raid Dragonica, and Dragonica Europe / PlayDragonica.eu), and the official North American version (rebranded as Dragon Saga) is still live on Steam and WarpPortal.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=3-Be23bzg94",
+        "https://www.youtube.com/watch?v=DoYR5y4E9Lw",
+        "https://www.youtube.com/watch?v=yR9XidIeCXU",
+        "https://www.youtube.com/watch?v=hA6hy3kRvA8",
+        "https://www.youtube.com/watch?v=LIFyy94f1h4",
+        "https://www.youtube.com/watch?v=2T1jHES6Fjw"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Dragonica's fast-paced 2.5D side-scrolling brawler combat and air combos translate naturally into a vibrant browser-based action slice. Rebuilding an instanced co-op dungeon and boss fight from gameplay footage showcases both tight arcade physics and real-time multi-agent teamwork.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Dragon_Saga",
+        "https://www.pcgamingwiki.com/wiki/Dragon_Saga",
+        "https://en.volia.biz/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "wonderkingonline",
+      "score": null,
+      "name": "WonderKing Online",
+      "year_released": 2007,
+      "year_lost": 2011,
+      "developer": "Ryu & Soft",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "Side-scrolling MMORPG",
+      "how_lost": "Due to legal disputes between developer Ryu & Soft and publisher Ignited Games (which had taken over service from NDOORS Interactive) that halted content updates, combined with widespread hacking, the North American servers were shut down in December 2011.",
+      "status": "revived",
+      "revival_check": "Officially relaunched on Steam as 'WonderKing' in January 2026 by DreamIdeaSoft and Wondersoft; fan-run private servers such as WonderClassic also exist.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=M0SwGtNbEHM",
+        "https://www.youtube.com/watch?v=LmHtN51ZJpw",
+        "https://www.youtube.com/watch?v=Ro0tqyUn0o0",
+        "https://www.youtube.com/watch?v=5vQ0zQct7ac",
+        "https://www.youtube.com/watch?v=10Z-hUaGbtw",
+        "https://www.youtube.com/watch?v=t9p4ozh6VHc"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "WonderKing Online's colorful 2D side-scrolling action and clear UI in the gameplay footage make it ideal for extracting sprites, platforming physics, and combat mechanics. Rebuilding a multiplayer slice of this MapleStory-style world lets AI agents party up and battle monsters together in real time.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/WonderKing_Online",
+        "https://wonderking.fandom.com/wiki/WonderKing_Online_Wiki",
+        "https://wonderkingonline.com/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "fantage",
+      "score": null,
+      "name": "Fantage",
+      "year_released": 2008,
+      "year_lost": 2018,
+      "developer": "Fantage, Inc.",
+      "platform": "Browser (Flash)",
+      "category": "web",
+      "genre": "Virtual world / Social MMORPG",
+      "how_lost": "Fantage, Inc. permanently shut down the game's servers on July 1, 2018 (following an announced June 30, 2018 closure date) due to declining player numbers and financial difficulties.",
+      "status": "revived",
+      "revival_check": "Partial single-player fan recreations (such as Fantage Single Player) and mobile spin-offs using the original assets (such as LeShop Fashion Designer) are playable, while full multiplayer fan remakes like Fantage Rewritten and Fantage Revival Project are in development/closed beta testing.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=HhaxbebHBvY",
+        "https://www.youtube.com/watch?v=pZb3-PnwKuI",
+        "https://www.youtube.com/watch?v=cmZrw6W_b50",
+        "https://www.youtube.com/watch?v=r6Vf-FZaGIk",
+        "https://www.youtube.com/watch?v=mvf2CcpNDlU",
+        "https://www.youtube.com/watch?v=ea82SZx7hC0"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Fantage was a beloved 2D Flash virtual world where players socialized, competed in fashion shows, and played minigames together. With hours of raw tour and minigame footage available, we can rebuild a playable multiplayer slice of the town square and its iconic fashion competitions directly from video.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Fantage",
+        "https://fantage.fandom.com/wiki/Fantage_Wiki",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Fantage",
+        "https://venturebeat.com/games/fantage-kids-virtual-world-will-shut-after-10-years/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hellokittyonline",
+      "score": null,
+      "name": "Hello Kitty Online",
+      "year_released": 2008,
+      "year_lost": 2017,
+      "developer": "Sanrio Digital",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "MMORPG",
+      "how_lost": "After stopping content updates in 2012, the official game servers were permanently shut down without a formal announcement around August 2017.",
+      "status": "revived",
+      "revival_check": "Hello Kitty Online Server Project (HKO-re / HKO-Rewritten on GitHub)",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=nAm3hJ1uWHQ",
+        "https://www.youtube.com/watch?v=1wWjrEzC7wM",
+        "https://www.youtube.com/watch?v=K_LDw-M9vPg",
+        "https://www.youtube.com/watch?v=tDxRUptY9ug",
+        "https://www.youtube.com/watch?v=AlVMV79BQV8",
+        "https://www.youtube.com/watch?v=EGysyLXzkjg"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Rebuilding a slice of this cult-classic isometric MMORPG lets us showcase real-time multiplayer gathering, crafting, and charming 2.5D combat reconstructed purely from gameplay videos. Its recognizable aesthetic and cozy mechanics make for an immediately engaging, nostalgic browser demo.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Hello_Kitty_Online",
+        "https://hellokittyonline.fandom.com/wiki/Hello_Kitty_Online_Wiki",
+        "https://hellokittyonline.github.io/",
+        "https://github.com/HelloKittyOnline/HKO-re"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "panfu",
+      "score": null,
+      "name": "Panfu",
+      "year_released": 2007,
+      "year_lost": 2016,
+      "developer": "Goodbeans",
+      "platform": "Browser (Flash)",
+      "category": "web",
+      "genre": "Virtual world / MMORPG",
+      "how_lost": "After developer Goodbeans GmbH filed for bankruptcy and entered liquidation in April 2015, the official game servers and website were permanently shut down on November 1, 2016.",
+      "status": "revived",
+      "revival_check": "Multiple fan-run private servers (Panfu Private Servers) revive the game using the original Flash client and Ruffle emulation, most notably Panfu.me (formerly Panfu.us) and an unofficial revival hosted on the re-registered Panfu.com domain.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=wD-vmmHa2_c",
+        "https://www.youtube.com/watch?v=ZjC6WgB-9Ig",
+        "https://www.youtube.com/watch?v=YBWZZoExB5w",
+        "https://www.youtube.com/watch?v=QZhYA9pxOJw",
+        "https://www.youtube.com/watch?v=EP38U4yQB8U",
+        "https://www.youtube.com/watch?v=qtOa2rnRzBY"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Panfu is a nostalgic Club Penguin-style 2D virtual world with abundant quest and location walkthroughs on YouTube. Rebuilding a multi-room slice where AI agents and players can explore, chat, and complete quests together makes for an immediately recognizable and lively demo.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Panfu",
+        "https://panfu.fandom.com/wiki/Information",
+        "https://panfu.fandom.com/wiki/Goodbeans_GmbH",
+        "https://panfu.fandom.com/wiki/Panfu.me",
+        "https://tcrf.net/Panfu"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "lordofultima",
+      "score": null,
+      "name": "Lord of Ultima",
+      "year_released": 2010,
+      "year_lost": 2014,
+      "developer": "EA Phenomic",
+      "platform": "Browser (HTML/JS)",
+      "category": "web",
+      "genre": "MMORTS / City-building strategy",
+      "how_lost": "Following the closure of developer EA Phenomic in 2013, Electronic Arts permanently shut down all Lord of Ultima game servers on May 12, 2014.",
+      "status": "revived",
+      "revival_check": "Fans funded a spiritual remake titled Crown of the Gods (2015) that replicates the gameplay mechanics with original art and lore to avoid copyright infringement, and a fan-made web recreation called Lord of Ultima: Revival also exists.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=dlU2o4vNNdM",
+        "https://www.youtube.com/watch?v=MMi8rrwf9To",
+        "https://www.youtube.com/watch?v=CPZppRcgLvc",
+        "https://www.youtube.com/watch?v=XH0yOzOfpIc",
+        "https://www.youtube.com/watch?v=07fKSnUTUe4",
+        "https://www.youtube.com/watch?v=ux7kQmBj-KM"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Lord of Ultima was a pure HTML5/JavaScript 2D browser strategy game whose grid-based city building and adjacency bonus mechanics are clearly visible in gameplay footage. A model can readily extract its UI-heavy resource management and tactical map systems to recreate a playable slice of a lost EA strategy title in a single day.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lord_of_Ultima",
+        "https://lordofultima.fandom.com/wiki/Lord_of_Ultima_Wiki",
+        "https://www.shacknews.com/article/83123/lord-of-ultima-shutting-down-in-may"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "dofusarena",
+      "score": null,
+      "name": "Dofus Arena",
+      "year_released": 2006,
+      "year_lost": 2014,
+      "developer": "Ankama",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "Tactical RPG / Turn-based strategy",
+      "how_lost": "After pausing development in February 2012 due to low profitability, Ankama Games permanently shut down the game's servers on October 14, 2014.",
+      "status": "revived",
+      "revival_check": "Arena Returns (an unofficial fan revival server tolerated by Ankama, which operates intermittently via public beta phases)",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=b0GDJUWpOh8",
+        "https://www.youtube.com/watch?v=fVVT4WJtHKg",
+        "https://www.youtube.com/watch?v=M6xIkfHYulM",
+        "https://www.youtube.com/watch?v=jT88qEcps4o",
+        "https://www.youtube.com/watch?v=5bjqGBLXf0Y",
+        "https://www.youtube.com/watch?v=dZBqrDYGdp8"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Dofus Arena's deterministic, grid-based isometric combat makes it an ideal showcase for extracting game rules and UI layouts directly from video footage. A playable 1v1 browser slice with a couple of arenas and fighter classes will immediately capture the tactical depth of this lost Ankama classic.",
+      "sources": [
+        "https://fr.wikipedia.org/wiki/Arena_(jeu_vid%C3%A9o,_2010)",
+        "https://en.wikipedia.org/wiki/Dofus_Arena",
+        "https://www.arenareturns.com/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "finalfantasybraveexvius",
+      "score": null,
+      "name": "Final Fantasy Brave Exvius",
+      "year_released": 2015,
+      "year_lost": 2025,
+      "developer": "Alim / gumi / Square Enix",
+      "platform": "iOS / Android",
+      "category": "mobile",
+      "genre": "Turn-based RPG / Gacha RPG",
+      "how_lost": "The global version ended service on October 30, 2024, followed by the shutdown of the original Japanese version on October 31, 2025.",
+      "status": "revived",
+      "revival_check": "An official console/PC HD-2D remake adapting the first story arc, titled Final Fantasy Resonance, was released by Square Enix and Lancarse on October 22, 2026; additionally, a non-playable Japanese Memorial Version gallery app was released, and a fan-made offline server revival is in development.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=NNWjFsSx-po",
+        "https://www.youtube.com/watch?v=Nnvq7W2mahc",
+        "https://www.youtube.com/watch?v=t-jPbcF0skM",
+        "https://www.youtube.com/watch?v=YKGkozoVk6Q",
+        "https://www.youtube.com/watch?v=KHX_fQmiFW4",
+        "https://www.youtube.com/watch?v=bZAQJpe1rsA"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Final Fantasy Brave Exvius pairs gorgeous 2D pixel art with classic turn-based RPG mechanics that are now locked behind defunct gacha servers. Rebuilding a slice of its tactical boss battles and town exploration from gameplay footage makes for an instantly recognizable and nostalgic browser demo.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Final_Fantasy_Brave_Exvius",
+        "https://en.wikipedia.org/wiki/Final_Fantasy_Resonance",
+        "https://exvius.fandom.com/wiki/Final_Fantasy_Brave_Exvius_Wiki",
+        "https://www.crunchyroll.com/news/latest/2025/8/25/final-fantasy-brave-exvius-mobile-game-to-end-service"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "sonicrunners",
+      "score": null,
+      "name": "Sonic Runners",
+      "year_released": 2015,
+      "year_lost": 2016,
+      "developer": "Sonic Team / Sega",
+      "platform": "iOS / Android",
+      "category": "mobile",
+      "genre": "Endless runner / platformer",
+      "how_lost": "Sega shut down the game's online servers and removed it from mobile app stores on July 27, 2016 due to commercial underperformance, rendering the always-online game unplayable.",
+      "status": "revived",
+      "revival_check": "Sonic Runners Revival (powered by the open-source Outrun custom server software) and Sonic Runners Reloaded (fan remake).",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=Lf-mQwXS3MA",
+        "https://www.youtube.com/watch?v=jgcEdGYr8Lc",
+        "https://www.youtube.com/watch?v=siSZpS91rmw",
+        "https://www.youtube.com/watch?v=BoTZYlYXADw",
+        "https://www.youtube.com/watch?v=4i-kgfPJ_LA",
+        "https://www.youtube.com/watch?v=yKAM_XgD5x4"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Sonic Runners is a high-profile lost mobile game from Sonic Team whose fast-paced side-scrolling gameplay and boss encounters are thoroughly documented in HD footage. Rebuilding a playable slice of its iconic endless-runner loop with character switching and power-ups makes for an instantly recognizable and exciting browser demo.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sonic_Runners",
+        "https://sonic.fandom.com/wiki/Sonic_Runners",
+        "https://sonicrunners.com/",
+        "https://github.com/fluofoxxo/outrun",
+        "https://www.nintendolife.com/news/2016/05/sonic_runners_segas_mobile_release_by_the_sonic_team_is_getting_shut_down"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "millsberry",
+      "score": null,
+      "name": "Millsberry",
+      "year_released": 2004,
+      "year_lost": 2010,
+      "developer": "General Mills",
+      "platform": "Browser (Flash)",
+      "category": "web",
+      "genre": "Virtual world / Advergame / Minigame collection",
+      "how_lost": "General Mills shut down the virtual world on December 31, 2010 (removing the site on January 1, 2011) amid shifting marketing strategies and pressure from public health advocates regarding child-targeted cereal advergaming.",
+      "status": "revived",
+      "revival_check": "The original game and its Flash minigames were not preserved in working form on Flashpoint, though an early-stage fan remake demo called Millsberry Rebirth (millsberry-rebirth.com) launched in August 2025.",
+      "footage_volume": "medium",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=Ie9bYhehFbw",
+        "https://www.youtube.com/watch?v=OLri4f_klhY",
+        "https://www.youtube.com/watch?v=FpVDmg09S-s",
+        "https://www.youtube.com/watch?v=MR-xzEG1o4k",
+        "https://www.youtube.com/watch?v=RgtoOyB4QMg",
+        "https://www.youtube.com/watch?v=Lp_OZ-yTRis"
+      ],
+      "rebuild_difficulty": 3,
+      "argon_fit": 4,
+      "why_interesting": "Millsberry is a beloved piece of 2000s cereal-advergame nostalgia whose original Flash world and minigames were completely lost when the servers shut down. Rebuilding a playable slice of the town and its iconic arcade games from childhood gameplay recordings is a fantastic showcase of resurrecting lost web history.",
+      "sources": [
+        "https://millsberry.fandom.com/wiki/Millsberry_Wiki",
+        "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Millsberry",
+        "https://gameslikefinder.com/gaming-archive-1-millsberry/",
+        "https://www.millsberry-rebirth.com/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ageofempiresonline",
+      "score": null,
+      "name": "Age of Empires Online",
+      "year_released": 2011,
+      "year_lost": 2014,
+      "developer": "Robot Entertainment / Gas Powered Games",
+      "platform": "PC (Games for Windows Live)",
+      "category": "cloud-online",
+      "genre": "MMO real-time strategy (MMORTS)",
+      "how_lost": "Microsoft permanently shut down the official servers on July 1, 2014, citing that maintaining and creating new content for the game was too expensive.",
+      "status": "revived",
+      "revival_check": "Project Celeste (fan-made community server revival launched in 2017 that restores all online features and adds new civilizations like the Romans and Indians)",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=iq1vRRZpH9E",
+        "https://www.youtube.com/watch?v=HCondZ6Fs-I",
+        "https://www.youtube.com/watch?v=Kxau-2bwYa4",
+        "https://www.youtube.com/watch?v=JzgYynXg9Os",
+        "https://www.youtube.com/watch?v=LjVjF6idYPI",
+        "https://www.youtube.com/watch?v=ktNYcAUk0gA"
+      ],
+      "rebuild_difficulty": 5,
+      "argon_fit": 4,
+      "why_interesting": "Age of Empires Online blended classic real-time strategy base-building with persistent MMO progression before Microsoft shut down its servers in 2014. Using surviving gameplay footage, we can reconstruct a slice of its vibrant, stylized RTS skirmishes and unit-gearing mechanics directly in the browser.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Age_of_Empires_Online",
+        "https://ageofempires.fandom.com/wiki/Age_of_Empires_Online",
+        "https://ageofempiresonline.fandom.com/wiki/Project_Celeste",
+        "https://www.projectceleste.com/",
+        "https://www.ign.com/articles/2014/07/01/age-of-empires-online-shuts-down",
+        "https://www.gamespot.com/articles/rip-age-of-empires-online/1100-6420876/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "legouniverse",
+      "score": null,
+      "name": "Lego Universe",
+      "year_released": 2010,
+      "year_lost": 2012,
+      "developer": "NetDevil / The Lego Group",
+      "platform": "PC / Mac client",
+      "category": "cloud-online",
+      "genre": "MMORPG",
+      "how_lost": "The Lego Group permanently shut down the game's servers on January 30–31, 2012, citing an inability to build a satisfactory revenue model and convert free-to-play users into paying subscribers.",
+      "status": "revived",
+      "revival_check": "Darkflame Universe (an open-source server emulator under AGPLv3 used for self-hosting or private revival servers like Nexus Universe) and Uchu.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=qT6HuMcyBuw",
+        "https://www.youtube.com/watch?v=WJjNk88776s",
+        "https://www.youtube.com/watch?v=BPWcY_zblQY",
+        "https://www.youtube.com/watch?v=VxZzCwfYK40",
+        "https://www.youtube.com/watch?v=wX9m-K6_Av8",
+        "https://www.youtube.com/watch?v=R3PEAFOfrDI"
+      ],
+      "rebuild_difficulty": 5,
+      "argon_fit": 4,
+      "why_interesting": "Lego Universe is a legendary lost MMO with a fiercely dedicated fanbase and instantly recognizable minifigure aesthetics. Rebuilding a single slice—like battling Stromlings in Avant Gardens alongside other players—makes for an immediately nostalgic and visually striking multiplayer demo.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Lego_Universe",
+        "https://www.pcgamingwiki.com/wiki/Lego_Universe",
+        "https://legogames.fandom.com/wiki/LEGO_Universe",
+        "https://github.com/DarkflameUniverse/DarkflameServer",
+        "https://www.engadget.com/2011-11-04-lego-universe-shutting-down-january-2012.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "darkspore",
+      "score": null,
+      "name": "Darkspore",
+      "year_released": 2011,
+      "year_lost": 2016,
+      "developer": "Maxis / EA",
+      "platform": "PC client (always online)",
+      "category": "cloud-online",
+      "genre": "Action role-playing (hack and slash)",
+      "how_lost": "Electronic Arts permanently shut down the game's servers on March 1, 2016, rendering both single-player and multiplayer modes unplayable due to always-online DRM.",
+      "status": "revived",
+      "revival_check": "Resurrection Capsule (ReCap), an open-source local server emulator project on GitHub, allows bypassing the login screen to access the hero editor and work-in-progress offline gameplay.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=4bCpKXdB05U",
+        "https://www.youtube.com/watch?v=le3CpyphpDI",
+        "https://www.youtube.com/watch?v=-AbHzQ_B4K4",
+        "https://www.youtube.com/watch?v=tQqBmg4KGbA",
+        "https://www.youtube.com/watch?v=HVaMRSWD-ic",
+        "https://www.youtube.com/watch?v=cccJSln13Vk"
+      ],
+      "rebuild_difficulty": 5,
+      "argon_fit": 4,
+      "why_interesting": "Darkspore is an infamous casualty of always-online DRM, making its revival a compelling preservation story. Rebuilding a playable slice of its squad-swapping isometric co-op combat from gameplay footage demonstrates how AI can rescue lost mechanics even when original server logic is gone.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Darkspore",
+        "https://www.pcgamingwiki.com/wiki/Darkspore",
+        "https://spore.fandom.com/wiki/Darkspore",
+        "https://github.com/Resurrection-Capsule/Resurrection-Capsule"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "spirittales",
+      "score": null,
+      "name": "Spirit Tales (Glory Destiny Online)",
+      "year_released": 2011,
+      "year_lost": 2015,
+      "developer": "X-Legend",
+      "platform": "PC client",
+      "category": "cloud-online",
+      "genre": "MMORPG",
+      "how_lost": "North American publisher KoramGame shut down the Western English servers around 2015 (with the website and forums fully closing in 2016–2018), though X-Legend later relaunched a global version on Steam in 2025.",
+      "status": "revived",
+      "revival_check": "Officially relaunched globally on Steam by X-Legend Entertainment as 'Glory Destiny - Reborn' in March 2025 (and as a mobile/cross-platform version in Korea via Com2uS Holdings in 2025); fan-patched Taiwanese/Japanese servers ('Glory Destiny Again!') and intermittent private servers also exist.",
+      "footage_volume": "high",
+      "footage_examples": [
+        "https://www.youtube.com/watch?v=pJ33r0-BI1Q",
+        "https://www.youtube.com/watch?v=OjZu44gxc94",
+        "https://www.youtube.com/watch?v=8C1Xbs8bcQ4",
+        "https://www.youtube.com/watch?v=z8EmSCe_WIg",
+        "https://www.youtube.com/watch?v=iKOQaDpf6kY",
+        "https://www.youtube.com/watch?v=N0NoJJ1vkiY"
+      ],
+      "rebuild_difficulty": 5,
+      "argon_fit": 4,
+      "why_interesting": "Rebuilding a slice of Spirit Tales from footage demonstrates how AI can resurrect the charm of a shut-down chibi 3D MMORPG, complete with beast transformations and co-op boss fights. Even a single instanced dungeon recreated in the browser captures the nostalgic multiplayer magic of an era of lost anime online games.",
+      "sources": [
+        "https://en.wikipedia.org/wiki/Koramgame",
+        "https://x-legend.fandom.com/wiki/X-Legend_Entertainment",
+        "https://store.steampowered.com/app/3352180/GLORY_DESTINY__REBORN/",
+        "https://mmos.com/review/spirit-tales"
+      ],
+      "confidence": "high"
     }
   ]
 }

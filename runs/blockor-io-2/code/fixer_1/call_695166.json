@@ -1,0 +1,9 @@
+{
+ "path": "public/index.html",
+ "edits": [
+  {
+   "oldText": "  <script src=\"net.js\"></script>\n  <script src=\"js/audio.js\"></script>\n  <script src=\"js/skins.js\"></script>\n  <script src=\"js/cluster.js\"></script>\n  <script src=\"js/world.js\"></script>\n  <script src=\"js/hud.js\"></script>\n  <script src=\"js/main.js\"></script>",
+   "newText": "  <script src=\"net.js?v=2\"></script>\n  <script src=\"js/audio.js?v=2\"></script>\n  <script src=\"js/skins.js?v=2\"></script>\n  <script src=\"js/cluster.js?v=2\"></script>\n  <script src=\"js/world.js?v=2\"></script>\n  <script src=\"js/hud.js?v=2\"></script>\n  <script src=\"js/main.js?v=2\"></script>"
+  }
+ ]
+}

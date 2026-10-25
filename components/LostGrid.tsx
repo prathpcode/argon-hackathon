@@ -2,16 +2,21 @@
 
 import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
+import { youtubeId } from "@/lib/links";
 import type { LostGame } from "@/lib/archive";
 import { LostCard } from "./LostCard";
+
+const hasThumb = (g: LostGame) => g.footage_examples.some((u) => youtubeId(u));
 
 export function LostGrid({ games, categories }: { games: LostGame[]; categories: Record<string, string> }) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string | null>(null);
+  // Games with a thumbnail first, archive order otherwise.
+  const ordered = useMemo(() => [...games.filter(hasThumb), ...games.filter((g) => !hasThumb(g))], [games]);
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return games.filter((g) => (!cat || g.category === cat || g.also_in?.includes(cat)) && (!needle || `${g.name} ${g.developer} ${g.platform} ${g.genre}`.toLowerCase().includes(needle)));
-  }, [games, q, cat]);
+    return ordered.filter((g) => (!cat || g.category === cat || g.also_in?.includes(cat)) && (!needle || `${g.name} ${g.developer} ${g.platform} ${g.genre}`.toLowerCase().includes(needle)));
+  }, [ordered, q, cat]);
   return (
     <>
       <div className="filter-row">

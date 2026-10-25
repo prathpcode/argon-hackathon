@@ -92,7 +92,6 @@ h1, h2, h3, p { margin: 0; }
   background: var(--black);
   font-family: var(--tt); font-size: 17px; white-space: nowrap;
 }
-.page-no { color: var(--white); }
 .brand { display: inline-flex; align-items: center; gap: 1ch; color: var(--yellow); font-family: var(--tt); font-weight: 700; letter-spacing: 0.06em; }
 .mark-svg rect { transition: opacity 0.2s; }
 .brand:hover .mark-svg rect { animation: key 0.6s steps(2) 1; }
@@ -100,8 +99,6 @@ h1, h2, h3, p { margin: 0; }
 .brand:hover .mark-svg rect:nth-child(3) { animation-delay: 0.16s; }
 .brand:hover .mark-svg rect:nth-child(4) { animation-delay: 0.24s; }
 .topbar-center { flex: 1; }
-.clock { color: var(--yellow); }
-.clock-day { color: var(--cyan); }
 .topbar-right { display: flex; align-items: center; }
 .topbar-right .btn-violet { height: 30px; padding: 0 1.4ch; font-size: 14px; }
 
@@ -496,7 +493,6 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
   .game-hero { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
-  .page-no, .clock-day { display: none; }
   .topbar { gap: 1.4ch; font-size: 15px; }
   .topbar-right .btn-violet { padding: 0 1ch; }
   .topbar-right .btn-violet svg { display: none; }
@@ -509,9 +505,6 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
   .phase::after { display: none; }
   .desk-head { flex-wrap: wrap; }
   .follow { display: none; }
-}
-@media (max-width: 420px) {
-  .clock { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

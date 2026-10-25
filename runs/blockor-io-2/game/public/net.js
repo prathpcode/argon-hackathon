@@ -9,15 +9,32 @@
 (function () {
   function connect(opts) {
     const params = new URLSearchParams(location.search);
-    const net = { players: new Map(), shared: {}, me: null, host: null, online: false, get isHost() { return !this.online || this.host === this.me; } };
-    let ws = null, lastState = 0, pending = null, retry = 500;
+    let currentRoom = params.get("room") || opts.room || "main";
+    let currentName = opts.name || params.get("name") || "Player";
+    const net = {
+      players: new Map(),
+      shared: {},
+      me: null,
+      host: null,
+      online: false,
+      get room() {
+        return currentRoom;
+      },
+      get isHost() {
+        return !this.online || this.host === this.me;
+      }
+    };
+    let ws = null, lastState = 0, pending = null, retry = 500, closedManually = false;
     const call = (fn, ...a) => { try { opts[fn] && opts[fn](...a); } catch (e) { console.error(e); } };
 
     function open() {
+      closedManually = false;
       const proto = location.protocol === "https:" ? "wss" : "ws";
-      try { ws = new WebSocket(`${proto}://${location.host}/ws?room=${encodeURIComponent(params.get("room") || opts.room || "main")}`); } catch { return; }
-      ws.onopen = () => { retry = 500; ws.send(JSON.stringify({ t: "hello", name: opts.name || params.get("name") || "Player" })); };
-      ws.onmessage = (e) => {
+      try { ws = new WebSocket(`${proto}://${location.host}/ws?room=${encodeURIComponent(currentRoom)}`); } catch { return; }
+      const sock = ws;
+      sock.onopen = () => { if (sock !== ws) return; retry = 500; sock.send(JSON.stringify({ t: "hello", name: currentName })); };
+      sock.onmessage = (e) => {
+        if (sock !== ws) return;
         let m; try { m = JSON.parse(e.data); } catch { return; }
         if (m.t === "welcome") {
           net.me = m.id; net.host = m.host ?? m.id; net.online = true; net.shared = m.shared || {};
@@ -32,13 +49,14 @@
         else if (m.t === "host") { net.host = m.id; call("onHost", m.id === net.me); }
         else call("onMsg", m);
       };
-      ws.onclose = () => {
+      sock.onclose = () => {
+        if (sock !== ws) return;
         const was = net.online; net.online = false;
         for (const p of net.players.values()) call("onLeave", p);
         net.players.clear();
-        if (was || retry < 8000) setTimeout(open, (retry = Math.min(retry * 2, 8000)));
+        if (!closedManually && (was || retry < 8000)) setTimeout(open, (retry = Math.min(retry * 2, 8000)));
       };
-      ws.onerror = () => {};
+      sock.onerror = () => {};
     }
 
     const raw = (m) => { if (ws && ws.readyState === 1) ws.send(JSON.stringify(m)); };
@@ -49,6 +67,16 @@
     };
     net.send = (type, data) => raw({ ...(data || {}), t: type });
     net.set = (key, value) => { net.shared[key] = value; raw({ t: "set", key, value }); };
+    net.switchRoom = (newRoom, newName) => {
+      if (newRoom) currentRoom = String(newRoom).slice(0, 40);
+      if (newName) currentName = String(newName).slice(0, 24);
+      closedManually = true;
+      if (ws) { try { ws.close(); } catch {} ws = null; }
+      net.players.clear();
+      net.shared = {};
+      net.online = false;
+      open();
+    };
     open();
     return net;
   }

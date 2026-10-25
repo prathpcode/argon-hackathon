@@ -99,7 +99,9 @@ export function Workshop({ initial }: { initial: RunState }) {
   };
   const working = run.agents.filter((a) => a.status === "running");
   const tokens = run.agents.reduce((n, a) => n + (a.tokens_in ?? 0) + (a.tokens_out ?? 0), 0);
-  const elapsed = run.startedAt ? (live ? now : (run.updatedAt ?? now)) - run.startedAt : 0;
+  // A paused run's clocks stop at its last event; the log still says its agents are running.
+  const clockAt = live ? now : (run.updatedAt ?? now);
+  const elapsed = run.startedAt ? clockAt - run.startedAt : 0;
 
   async function control(action: "resume" | "stop" | "play") {
     setBusy(true);
@@ -138,7 +140,7 @@ export function Workshop({ initial }: { initial: RunState }) {
 
       <div className="phases" role="tablist" aria-label="Phases">
         {phases(run).map((p, i) => {
-          const t = p.state.startedAt ? (p.state.endedAt && p.state.status !== "running" ? p.state.endedAt : now) - p.state.startedAt : null;
+          const t = p.state.startedAt ? (p.state.endedAt && p.state.status !== "running" ? p.state.endedAt : clockAt) - p.state.startedAt : null;
           const has = run.agents.some((a) => phaseOf(a) === p.key);
           const selected = (focus ? phaseOf(focus) : null) === p.key;
           return (
@@ -186,10 +188,10 @@ export function Workshop({ initial }: { initial: RunState }) {
               })}
             </div>
           )}
-          {focus ? <Desk key={focus.id} run={run} agent={focus} now={now} following={!pinned && !tab} onFollow={followLive} /> : <p className="empty-note">The agents start in a moment.</p>}
+          {focus ? <Desk key={focus.id} run={run} agent={focus} now={clockAt} following={!pinned && !tab} onFollow={followLive} /> : <p className="empty-note">The agents start in a moment.</p>}
         </div>
         <aside className="ws-side">
-          <Roster run={run} focus={focus?.id ?? null} now={now} onPick={pick} />
+          <Roster run={run} focus={focus?.id ?? null} now={clockAt} onPick={pick} />
           <Scores run={run} />
           <Issues run={run} />
           <FootageList run={run} />
