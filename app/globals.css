@@ -590,3 +590,13 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .players button[aria-pressed="true"] { outline-color: var(--yellow); }
 .players button[aria-pressed="true"] span { background: var(--yellow); color: var(--black); }
 @media (max-width: 760px) { .players button { width: 64px; } }
+
+/* Footage check: rules played in the rebuild and judged against the original footage */
+.footage-check ul { list-style: none; margin: 8px 0 0; padding: 0; max-height: 420px; overflow: auto; }
+.footage-check li summary { display: grid; grid-template-columns: 2ch 1fr auto; gap: 1ch; align-items: baseline; cursor: pointer; padding: 3px 0; }
+.footage-check li summary a { color: var(--cyan); font-size: 13px; white-space: nowrap; }
+.footage-check li p { margin: 4px 0 4px 3ch; font-size: 14px; }
+.footage-check video { display: block; width: calc(100% - 3ch); margin: 6px 0 8px 3ch; }
+.footage-check .fc-ok { color: var(--green); font-style: normal; }
+.footage-check .fc-no { color: var(--red); font-style: normal; }
+.fc-trend { font-family: var(--tt); color: var(--yellow); margin: 6px 0; }

@@ -63,6 +63,15 @@ export type Issue = { severity: "high" | "medium" | "low"; kind: string; title: 
 
 export type TesterReport = { tester: "fun" | "faithful" | "together"; fun: number; faithful: number; summary: string; issues: Issue[]; best: string[] };
 
+/** One footage rule, played in the rebuild and judged against its moment in the original (pipeline/verify.py). */
+export type VerifyRule = {
+  id: string; rule: string; pass: boolean; verdict?: string; votes?: boolean[];
+  original: { video: string; start: number; end: number }; original_url: string;
+  original_shows: string; rebuild_shows: string; difference: string; video: string | null;
+};
+
+export type Verify = { round: number; matched: number; total: number; lost: string[]; rules: VerifyRule[] };
+
 export type Round = {
   round: number;
   status: "testing" | "tested" | "fixing" | "fixed";
@@ -70,6 +79,7 @@ export type Round = {
   faithful?: number;
   reports: TesterReport[];
   issues: Issue[];
+  verify?: Verify | null;
 };
 
 export type RunSummary = {

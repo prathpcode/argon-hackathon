@@ -30,7 +30,7 @@ const FOCUS_ICON = { fun: Sparkles, faithful: Scale, together: Users } as const;
 
 function agentIcon(a: Agent): LucideIcon {
   if (a.role === "tester") return FOCUS_ICON[a.focus ?? "fun"] ?? Gamepad2;
-  return { researcher: Globe, watcher: Eye, builder: Hammer, fixer: Wrench }[a.role] ?? Hammer;
+  return { researcher: Globe, watcher: Eye, builder: Hammer, fixer: Wrench, verifier: Film, squad: Gamepad2 }[a.role] ?? Hammer;
 }
 
 const file = (run: RunState, p: string) => `/api/revivals/${run.id}/file?p=${encodeURIComponent(p)}`;
@@ -190,6 +190,7 @@ export function Workshop({ initial }: { initial: RunState }) {
         </div>
         <aside className="ws-side">
           <Roster run={run} focus={focus?.id ?? null} now={now} onPick={pick} />
+          <FootageCheck run={run} />
           <Scores run={run} />
           <Issues run={run} />
           <FootageList run={run} />
@@ -551,6 +552,46 @@ function Scores({ run }: { run: RunState }) {
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+/** Every footage rule, played in the rebuild and judged against its moment in the original footage. */
+function FootageCheck({ run }: { run: RunState }) {
+  const checked = run.rounds.filter((r) => r.verify);
+  if (!checked.length) return null;
+  const v = checked.at(-1)!.verify!;
+  const rules = [...v.rules].sort((a, b) => Number(b.pass) - Number(a.pass));
+  return (
+    <section className="panel footage-check">
+      <h2>Footage check<span>{v.matched} of {v.total} rules match the original</span></h2>
+      <p className="muted small">Each rule was played in the rebuild and compared with its moment in the original footage.</p>
+      {checked.length > 1 && (
+        <p className="fc-trend">
+          {checked.map((r, n) => (
+            <span key={r.round}>{n ? " → " : ""}<b>R{r.round}</b> {r.verify!.matched}</span>
+          ))}
+        </p>
+      )}
+      <ul>
+        {rules.map((r) => (
+          <li key={r.id}>
+            <details>
+              <summary>
+                <i className={r.pass ? "fc-ok" : "fc-no"} aria-label={r.pass ? "matches" : "differs"}>{r.pass ? "✓" : "✗"}</i>
+                <span>{r.rule}</span>
+                <a href={r.original_url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
+                  {r.original.video} {clock(r.original.start)}
+                </a>
+              </summary>
+              <p><b>Original:</b> {r.original_shows}</p>
+              <p><b>Rebuild:</b> {r.rebuild_shows}</p>
+              {!r.pass && r.difference && <p><b>Difference:</b> {r.difference}</p>}
+              {r.video && <video src={file(run, r.video)} controls muted playsInline preload="none" />}
+            </details>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
