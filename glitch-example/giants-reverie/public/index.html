@@ -842,7 +842,8 @@ const GIANTS_DATA = [
 
 // --- Player & World State ---
 const State = {
-  playerId: "p_" + Math.floor(seededRandom() * 900000 + 100000),
+  // Unique per client; never from the seeded RNG, or two players sharing a seed get the same id.
+  playerId: "p_" + (crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now().toString(36)),
   streetId: "beau_home",
   player: {
     name: urlParams.get("name") || "Beau",
@@ -936,6 +937,15 @@ const BOT_PROFILES = [ // hand fix: Argon output had "constBOT_PROFILES"
   { id: "bot_aris", name: "Aris", street: "chego_chase", x: 840, y: 465, dir: -1, skinColor: "#d9e05b", hairColor: "#e6b822", shirtColor: "#9dc43b", pantsColor: "#759c24", hat: "none", hiSign: "hi" }
 ];
 
+// A simulated player gives way to any real player using the same name.
+function dropBotsNamed(names) {
+  const taken = new Set(names.map(n => String(n).toLowerCase()));
+  Object.keys(State.otherPlayers).forEach(k => {
+    const o = State.otherPlayers[k];
+    if (o.isBot && taken.has(o.name.toLowerCase())) delete State.otherPlayers[k];
+  });
+}
+
 function initBots() {
   BOT_PROFILES.forEach(b => {
     State.otherPlayers[b.id] = {
@@ -950,6 +960,7 @@ function initBots() {
   });
 }
 initBots();
+dropBotsNamed([State.player.name]);
 
 // --- WebSocket Multiplayer Connection ---
 function connectWebSocket() {
@@ -1003,6 +1014,7 @@ function handleServerMessage(msg) {
         State.otherPlayers[p.id] = p;
       }
     });
+    dropBotsNamed((msg.players || []).map(p => p.name));
     updateOnlineListUI();
   } else if (msg.type === "player_moved") {
     if (msg.id !== State.playerId && msg.street === State.streetId) {
@@ -2422,7 +2434,8 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 
 function renderScene() {
-  if (canvas.width === 0) resizeCanvas();
+  const wrapEl = document.getElementById("viewport-wrap");
+  if (canvas.width !== wrapEl.clientWidth || canvas.height !== wrapEl.clientHeight) resizeCanvas();
   const W = canvas.width;
   const H = canvas.height;
   const st = STREETS[State.streetId];
