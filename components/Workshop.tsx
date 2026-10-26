@@ -668,7 +668,6 @@ function ParityView({ run, check }: { run: RunState; check: Verify }) {
         {v !== "ok" && r.difference && <p>{r.difference}</p>}
         <nav className="parity-step">
           <button className="btn-ghost" onClick={() => setI(i - 1)} disabled={i === 0} aria-label="Previous rule"><ChevronLeft aria-hidden /></button>
-          <span>{i + 1} / {rules.length}</span>
           <button className="btn-ghost" onClick={() => setI(i + 1)} disabled={i === rules.length - 1} aria-label="Next rule"><ChevronRight aria-hidden /></button>
         </nav>
       </div>
