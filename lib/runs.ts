@@ -245,3 +245,14 @@ export async function playRun(id: string) {
   }
   return port;
 }
+
+/** Stop the pipeline and any game server, then remove the run folder. */
+export function deleteRun(id: string) {
+  const dir = runDir(id);
+  if (!dir || !fs.existsSync(dir)) return false;
+  stopRun(id);
+  games.get(id)?.proc.kill();
+  games.delete(id);
+  fs.rmSync(dir, { recursive: true, force: true });
+  return true;
+}

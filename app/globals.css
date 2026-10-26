@@ -217,6 +217,15 @@ h1, h2, h3, p { margin: 0; }
 .tag-badge.error { background: var(--red); color: var(--black); }
 .tag-badge.queued { background: var(--blue); color: var(--white); }
 .score-badge { position: absolute; right: 0; bottom: 0; display: inline-flex; align-items: center; height: 24px; padding: 0 1ch; font-family: var(--tt); font-size: 13px; background: var(--black); color: var(--yellow); }
+.run-card { position: relative; min-width: 0; }
+.run-card .del { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 28px; height: 28px; background: var(--black); color: var(--dim); opacity: 0;
+  transition: opacity 120ms linear, transform 0.35s var(--ease), background 90ms linear, color 90ms linear; }
+.run-card .del svg { width: 15px; height: 15px; }
+.run-card:hover .del, .run-card .del:focus-visible { opacity: 1; transform: translate(-4px, -4px); }
+.run-card .del:hover:not(:disabled) { background: var(--red); color: var(--black); }
+.run-card .del:disabled { opacity: 1; cursor: default; }
+.run-card:has(.del:hover) .card .thumb { transform: translate(-4px, -4px); box-shadow: 6px 6px 0 0 var(--red); }
+@media (hover: none) { .run-card .del { opacity: 1; } }
 
 /* ------------------------------------------------------------ archive */
 .filter-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 26px; }
