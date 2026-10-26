@@ -42,7 +42,7 @@ export type Agent = {
   brief: string;
   status: "running" | "done" | "error";
   round?: number;
-  focus?: "fun" | "faithful" | "together";
+  focus?: "fun" | "fidelity" | "together";
   detail?: string;
   secs?: number;
   tokens_in?: number;
@@ -61,7 +61,7 @@ export type Footage = { key: string; url: string; title?: string; channel?: stri
 
 export type Issue = { severity: "high" | "medium" | "low"; kind: string; title: string; detail: string; evidence?: string; by?: string };
 
-export type TesterReport = { tester: "fun" | "faithful" | "together"; fun: number; faithful: number; summary: string; issues: Issue[]; best: string[] };
+export type TesterReport = { tester: "fun" | "fidelity" | "together"; fun: number; fidelity: number; summary: string; issues: Issue[]; best: string[] };
 
 /** One footage rule, played in the rebuild and judged against its moment in the original (pipeline/verify.py). */
 export type VerifyRule = {
@@ -81,7 +81,7 @@ export type Round = {
   round: number;
   status: "testing" | "tested" | "fixing" | "fixed";
   fun?: number;
-  faithful?: number;
+  fidelity?: number;
   reports: TesterReport[];
   issues: Issue[];
   verify?: Verify | null;
@@ -94,7 +94,7 @@ export type RunSummary = {
   title: string | null;
   status: "queued" | "running" | "done" | "error" | "stopped";
   stage: StageId | null;
-  best: { round: number; fun: number; faithful: number } | null;
+  best: { round: number; fun: number; fidelity: number } | null;
   footage: string | null;
   /** The latest screenshot any agent took of the rebuild. */
   shot: string | null;

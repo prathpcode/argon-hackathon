@@ -206,7 +206,8 @@ export async function runAgent(run: Run, spec: AgentSpec, label: (tool: string, 
           tokens.tokens_out += m.usage.output ?? 0;
           run.emit("agent", { id, ...tokens });
         }
-        if (m.stopReason === "error" && m.errorMessage) error = extractError(m.errorMessage);
+        // An aborted or failed turn ends session.prompt like a finished one; surface it instead of reporting "done".
+        if (m.stopReason === "error" || m.stopReason === "aborted") error = m.errorMessage ? extractError(m.errorMessage) : `The model stopped (${m.stopReason}).`;
         const said = (m.content ?? []).filter((c: any) => c.type === "text").map((c: any) => c.text).join("").trim();
         if (said) {
           lastText = said;

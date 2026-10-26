@@ -14,9 +14,19 @@ const PYTHON = path.join(process.cwd(), "pipeline", ".venv", "bin", "python");
 const STAGES: StageId[] = ["find", "watch", "build", "playtest"];
 const ACTS_KEPT = 80;
 
+/** Runs from before the rename say "faithful"; read them as "fidelity". */
+const fidelity = (_k: string, v: unknown) => {
+  if (v === "faithful") return "fidelity";
+  if (v && typeof v === "object" && !Array.isArray(v) && "faithful" in v) {
+    const { faithful, ...rest } = v as Record<string, unknown>;
+    return { fidelity: faithful, ...rest };
+  }
+  return v;
+};
+
 const read = <T,>(...p: string[]): T | null => {
   try {
-    return JSON.parse(fs.readFileSync(path.join(RUNS, ...p), "utf8")) as T;
+    return JSON.parse(fs.readFileSync(path.join(RUNS, ...p), "utf8"), fidelity) as T;
   } catch {
     return null;
   }
@@ -40,7 +50,7 @@ function events(id: string): Event[] {
   try {
     return fs.readFileSync(path.join(RUNS, id, "events.jsonl"), "utf8").split("\n").filter(Boolean).flatMap((l) => {
       try {
-        return [JSON.parse(l) as Event];
+        return [JSON.parse(l, fidelity) as Event];
       } catch {
         return [];
       }
@@ -56,7 +66,7 @@ function fold(id: string) {
   const stages = Object.fromEntries(STAGES.map((s) => [s, { status: "waiting" } as StageState])) as Record<StageId, StageState>;
   const agents = new Map<string, Agent>();
   const calls = new Map<string, Act>();
-  const rounds = new Map<number, { status: Round["status"]; fun?: number; faithful?: number }>();
+  const rounds = new Map<number, { status: Round["status"]; fun?: number; fidelity?: number }>();
   let error: string | null = null, done = false, startedAt: number | null = null, endedAt: number | null = null, shot: string | null = null;
   for (const e of evs) {
     if (e.type === "start") {
@@ -93,7 +103,7 @@ function fold(id: string) {
       a.actCount++;
     } else if (e.type === "round") {
       const prev = rounds.get(e.round as number);
-      rounds.set(e.round as number, { ...prev, status: e.status as Round["status"], ...(e.fun !== undefined ? { fun: e.fun as number, faithful: e.faithful as number } : {}) });
+      rounds.set(e.round as number, { ...prev, status: e.status as Round["status"], ...(e.fun !== undefined ? { fun: e.fun as number, fidelity: e.fidelity as number } : {}) });
     } else if (e.type === "error") error = e.message as string;
     else if (e.type === "done") done = true;
     endedAt = e.t;
@@ -130,12 +140,12 @@ function summary(id: string, f: ReturnType<typeof fold>): RunSummary | null {
   if (!revival) return null;
   const footage = read<Footage[]>(id, "footage.json") ?? [];
   const b = bestRound(id);
-  const rep = b ? read<{ fun: number; faithful: number }>(id, "rounds", String(b), "report.json") : null;
+  const rep = b ? read<{ fun: number; fidelity: number }>(id, "rounds", String(b), "report.json") : null;
   const stage = STAGES.findLast((s) => f.stages[s].status !== "waiting") ?? null;
   const build = read<{ by?: string; title: string }>(id, "build.json");
   return {
     id, revival, status: status(id, f), stage,
-    best: rep && b ? { round: b, fun: rep.fun, faithful: rep.faithful } : null,
+    best: rep && b ? { round: b, fun: rep.fun, fidelity: rep.fidelity } : null,
     footage: footage[0]?.url ?? revival.videos?.[0] ?? null,
     shot: f.shot,
     updatedAt: f.endedAt,
@@ -149,10 +159,10 @@ export function getRun(id: string): RunState | null {
   if (!s) return null;
   const spec = read<{ rules?: unknown[]; areas?: unknown[] }>(id, "spec.json");
   const rounds: Round[] = [...f.rounds.entries()].sort(([a], [b]) => a - b).map(([round, r]) => {
-    const rep = read<Pick<Round, "reports" | "issues" | "fun" | "faithful">>(id, "rounds", String(round), "report.json");
+    const rep = read<Pick<Round, "reports" | "issues" | "fun" | "fidelity">>(id, "rounds", String(round), "report.json");
     const verify = read<Verify>(id, "rounds", String(round), "verify.json");
     const squad = read<Squad>(id, "rounds", String(round), "squad.json");
-    return { round, status: r.status, fun: rep?.fun ?? r.fun, faithful: rep?.faithful ?? r.faithful, reports: rep?.reports ?? [], issues: rep?.issues ?? [], verify, squad };
+    return { round, status: r.status, fun: rep?.fun ?? r.fun, fidelity: rep?.fidelity ?? r.fidelity, reports: rep?.reports ?? [], issues: rep?.issues ?? [], verify, squad };
   });
   return {
     ...s,

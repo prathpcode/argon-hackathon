@@ -19,7 +19,7 @@ export function RunCard({ run }: { run: RunSummary }) {
         </span>
         {run.best && (
           <span className="score-badge">
-            Fun {run.best.fun} · Faithful {run.best.faithful}
+            Fun {run.best.fun} · Fidelity {run.best.fidelity}
           </span>
         )}
       </div>

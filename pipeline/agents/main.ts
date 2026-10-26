@@ -1,7 +1,7 @@
 /**
  * The agent half of a revival, after the footage is found and watched (pipeline/revive.py runs this):
  *   build:     a pi builder agent writes the game from SPEC.md, playing it as it goes.
- *   playtest:  each round, three pi playtesters play a snapshot for real in a browser (fun, faithfulness,
+ *   playtest:  each round, three pi playtesters play a snapshot for real in a browser (fun, fidelity,
  *              multiplayer) and report; the builder fixes what they found; repeat. The best round is kept.
  * Each step is skipped when its output exists, so a stopped run resumes where it left off.
  *
@@ -24,7 +24,7 @@ const KIT = path.join(import.meta.dirname, "..", "kit");
 const DOCS = new Set(["SPEC.md", "KIT.md", "PLAYTEST.md"]);
 
 type Issue = { severity: "high" | "medium" | "low"; kind: string; title: string; detail: string; evidence?: string; by?: string };
-type Report = { tester: string; fun: number; faithful: number; summary: string; issues: Issue[]; best: string[] };
+type Report = { tester: string; fun: number; fidelity: number; summary: string; issues: Issue[]; best: string[] };
 type Verify = { round: number; matched: number; total: number; lost: string[]; rules: { id: string; rule: string; pass: boolean; original: { video: string; start: number; end: number }; original_url: string; original_shows: string; rebuild_shows: string; difference: string; fix: string }[] };
 
 const ROOT = path.resolve(import.meta.dirname, "..", "..");
@@ -55,7 +55,7 @@ function squadReady(): boolean {
   }
 }
 
-/** Who playtests a round. Faithfulness is the footage check's job (rule by rule against the original, not opinion);
+/** Who playtests a round. Fidelity is the footage check's job (rule by rule against the original, not opinion);
  *  multiplayer is the Managed Agent squad's, playing over the real internet. The local multiplayer tester only
  *  stands in when the squad can't run on this machine. The fun tester always plays. */
 function roundTesters() {
@@ -87,7 +87,7 @@ function footageIssues(v: Verify | null): Issue[] {
   if (!v) return [];
   return v.rules.filter((r) => !r.pass).map((r) => ({
     severity: "high" as const,
-    kind: v.lost.includes(r.id) ? "regression" : "faithful",
+    kind: v.lost.includes(r.id) ? "regression" : "fidelity",
     title: `${v.lost.includes(r.id) ? "Regression: " : ""}${clip(r.rule, 110)}`,
     detail: `Original (${r.original.video} ${r.original.start}-${r.original.end}s): ${r.original_shows} | Rebuild: ${r.rebuild_shows} | ${r.difference}${r.fix ? ` | Fix: ${r.fix}` : ""}`,
     evidence: r.original_url,
@@ -196,14 +196,14 @@ async function playtester(run: Run, round: number, t: (typeof TESTERS)[number], 
     description: "Submit your playtest report. Call once, when you have played enough.",
     parameters: Type.Object({
       fun: Type.Number({ minimum: 1, maximum: 10 }),
-      faithful: Type.Number({ minimum: 1, maximum: 10 }),
+      fidelity: Type.Number({ minimum: 1, maximum: 10 }),
       summary: Type.String(),
-      issues: Type.Array(Type.Object({ severity: Type.String({ description: "high | medium | low" }), kind: Type.String({ description: "bug | fun | faithful | multiplayer" }), title: Type.String(), detail: Type.String(), evidence: Type.Optional(Type.String()) })),
+      issues: Type.Array(Type.Object({ severity: Type.String({ description: "high | medium | low" }), kind: Type.String({ description: "bug | fun | fidelity | multiplayer" }), title: Type.String(), detail: Type.String(), evidence: Type.Optional(Type.String()) })),
       best: Type.Array(Type.String()),
     }),
     execute: async (_id, p: any) => {
-      report = { tester: t.key, fun: p.fun, faithful: p.faithful, summary: p.summary, best: p.best ?? [], issues: (p.issues ?? []).map((i: Issue) => ({ ...i, by: t.key })) };
-      return { content: [{ type: "text" as const, text: "Report received. You're done." }], details: { summary: `Fun ${p.fun} · Faithful ${p.faithful} · ${p.issues?.length ?? 0} issues` } };
+      report = { tester: t.key, fun: p.fun, fidelity: p.fidelity, summary: p.summary, best: p.best ?? [], issues: (p.issues ?? []).map((i: Issue) => ({ ...i, by: t.key })) };
+      return { content: [{ type: "text" as const, text: "Report received. You're done." }], details: { summary: `Fun ${p.fun} · Fidelity ${p.fidelity} · ${p.issues?.length ?? 0} issues` } };
     },
   };
   try {
@@ -236,7 +236,7 @@ function playtestMarkdown(round: number, reports: Report[], verify: Verify | nul
     lines.push("");
   }
   for (const r of reports) {
-    lines.push(`## ${TESTERS.find((t) => t.key === r.tester)?.name}: fun ${r.fun}/10, faithful ${r.faithful}/10`, "", r.summary, "");
+    lines.push(`## ${TESTERS.find((t) => t.key === r.tester)?.name}: fun ${r.fun}/10, fidelity ${r.fidelity}/10`, "", r.summary, "");
     if (r.best.length) lines.push("Keep:", ...r.best.map((b) => `- ${b}`), "");
   }
   lines.push("## Issues, most severe first", "");
@@ -263,16 +263,16 @@ async function playtest(run: Run) {
       const verify = await footage;
       const others = [...reports.flatMap((x) => x.issues), ...(await squad)].sort((a, b) => (ORDER[a.severity] ?? 3) - (ORDER[b.severity] ?? 3));
       const issues = [...footageIssues(verify), ...others];
-      const result = { round: r, fun: mean(reports.map((x) => x.fun)), faithful: mean(reports.map((x) => x.faithful)), reports, issues,
+      const result = { round: r, fun: mean(reports.map((x) => x.fun)), fidelity: mean(reports.map((x) => x.fidelity)), reports, issues,
         verify: verify ? { matched: verify.matched, total: verify.total, lost: verify.lost.length } : null };
       run.writeJson(result, "rounds", String(r), "report.json");
       fs.writeFileSync(path.join(rdir, "PLAYTEST.md"), playtestMarkdown(r, reports, verify, others.filter((i) => i.by === "squad")));
-      run.emit("round", { round: r, status: "tested", fun: result.fun, faithful: result.faithful, issues: issues.length, high: issues.filter((i) => i.severity === "high").length,
+      run.emit("round", { round: r, status: "tested", fun: result.fun, fidelity: result.fidelity, issues: issues.length, high: issues.filter((i) => i.severity === "high").length,
         ...(verify ? { matched: verify.matched, total: verify.total } : {}) });
       pickBest(run);
     }
     const report = run.readJson("rounds", String(r), "report.json");
-    summary = `Fun ${report.fun} · Faithful ${report.faithful}`;
+    summary = `Fun ${report.fun} · Fidelity ${report.fidelity}`;
     if (r < ROUNDS && !run.exists("rounds", String(r), "fixed")) {
       fs.copyFileSync(path.join(rdir, "PLAYTEST.md"), path.join(game, "PLAYTEST.md"));
       const id = `fixer:${r}`;
@@ -297,15 +297,15 @@ async function playtest(run: Run) {
 }
 
 /** The round people play: footage rules matched count most (checked against the original, not opinion), then fun.
- *  Without a footage check it falls back to the playtesters' faithfulness score. */
+ *  Without a footage check it falls back to the playtesters' fidelity score. */
 function pickBest(run: Run) {
   const dir = run.path("rounds");
   let best: { r: string; score: number } | null = null;
   for (const r of fs.readdirSync(dir)) {
     if (!run.exists("rounds", r, "report.json")) continue;
     const rep = run.readJson("rounds", r, "report.json");
-    const faithful = rep.verify?.total ? (rep.verify.matched / rep.verify.total) * 20 : rep.faithful;
-    const score = faithful + rep.fun * 1.2 - rep.issues.filter((i: Issue) => i.severity === "high" && i.by !== "footage").length * 0.3;
+    const fidelity = rep.verify?.total ? (rep.verify.matched / rep.verify.total) * 20 : rep.fidelity;
+    const score = fidelity + rep.fun * 1.2 - rep.issues.filter((i: Issue) => i.severity === "high" && i.by !== "footage").length * 0.3;
     if (!best || score > best.score) best = { r, score };
   }
   if (best) fs.writeFileSync(path.join(dir, "BEST"), best.r);

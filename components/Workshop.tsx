@@ -27,7 +27,7 @@ function doing(a: Agent): string {
   if (last.kind === "say") return last.text ?? a.brief;
   return last.label ?? a.brief;
 }
-const FOCUS_ICON = { fun: Sparkles, faithful: Scale, together: Users } as const;
+const FOCUS_ICON = { fun: Sparkles, fidelity: Scale, together: Users } as const;
 
 function agentIcon(a: Agent): LucideIcon {
   if (a.role === "tester") return FOCUS_ICON[a.focus ?? "fun"] ?? Gamepad2;
@@ -460,12 +460,12 @@ function CodeView({ run, act, live, onLive }: { run: RunState; act: Act; live: b
   );
 }
 
-function ReportCard({ report: r }: { report: { fun: number; faithful: number; summary: string; best: string[] } }) {
+function ReportCard({ report: r }: { report: { fun: number; fidelity: number; summary: string; best: string[] } }) {
   return (
     <div className="report">
       <div className="report-scores">
         <Score label="Fun" value={r.fun} />
-        <Score label="Faithful" value={r.faithful} />
+        <Score label="Fidelity" value={r.fidelity} />
       </div>
       <p>{r.summary}</p>
       {r.best.length > 0 && <ul className="keep">{r.best.slice(0, 4).map((b) => <li key={b}>{b}</li>)}</ul>}
@@ -530,7 +530,7 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
                 <span className="mate-icon"><Icon aria-hidden /></span>
                 <span className="mate-text">
                   <b>{a.name}</b>
-                  <small>{a.status === "running" ? doing(a) : a.status === "error" ? "Stopped" : rep ? `Fun ${rep.fun} · Faithful ${rep.faithful}` : duration(a.secs ?? now - a.startedAt)}</small>
+                  <small>{a.status === "running" ? doing(a) : a.status === "error" ? "Stopped" : rep ? `Fun ${rep.fun} · Fidelity ${rep.fidelity}` : duration(a.secs ?? now - a.startedAt)}</small>
                 </span>
                 {a.shot ? <img className="mate-shot" src={file(run, a.shot)} alt="" /> : <span className="mate-dot" />}
               </button>
@@ -557,16 +557,16 @@ function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: st
       {latest && (
         <div className="report-scores">
           <Score label="Fun" value={latest.fun} />
-          <Score label="Faithful" value={latest.faithful} />
+          <Score label="Fidelity" value={latest.fidelity} />
         </div>
       )}
       {scored.length > 1 && (
         <div className="trend">
           {scored.map((r) => (
-            <div key={r.round} className={`trend-col ${run.best?.round === r.round ? "best" : ""}`} title={`Round ${r.round}: fun ${r.fun}, faithful ${r.faithful}`}>
+            <div key={r.round} className={`trend-col ${run.best?.round === r.round ? "best" : ""}`} title={`Round ${r.round}: fun ${r.fun}, fidelity ${r.fidelity}`}>
               <div className="trend-bars">
                 <i className="f" style={{ height: `${(r.fun ?? 0) * 10}%` }} />
-                <i className="a" style={{ height: `${(r.faithful ?? 0) * 10}%` }} />
+                <i className="a" style={{ height: `${(r.fidelity ?? 0) * 10}%` }} />
               </div>
               <span>{r.round}</span>
             </div>
@@ -589,7 +589,7 @@ function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: st
                   <span className="mate-icon"><Icon aria-hidden /></span>
                   <span className="mate-text">
                     <b>{a.name}</b>
-                    <small>{rep ? `Fun ${rep.fun} · Faithful ${rep.faithful}` : a.status === "running" ? "Playing" : "No score"}</small>
+                    <small>{rep ? `Fun ${rep.fun} · Fidelity ${rep.fidelity}` : a.status === "running" ? "Playing" : "No score"}</small>
                   </span>
                 </button>
                 {rep?.summary && <p>{rep.summary}</p>}

@@ -24,7 +24,11 @@ export class Run {
   }
 
   readJson<T = any>(...parts: string[]): T {
-    return JSON.parse(fs.readFileSync(this.path(...parts), "utf8"));
+    return JSON.parse(fs.readFileSync(this.path(...parts), "utf8"), (_k, v) => {
+      // Rounds from before the rename say "faithful".
+      if (v && typeof v === "object" && !Array.isArray(v) && "faithful" in v && !("fidelity" in v)) return { ...v, fidelity: v.faithful };
+      return v;
+    });
   }
 
   writeJson(data: unknown, ...parts: string[]) {

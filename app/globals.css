@@ -445,7 +445,7 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .keep li::before { content: "+ "; }
 .report-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .score { --c: var(--yellow); display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 2px 1.2ch; }
-.score.faithful { --c: var(--cyan); }
+.score.fidelity { --c: var(--cyan); }
 .score span { font-family: var(--tt); font-size: 13px; color: var(--dim); }
 .score b { justify-self: end; font-family: var(--tt); font-weight: 400; font-size: 26px; line-height: 1; color: var(--c); }
 .blocks { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; height: 10px; }

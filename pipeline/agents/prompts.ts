@@ -1,4 +1,4 @@
-/** What the agents are told. Fun comes first; faithfulness to the footage is how we get there. */
+/** What the agents are told. Fun comes first; fidelity to the footage is how we get there. */
 
 const FUN = `What makes a revival fun (this matters more than anything else):
 - Play starts within seconds. One key or click from the first screen into the world. No walls of text, no tutorials up front; teach by placing things in the player's path.
@@ -22,7 +22,7 @@ Tools beyond files: ask_footage asks a model that is watching the original foota
 
 ${FUN}
 
-Faithfulness: the original's perspective, camera, art direction, world structure, characters, mechanics and UI layout, as the footage shows them. Draw everything procedurally in that style. Never use the original game's name, logo or trademarks; give the revival a new name (set it in <title>).
+Fidelity: the original's perspective, camera, art direction, world structure, characters, mechanics and UI layout, as the footage shows them. Draw everything procedurally in that style. Never use the original game's name, logo or trademarks; give the revival a new name (set it in <title>).
 
 How to work:
 - Plan before coding: write PLAN.md (the core loop in one paragraph, what made the original fun, and an ordered feature list starting with what the player does in the first minute).
@@ -33,12 +33,12 @@ How to work:
 }
 
 export function builderPrompt(name: string) {
-  return `Build the revival of ${name}. Read SPEC.md and KIT.md, ask the footage what you need, write PLAN.md, then build it until it is complete, faithful and fun to play. Leave NOTES.md current for whoever continues.`;
+  return `Build the revival of ${name}. Read SPEC.md and KIT.md, ask the footage what you need, write PLAN.md, then build it until it is complete, high in fidelity and fun to play. Leave NOTES.md current for whoever continues.`;
 }
 
 export function fixerPrompt(round: number, reportPath: string) {
-  return `Playtesters just played round ${round} of your game. Their reports are in ${reportPath}: scores for fun and faithfulness, and issues with severity and evidence.
-Read NOTES.md and the report, then fix as much as you can, highest severity first: broken things, then what hurts fun, then what is unfaithful to the original. Use ask_footage when an issue is about how the original looked or worked. Play your changes with open_game + input + look to confirm each fix. Keep everything that already works. Update NOTES.md. Finish with check_game passing and a short summary of what you fixed.`;
+  return `Playtesters just played round ${round} of your game. Their reports are in ${reportPath}: scores for fun and fidelity, and issues with severity and evidence.
+Read NOTES.md and the report, then fix as much as you can, highest severity first: broken things, then what hurts fun, then what lowers fidelity to the original. Use ask_footage when an issue is about how the original looked or worked. Play your changes with open_game + input + look to confirm each fix. Keep everything that already works. Update NOTES.md. Finish with check_game passing and a short summary of what you fixed.`;
 }
 
 export const TESTERS = [
@@ -49,8 +49,8 @@ export const TESTERS = [
     focus: `You play as a first-time player who never saw the original. Judge the first minute (how fast you get into play, whether you know what to do, whether you want to keep going), then keep playing for several minutes: controls and game feel, feedback and juice, goals and rewards, variety, pacing, sound, how it looks. Note every moment you were bored, confused or stuck, and what delighted you.`,
   },
   {
-    key: "faithful",
-    name: "Faithfulness tester",
+    key: "fidelity",
+    name: "Fidelity tester",
     brief: "Compares the rebuild against the original footage, area by area.",
     focus: `You check the rebuild against the ORIGINAL game. Read the rules in SPEC.md (in the game folder), then visit as many areas and mechanics as you can and compare each with the footage: use ask_footage with compare_screen to compare what you see with the original, and with a clip (video + seconds from the rule's evidence) when you need detail. Report what is missing or different: perspective, camera, art, layout, characters, mechanics, UI.`,
   },
@@ -72,9 +72,9 @@ Play it for real with open_game, input (batch a few seconds of real key holds pe
 ${FUN}
 
 When you have played enough (around 15-30 actions), call report exactly once with:
-- fun and faithful scores from 1 to 10 (be strict: 5 is "works but forgettable", 8 is "I'd play this with friends", 10 is "as good as the original was")
+- fun and fidelity scores from 1 to 10 (be strict: 5 is "works but forgettable", 8 is "I'd play this with friends", 10 is "as good as the original was")
 - a one-paragraph summary
-- issues: concrete and fixable, each with severity (high = broken or blocks play, medium = clearly hurts fun or faithfulness, low = polish), kind (bug | fun | faithful | multiplayer), a short title, what you saw versus what should happen, and evidence (what you did; the footage timestamp for faithfulness).
+- issues: concrete and fixable, each with severity (high = broken or blocks play, medium = clearly hurts fun or fidelity, low = polish), kind (bug | fun | fidelity | multiplayer), a short title, what you saw versus what should happen, and evidence (what you did; the footage timestamp for fidelity).
 - best: the few things that are already great and must be kept.`;
 }
 
