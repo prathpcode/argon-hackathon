@@ -1,0 +1,13 @@
+{
+ "path": "public/js/deck.js",
+ "edits": [
+  {
+   "oldText": "    ctx.fillStyle = \"#facc15\";\n    ctx.font = \"bold 16px monospace\";\n    ctx.fillText(\"BATTLE MEMORY DECK — BONUS LINE MATRIX\", gpX + 16, gpY + 28);\n    ctx.fillStyle = \"#94a3b8\";\n    ctx.font = \"12px monospace\";\n    ctx.fillText(\"Match connected card colors (or White core) to light up Bonus Lines (+14% Stats each)!\", gpX + 16, gpY + 48);",
+   "newText": "    ctx.fillStyle = \"#facc15\";\n    ctx.font = \"bold 15px monospace\";\n    ctx.fillText(\"BATTLE MEMORY DECK — BONUS LINE MATRIX\", gpX + 16, gpY + 28);\n    ctx.fillStyle = \"#94a3b8\";\n    ctx.font = \"11px monospace\";\n    ctx.fillText(\"Match connected card colors (or White core) for +14% Bonus Lines!\", gpX + 16, gpY + 48);"
+  },
+  {
+   "oldText": "      ctx.fillStyle = \"#ffffff\";\n      ctx.font = \"bold 14px monospace\";\n      ctx.fillText(`${st.name} — Boss: ${st.bossName}`, lx + 30, sy + 23);",
+   "newText": "      ctx.fillStyle = \"#ffffff\";\n      ctx.font = \"bold 13px monospace\";\n      ctx.fillText(`${st.name} (${st.bossName})`, lx + 30, sy + 23);"
+  }
+ ]
+}

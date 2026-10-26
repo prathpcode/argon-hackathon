@@ -1,0 +1,135 @@
+{
+ "round": 2,
+ "fun": 9,
+ "fidelity": 9,
+ "reports": [
+  {
+   "tester": "fun",
+   "fun": 9,
+   "fidelity": 9,
+   "summary": "This Rockman Xover revival is a remarkably complete, responsive, and faithful recreation of the lost 25th Anniversary mobile action-RPG. All major issues from Round 1 have been cleanly resolved: the background-tab simulation ticker (`setInterval` fallback in `public/js/game.js`) keeps multi-tab sessions running in real time, inactive/menu peers no longer hover mid-air in stages, the far-left 28-segment HP bar accurately tracks OVER-1's stage health (dropping 2 segments per hit with an electric shock flinch and charge reset), stage enemies actively fire projectiles (`enemyBullets`), co-op squadmates fire live support shots (`stageShot`), floating pickup texts no longer overlap, and Giga Crush / Card & Map Part pickups / Boss lunges now feature their signature visual flair from the original footage.",
+   "best": [
+    "Rhythmic 3-tier auto-charging Buster (Blue 1-hit -> Yellow 2-pierce -> Red/Pink 3-pierce) and the 3x2 circular fireball Giga Crush with 1Hit!!..6Hit!! popups make Stage runs immediately satisfying.",
+    "Authentic Action Stage and Boss HUD architecture: far-left 28-segment vertical HP bar (dropping 2 segments per hit with yellow electric flinch and charge reset), visual Battle Memory Card and 3x3 Map Part pickup overlays, 50-turn counter, circular SKIP button, and Lv.0..5 C.Shot gauge.",
+    "Battle Memory Deck & Bonus Line Matrix (public/js/deck.js) with geometric slot layouts across OVER-1 through OVER-10 and glowing color-matched Bonus Lines (+14% stats per line) within the player's CST cap.",
+    "Cohesive multiplayer integration: active-only stage co-op runner filtering, live squadmate support fire (stageShot) that destroys enemies and neutralizes enemy bullets, 4-Player Master Boss Raids with synced boss HP, and post-stage Bulk Cheer (+75Z).",
+    "Fixed-timestep 60 FPS game loop with a 20ms setInterval background-tab fallback ticker and immediate title dismissal on first keydown/pointerdown so multi-tab sessions run smoothly."
+   ],
+   "issues": [
+    {
+     "evidence": "Inspected public/js/stage.js line 174 (st.hp = Math.max(1, st.hp - twoSegDmg)) and lines 398-405 (Stage Clear transition); compare with Video A 01:23-01:26 where OVER-1 runs off the right edge on Stage Clear.",
+     "detail": "In public/js/stage.js (damagePlayerInStage, line 174), st.hp is clamped to Math.max(1, st.hp - twoSegDmg) so the player can never be defeated in an Action Stage even after taking 14+ hits, and startBossBattle(\"stage\") initializes bs.playerHp to full maxPlayerHp rather than carrying over or penalizing stage damage. Additionally, at Stage Clear (Video A 01:23-01:26), OVER-1 stops in place under the modal instead of sprinting off the right edge of the screen before the rewards modal opens.",
+     "kind": "fidelity",
+     "title": "Action Stage HP clamps at 1 HP instead of triggering a stage fail/penalty, and OVER-1 doesn't run off-screen on Stage Clear",
+     "severity": "low",
+     "by": "fun"
+    },
+    {
+     "kind": "fidelity",
+     "detail": "In Video A (02:23-02:25, 02:31-02:33), a normal Shot in Boss Battle fires a 3-pellet burst of round yellow energy shots in quick succession, whereas a Charge Shot (C.Shot) performs the forward dash/large blast. In public/js/boss.js (choosePlayerAttack and renderBoss, lines 284-295, 488-493), both Normal Shot and C.Shot perform the same 260px forward dash and fire a single elliptical projectile. Differentiating Normal Shot (3-pellet buster burst from standing position) from C.Shot (dash-in + heavy charged blast) would make C.Shot attacks feel much more distinct.",
+     "evidence": "Inspected public/js/boss.js lines 284-295 and 488-493; compare with Video A 02:23-02:33 (3-pellet normal shot burst) and A 10:21-10:45.",
+     "title": "Boss Battle Normal Shot and C.Shot share the same dash and single-projectile animation instead of a 3-pellet burst vs charged strike",
+     "severity": "low",
+     "by": "fun"
+    },
+    {
+     "evidence": "Inspected public/js/boss.js lines 298-315 where raidSquad ally projectiles are pushed in a synchronous loop without staggered delay.",
+     "detail": "In public/js/boss.js (choosePlayerAttack, lines 298-315), during a 4-Player Master Raid, all 3 squad allies spawn their projectiles at the exact same x-coordinate timing with identical velocity (vx: 1350) and targetX: 940, so their hits land almost simultaneously in a single frame cluster. Staggering each squadmate's lunge and shot by ~0.12s would make the 4-unit combo attack read clearly as a sequential team barrage.",
+     "kind": "multiplayer",
+     "title": "4-Player Master Raid squad projectiles fire simultaneously rather than in a staggered sequential combo",
+     "severity": "low",
+     "by": "fun"
+    }
+   ]
+  },
+  {
+   "tester": "together",
+   "fun": 9,
+   "fidelity": 9,
+   "summary": "This Round 2 build of CYBER-OVER: Memory Horizon (Rockman Xover) resolves all 10 issues from Round 1 and delivers a polished, fast-paced, and faithful revival of the lost 25th Anniversary mobile action-RPG. The 20ms background-tab fallback ticker keeps multi-tab sessions running smoothly, inactive/menu peers no longer float in mid-air during stages, active room squadmates fire support shots in Action Stages, enemies actively fire projectiles, taking hits depletes the far-left 28-segment HP bar by 2 segments with a yellow electric shock flinch and charge reset, and Giga Crush, Card/Map Part pickups, and Boss Battle lunges all match the original footage's visual flair. Only minor polish items remain, such as syncing shared Raid Boss HP when using the SKIP button in 4-Player Master Raids and adding a raid damage leaderboard.",
+   "best": [
+    "Fixed-timestep 60 FPS simulation with 20ms background-tab fallback ticker and instant title dismissal makes single-player and multi-tab multiplayer responsive from the first input.",
+    "Action Stage combat loop with 3-tier auto-charging Pierce Shots (Blue 1-hit, Yellow 2-pierce, Red/Pink 3-pierce), active enemy projectiles, 28-segment HP bar with electric shock flinch, and 3x2 circular Giga Crush fireball explosions with 1Hit!!..6Hit!! popups.",
+    "Co-op multiplayer integration across both Action Stages (live peer runner filtering + real-time stageShot and periodic ally support fire) and 4-Player Master Boss Raids (2x2 staggered squad formation + live raidHit WebSocket HP sync), paired with post-stage Recent Players and Bulk Cheer (一括応援).",
+    "Deep RPG meta-systems faithfully recreated in one cohesive UI: geometric Battle Memory Deck with glowing color-matched Bonus Lines, Card Enhancement (強化), Normal/Premium Gacha, visual Card & 3x3 Map Part pickup overlays, Battle Tower, and 1v1 Battle Arena."
+   ],
+   "issues": [
+    {
+     "detail": "In public/js/boss.js, applyDamageToBoss() syncs Master Raid boss HP across the room via game.net.set(bs.boss.sharedKey, bs.boss.hp) and game.net.send('raidHit', ...). However, skipBossBattle() (lines 259-288) decrements bs.boss.hp directly inside a while loop without calling applyDamageToBoss() or broadcasting the final HP/damage to game.net. If a player clicks the top-right SKIP button (or presses KeyS) during a 4-Player Master Boss Raid, their damage is applied locally only and never synced to other room players.",
+     "kind": "multiplayer",
+     "evidence": "public/js/boss.js lines 190-193 (applyDamageToBoss sends raidHit and sets sharedKey) vs lines 259-288 (skipBossBattle mutates bs.boss.hp directly without net.set or net.send).",
+     "severity": "medium",
+     "title": "Skipping a 4-Player Master Boss Raid does not broadcast raidHit or update shared boss HP for room peers",
+     "by": "together"
+    },
+    {
+     "title": "Action Stage player HP clamps at 1 HP instead of triggering a stage defeat or recovery penalty at 0 HP",
+     "severity": "low",
+     "detail": "In public/js/stage.js (damagePlayerInStage, line 173), taking damage from enemies, enemyBullets, or ground hazards reduces st.hp by 2/28ths of maxHp, resets charge aura, and triggers the electric shock flinch, but clamps st.hp = Math.max(1, st.hp - twoSegDmg). Because HP is clamped at 1, taking 14+ hits in an action stage never triggers a stage fail, respawn penalty, or emergency E-Can recovery.",
+     "evidence": "public/js/stage.js line 173: st.hp = Math.max(1, st.hp - twoSegDmg); keeps player HP at 1 even when all 28 segments are depleted.",
+     "kind": "fun",
+     "by": "together"
+    },
+    {
+     "evidence": "Compare Footage C 07:13-07:45 (Master Boss damage ranking leaderboard with PT scores) and A 06:06-06:12 with public/js/deck.js lines 430-467.",
+     "kind": "fidelity",
+     "severity": "low",
+     "detail": "In Video C 07:13-07:45 and Rule 27, the 4-Player Master Boss Raid screen displays a per-player damage ranking leaderboard (e.g., 1st place PT score across room/world participants), and per Rule 16 (Video A 06:06-06:12) collecting all 9 pieces of the 3x3 Map grid unlocks the area's Master Boss. In public/js/deck.js (lines 430-467), the Master Boss Raid can be launched before 9/9 Map Parts are collected and does not display a cumulative raid damage ranking table for room players.",
+     "title": "Master Boss Raid hub lacks cumulative Raid Damage (PT) ranking leaderboard and 9/9 Map Part unlock gate",
+     "by": "together"
+    }
+   ]
+  }
+ ],
+ "issues": [
+  {
+   "detail": "In public/js/boss.js, applyDamageToBoss() syncs Master Raid boss HP across the room via game.net.set(bs.boss.sharedKey, bs.boss.hp) and game.net.send('raidHit', ...). However, skipBossBattle() (lines 259-288) decrements bs.boss.hp directly inside a while loop without calling applyDamageToBoss() or broadcasting the final HP/damage to game.net. If a player clicks the top-right SKIP button (or presses KeyS) during a 4-Player Master Boss Raid, their damage is applied locally only and never synced to other room players.",
+   "kind": "multiplayer",
+   "evidence": "public/js/boss.js lines 190-193 (applyDamageToBoss sends raidHit and sets sharedKey) vs lines 259-288 (skipBossBattle mutates bs.boss.hp directly without net.set or net.send).",
+   "severity": "medium",
+   "title": "Skipping a 4-Player Master Boss Raid does not broadcast raidHit or update shared boss HP for room peers",
+   "by": "together"
+  },
+  {
+   "evidence": "Inspected public/js/stage.js line 174 (st.hp = Math.max(1, st.hp - twoSegDmg)) and lines 398-405 (Stage Clear transition); compare with Video A 01:23-01:26 where OVER-1 runs off the right edge on Stage Clear.",
+   "detail": "In public/js/stage.js (damagePlayerInStage, line 174), st.hp is clamped to Math.max(1, st.hp - twoSegDmg) so the player can never be defeated in an Action Stage even after taking 14+ hits, and startBossBattle(\"stage\") initializes bs.playerHp to full maxPlayerHp rather than carrying over or penalizing stage damage. Additionally, at Stage Clear (Video A 01:23-01:26), OVER-1 stops in place under the modal instead of sprinting off the right edge of the screen before the rewards modal opens.",
+   "kind": "fidelity",
+   "title": "Action Stage HP clamps at 1 HP instead of triggering a stage fail/penalty, and OVER-1 doesn't run off-screen on Stage Clear",
+   "severity": "low",
+   "by": "fun"
+  },
+  {
+   "kind": "fidelity",
+   "detail": "In Video A (02:23-02:25, 02:31-02:33), a normal Shot in Boss Battle fires a 3-pellet burst of round yellow energy shots in quick succession, whereas a Charge Shot (C.Shot) performs the forward dash/large blast. In public/js/boss.js (choosePlayerAttack and renderBoss, lines 284-295, 488-493), both Normal Shot and C.Shot perform the same 260px forward dash and fire a single elliptical projectile. Differentiating Normal Shot (3-pellet buster burst from standing position) from C.Shot (dash-in + heavy charged blast) would make C.Shot attacks feel much more distinct.",
+   "evidence": "Inspected public/js/boss.js lines 284-295 and 488-493; compare with Video A 02:23-02:33 (3-pellet normal shot burst) and A 10:21-10:45.",
+   "title": "Boss Battle Normal Shot and C.Shot share the same dash and single-projectile animation instead of a 3-pellet burst vs charged strike",
+   "severity": "low",
+   "by": "fun"
+  },
+  {
+   "evidence": "Inspected public/js/boss.js lines 298-315 where raidSquad ally projectiles are pushed in a synchronous loop without staggered delay.",
+   "detail": "In public/js/boss.js (choosePlayerAttack, lines 298-315), during a 4-Player Master Raid, all 3 squad allies spawn their projectiles at the exact same x-coordinate timing with identical velocity (vx: 1350) and targetX: 940, so their hits land almost simultaneously in a single frame cluster. Staggering each squadmate's lunge and shot by ~0.12s would make the 4-unit combo attack read clearly as a sequential team barrage.",
+   "kind": "multiplayer",
+   "title": "4-Player Master Raid squad projectiles fire simultaneously rather than in a staggered sequential combo",
+   "severity": "low",
+   "by": "fun"
+  },
+  {
+   "title": "Action Stage player HP clamps at 1 HP instead of triggering a stage defeat or recovery penalty at 0 HP",
+   "severity": "low",
+   "detail": "In public/js/stage.js (damagePlayerInStage, line 173), taking damage from enemies, enemyBullets, or ground hazards reduces st.hp by 2/28ths of maxHp, resets charge aura, and triggers the electric shock flinch, but clamps st.hp = Math.max(1, st.hp - twoSegDmg). Because HP is clamped at 1, taking 14+ hits in an action stage never triggers a stage fail, respawn penalty, or emergency E-Can recovery.",
+   "evidence": "public/js/stage.js line 173: st.hp = Math.max(1, st.hp - twoSegDmg); keeps player HP at 1 even when all 28 segments are depleted.",
+   "kind": "fun",
+   "by": "together"
+  },
+  {
+   "evidence": "Compare Footage C 07:13-07:45 (Master Boss damage ranking leaderboard with PT scores) and A 06:06-06:12 with public/js/deck.js lines 430-467.",
+   "kind": "fidelity",
+   "severity": "low",
+   "detail": "In Video C 07:13-07:45 and Rule 27, the 4-Player Master Boss Raid screen displays a per-player damage ranking leaderboard (e.g., 1st place PT score across room/world participants), and per Rule 16 (Video A 06:06-06:12) collecting all 9 pieces of the 3x3 Map grid unlocks the area's Master Boss. In public/js/deck.js (lines 430-467), the Master Boss Raid can be launched before 9/9 Map Parts are collected and does not display a cumulative raid damage ranking table for room players.",
+   "title": "Master Boss Raid hub lacks cumulative Raid Damage (PT) ranking leaderboard and 9/9 Map Part unlock gate",
+   "by": "together"
+  }
+ ],
+ "verify": null
+}

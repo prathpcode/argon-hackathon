@@ -1,0 +1,22 @@
+# NOTES.md — CYBER-OVER: Memory Horizon (Rockman Xover Revival)
+
+## Architecture
+- `server.js` & `public/net.js`: Zero-dependency WebSocket room & state relay (15 Hz player state sync + shared room keys + instant broadcast messages for Cheers, Lobi Chat, and co-op Master Boss Raid damage).
+- `public/js/data.js`: Seeded Mulberry32 RNG (`?seed=`), 5 playable OVER Armors (`OVER-1`, `OVER-2`, `OVER-3`, `OVER-4`, `OVER-10`) with authentic geometric slot layouts & elemental links, 12 Battle Memory cards spanning Classic/X/Zero/ZX/EXE/StarForce/Legends eras, 5 Worlds (25 stages + 5 Master Bosses), Battle Tower floors, and AI/Live rivals.
+- `public/js/sound.js`: Procedural WebAudio synthesizer for stage/boss chiptune-rock BGM loops and SFX (warp-in beam, buster shots tiers 0–3, charge ticks, multi-hit pierce, 6-beam Giga Crush, Zenny/Card/EP pickups, skill cut-ins, cheers, and victory fanfare).
+- `public/js/sprites.js`: Procedural Canvas 2D renderer for parallax worlds (Bay Area Highway, Night Cyber City, Industrial Factory, Cyber Network Grid, Fortress Lab, Battle Arena), OVER armor sprites with flowing scarf and 3-tier charge auras, Rex-2000/Batton/Cannon enemies, Bosses, and Battle Memory cards.
+- `public/js/stage.js`: Auto-scrolling action stage with vertical warp-in beam, fixed left-third player position (`x = 270`), far-left 28-segment yellow/orange OVER-1 HP Bar (dropping 2 segments on hit with electric shock flinch and charge reset), compact Stage Distance progress meter under AutoPlay, enemy projectiles (`enemyBullets` / `shootTimer` for cannons, Battons, and Rex-2000s), coyote-time/jump-buffered jumping, auto-charging buster (Blue 1-hit, Yellow 2-pierce, Red/Pink 3-pierce), Giga Crush gauge + 3x2 circular fireball explosions with `1Hit!!..6Hit!!` popups, active multiplayer co-op runner filtering & support fire (`stageShot`), visual Battle Memory Card & 3x3 Map Part pickup overlays, non-overlapping floating pickup texts, and post-stage 3 Recent Players & Bulk Cheer modal.
+- `public/js/boss.js`: Turn-based Boss Battles, 4-Player Master Boss Raids (2x2 staggered squad with live room allies), Battle Tower (persistent Boss HP + Lv.5 C.Shot), and 1v1 Battle Arena PvP (horizontal top HP bars). Includes 50-turn counter (`残りターン数: 50`), circular `SKIP` button, start-of-turn Battle Memory Skill Cut-Ins, `Lv.0..5` C.Shot gauge, OVER-1 dash-to-center & Boss tackle lunge attack animations, Armor Part rewards, and `Awakening Continue` (`覚醒コンティニュー`).
+- `public/js/deck.js`: Interactive Battle Memory Deck & OVER Armor customizer with glowing color-matched **Bonus Lines**, Card Enhancement (`強化`), Normal/Premium Gacha pulls, Level-Up Status Point allocation (`EP` / `COST`), 3x3 Master Boss Map grid, and Lobi community chat/cheer board.
+- `public/js/game.js`: Central 60 FPS fixed-timestep game loop with 20ms `setInterval` background-tab ticker fallback so multi-tab sessions never stall, instant title-overlay dismissal & frame render on first key/click, Top Status Header (`EXP/LV`, `EP` + 5:00 timer, `PP` 5 pips, `Zenny`, `Crest`), input routing, and `window.State` / `window.__events` contract.
+
+## Status
+- All 29 rules from `SPEC.md` and all 10 playtest issues from Round 1 (`PLAYTEST.md`) are resolved:
+  1. Background-tab simulation throttling fixed via 20ms `setInterval` fallback ticker + `1.5s` elapsed catch-up and immediate `frame()` + `return` on `keydown`/`pointerdown` title dismissal.
+  2. Inactive/menu/title-overlay multiplayer peers no longer float frozen at `y=370` in Action Stages (`inStage` state check + `GROUND_Y` clamping).
+  3. Action Stage player HP (`st.hp`/`st.maxHp`) wired to `window.State.health` and the far-left 28-segment HP bar; taking damage drops 2 segments, resets charge aura, and triggers a yellow electric shock flinch.
+  4. Enemy projectiles (`enemyBullets` & `shootTimer`) active and rendered for cannons, Battons, and Rex-2000s.
+  5. Co-op room squadmates actively fire support projectiles (`stageShot` + periodic squad fire) that destroy stage enemies and neutralize enemy bullets.
+  6. Floating pickup texts offset dynamically so consecutive pickups never stack over each other or the player nametag.
+  7. Giga Crush renders 3x2 circular fireball explosions with `1Hit!!..6Hit!!` popups, Card/Map pickups display visual card/3x3 puzzle overlays, and Boss battles animate OVER-1 center dashes and Boss tackle lunges.
+  8. Stage Clear UI reward labels aligned (`+25Z` each / `+75Z` Bulk Cheer, `+40%` stage progress per run).

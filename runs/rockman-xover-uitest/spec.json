@@ -1,0 +1,801 @@
+{
+ "index": [
+  {
+   "video": "A",
+   "range": "00:00-00:15",
+   "location": "iOS Home Screen / Title & Login",
+   "activity": "Launching app, viewing Capcom/Adways/Rockman 25th Anniversary logos, loading screen with Kalinka tip, and social login prompt.",
+   "players_visible": 0,
+   "useful": false
+  },
+  {
+   "video": "A",
+   "range": "00:15-00:43",
+   "location": "Crossover World (Intro Cutscene)",
+   "activity": "Kalinka greets the player (named Heatman / \u30d2\u30fc\u30c8\u30de\u30f3), explains Crossover World, and a red WARNING banner alerts of Irregulars in the Bay Area.",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "00:43-01:37",
+   "location": "Tutorial Quest Stage (Bay Area Highway)",
+   "activity": "Auto-runner tutorial stage as OVER-1. Kalinka teaches normal shooting, jumping to shoot aerial enemies, 3-tier charge shots, and Giga Crush.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "01:37-02:15",
+   "location": "Level Up / Quest Progress / Deck Menu",
+   "activity": "Level up to Lv. 2, Kalinka explains EP and COST status points, views quest progress bar with 3 other players listed, and inspects the 5-slot Battle Memory deck.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "02:15-03:03",
+   "location": "Tutorial Boss Battle (Bay Area Highway)",
+   "activity": "Turn-based boss battle against Chill Penguin (Icy Penguigo) Lv. 1. Player attacks with normal shots until C.Shot gauge reaches Lv. 1, then finishes boss with a Charge Shot for 1000 Zenny.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "03:03-03:52",
+   "location": "Gacha Menu",
+   "activity": "Kalinka introduces the Gacha shop. Player spends 1000 Zenny on a 5+1 Normal Gacha pull, obtaining Rare Saroma and 5 Normal/Normal+ Battle Memory cards.",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "03:52-04:17",
+   "location": "Login Bonus & Main Menu",
+   "activity": "Claims Day 1 login bonus (1000 Zenny) on the 20-day hexagonal calendar, views 3-step tutorial slides, and lands on the Main Menu.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "04:17-05:02",
+   "location": "Battle Memory Enhance & Equip Menus",
+   "activity": "Views card enhancement screen, then opens deck equipment screen and replaces center Raybit card with Rare Saroma (Cost 8/8).",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "05:02-05:26",
+   "location": "World Select & World 1 Stage Select",
+   "activity": "Selects World 1 from the world list, chooses Stage 2 (Spark Mandrill Lv. 1, EP 4), and watches boss roulette intro.",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "05:26-06:24",
+   "location": "World 1-2 Quest Stage (0% to 20%)",
+   "activity": "Runs auto-scrolling highway stage, shooting enemies, collecting Zenny, Battle Memory cards (Woodnote, Metal Wing), and Map Part #1.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "06:24-07:33",
+   "location": "World 1-2 Quest Stage (20% to 40%) & Level Up",
+   "activity": "Runs second leg of World 1-2, collects BM cards and Map Part #2, levels up to Lv. 3, and allocates 5 Status Points (+1 EP, +4 Cost).",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "07:33-08:18",
+   "location": "World 1-2 Quest Stage (40% to 60%)",
+   "activity": "Runs third leg of World 1-2, collects Map Part #3, an EP recovery capsule, and Metool BM card.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "08:18-09:20",
+   "location": "World 1-2 Quest Stage (60% to 80%) & Level Up",
+   "activity": "Runs fourth leg of World 1-2, collects Map Part #4 and BM cards, levels up to Lv. 4, and allocates 5 Status Points (+3 EP, +2 Cost).",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "09:20-10:10",
+   "location": "World 1-2 Quest Stage (80% to 100%)",
+   "activity": "Runs final leg of World 1-2, collects Map Part #5 and BM cards, reaches 100% progress, and initiates Boss Battle (EP 10) without auto-equipping.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "10:10-11:06",
+   "location": "World 1-2 Boss Battle (Spark Mandrill)",
+   "activity": "Turn-based boss battle against Spark Mandrill Lv. 1. Saroma's DEF Up skill activates twice; player wins and unlocks an OVER-2 helmet armor part.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "11:06-12:04",
+   "location": "Gacha Menu & Friends Menu",
+   "activity": "Performs a 5+1 Normal Gacha pull (1000 Zenny), returns to Main Menu, and accepts two incoming Friend Requests.",
+   "players_visible": 3,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "12:04-13:26",
+   "location": "Battle Memory Enhance & Equip Menus",
+   "activity": " attempts card enhancement, then manually rearranges Battle Memory cards in the 5-slot deck to maximize stats within 11/11 Cost, forming green link lines.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "13:26-14:38",
+   "location": "World 1-4 Quest Stage (0% to 20%)",
+   "activity": "Selects World 1 Stage 4 (Flame Mammoth Lv. 1, EP 4), watches boss intro, and completes the first 20% auto-runner stage.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "14:38-15:21",
+   "location": "World 1-4 Quest Stage (20% to 40%)",
+   "activity": "Fires Giga Crush early in the run, shoots enemies, and collects Battle Memory cards to reach 40% stage progress.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "15:21-16:20",
+   "location": "World 1-4 Quest Stage (40% to 60%) & Level Up",
+   "activity": "Completes third run, collects Map Part #6, levels up to Lv. 5 (Kalinka announces a Lv. 5 gift), and allocates 5 Status Points (+3 EP, +2 Cost).",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "16:20-17:11",
+   "location": "World 1-4 Quest Stage (60% to 80%)",
+   "activity": "Completes fourth run, takes electric hazard damage from a top turret, collects BM cards and Map Part #7.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "17:11-17:59",
+   "location": "World 1-4 Quest Stage (80% to 100%)",
+   "activity": "Completes fifth run to reach 100% progress and launches Boss Battle (EP 10).",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "17:59-18:48",
+   "location": "World 1-4 Boss Battle (Flame Mammoth)",
+   "activity": "Turn-based boss battle against Flame Mammoth Lv. 1. Beat's DEF Down and Saroma's DEF Up skills trigger; player finishes boss with Lv. 1 Charge Shot and unlocks an arm armor part.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "A",
+   "range": "18:48-19:42",
+   "location": "Gacha Menu, Friends Menu & Home",
+   "activity": "Performs a 5+1 Normal Gacha pull (getting Rare Rolling Cutter), accepts a third Friend Request, checks Main Menu, and exits to iOS home screen.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "00:00-01:15",
+   "location": "iOS Home Screen / Registration",
+   "activity": "Reviewer launches game on iPad, waits through loading screens, and registers character name 'hippo'.",
+   "players_visible": 0,
+   "useful": false
+  },
+  {
+   "video": "B",
+   "range": "01:15-03:38",
+   "location": "Intro Cutscene & Tutorial Quest Stage",
+   "activity": "Watches Kalinka intro dialogue, plays tutorial auto-runner stage, levels up to Lv. 2, and reviews Status Points screen.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "03:38-05:25",
+   "location": "Tutorial Boss Prep & Chill Penguin Boss Battle",
+   "activity": "Explains recently played users list, views starting BM deck, and defeats Chill Penguin Lv. 1 in turn-based combat.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "05:25-07:45",
+   "location": "Gacha Menu, Login Calendar & Main Menu",
+   "activity": "Pulls 5+1 Normal Gacha (gets Rare Count Zap), claims Day 1 login bonus (1000 Zenny), dismisses tutorial popups, and explains Main Menu buttons.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "07:45-10:00",
+   "location": "Battle Memory Equip Menu",
+   "activity": "Uses Auto-Equip and then manually swaps cards to demonstrate Cost limits (7/8, 8/8) and stat changes when breaking/forming color link lines.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "10:00-12:08",
+   "location": "World 1-1 Quest Stage & Player Inspection",
+   "activity": "Selects World 1 Stage 1 (Chill Penguin), completes first 20% auto-runner stage, then inspects another player ('KOF' Lv. 4) and sends a Friend Request.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "12:08-13:05",
+   "location": "Settings & Battle Memory Equip Menu",
+   "activity": "Checks sub-menu icons, auto-equips deck, and swaps a Cost 2 card into the right slot to form blue link lines.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "13:05-15:20",
+   "location": "World 1-1 Quest Stage (20% to 40%) & Level Up",
+   "activity": "Explains EP regeneration timer, runs second leg of World 1-1, collects Map Part #1, levels up to Lv. 3, and allocates 5 Status Points (+1 EP, +4 Cost).",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "B",
+   "range": "15:20-17:51",
+   "location": "Master Boss Menu, Gacha & Deck Equip",
+   "activity": "Shows locked Master Boss screen ('KEEP OUT'), pulls 5+1 Normal Gacha (getting GutsMan), and auto-equips an all-blue linked deck (CST 8/10).",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "00:00-01:07",
+   "location": "Title Screen, Login Bonus & News",
+   "activity": "Launches late-game version of Rockman Xover, claims login bonus, and scrolls through announcements including World 12 and the End of Service notice.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "01:07-02:08",
+   "location": "Battle Memory Inventory & Deck Menu",
+   "activity": "Browses 67 high-level SR+/SSR Battle Memory cards and shows a 7-slot deck on OVER-10 armor (HP 145,292, ATK 57,934, DEF 57,544, CST 141/200).",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "02:08-02:59",
+   "location": "Armor Select & Deck Equip Menu",
+   "activity": "Scrolls through 25+ unlocked armors (OVER-1 through OVER-10, OVER-B, OVER-Z, elemental/special armors), showing their unique card slot layouts and link colors, then equips a deck.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "02:59-03:39",
+   "location": "World Select (Worlds 1-12 & X Special World)",
+   "activity": "Browses Worlds 1-12, toggles EX World view, checks X Special World, and enters World 12 Stage 3 (Vile stage, EP 45).",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "03:39-05:25",
+   "location": "World 12-3 Quest Stages (24% to 48%)",
+   "activity": "Plays two auto-runner stages in an indoor base tileset using OVER-10 armor, collecting BM cards, Map Parts, and Fire Chips until hitting the card inventory limit.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "05:25-05:41",
+   "location": "Battle Memory Enhancement Menu",
+   "activity": "Fuses 10 fodder cards into an SR+ Kalinka card to free up inventory space and gain card EXP.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "05:41-06:58",
+   "location": "World 12-5 Boss Battle (Vile / Vava)",
+   "activity": "Fights Boss Vile Lv. 8 twice (once manually, once using Skip button); loses both times and declines the 100-Crest Awakening continue prompt.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "06:58-07:50",
+   "location": "Master Boss (Raid Boss) Menu & Battle",
+   "activity": "Claims reward from a defeated Boss Spider Lv. 149, then spends 1 Rescue Call to fight Utuboros Lv. 149 alongside a 4-player team, dealing ~380k damage before being wiped out.",
+   "players_visible": 4,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "07:50-09:10",
+   "location": "Friends Menu & Team Battle Entry",
+   "activity": "Accepts friend requests, scrolls through high-level friends list, uses bulk Cheer (+1000 Zenny), inspects friend 'Skeletor' (Lv. 218, 8-slot deck), and enters Team Battle queue.",
+   "players_visible": 5,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "09:10-09:29",
+   "location": "Gacha Menu",
+   "activity": "Performs a 12-consecutive Normal Gacha pull (20,000 Zenny), obtaining Rare and SuperRare Battle Memory cards.",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "09:29-10:42",
+   "location": "Battle Arena (PvP Mode)",
+   "activity": "Enters Battle Arena during Bonus Time, fights Lv. 33 player (wins 320 Arena Coins), switches armor to OVER-5, and fights Lv. 21 player using Skip (loses, gets 50 Arena Coins).",
+   "players_visible": 2,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "10:42-11:39",
+   "location": "World Select Tour (Worlds 1-11)",
+   "activity": "Opens Worlds 11, 10, 9, 8, 7, 6, 5, 3, and 1 to showcase their stage lists and background illustrations.",
+   "players_visible": 0,
+   "useful": true
+  },
+  {
+   "video": "C",
+   "range": "11:39-12:59",
+   "location": "Lobi In-Game Community Chat",
+   "activity": "Opens the integrated Lobi chat groups, views player posts and concept art photos, and types 'Rip Rockman xover'.",
+   "players_visible": 0,
+   "useful": false
+  },
+  {
+   "video": "D",
+   "range": "00:00-02:59",
+   "location": "Main Menu & Friends Menu",
+   "activity": "Accepts a friend request, inspects own main account ('doodoo', OVER-2 armor) to explain color link lines, and shows the 8-character Friend ID search screen.",
+   "players_visible": 5,
+   "useful": true
+  },
+  {
+   "video": "D",
+   "range": "02:59-05:35",
+   "location": "Battle Memory Enhancement Menu",
+   "activity": "Explains card sorting filters and fuses two Dynamo cards (Heat Lv. 1) into a FireMan card (Heat Lv. 2), leveling it to Lv. 7 and upgrading its skill to Heat Lv. 3.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "D",
+   "range": "05:35-07:40",
+   "location": "Armor Select & Deck Equipment Menus",
+   "activity": "Shows locked OVER-2 armor silhouette, then demonstrates how matching 5 Red cards creates 8 bonus link lines and how center card placement affects total stats.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "D",
+   "range": "07:40-11:31",
+   "location": "World Select (Worlds 1-4), Master Boss & News",
+   "activity": "Tours Worlds 1-4, checks Master Boss screen, highlights a 2x EXP stage banner in World 1-2, and explains the Lv. 20 'Rock & Roll' special card event.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "E",
+   "range": "00:00-00:57",
+   "location": "Battle Tower Floor 40 (vs Rosso.M)",
+   "activity": "Fights Rosso.M on Floor 40 using OVER-1 armor, finishes him with a Lv. 5 Charge Shot, advances to Floor 41 (GutsMan), and receives SR+ Model H card reward.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "E",
+   "range": "00:57-02:00",
+   "location": "Battle Tower Floor 40 (vs Blu.D)",
+   "activity": "Fights Blu.D on Floor 40 using OVER-4 armor, finishes him with a Lv. 5 Charge Shot, advances to Floor 41 (AirMan), and receives R EXP/Skill Up card and H-Can.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "E",
+   "range": "02:00-03:21",
+   "location": "Battle Tower Floor 40 (vs Verde.R)",
+   "activity": "Fights Verde.R on Floor 40 using OVER-2 armor, finishes him with a Lv. 5 Charge Shot, advances to Floor 41 (ShadowMan), and claims 40-kill rewards.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "E",
+   "range": "03:21-04:52",
+   "location": "Battle Tower Floor 40 (vs Giallo.S / Oro.S)",
+   "activity": "Fights Oro.S on Floor 40 using OVER-3 armor, finishes her with a Lv. 5 Charge Shot, advances to Floor 41 (Spark Mandrill), and claims 40-kill rewards.",
+   "players_visible": 1,
+   "useful": true
+  },
+  {
+   "video": "E",
+   "range": "04:52-06:15",
+   "location": "Battle Tower Floor 40 (vs Nero.L)",
+   "activity": "Fights Nero.L on Floor 40 using OVER-6 armor, finishes him with a Lv. 5 Charge Shot, advances to Floor 41 (SkullMan), and claims 40-kill rewards.",
+   "players_visible": 1,
+   "useful": true
+  }
+ ],
+ "rules": [
+  {
+   "area": "Player Character & Movement",
+   "rule": "In Quest action stages, the player character (OVER-1) warps in from a vertical beam and automatically runs horizontally from left to right at a constant speed until reaching the end of the stage.",
+   "evidence": [
+    "A 00:44-01:26",
+    "A 09:21-09:50",
+    "C 03:40-04:20"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Player Character & Movement",
+   "rule": "The player character has a fixed horizontal screen position on the left third of the screen while the background and ground scroll leftwards.",
+   "evidence": [
+    "A 00:44-01:23",
+    "A 05:27-05:57"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "Action stages feature three on-screen virtual buttons on the right side of the screen: Jump (bottom-left button), Shot (bottom-right button), and Giga Crush (top-right button).",
+   "evidence": [
+    "A 00:48-01:19",
+    "A 05:27-05:56"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "Tapping the Jump button makes the player jump vertically to reach high-flying enemies, upper-tier platforms/turrets, or airborne item drops, and jump over ground hazards.",
+   "evidence": [
+    "A 00:54-00:57",
+    "A 05:39-05:41",
+    "C 03:41-03:43"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "When not firing, the player character automatically charges their buster, cycling through three aura colors: purple/blue (tier 1), yellow (tier 2), and red/pink (tier 3).",
+   "evidence": [
+    "A 00:57-01:06",
+    "B 02:10-02:20"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "Firing with a yellow aura pierces and defeats up to 2 enemies in a row; firing with a red aura pierces and defeats up to 3 enemies in a row; firing with a blue aura defeats 1 enemy.",
+   "evidence": [
+    "A 01:01-01:06",
+    "A 05:30-05:32",
+    "A 08:21-08:23"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "Defeating multiple enemies simultaneously with a Charge Shot fills the blue bar under the Giga Crush button; when full, tapping Giga Crush leaps into the air and blasts 6 energy explosions across the screen, destroying all visible enemies.",
+   "evidence": [
+    "A 01:11-01:22",
+    "A 14:41-14:45"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Controls & Combat (Action Stages)",
+   "rule": "Later versions of the game include an 'AutoPlay' toggle button in the top-right corner of Quest action stages.",
+   "evidence": [
+    "C 03:40-04:16",
+    "C 04:33-04:54"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Camera",
+   "rule": "Both action stages and boss battles use a fixed 2D side-scrolling / side-view perspective with no vertical camera panning.",
+   "evidence": [
+    "A 00:44-01:26",
+    "A 02:15-02:45"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Quest Structure & Progression",
+   "rule": "Worlds are divided into 5 stages (4 regular boss stages + 1 locked final boss stage that unlocks after clearing the first 4), and each stage requires 5 auto-runner runs (20% progress per run) to reach 100% and unlock the stage's Boss Battle.",
+   "evidence": [
+    "A 05:07-05:11",
+    "A 06:14-06:20",
+    "A 07:26-07:29",
+    "A 08:10-08:13",
+    "A 09:14-09:16",
+    "A 09:58-10:03",
+    "C 03:13-03:18"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Boss Battles (Turn-Based)",
+   "rule": "Boss battles are turn-based ('Your Turn' alternating with 'Boss Turn') with a 50-turn limit ('\u6b8b\u308a\u30bf\u30fc\u30f3\u6570: 49' counting down each round) and a 'SKIP' button in the top-right corner to fast-forward to the battle outcome.",
+   "evidence": [
+    "A 02:16-02:44",
+    "C 05:51-06:28",
+    "C 06:43-06:48"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Boss Battles (Turn-Based)",
+   "rule": "During 'Your Turn', the player chooses between a normal Shot button and a Charge Shot (C.Shot) button; the C.Shot gauge starts at Lv. 0 and fills as the player deals and receives damage (up to Lv. 1 in early game or Lv. 5 in Battle Tower), unleashing a high-damage blast when used.",
+   "evidence": [
+    "A 02:20-02:43",
+    "B 04:48-05:05",
+    "E 00:20-00:38"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Boss Battles (Turn-Based)",
+   "rule": "Equipped Battle Memory cards can trigger passive/active skills at the start of a turn (e.g., ATK Up, DEF Up, enemy DEF Down, Heat DoT, Slow) before attacks are exchanged.",
+   "evidence": [
+    "A 10:18-10:21",
+    "A 10:41-10:44",
+    "A 18:19-18:31",
+    "E 02:39-02:41"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Win & Lose Conditions",
+   "rule": "In Boss Battles, whoever's HP bar reaches zero first loses. If the player loses, an 'Awakening Continue' (\u899a\u9192\u30b3\u30f3\u30c6\u30a3\u30cb\u30e5\u30fc) screen offers a rematch with +20% HP/ATK/DEF and 2x skill activation rate for 100 Crest.",
+   "evidence": [
+    "A 02:29-02:30",
+    "C 06:26-06:34",
+    "C 06:50-06:57"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Drops, Map Parts & Armor Parts",
+   "rule": "Enemies defeated in action stages drop Zenny coins, green/gold Battle Memory cards, yellow EP recovery capsules, elemental chips, and Map Parts.",
+   "evidence": [
+    "A 05:30-05:56",
+    "A 07:44-07:49",
+    "C 04:26-04:28"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Drops, Map Parts & Armor Parts",
+   "rule": "Collecting all 9 pieces of a 3x3 Map grid in a World unlocks the Master Boss / Raid Boss for that area.",
+   "evidence": [
+    "A 06:06-06:12",
+    "B 14:36-14:48",
+    "B 15:26-15:36"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Drops, Map Parts & Armor Parts",
+   "rule": "Defeating a stage Boss for the first time awards one of 5 Armor Parts (head, body, right arm, left arm, legs); collecting all 5 parts unlocks a new playable Armor.",
+   "evidence": [
+    "A 10:53-11:00",
+    "A 18:40-18:43",
+    "D 05:38-05:48"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Armors & Battle Memory Deck",
+   "rule": "Each Armor (OVER-1 through OVER-10, OVER-B, OVER-Z, etc.) has its own elemental resistances, base stats, and a geometric grid of 5 to 8 Battle Memory card slots connected by lines.",
+   "evidence": [
+    "A 02:04-02:11",
+    "C 01:50-01:57",
+    "C 02:10-02:42",
+    "C 08:53-08:59"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Armors & Battle Memory Deck",
+   "rule": "Each Battle Memory card has a Cost value, HP/ATK/DEF stats, a rarity (Normal, Normal+, Rare, SuperRare / SR, SR+, SSR), a skill, and a border color (red, green, blue, yellow, white/black). Total equipped card Cost cannot exceed the player's current max COST stat.",
+   "evidence": [
+    "A 12:52-12:58",
+    "B 08:30-09:23",
+    "C 01:08-01:46"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Armors & Battle Memory Deck",
+   "rule": "Placing Battle Memory cards of matching colors into connected slots activates colored Bonus Lines (\u30dc\u30fc\u30ca\u30b9\u30e9\u30a4\u30f3) between them, significantly boosting total HP, ATK, and DEF, with the center card linking to all outer cards.",
+   "evidence": [
+    "B 09:28-09:55",
+    "D 01:39-02:04",
+    "D 06:29-07:36"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Card Enhancement (Upgrade)",
+   "rule": "In the Enhancement (\u5f37\u5316) menu, players select a base Battle Memory card and fuse fodder cards into it at the cost of Zenny to increase its Level and stats; fusing cards with the same skill (e.g., Heat + Heat) also levels up the card's Skill Level.",
+   "evidence": [
+    "C 05:26-05:39",
+    "D 03:48-05:09"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Currencies & Gacha",
+   "rule": "The game uses two main currencies: Zenny (silver coins earned in stages, boss fights, login bonuses, and cheering friends) and Crest (gold coins, premium currency), plus Gacha Tickets and Arena Coins.",
+   "evidence": [
+    "A 03:04-03:18",
+    "B 05:30-05:48",
+    "C 10:01-10:03"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Currencies & Gacha",
+   "rule": "Normal Gacha costs 200 Zenny per pull (or 1000 Zenny for a 5+1 bundle, or 20,000 Zenny for a 12-pull in later versions); Premium Gacha costs 300 Crest per pull.",
+   "evidence": [
+    "A 03:09-03:23",
+    "C 09:11-09:15"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Meters, Timers & Leveling",
+   "rule": " Player progression is governed bythree top-bar meters: EXP (fills from stages to trigger Level Up), EP (Energy Points consumed by Quests and Bosses, regenerates 1 point every 5 minutes), and PP (5 pips used for Battle Arena PvP).",
+   "evidence": [
+    "A 01:42-01:52",
+    "A 06:14-06:19",
+    "B 13:18-13:45",
+    "C 09:32-09:44"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Meters, Timers & Leveling",
+   "rule": "Each Level Up grants 5 Status Points that the player manually distributes between EP (+1 max EP per 1 point) and COST (+1 max Cost per 2 points), and fully refills EP.",
+   "evidence": [
+    "A 07:10-07:22",
+    "A 09:03-09:11",
+    "B 14:55-15:15"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Multiplayer, Social & Modes",
+   "rule": "After each quest stage, 3 recently active players are displayed and can be inspected or sent Friend Requests; players can also search friends by an 8-character alphanumeric ID and use a bulk 'Cheer' (\u4e00\u62ec\u5fdc\u63f4) button on their friends list to earn Zenny.",
+   "evidence": [
+    "A 01:58-02:02",
+    "B 11:28-12:06",
+    "C 08:44-08:47",
+    "D 02:20-02:47"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Multiplayer, Social & Modes",
+   "rule": "Master Bosses (Raid Bosses) have millions of HP and are fought by a 4-player team of OVER-1 units simultaneously on screen, with a damage ranking leaderboard.",
+   "evidence": [
+    "C 07:00-07:49"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Multiplayer, Social & Modes",
+   "rule": "Battle Arena is an asynchronous 1v1 PvP mode where players spend PP to fight other players' OVER-1 units for Arena Coins and ranking positions.",
+   "evidence": [
+    "C 09:30-10:41"
+   ],
+   "confidence": "seen"
+  },
+  {
+   "area": "Multiplayer, Social & Modes",
+   "rule": "Battle Tower (\u30d0\u30c8\u30eb\u30bf\u30ef\u30fc) is a floor-climbing boss gauntlet where boss HP persists across attempts (or recovers 1% over time) and clearing milestone floors (such as Floor 40) awards SR+ cards, E-Cans, H-Cans, and Zenny.",
+   "evidence": [
+    "E 00:01-00:57",
+    "E 00:58-02:00",
+    "E 04:53-06:10"
+   ],
+   "confidence": "seen"
+  }
+ ],
+ "areas": [
+  {
+   "name": "Crossover World / World 1 (Mega Man X1 Bay Area)",
+   "evidence": [
+    "A 00:18-00:37",
+    "A 00:44-01:26",
+    "A 05:06-05:11"
+   ],
+   "description": "A futuristic coastal metropolis and highway bridge stage featuring bosses from Mega Man X1: Chill Penguin, Spark Mandrill, Armored Armadillo, and Flame Mammoth."
+  },
+  {
+   "name": "World 2 (Mega Man X1 Night City)",
+   "evidence": [
+    "C 03:02-03:10",
+    "D 08:02-08:10"
+   ],
+   "description": "A nighttime cyberpunk city skyline featuring the remaining Mega Man X1 Mavericks: Storm Eagle, Flame Stag / Boomer Kuwanger, Launch Octopus, and Sting Chameleon, plus Dr. Doppler."
+  },
+  {
+   "name": "World 3 (Classic Mega Man 1 Industrial City)",
+   "evidence": [
+    "C 11:27-11:31",
+    "D 08:12-08:21"
+   ],
+   "description": "An orange-tinted industrial factory cityscape featuring Classic Mega Man 1 Robot Masters: CutMan, ElecMan, IceMan, FireMan, and Dr. Wily."
+  },
+  {
+   "name": "World 4 (Mega Man Battle Network Cyberworld)",
+   "evidence": [
+    "C 03:11-03:19",
+    "D 08:22-08:32"
+   ],
+   "description": "A digital cyberspace network interior featuring NetNavis from Mega Man Battle Network: AirMan.EXE, FireMan.EXE, GutsMan.EXE, NumberMan.EXE, and WoodMan.EXE."
+  },
+  {
+   "name": "Worlds 5 to 11 ( Additional Crossover Worlds)",
+   "evidence": [
+    "C 10:44-11:26"
+   ],
+   "description": "Additional themed worlds spanning Mega Man Star Force (World 5), Mega Man Zero (World 6), Classic/X/Legends/ZX worlds (Worlds 7-11) with distinct city, forest, sky, and fortress backgrounds."
+  },
+  {
+   "name": "World 12 & X Special World (Fortress Interior)",
+   "evidence": [
+    "C 03:20-05:25",
+    "C 05:51-06:28"
+   ],
+   "description": "A dark, metallic indoor fortress laboratory with blue canisters and yellow hazard stripes, featuring bosses like Vile (Vava) and X-series Mavericks."
+  },
+  {
+   "name": "Battle Arena & Battle Tower",
+   "evidence": [
+    "C 09:30-10:41",
+    "E 00:01-06:12"
+   ],
+   "description": "A virtual blue-grid arena for 1v1 PvP battles and a multi-branch tower facility where players climb floors fighting Rosso.M, Blu.D, Verde.R, Oro.S, Nero.L, and classic bosses."
+  }
+ ],
+ "feel": {
+  "core_loop": "Spend EP to run short (~30-second) auto-scrolling action stages 5 times per stage, shooting enemies to collect Zenny, Battle Memory cards, and Map Parts. At 100% stage progress, fight a turn-based Boss Battle to earn Armor Parts and unlock the next stage/world. Between runs, fuse duplicate cards to level up stats/skills, arrange color-matched 5-to-8 card decks on unlocked OVER armors, pull Gacha, and tackle Master Boss raids, Battle Arena PvP, or Battle Tower floors.",
+  "why_players_loved_it": "Nostalgic fan service celebrating the 25th Anniversary of Mega Man: collecting hundreds of Battle Memory cards and armors representing every era of the franchise (Classic, X, Zero, ZX, Battle Network, Star Force, Legends) accompanied by energetic rock/chiptune arrangements of classic Mega Man themes.",
+  "moment_to_moment": "Fast, casual, one-handed mobile pacing. Action stages are brisk auto-runners focused on timing jumps and holding/releasing charge shots to pierce groups of 2-3 enemies or trigger screen-clearing Giga Crushes, while boss fights arehands-off turn-based stat checks where players watch skill cut-ins and time their Charge Shot.",
+  "together": "Asynchronous social RPG cooperation and competition: seeing 3 other players after every quest run, exchanging Friend Requests and daily bulk 'Cheers' for Zenny, inspecting friends' card decks/armors, teaming up in 4-player groups to chip down multi-million-HP Master Bosses, competing in Battle Arena rankings, and chatting in the built-in Lobi community boards."
+ },
+ "unknowns": [
+  "Exact mathematical formula for damage calculation and defense mitigation in turn-based boss battles.",
+  "Exact percentage stat multiplier granted per colored Bonus Line in the Battle Memory deck grid.",
+  "Complete list of all Battle Memory card skills and all 12 Worlds' full stage/boss rosters beyond those shown in the menus."
+ ]
+}

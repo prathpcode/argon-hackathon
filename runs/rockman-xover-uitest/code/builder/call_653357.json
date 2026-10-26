@@ -1,0 +1,4 @@
+{
+ "path": "package.json",
+ "content": "{\n  \"type\": \"commonjs\"\n}\n"
+}

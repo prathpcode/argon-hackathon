@@ -1,0 +1,9 @@
+{
+ "path": "public/js/game.js",
+ "edits": [
+  {
+   "oldText": "    pushEvent(type, extra = {}) {\n      window.__events.push({\n        t: Math.round(performance.now() - startTime),\n        type,\n        ...extra,\n      });\n      if (window.__events.length > 250) window.__events.shift();\n    },",
+   "newText": "    pushEvent(type, extra = {}) {\n      const ev = {\n        ...extra,\n        t: Math.round(performance.now() - startTime),\n        type,\n      };\n      if (extra && extra.type && extra.type !== type) {\n        ev.subType = extra.type;\n      }\n      window.__events.push(ev);\n      if (window.__events.length > 250) window.__events.shift();\n    },"
+  }
+ ]
+}

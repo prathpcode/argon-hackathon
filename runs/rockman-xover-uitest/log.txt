@@ -1,0 +1,37 @@
+[find] running
+[find] done: 5 videos, 68 min
+[watch] running
+[watch] done: 29 rules, 55 scenes, 7 areas
+[build] running
+[build] error: ENOENT: no such file or directory, open '/Users/codergautam/argontest/runs/rockman-xover/game/public/index.html'
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] running
+[build] done: Built “CYBER-OVER: Memory Horizon”
+[playtest] running
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] done: kept from the last run
+[playtest] running
+Fun tester failed: Error: fetch failed
+    at runAgent [90m(/Users/codergautam/argontest/[39mpipeline/agents/pi.ts:223:24[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at async playtester [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:210:5[90m)[39m
+    at async Promise.all (index 0)
+    at async playtest [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:261:24[90m)[39m
+    at async main [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:327:31[90m)[39m
+Multiplayer tester failed: Error: fetch failed
+    at runAgent [90m(/Users/codergautam/argontest/[39mpipeline/agents/pi.ts:223:24[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)[39m
+    at async playtester [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:210:5[90m)[39m
+    at async Promise.all (index 1)
+    at async playtest [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:261:24[90m)[39m
+    at async main [90m(/Users/codergautam/argontest/[39mpipeline/agents/main.ts:327:31[90m)[39m
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] done: kept from the last run
+[playtest] running
+[find] done: kept from the last run
+[watch] done: kept from the last run
+[build] done: kept from the last run
+[playtest] running

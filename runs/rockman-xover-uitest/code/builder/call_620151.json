@@ -1,0 +1,13 @@
+{
+ "path": "public/js/boss.js",
+ "edits": [
+  {
+   "oldText": "    return {\n      mode, // \"stage\" | \"raid\" | \"tower\" | \"arena\"\n      theme: mode === \"arena\" ? \"arena\" : world.theme,\n      warningTimer: 1.35, // Flashing red WARNING!! intro\n      remainingTurns: 50, // Rule 11: 50-turn limit counting down each round",
+   "newText": "    return {\n      mode, // \"stage\" | \"raid\" | \"tower\" | \"arena\"\n      theme: mode === \"arena\" ? \"arena\" : world.theme,\n      warningTimer: 0.85, // Flashing red WARNING!! intro\n      remainingTurns: 50, // Rule 11: 50-turn limit counting down each round"
+  },
+  {
+   "oldText": "      // Numeric HP readout for clarity\n      ctx.fillStyle = \"#ffffff\";\n      ctx.font = \"bold 12px monospace\";\n      ctx.textAlign = \"left\";\n      ctx.fillText(`HP: ${bs.playerHp}/${bs.playerMaxHp}`, 50, 120);\n      ctx.textAlign = \"right\";\n      ctx.fillText(`${bs.boss.name} (Lv.${bs.boss.level}) HP: ${bs.boss.hp}/${bs.boss.maxHp}`, W - 50, 120);",
+   "newText": "      // Numeric HP readout for clarity\n      ctx.fillStyle = \"#ffffff\";\n      ctx.font = \"bold 12px monospace\";\n      ctx.textAlign = \"left\";\n      ctx.fillText(`HP: ${bs.playerHp}/${bs.playerMaxHp}`, 50, 120);\n      ctx.textAlign = \"right\";\n      ctx.fillText(`${bs.boss.name} (Lv.${bs.boss.level}) HP: ${bs.boss.hp}/${bs.boss.maxHp}`, W - 140, 81);"
+  }
+ ]
+}

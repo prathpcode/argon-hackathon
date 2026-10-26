@@ -1,0 +1,1584 @@
+{
+ "world_to_client": "(() => { const c = document.getElementById('gameCanvas'), r = c.getBoundingClientRect(); return { x: r.left + (x / 1280) * r.width, y: r.top + (y / 720) * r.height }; })()",
+ "start": [
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click_world",
+   "x": 640,
+   "y": 517
+  },
+  {
+   "do": "wait",
+   "ms": 200
+  }
+ ],
+ "scenarios": [
+  {
+   "id": "warp_in_and_auto_run",
+   "rule_index": 0,
+   "rule": "In Quest action stages, the player character (OVER-1) warps in from a vertical beam and automatically runs horizontally from left to right at a constant speed until reaching the end of the stage.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 44,
+    "end": 65
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "1",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 250
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.stageState.warpTimer > 0 && window.State.y < 530",
+     "desc": "Player warps in from above via vertical beam"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "expect",
+     "js": "window.State.vx === 195 && window.State.x > 300",
+     "desc": "Player automatically runs right at constant speed 195"
+    },
+    {
+     "do": "wait",
+     "ms": 2000
+    },
+    {
+     "do": "expect",
+     "js": "window.State.x > 600",
+     "desc": "Player continues auto-running toward the end of the stage"
+    }
+   ],
+   "look_for": "OVER-1 warping down in a vertical cyan beam at the start of the stage, then automatically running left-to-right at constant speed while the left vertical progress bar depletes."
+  },
+  {
+   "id": "fixed_left_screen_position",
+   "rule_index": 1,
+   "rule": "The player character has a fixed horizontal screen position on the left third of the screen while the background and ground scroll leftwards.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 50,
+    "end": 70
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "expect",
+     "js": "window.State.x - window.State.camera.x === 270",
+     "desc": "Player screen X is fixed at 270 (left third of 1280px screen)"
+    },
+    {
+     "do": "wait",
+     "ms": 2500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.camera.x > 400 && (window.State.x - window.State.camera.x) === 270",
+     "desc": "Background and camera scroll while player screen X stays fixed at 270"
+    }
+   ],
+   "look_for": "OVER-1 remaining anchored on the left third of the screen while the highway road, guardrails, and city skyline scroll leftwards."
+  },
+  {
+   "id": "virtual_action_buttons",
+   "rule_index": 2,
+   "rule": "Action stages feature three on-screen virtual buttons on the right side of the screen: Jump (bottom-left button), Shot (bottom-right button), and Giga Crush (top-right button).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 48,
+    "end": 68
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "expect",
+     "js": "['stage_jump','stage_shot','stage_giga'].every(id => window.Game.buttons.some(b => b.id === id))",
+     "desc": "All three virtual buttons (Jump, Shot, Giga Crush) are present on the right side"
+    },
+    {
+     "do": "click_world",
+     "x": 1070,
+     "y": 648
+    },
+    {
+     "do": "wait",
+     "ms": 250
+    },
+    {
+     "do": "expect",
+     "js": "window.State.y < 530",
+     "desc": "Clicking virtual Jump button makes player jump"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 630
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'shot')",
+     "desc": "Clicking virtual Shot button fires buster"
+    }
+   ],
+   "look_for": "Three circular virtual buttons on the right side of the action stage HUD: Jump (bottom-left of cluster), Shot (bottom-right), and Giga Crush (top-right above Shot)."
+  },
+  {
+   "id": "jump_platforms_enemies_drops",
+   "rule_index": 3,
+   "rule": "Tapping the Jump button makes the player jump vertically to reach high-flying enemies, upper-tier platforms/turrets, or airborne item drops, and jump over ground hazards.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 52,
+    "end": 65
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "key",
+     "key": " ",
+     "ms": 250
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.State.y < 480 && window.State.vy < 0",
+     "desc": "Player jumps vertically into the air"
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "key",
+     "key": " ",
+     "ms": 300
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    }
+   ],
+   "look_for": "OVER-1 jumping vertically when Jump is pressed to reach upper platforms, airborne drops, and aerial Batton drones, and clearing ground hazards."
+  },
+  {
+   "id": "auto_charge_aura_tiers",
+   "rule_index": 4,
+   "rule": "When not firing, the player character automatically charges their buster, cycling through three aura colors: purple/blue (tier 1), yellow (tier 2), and red/pink (tier 3).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 56,
+    "end": 68
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "expect",
+     "js": "window.State.chargeTier === 1",
+     "desc": "Buster auto-charges to Tier 1 (blue/purple aura)"
+    },
+    {
+     "do": "wait",
+     "ms": 450
+    },
+    {
+     "do": "expect",
+     "js": "window.State.chargeTier === 2",
+     "desc": "Buster auto-charges to Tier 2 (yellow aura)"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "window.State.chargeTier === 3",
+     "desc": "Buster auto-charges to Tier 3 (red/pink aura)"
+    }
+   ],
+   "look_for": "OVER-1's circular energy aura automatically cycling from blue (Tier 1) to yellow (Tier 2) to red/pink (Tier 3) while not firing."
+  },
+  {
+   "id": "charge_shot_pierce_tiers",
+   "rule_index": 5,
+   "rule": "Firing with a yellow aura pierces and defeats up to 2 enemies in a row; firing with a red aura pierces and defeats up to 3 enemies in a row; firing with a blue aura defeats 1 enemy.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 58,
+    "end": 70
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'shot' && e.tier === 1 && e.pierce === 1)",
+     "desc": "Blue aura shot has pierce 1"
+    },
+    {
+     "do": "wait",
+     "ms": 750
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'shot' && e.tier === 2 && e.pierce === 2)",
+     "desc": "Yellow aura shot pierces up to 2 enemies"
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'shot' && e.tier === 3 && e.pierce === 3)",
+     "desc": "Red aura shot pierces up to 3 enemies"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    }
+   ],
+   "look_for": "Blue shots defeating 1 enemy, Yellow charge shots piercing through 2 enemies in a row, and Red charge shots piercing through 3 enemies in a row."
+  },
+  {
+   "id": "giga_crush_full_screen_blast",
+   "rule_index": 6,
+   "rule": "Defeating multiple enemies simultaneously with a Charge Shot fills the blue bar under the Giga Crush button; when full, tapping Giga Crush leaps into the air and blasts 6 energy explosions across the screen, destroying all visible enemies.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 70,
+    "end": 84
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 2100
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1500
+    },
+    {
+     "do": "key",
+     "key": "x",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "eval",
+     "js": "window.Game.stageState.gigaGauge = 100;"
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 505
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'item_use' && e.item === 'giga_crush')",
+     "desc": "Giga Crush activates, blasting 6 pillars and destroying visible enemies"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    }
+   ],
+   "look_for": "The blue gauge bar under the Giga Crush button filling from multi-enemy Charge Shot pierces, then tapping Giga Crush to leap up and unleash 6 vertical energy blasts across the entire screen."
+  },
+  {
+   "id": "autoplay_toggle_button",
+   "rule_index": 7,
+   "rule": "Later versions of the game include an 'AutoPlay' toggle button in the top-right corner of Quest action stages.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 220,
+    "end": 245
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "click_world",
+     "x": 1200,
+     "y": 79
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.stageState.autoPlay === true",
+     "desc": "AutoPlay toggle in top-right corner is enabled"
+    },
+    {
+     "do": "wait",
+     "ms": 3000
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'shot')",
+     "desc": "AutoPlay automatically fires and jumps through the stage"
+    }
+   ],
+   "look_for": "Clicking the 'AutoPlay' button in the top-right corner of the action stage so it turns green ('AutoPlay: ON') and automatically jumps and fires Charge Shots."
+  },
+  {
+   "id": "fixed_2d_side_view_no_vertical_pan",
+   "rule_index": 8,
+   "rule": "Both action stages and boss battles use a fixed 2D side-scrolling / side-view perspective with no vertical camera panning.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 48,
+    "end": 65
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "key",
+     "key": " ",
+     "ms": 300
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.State.y < 460 && window.State.camera.y === 0",
+     "desc": "Action stage camera Y remains 0 even when jumping high"
+    },
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'boss' && window.State.camera.y === 0",
+     "desc": "Boss battle uses fixed 2D side-view with camera Y at 0"
+    }
+   ],
+   "look_for": "Both the auto-scrolling action stage (even during high jumps) and the boss battle maintaining a fixed 2D side-view perspective with zero vertical camera panning."
+  },
+  {
+   "id": "world_stages_and_progress_to_boss",
+   "rule_index": 9,
+   "rule": "Worlds are divided into 5 stages (4 regular boss stages + 1 locked final boss stage that unlocks after clearing the first 4), and each stage requires 5 auto-runner runs (20% progress per run) to reach 100% and unlock the stage's Boss Battle.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 305,
+    "end": 320
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'world' && window.Game.getCurrentWorld().stages.length === 5",
+     "desc": "World map shows 5 stages per world and stage progress percentage"
+    },
+    {
+     "do": "click_world",
+     "x": 426,
+     "y": 208
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "eval",
+     "js": "window.Game.stageState.scrollX = window.Game.stageState.maxDist - 60;"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.stageState.cleared === true && window.State.stageProgress === 100",
+     "desc": "Completing the run advances stage progress to 100% and unlocks the stage Boss Battle"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    }
+   ],
+   "look_for": "The World Map showing 5 stages in World 1 with progress percentages, followed by completing a stage run to reach 100% progress and unlocking the red 'FIGHT STAGE BOSS!!' button."
+  },
+  {
+   "id": "boss_turn_based_50_turns_and_skip",
+   "rule_index": 10,
+   "rule": "Boss battles are turn-based ('Your Turn' alternating with 'Boss Turn') with a 50-turn limit ('\u6b8b\u308a\u30bf\u30fc\u30f3\u6570: 49' counting down each round) and a 'SKIP' button in the top-right corner to fast-forward to the battle outcome.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 136,
+    "end": 164
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.remainingTurns === 50 && window.Game.bossState.turnPhase === 'player_input'",
+     "desc": "Boss battle starts at 50 remaining turns on Your Turn"
+    },
+    {
+     "do": "click_world",
+     "x": 1065,
+     "y": 646
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.remainingTurns === 49",
+     "desc": "After exchanging turns with the boss, remaining turns counts down to 49"
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 86
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.turnPhase === 'ended'",
+     "desc": "Clicking the top-right SKIP button fast-forwards to the battle outcome"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    }
+   ],
+   "look_for": "Turn-based boss combat showing '\u6b8b\u308a\u30bf\u30fc\u30f3\u6570: 50' counting down to 49 after 'YOUR TURN' and 'BOSS TURN', then clicking the circular top-right 'SKIP' button to jump to the outcome."
+  },
+  {
+   "id": "boss_shot_vs_cshot_gauge",
+   "rule_index": 11,
+   "rule": "During 'Your Turn', the player chooses between a normal Shot button and a Charge Shot (C.Shot) button; the C.Shot gauge starts at Lv. 0 and fills as the player deals and receives damage (up to Lv. 1 in early game or Lv. 5 in Battle Tower), unleashing a high-damage blast when used.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 140,
+    "end": 163
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "click_world",
+     "x": 1065,
+     "y": 646
+    },
+    {
+     "do": "wait",
+     "ms": 1800
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.cshotPoints >= 100",
+     "desc": "C.Shot gauge fills to Lv.1 after dealing and receiving damage"
+    },
+    {
+     "do": "click_world",
+     "x": 1185,
+     "y": 628
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.cshotPoints === 0",
+     "desc": "Clicking C.Shot button unleashes high-damage Charge Shot and consumes gauge"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    }
+   ],
+   "look_for": "The bottom-left C.Shot Lv.0 gauge filling to Lv.1 after exchanging normal shots with the boss, then clicking the glowing orange 'C.SHOT Lv.1' button on the bottom-right to fire a massive blast."
+  },
+  {
+   "id": "battle_memory_turn_start_skills",
+   "rule_index": 12,
+   "rule": "Equipped Battle Memory cards can trigger passive/active skills at the start of a turn (e.g., ATK Up, DEF Up, enemy DEF Down, Heat DoT, Slow) before attacks are exchanged.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 615,
+    "end": 625
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.awakeningActive = true;"
+    },
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.cutInCard !== null",
+     "desc": "Equipped Battle Memory card triggers its turn-start skill cut-in banner and buff/debuff"
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    }
+   ],
+   "look_for": "A 'SKILL ACTIVATED' Battle Memory card cut-in banner appearing at the start of the player's turn along with buff/debuff icons (such as ATK\u2191, DEF\u2191, DEF\u2193, or HEAT) above the characters."
+  },
+  {
+   "id": "boss_defeat_and_awakening_continue",
+   "rule_index": 13,
+   "rule": "In Boss Battles, whoever's HP bar reaches zero first loses. If the player loses, an 'Awakening Continue' (\u899a\u9192\u30b3\u30f3\u30c6\u30a3\u30cb\u30e5\u30fc) screen offers a rematch with +20% HP/ATK/DEF and 2x skill activation rate for 100 Crest.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 384,
+    "end": 400
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "eval",
+     "js": "window.Game.bossState.playerHp = 10; window.Game.bossState.boss.atk = 9000;"
+    },
+    {
+     "do": "click_world",
+     "x": 1065,
+     "y": 646
+    },
+    {
+     "do": "wait",
+     "ms": 1900
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.turnPhase === 'ended' && window.Game.bossState.outcome === 'lose'",
+     "desc": "Player loses when HP reaches 0 and Awakening Continue modal appears"
+    },
+    {
+     "do": "click_world",
+     "x": 450,
+     "y": 487
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.awakeningUsed === true && window.Game.bossState.skillRateMult === 2.0 && window.State.crest === 500",
+     "desc": "Awakening Continue deducts 100 Crest and starts rematch with +20% stats and 2x skill rate"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    }
+   ],
+   "look_for": "Losing a boss fight to bring up the 'BATTLE LOST \u2014 AWAKENING CONTINUE (\u899a\u9192\u30b3\u30f3\u30c6\u30a3\u30cb\u30e5\u30fc)' screen, then clicking 'AWAKENING REMATCH (100 CREST)' to restart with +20% HP/ATK/DEF and 2x skill activation rate."
+  },
+  {
+   "id": "enemy_drops_zenny_cards_ep_mapparts",
+   "rule_index": 14,
+   "rule": "Enemies defeated in action stages drop Zenny coins, green/gold Battle Memory cards, yellow EP recovery capsules, elemental chips, and Map Parts.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 330,
+    "end": 356
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "1",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "click_world",
+     "x": 1200,
+     "y": 79
+    },
+    {
+     "do": "wait",
+     "ms": 4500
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'pickup' && e.subType === 'zenny')",
+     "desc": "Defeated enemies drop Zenny coins and items collected by the player"
+    }
+   ],
+   "look_for": "Defeated enemies dropping silver 'Z' Zenny coins, green/gold 'BM' Battle Memory cards, yellow 'EP' capsules, and blue 'MAP' parts along with top-center pickup notification banners."
+  },
+  {
+   "id": "world_map_3x3_grid_master_boss",
+   "rule_index": 15,
+   "rule": "Collecting all 9 pieces of a 3x3 Map grid in a World unlocks the Master Boss / Raid Boss for that area.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 876,
+    "end": 895
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.collectMapPart(1); window.Game.collectMapPart(1); window.Game.collectMapPart(1);"
+    },
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'world' && window.State.mapParts === 9",
+     "desc": "3x3 Map grid has all 9 pieces collected on the World Map"
+    },
+    {
+     "do": "click_world",
+     "x": 369,
+     "y": 541
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'boss' && window.Game.bossState.mode === 'raid'",
+     "desc": "Master Boss Raid launches from the 3x3 Map grid box"
+    }
+   ],
+   "look_for": "The 3x3 Map grid at the bottom-left of the World Map screen filled to 9/9 pieces, and clicking the purple 'LAUNCH 4-PLAYER CO-OP MASTER BOSS RAID!' button."
+  },
+  {
+   "id": "boss_first_victory_armor_parts_unlock",
+   "rule_index": 16,
+   "rule": "Defeating a stage Boss for the first time awards one of 5 Armor Parts (head, body, right arm, left arm, legs); collecting all 5 parts unlocks a new playable Armor.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 650,
+    "end": 665
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.armorParts['OVER-2'] = 4;"
+    },
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 86
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.outcome === 'win' && window.Game.isArmorUnlocked('OVER-2') === true",
+     "desc": "Defeating the stage boss awards the 5th Armor Part and unlocks OVER-2"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    }
+   ],
+   "look_for": "The 'YOU WIN!! \u2014 BOSS DEFEATED' modal displaying 'ARMOR PART ACQUIRED: OVER-2 Head (5/5)' and 'NEW OVER ARMOR UNLOCKED: OVER-2!!'."
+  },
+  {
+   "id": "armor_stats_elements_and_slot_grids",
+   "rule_index": 17,
+   "rule": "Each Armor (OVER-1 through OVER-10, OVER-B, OVER-Z, etc.) has its own elemental resistances, base stats, and a geometric grid of 5 to 8 Battle Memory card slots connected by lines.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 130,
+    "end": 155
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.unlockedArmors['OVER-2'] = true; window.Game.unlockedArmors['OVER-10'] = true;"
+    },
+    {
+     "do": "key",
+     "key": "4",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'deck' && window.State.equippedArmor === 'OVER-1' && window.Game.getEquippedArmor().slots.length === 5",
+     "desc": "OVER-1 shows 5-slot X-formation grid and Blue element"
+    },
+    {
+     "do": "click_world",
+     "x": 175,
+     "y": 500
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.equippedArmor === 'OVER-2' && window.Game.getEquippedArmor().element === 'red'",
+     "desc": "Switching to OVER-2 changes element to Red, base stats, and slot layout"
+    },
+    {
+     "do": "click_world",
+     "x": 175,
+     "y": 614
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.equippedArmor === 'OVER-10' && window.Game.getEquippedArmor().slots.length === 6",
+     "desc": "Switching to OVER-10 displays a 6-slot geometric grid and higher base stats"
+    }
+   ],
+   "look_for": "The Deck/Armor screen showing OVER-1, switching to OVER-2 (Red assault armor), and switching to OVER-10 (Gold 6-slot matrix) with distinct geometric card slot layouts and base stats."
+  },
+  {
+   "id": "battle_memory_card_stats_and_cost_cap",
+   "rule_index": 18,
+   "rule": "Each Battle Memory card has a Cost value, HP/ATK/DEF stats, a rarity (Normal, Normal+, Rare, SuperRare / SR, SR+, SSR), a skill, and a border color (red, green, blue, yellow, white/black). Total equipped card Cost cannot exceed the player's current max COST stat.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 68,
+    "end": 92
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "4",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "eval",
+     "js": "window.Game.maxCost = 14;"
+    },
+    {
+     "do": "click_world",
+     "x": 457,
+     "y": 389
+    },
+    {
+     "do": "wait",
+     "ms": 250
+    },
+    {
+     "do": "click_world",
+     "x": 1070,
+     "y": 422
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.cost <= window.State.maxCost && window.Game.toastText.includes('COST LIMIT EXCEEDED')",
+     "desc": "Equipping a high-cost card that exceeds maxCost is blocked with a COST LIMIT EXCEEDED alert"
+    }
+   ],
+   "look_for": "Battle Memory cards displaying rarity stars, Cost badge (C1-C5), HP/ATK/DEF stats, skill name, and colored borders, and an alert preventing total equipped Cost from exceeding max COST."
+  },
+  {
+   "id": "bonus_lines_color_matching_stat_boost",
+   "rule_index": 19,
+   "rule": "Placing Battle Memory cards of matching colors into connected slots activates colored Bonus Lines (\u30dc\u30fc\u30ca\u30b9\u30e9\u30a4\u30f3) between them, significantly boosting total HP, ATK, and DEF, with the center card linking to all outer cards.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "D",
+    "start": 99,
+    "end": 124
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "4",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "eval",
+     "js": "window.Game.decks['OVER-1'] = [window.Game.cards[0].uid, window.Game.cards[4].uid, null, null, null];"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.bonusLines === 0",
+     "desc": "Mismatched cards with empty center have 0 Bonus Lines"
+    },
+    {
+     "do": "click_world",
+     "x": 763,
+     "y": 95
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.bonusLines >= 4 && window.Game.getComputedStats().lineBonusPct >= 0.56",
+     "desc": "Matching card colors and White center core activate glowing Bonus Lines and boost HP/ATK/DEF"
+    }
+   ],
+   "look_for": "Inactive dashed lines between deck slots lighting up into glowing colored Bonus Lines when matching cards and the center core card are equipped, boosting HP, ATK, and DEF."
+  },
+  {
+   "id": "card_enhancement_level_and_skill_up",
+   "rule_index": 20,
+   "rule": "In the Enhancement (\u5f37\u5316) menu, players select a base Battle Memory card and fuse fodder cards into it at the cost of Zenny to increase its Level and stats; fusing cards with the same skill (e.g., Heat + Heat) also levels up the card's Skill Level.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 326,
+    "end": 339
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "5",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.screen === 'gacha' && window.Game.cards[0].level === 1",
+     "desc": "Enhancement screen displays base card at Lv.1 and Skill Lv.1"
+    },
+    {
+     "do": "click_world",
+     "x": 312,
+     "y": 276
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.cards[0].level === 2 && window.Game.cards[0].skillLv === 2 && window.State.zenny < 1200",
+     "desc": "Enhancing the card spends Zenny and increases Card Level, stats, and Skill Level"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    }
+   ],
+   "look_for": "Clicking 'ENHANCE CARD (120 ZENNY)' on the left panel of the Enhance/Gacha screen to level up 'Hunter X-01' from Lv.1 to Lv.2 (and Skill Lv.2) with higher HP/ATK/DEF."
+  },
+  {
+   "id": "currencies_zenny_crest_arena_coins",
+   "rule_index": 21,
+   "rule": "The game uses two main currencies: Zenny (silver coins earned in stages, boss fights, login bonuses, and cheering friends) and Crest (gold coins, premium currency), plus Gacha Tickets and Arena Coins.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 184,
+    "end": 198
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.zenny > 0 && window.State.crest > 0 && window.Game.arenaCoins > 0",
+     "desc": "Zenny, Crest, and Arena Coins are tracked and displayed in the UI"
+    },
+    {
+     "do": "click_world",
+     "x": 804,
+     "y": 457
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.zenny === 1275",
+     "desc": "Cheering friends increases Zenny balance"
+    }
+   ],
+   "look_for": "The top-left status bar showing silver coin Zenny ('Z') and gold coin Crest ('CR'), plus Arena Coins displayed on the World/Arena screen."
+  },
+  {
+   "id": "gacha_pulls_normal_and_premium",
+   "rule_index": 22,
+   "rule": "Normal Gacha costs 200 Zenny per pull (or 1000 Zenny for a 5+1 bundle, or 20,000 Zenny for a 12-pull in later versions); Premium Gacha costs 300 Crest per pull.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 189,
+    "end": 203
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "5",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_world",
+     "x": 928,
+     "y": 174
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.zenny === 1000 && window.Game.lastGachaPulls.length === 1",
+     "desc": "Normal Gacha 1x pull deducts 200 Zenny and grants 1 card"
+    },
+    {
+     "do": "click_world",
+     "x": 928,
+     "y": 246
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.zenny === 0 && window.Game.lastGachaPulls.length === 6",
+     "desc": "Normal Gacha 5+1 bundle deducts 1000 Zenny and grants 6 cards"
+    },
+    {
+     "do": "click_world",
+     "x": 928,
+     "y": 320
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.crest === 300 && window.Game.lastGachaPulls[0].rarity >= 5",
+     "desc": "Premium Gacha deducts 300 Crest and grants an SR+/SSR card"
+    }
+   ],
+   "look_for": "Pulling Normal Gacha (200 Zenny), 5+1 Bundle (1000 Zenny), and Premium Crest Gacha (300 Crest) on the right side of the Enhance/Gacha screen and seeing the newly summoned cards."
+  },
+  {
+   "id": "top_bar_exp_ep_pp_meters",
+   "rule_index": 23,
+   "rule": "Player progression is governed bythree top-bar meters: EXP (fills from stages to trigger Level Up), EP (Energy Points consumed by Quests and Bosses, regenerates 1 point every 5 minutes), and PP (5 pips used for Battle Arena PvP).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 102,
+    "end": 115
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "expect",
+     "js": "window.State.ep === 23 && window.State.maxEp === 23 && window.State.pp === 5 && window.Game.epTimer <= 300",
+     "desc": "Top bar tracks EXP, EP with 5-minute regen timer, and 5 PP pips"
+    },
+    {
+     "do": "key",
+     "key": "1",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.ep === 20",
+     "desc": "Starting a Quest stage consumes EP"
+    },
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_world",
+     "x": 1158,
+     "y": 257
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State.pp === 4",
+     "desc": "Entering a Battle Arena duel consumes 1 PP pip"
+    }
+   ],
+   "look_for": "The top-center status bar displaying the orange EXP bar, green EP bar with its (4:59) 5-minute countdown timer, and 5 green PP pips."
+  },
+  {
+   "id": "level_up_status_points_allocation",
+   "rule_index": 24,
+   "rule": "Each Level Up grants 5 Status Points that the player manually distributes between EP (+1 max EP per 1 point) and COST (+1 max Cost per 2 points), and fully refills EP.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 430,
+    "end": 442
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.ep = 10; window.Game.gainExp(120);"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State.level === 2 && window.State.statusPoints === 10 && window.State.ep === window.State.maxEp",
+     "desc": "Level Up grants +5 Status Points and fully refills EP"
+    },
+    {
+     "do": "key",
+     "key": "5",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_world",
+     "x": 806,
+     "y": 601
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State.maxEp === 24 && window.State.statusPoints === 9",
+     "desc": "Allocating 1 Status Point to EP increases maxEP by 1"
+    },
+    {
+     "do": "click_world",
+     "x": 1078,
+     "y": 601
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State.maxCost === 17 && window.State.statusPoints === 7",
+     "desc": "Allocating 2 Status Points to COST increases maxCost by 1"
+    }
+   ],
+   "look_for": "Leveling up to gain +5 Status Points and refilling EP, then clicking '+1 MAX EP (Cost: 1 Pt)' and '+1 MAX COST (Cost: 2 Pts)' at the bottom-right of the Enhance/Gacha screen."
+  },
+  {
+   "id": "post_stage_recent_players_and_bulk_cheer",
+   "rule_index": 25,
+   "rule": "After each quest stage, 3 recently active players are displayed and can be inspected or sent Friend Requests; players can also search friends by an 8-character alphanumeric ID and use a bulk 'Cheer' (\u4e00\u62ec\u5fdc\u63f4) button on their friends list to earn Zenny.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "D",
+    "start": 140,
+    "end": 167
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "window.Game.stageState.scrollX = window.Game.stageState.maxDist - 40;"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.stageState.cleared === true && window.Game.getRecentPlayers(3).length === 3",
+     "desc": "Stage Clear screen displays 3 recently active players"
+    },
+    {
+     "do": "click_world",
+     "x": 962,
+     "y": 312
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'chat' && e.kind === 'cheer')",
+     "desc": "Cheering an individual recent player awards +25 Zenny"
+    },
+    {
+     "do": "click_world",
+     "x": 345,
+     "y": 516
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'chat' && e.kind === 'bulk_cheer')",
+     "desc": "Clicking Bulk Cheer (\u4e00\u62ec\u5fdc\u63f4) cheers all 3 players and awards +75 Zenny"
+    }
+   ],
+   "look_for": "The Stage Clear modal listing 3 recent active players with individual 'CHEER +25Z' buttons and the gold 'BULK CHEER (+75Z)' button at the bottom-left."
+  },
+  {
+   "id": "master_boss_4_player_raid",
+   "rule_index": 26,
+   "rule": "Master Bosses (Raid Bosses) have millions of HP and are fought by a 4-player team of OVER-1 units simultaneously on screen, with a damage ranking leaderboard.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 420,
+    "end": 445
+   },
+   "players": 2,
+   "steps": [
+    {
+     "do": "key",
+     "key": "3",
+     "ms": 0,
+     "player": 0
+    },
+    {
+     "do": "key",
+     "key": "3",
+     "ms": 0,
+     "player": 1
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.mode === 'raid' && window.Game.bossState.raidSquad.length === 4",
+     "desc": "4-player team of OVER units is assembled on the left side against the Master Raid Boss"
+    },
+    {
+     "do": "click_world",
+     "x": 1065,
+     "y": 646,
+     "player": 0
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.boss.hp < window.Game.bossState.boss.maxHp",
+     "desc": "All 4 squad members fire at the Master Boss and sync shared raid HP"
+    }
+   ],
+   "look_for": "A 4-player squad of OVER units in a 2x2 formation on the left side firing a volley of shots together against the giant Master Raid Boss on the right."
+  },
+  {
+   "id": "battle_arena_1v1_pvp",
+   "rule_index": 27,
+   "rule": "Battle Arena is an asynchronous 1v1 PvP mode where players spend PP to fight other players' OVER-1 units for Arena Coins and ranking positions.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "C",
+    "start": 570,
+    "end": 595
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_world",
+     "x": 1158,
+     "y": 257
+    },
+    {
+     "do": "wait",
+     "ms": 1300
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.mode === 'arena' && window.State.pp === 4",
+     "desc": "Entering Battle Arena spends 1 PP and starts a 1v1 PvP duel against a rival OVER unit"
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 86
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.outcome === 'win' && window.Game.arenaCoins === 15",
+     "desc": "Winning the Arena duel awards +5 Arena Coins"
+    }
+   ],
+   "look_for": "Clicking 'DUEL (1 PP)' in the Battle Arena section to fight a rival player's OVER unit 1v1 with horizontal top VS health bars, earning Arena Coins upon victory."
+  },
+  {
+   "id": "battle_tower_persistent_boss_hp",
+   "rule_index": 28,
+   "rule": "Battle Tower (\u30d0\u30c8\u30eb\u30bf\u30ef\u30fc) is a floor-climbing boss gauntlet where boss HP persists across attempts (or recovers 1% over time) and clearing milestone floors (such as Floor 40) awards SR+ cards, E-Cans, H-Cans, and Zenny.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "E",
+    "start": 10,
+    "end": 35
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "6",
+     "ms": 0
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_world",
+     "x": 954,
+     "y": 160
+    },
+    {
+     "do": "wait",
+     "ms": 1400
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.bossState.mode === 'tower' && window.Game.bossState.cshotMaxLevel === 5",
+     "desc": "Battle Tower Floor 1 starts with C.Shot gauge up to Lv.5"
+    },
+    {
+     "do": "click_world",
+     "x": 1065,
+     "y": 646
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "expect",
+     "js": "window.Game.towerBossHp > 0 && window.Game.towerBossHp < window.Game.bossState.boss.maxHp",
+     "desc": "Boss HP damage is persisted in towerBossHp across attempts"
+    },
+    {
+     "do": "click_world",
+     "x": 1188,
+     "y": 86
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State.towerFloor === 2",
+     "desc": "Defeating the Tower Boss advances towerFloor to Floor 2 and awards SR+ card, Crest, and Zenny"
+    }
+   ],
+   "look_for": "Launching Battle Tower from the World/Arena screen, fighting 'Floor 1: Rosso.M Vanguard' with a 5-segment C.Shot gauge and persistent boss HP, and advancing to Floor 2 upon victory."
+  }
+ ]
+}
