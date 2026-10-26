@@ -8,61 +8,64 @@ web
 
 ## Stack
 
-Next.js / React (user's choice), run behind one custom Node server that also hosts the WebSocket multiplayer rooms. Game building runs on the pi agent harness (`@earendil-works/pi-coding-agent`, pi.dev) server-side with the Gemini model from `.env`; the key never reaches the client. Games run in Three.js. Storage is JSON files on disk for now. Deploy target: undecided.
+Next.js / React for the app, run locally with `pnpm dev`. Each revival is a folder on disk (`runs/<id>/`) whose `events.jsonl` is the log the UI reads; there is no database. The footage stages (find, watch, footage check) are Python scripts in `pipeline/` calling Gemini Argon. The Builder and playtesters are pi agents (`@earendil-works/pi-coding-agent`) driven from `pipeline/agents/`, playing the game in Playwright. Every rebuilt game starts from the zero-dependency kit in `pipeline/kit/` (a WebSocket relay and its client), and the app starts that game's own server on a local port when someone presses Play. The Managed Agent squad plays through a temporary `cloudflared` tunnel. The Gemini key lives in `.env` and never reaches the client.
 
 ## Users
 
-Teens and adults (13+): hobbyists and casual creators who want to make games without learning an engine, and the players who come to play what others have made. Creating and playing carry equal weight; most users are expected to do both.
+People who miss a game that shut down (an online game whose servers went dark, a Flash game, a delisted title) and want to play it again with friends. Also anyone curious to watch agents bring a lost game back.
 
 ## Product Purpose
 
-Revive is a Roblox-style game platform that runs in the browser. A user describes a game in one prompt and gets a playable 3D multiplayer game, which they can publish for others to discover and play. Success means a working, shareable game from a single prompt, and a library of community games worth coming back to play.
+Revive brings back games that can no longer be played. Agents find the surviving gameplay footage, watch all of it, and rebuild the game as a multiplayer browser game. They then playtest it round after round until it is both fun and faithful to the original. Success means a lost game you can open in a browser tab and play with other people, and that holds up when checked rule by rule against its own footage.
 
 ## Positioning
 
-Web-based, with games made in one prompt. There's no download, no engine and no scripting step between an idea and a playable multiplayer game. Roblox needs a client install and Studio; Revive goes from a prompt to play in a browser tab.
+Once a game's servers or runtime are gone, gameplay video is often all that's left. Revive treats that footage as the spec: every rule it rebuilds comes with a timestamp in the original video, and every round is checked against those moments. Fan remakes take years. A revival runs in a sitting, and you can watch the agents work the whole time.
 
 ## Operating Context
 
-- Core loop: prompt a game → play and iterate on it → publish → others discover and play it together.
-- Runs entirely in the browser on the web platform. Mobile web is still web.
-- Games are 3D and multiplayer, so realtime sessions are part of the product, not an add-on.
-- A Gemini model is configured in `.env` (`GEMINI_API_KEY`, `GEMINI_MODEL`); the pi agent harness drives generation on the building page.
-- Every generated game builds its own 3D map and is played in Three.js. Every game is multiplayer so friends can play together; an invite link drops a friend into the same server.
-- The home screen follows a Roblox-style platform layout (user-supplied reference: Boxity.io home). Its friends row is replaced by a prompt for building your own game from an idea.
-- Users are guests with an auto-generated username and avatar color, kept in a cookie. There's no login yet.
+- A revival moves through three phases shown in the workshop: **Collect** (find long gameplay videos and watch every one of them in a single long-context call, producing a timeline and timestamped rules), **Remake** (the Builder writes the game, asks the footage questions, and plays its own build in a real browser), and **Playtest** (rounds of fixing and replaying).
+- Each playtest round has a fun tester, a footage check, and a squad of three Gemini Managed Agents (Explorer, Griefer, Socialite). The footage check plays every rule as a scripted scenario, records it, and judges it against the original moment. The squad agents each run in their own Google-hosted sandbox and play the round's build together over the internet. The best round, ranked by rules matched, is the one people play.
+- The **Parity** view puts the rebuild's recording beside the original footage, rule by rule.
+- The **Lost games** archive lists 166 shut-down games with their history and surviving footage, ranked by how well each suits a revival. Any of them can be revived in one click, and **Add a game** starts one for a title that isn't listed.
+- Everything the agents do (tool calls, reasoning summaries, screenshots, the code they write) streams to the revival page while it runs.
+- No accounts. Everyone who opens the app sees every revival.
 
 ## Capabilities and Constraints
 
 Confirmed:
-- One-prompt game generation that produces playable 3D games, with follow-up prompts to refine them on the building page.
-- Multiplayer play.
-- Publishing and discovery of community-made games.
+- Rebuilds a lost game from footage alone, as a multiplayer browser game.
+- Rule-by-rule footage check of every playtest round, with recordings.
+- Managed Agent squad multiplayer playtests over a public tunnel.
+- Runs resume where they stopped; revivals can be stopped, resumed, played and deleted from the UI.
+
+Constraints:
+- Fidelity depends on the footage that survives. Rules the videos never show can't be checked.
+- Runs locally. A revival takes tens of minutes and spends real model calls.
+- The squad needs `cloudflared` and a one-time agent setup per API key; without them, a local multiplayer tester stands in.
 
 Open decisions (do not invent):
-- Real accounts and identity, social features, moderation approach, monetization.
-- Deploy target.
-- Product name styling or final branding beyond the working name "Revive".
+- Hosting, accounts and sharing revivals publicly.
+- Rights and takedown handling for revived games.
 
 ## Brand Commitments
 
-- Name: Revive (working name).
-- The UI is simple and clean, never cluttered, the home page especially. Every element must earn its place.
-- Polish is the brand: authored motion and small details (hover, press, entrance, loading and transition states) on every surface, respecting reduced motion.
-- Layout follows the user-supplied Roblox-style reference (Boxity.io home).
+- Name: Revive.
+- Teletext look: fastext nav keys in red, green, yellow and cyan, block type, broadcast-page framing. The archive should feel like a service listing, not a store.
+- The agents' work is the show. Live activity stays visible and legible rather than hidden behind a spinner.
+- Honest about fidelity: show how many footage rules a revival matches, never claim a perfect copy.
 
 ## Evidence on Hand
 
-A few hand-written starter games ship with the platform, labeled as starters. Beyond those there are no real users, games, testimonials, metrics or press yet. Stats shown in the UI must be real (live players from the multiplayer server, actual plays and votes). Future work must not fabricate player counts, featured games, creator quotes or ratings; use clearly labeled placeholders until real content exists.
+Revivals of Glitch (from 69 minutes of footage), blockor.io and Rockman Xover, each with its footage, rounds, footage-check recordings and squad findings in `runs/`. Earlier prototypes (Spore 2D, Giants' Reverie, the first improvement loop) are kept in `spore2d-example/`, `glitch-example/` and `loop/`. The revival pages are read straight from these run files.
 
 ## Product Principles
 
-1. **Prompt to play, with nothing in between.** Every added step between the idea and a playable game has to justify itself.
-2. **Creators and players are the same people.** Design so either loop flows into the other: playing should inspire making, and making should end in being played.
-3. **The browser is the console.** No install, instant load and a shareable link are the product promise, not conveniences.
-4. **Multiplayer by default.** A game is something you play with others; solo is the exception.
-5. **Safe for a 13+ community.** User-generated content and live play with strangers require moderation and reporting from the start.
+1. **The footage is the spec.** Every rule traces back to a timestamp in the original video, and every round is judged against it.
+2. **Fun and faithful, in that order of proof.** A revival has to match the original, and still has to be worth playing.
+3. **Multiplayer by default.** These games were played together; the rebuild is too, and agents test it together.
+4. **Show the work.** Anyone watching can see what each agent saw, did and found.
 
 ## Accessibility & Inclusion
 
-Audience includes minors (13+): plan for content moderation, reporting and age-appropriate defaults in social and multiplayer features. No specific WCAG level has been set yet.
+No specific WCAG level has been set. The teletext palette must still meet contrast on text, the fastext colours are always paired with labels, and live activity respects reduced motion.
