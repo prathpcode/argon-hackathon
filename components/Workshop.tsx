@@ -614,10 +614,12 @@ function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: st
 }
 
 /** Every footage rule, played in the rebuild and judged against its moment in the original footage. */
-/** The footage check people judge a revival by: the best round's, else the latest round that has one. */
-function parityCheck(run: RunState) {
+/** The footage check people judge a revival by (the best round's, else the latest), cut to the rules that match. */
+function parityCheck(run: RunState): Verify | null {
   const checked = run.rounds.filter((r) => r.verify);
-  return (checked.find((r) => r.round === run.best?.round) ?? checked.at(-1))?.verify ?? null;
+  const check = (checked.find((r) => r.round === run.best?.round) ?? checked.at(-1))?.verify;
+  const rules = check?.rules.filter((r) => r.pass) ?? [];
+  return check && rules.length ? { ...check, rules } : null;
 }
 
 const VERDICT = { ok: "Match", no: "Differs", unsure: "Unclear" } as const;
