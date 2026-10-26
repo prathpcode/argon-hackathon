@@ -486,7 +486,6 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .review-parity:hover { background: #12123a; color: var(--white); }
 .review-parity svg { width: 15px; height: 15px; color: var(--cyan); }
 .review-parity span { flex: 1; }
-.review-parity b { font-family: var(--tt); font-weight: 400; color: var(--cyan); }
 .review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
 .review-list p { margin: 2px 0 8px calc(28px + 1.2ch + 6px); font-size: 12.5px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .issues ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
@@ -619,21 +618,17 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 
 /* ------------------------------------------------------------ parity: original footage beside the revival */
 .parity-view { animation: rise 0.4s var(--ease) both; }
-.parity-head { display: flex; align-items: center; gap: 2ch; margin-bottom: 16px; }
-.parity-pct { font-family: var(--tt); font-weight: 400; font-size: 34px; line-height: 1; color: var(--yellow); }
-.parity-meter { flex: 1; display: flex; gap: 3px; min-width: 0; }
-.parity-meter button { flex: 1; height: 26px; min-width: 6px; padding: 0; border: 0; background: var(--c); opacity: 0.45;
-  transition: opacity 160ms linear, transform 200ms var(--ease); animation: rise 0.4s var(--ease) both; }
-.parity-meter button:hover { opacity: 0.8; transform: translateY(-2px); }
-.parity-meter button[aria-selected="true"] { opacity: 1; transform: translateY(-4px); box-shadow: 0 4px 0 0 var(--white); }
-.parity-meter .ok, .parity-rule.ok { --c: var(--green); }
-.parity-meter .no, .parity-rule.no { --c: var(--red); }
-.parity-meter .unsure, .parity-rule.unsure { --c: var(--yellow); }
+.parity-rule.ok { --c: var(--green); }
+.parity-rule.no { --c: var(--red); }
+.parity-rule.unsure { --c: var(--yellow); }
 .parity-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
 .parity-pair figure { margin: 0; min-width: 0; animation: rise 0.45s var(--ease) both; }
 .parity-pair figure + figure { animation-delay: 70ms; }
 .parity-pair figcaption { display: flex; align-items: baseline; gap: 1.2ch; margin-bottom: 8px; font-family: var(--tt); font-size: 16px; color: var(--white); }
-.parity-pair figcaption span { font-size: 13px; color: var(--cyan); }
+.parity-pair figcaption span, .parity-pair figcaption a { font-size: 13px; color: var(--cyan); }
+.parity-pair figcaption a:hover { color: var(--white); }
+.yt-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; transition: opacity 0.3s var(--ease); }
+.yt-cover.gone { opacity: 0; }
 .pair-screen { position: relative; aspect-ratio: 16 / 9; background: #0a0a0a; outline: 2px solid var(--blue-line); outline-offset: -2px; overflow: hidden; }
 .pair-screen iframe, .pair-screen video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #000; }
 .pair-empty { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--tt); font-size: 14px; color: var(--cyan); }
@@ -655,5 +650,5 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
   .parity-step { position: static; margin-top: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .parity-view, .parity-pair figure, .parity-rule, .parity-meter button { animation: none; transition: none; }
+  .parity-view, .parity-pair figure, .parity-rule { animation: none; transition: none; }
 }

@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { clock, compact, duration } from "@/lib/format";
 import { youtubeId } from "@/lib/links";
+import { YtClip } from "./YtClip";
 import type { Act, Agent, RunState, StageState, Verify, VerifyRule } from "@/lib/run-types";
 
 const TOOL_ICON: Record<string, LucideIcon> = {
@@ -161,7 +162,7 @@ export function Workshop({ initial }: { initial: RunState }) {
             <span className="phase-no"><Scale aria-hidden /></span>
             <div>
               <b>Parity</b>
-              <span>{check.matched} of {check.total} match the footage</span>
+              <span>Original beside revival</span>
             </div>
           </button>
         )}
@@ -574,7 +575,7 @@ function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: st
       )}
       {check && (
         <button className="review-parity" onClick={onParity}>
-          <Scale aria-hidden /> <span>Matches the footage</span> <b>{check.matched} / {check.total}</b>
+          <Scale aria-hidden /> <span>Original beside revival</span>
         </button>
       )}
       {(reviewers.length > 0 || squad.length > 0) && (
@@ -642,28 +643,17 @@ function ParityView({ run, check }: { run: RunState; check: Verify }) {
 
   return (
     <section className="parity-view">
-      <header className="parity-head">
-        <b className="parity-pct">{Math.round((check.matched / check.total) * 100)}%</b>
-        <div className="parity-meter" role="tablist" aria-label="Footage rules">
-          {rules.map((x, n) => (
-            <button key={x.id} role="tab" aria-selected={n === i} aria-label={`${VERDICT[verdictOf(x)]}: ${x.rule}`} title={x.rule}
-              className={verdictOf(x)} onClick={() => setI(n)} />
-          ))}
-        </div>
-      </header>
 
-      <div className="parity-pair" key={r.id}>
+      <div className="parity-pair">
         <figure>
-          <figcaption>Original<span>{r.original.video} · {clock(r.original.start)}</span></figcaption>
+          <figcaption>Original<a href={r.original_url} target="_blank" rel="noreferrer">{r.original.video} · {clock(r.original.start)} ↗</a></figcaption>
           <div className="pair-screen">
-            {yt ? (
-              <iframe src={`https://www.youtube-nocookie.com/embed/${yt}?start=${r.original.start}&end=${r.original.end}&autoplay=1&mute=1&rel=0&playsinline=1`}
-                title="Original footage" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen />
-            ) : <a href={r.original_url} target="_blank" rel="noreferrer" className="pair-empty">Open the original</a>}
+            {yt ? <YtClip id={yt} start={r.original.start} end={r.original.end} title="Original footage" />
+              : <a href={r.original_url} target="_blank" rel="noreferrer" className="pair-empty">Open the original</a>}
           </div>
-          <p>{r.original_shows}</p>
+          <p key={r.id}>{r.original_shows}</p>
         </figure>
-        <figure>
+        <figure key={r.id}>
           <figcaption>Revival{run.rounds.length > 1 && <span>round {check.round}</span>}</figcaption>
           <div className="pair-screen">
             {r.video ? <video src={file(run, r.video)} autoPlay muted loop playsInline controls /> : <span className="pair-empty">No recording</span>}
