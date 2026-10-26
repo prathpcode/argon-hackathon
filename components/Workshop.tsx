@@ -524,7 +524,9 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
           <h3>{g.name}</h3>
           {g.agents.map((a) => {
             const Icon = agentIcon(a);
-            const rep = a.role === "tester" ? run.rounds.find((r) => r.round === a.round)?.reports.find((r) => r.tester === a.focus) : null;
+            const tr = a.role === "tester" ? run.rounds.find((r) => r.round === a.round) : undefined;
+            // A tester without its own report shows its round's scores.
+            const rep = tr?.reports.find((r) => r.tester === a.focus) ?? (tr?.fun !== undefined ? tr : null);
             return (
               <button key={a.id} className={`mate ${a.status}`} aria-pressed={focus === a.id} onClick={() => onPick(a.id)}>
                 <span className="mate-icon"><Icon aria-hidden /></span>
@@ -583,13 +585,14 @@ function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: st
           {reviewers.map((a) => {
             const Icon = agentIcon(a);
             const rep = round?.reports.find((r) => r.tester === a.focus);
+            const scores = rep ?? (round?.fun !== undefined ? round : null);
             return (
               <li key={a.id}>
                 <button className={`mate ${a.status}`} onClick={() => onPick(a.id)}>
                   <span className="mate-icon"><Icon aria-hidden /></span>
                   <span className="mate-text">
                     <b>{a.name}</b>
-                    <small>{rep ? `Fun ${rep.fun} · Fidelity ${rep.fidelity}` : a.status === "running" ? "Playing" : "No score"}</small>
+                    <small>{a.status === "running" ? "Playing" : scores ? `Fun ${scores.fun} · Fidelity ${scores.fidelity}` : "No score"}</small>
                   </span>
                 </button>
                 {rep?.summary && <p>{rep.summary}</p>}
