@@ -1,0 +1,9 @@
+{
+ "path": "public/js/ui.js",
+ "edits": [
+  {
+   "oldText": "        destinations.forEach((d) => {\n          const card = document.createElement(\"div\");\n          card.className = \"map-card\" + (game.area === d.id ? \" map-current\" : \"\");\n          card.innerHTML = `\n            <div class=\"map-badge\" style=\"background:${d.color}\">${d.region}</div>\n            <div class=\"map-street\">${d.name}</div>\n            <div class=\"map-desc\">${d.desc}</div>\n            <button class=\"green-pill-btn\">${game.area === d.id ? \"Currently Here\" : \"GO • Teleport Here\"}</button>\n          `;\n          card.querySelector(\"button\").onclick = () => {\n            closeModal();\n            if (game.area !== d.id) game.changeStreet(d.id);\n          };\n          wrap.appendChild(card);\n        });",
+   "newText": "        destinations.forEach((d) => {\n          const card = document.createElement(\"div\");\n          card.className = \"map-card\" + (game.area === d.id ? \" map-current\" : \"\");\n          card.style.cursor = \"pointer\";\n          card.innerHTML = `\n            <div class=\"map-badge\" style=\"background:${d.color}\">${d.region}</div>\n            <div class=\"map-street\">${d.name}</div>\n            <div class=\"map-desc\">${d.desc}</div>\n            <button class=\"green-pill-btn\">${game.area === d.id ? \"Currently Here\" : \"GO • Teleport Here\"}</button>\n          `;\n          const doGo = (e) => {\n            e.stopPropagation();\n            closeModal();\n            if (game.area !== d.id) game.changeStreet(d.id);\n          };\n          card.onclick = doGo;\n          card.querySelector(\"button\").onclick = doGo;\n          wrap.appendChild(card);\n        });"
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "path": "public/js/main.js",
+ "edits": [
+  {
+   "oldText": "    // 2. Check roaming critters\n    for (const c of st.critters) {\n      if (Math.abs(wx - c.x) < 28 && Math.abs(wy - (c.y - 12)) < 26) {\n        return { kind: \"critter\", obj: c, id: c.id, name: c.name };\n      }\n    }\n\n    // 3. Check street nodes\n    for (let i = st.nodes.length - 1; i >= 0; i--) {\n      const n = st.nodes[i];\n      const halfW = (n.w || 60) * 0.55;\n      const h = n.h || 80;\n      if (wx >= n.x - halfW && wx <= n.x + halfW && wy >= n.y - h - 10 && wy <= n.y + 15) {\n        return { kind: \"node\", obj: n, id: n.id, name: n.name };\n      }\n    }",
+   "newText": "    // 2. Check roaming critters\n    for (const c of st.critters) {\n      if (Math.abs(wx - c.x) < 38 && Math.abs(wy - (c.y - 14)) < 36) {\n        return { kind: \"critter\", obj: c, id: c.id, name: c.name };\n      }\n    }\n\n    // 3. Check street nodes\n    for (let i = st.nodes.length - 1; i >= 0; i--) {\n      const n = st.nodes[i];\n      const halfW = Math.max(42, (n.w || 60) * 0.68);\n      const h = (n.h || 80) + 18;\n      if (wx >= n.x - halfW && wx <= n.x + halfW && wy >= n.y - h && wy <= n.y + 20) {\n        return { kind: \"node\", obj: n, id: n.id, name: n.name };\n      }\n    }"
+  }
+ ]
+}

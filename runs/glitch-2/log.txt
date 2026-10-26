@@ -1,0 +1,30 @@
+[find] running
+Traceback (most recent call last):
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/revive.py", line 33, in main
+    run.stage(name, "done", mod.run_stage(run))
+                            ^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/find.py", line 74, in run_stage
+    _, text = call(run, "find" if not attempt else "find-more", stage="find", role="researcher", name="Researcher",
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/common.py", line 200, in call
+    raise RuntimeError(f"{name} {it.status}: {getattr(it, 'error', None)}")
+RuntimeError: Researcher failed: None
+[find] error: Researcher failed: None
+[find] running
+Traceback (most recent call last):
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/revive.py", line 33, in main
+    run.stage(name, "done", mod.run_stage(run))
+                            ^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/find.py", line 75, in run_stage
+    _, text = call(run, "find" if not attempt else "find-more", stage="find", role="researcher", name="Researcher",
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/prathyekpoojary/Desktop/projects/argon-hackathon/pipeline/common.py", line 200, in call
+    raise RuntimeError(f"{name} {it.status}: {getattr(it, 'error', None)}")
+RuntimeError: Researcher failed: None
+[find] error: Researcher failed: None
+[find] done: kept from the last run
+[watch] running
+[watch] done: 34 rules, 28 scenes, 6 areas
+[build] running
+[build] done: Built “Ur's Whimsy”
+[playtest] running

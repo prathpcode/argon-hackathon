@@ -1,0 +1,79 @@
+{
+ "round": 1,
+ "agents": {
+  "Socialite": {
+   "summary": "Explored Beau's Home Street alongside squad members Explorer and Griefer. While player join events and list entries updated in 'People here', Explorer was not visible in the street viewport, and UI text overlap issues were observed in the top-right navigation bar and near the signpost.",
+   "findings": [
+    {
+     "t": 31.1,
+     "severity": "medium",
+     "finding": "Player 'Explorer' appears in the 'People here' sidebar list as being in Beau's Home Street, but the player avatar is completely absent/invisible on screen.",
+     "repro": "Join room as Socialite and observe sidebar when Explorer joins; look for Explorer's avatar in the home street area."
+    },
+    {
+     "t": 31.1,
+     "severity": "low",
+     "finding": "Current street location text 'Beau's Home Street in Ur Home' in the top-right header overlaps the 'Go Home' button and clips off-screen.",
+     "repro": "Inspect the top-right corner of the header navigation area on Beau's Home Street."
+    },
+    {
+     "t": 72.3,
+     "severity": "low",
+     "finding": "Player nametag 'Socialite' overlaps directly with the signpost text bubble ('Want to know what I know?').",
+     "repro": "Stand near the info signpost to the left of the house and observe the nameplate colliding with the sign text."
+    }
+   ],
+   "shots": [
+    "shots/squad_1_Socialite/001.png"
+   ],
+   "secs": 269,
+   "persona": "Play with the others: find the other players, do everything players can do together (chat, emote, follow, trade, compete, co-op). Report anything other players don't see, broken co-op, overlapping names."
+  },
+  "Explorer": {
+   "summary": "Explored Beau's Home Street across the world boundaries, ladders, house area, and interactive objects. Observed header navigation text overflow clipping into the Go Home button, truncated dialogue bubble text on the notice tree, and floating character sprites without visible platform geometry.",
+   "findings": [
+    {
+     "t": 20.7,
+     "severity": "medium",
+     "finding": "Top navigation header text 'Beau's Home Street In Ur Home' overflows outside its container and overlaps the 'Go Home' button icon on the upper right.",
+     "repro": "Join the game and observe the top-right navigation header bar."
+    },
+    {
+     "t": 63.6,
+     "severity": "low",
+     "finding": "NPC / notice tree speech bubble text is truncated and cut off mid-sentence ('Want to know what I know? T') rather than wrapping properly.",
+     "repro": "Approach the notice tree located next to the house on Beau's Home Street."
+    },
+    {
+     "t": 63.6,
+     "severity": "medium",
+     "finding": "Player avatar 'Griefer' is seen standing and floating in mid-air against the house facade without any visible platform or collision art beneath them.",
+     "repro": "Observe players jumping or moving around the second story of the house on Beau's Home Street."
+    }
+   ],
+   "shots": [],
+   "secs": 348,
+   "persona": "Go everywhere: every area, both edges of the world, every exit and door, every platform. Report places you can't reach or leave, invisible walls, falling out of the world, missing art, transitions that fail."
+  },
+  "Griefer": {
+   "summary": "Observed a high-severity movement lock bug where spamming jumps and directional movement across area transitions causes the player to become stuck suspended in mid-air in Chego Chase, as well as a UI text clipping bug in the top navigation header.",
+   "findings": [
+    {
+     "t": 56.5,
+     "severity": "high",
+     "finding": "Player becomes permanently stuck floating in mid-air in the jump animation next to the Ministry of Departments building without landing or falling.",
+     "repro": "Transition from Beau's Home Street to Chego Chase, move toward the Ministry of Departments building, and repeatedly spam jump (Space) and directional keys near x=359, y=187."
+    },
+    {
+     "t": 10.4,
+     "severity": "low",
+     "finding": "Top-right street and world location text ('Beau's Home Street in Ur Home' / 'Chego Chase in Andra') overflows the header bar and overlaps adjacent UI elements.",
+     "repro": "Join the room and view the top-right header area where the current street location breadcrumb is rendered."
+    }
+   ],
+   "shots": [],
+   "secs": 379,
+   "persona": "Try to break it: spam inputs, run off edges, stand inside other players, use items or abilities repeatedly, click everything rapidly. Report exploits (infinite score or resources), stuck states, desync."
+  }
+ }
+}

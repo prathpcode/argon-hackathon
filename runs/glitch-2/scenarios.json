@@ -1,0 +1,1770 @@
+{
+ "world_to_client": "(() => { const c = document.getElementById('game-canvas'); const r = c.getBoundingClientRect(); const camX = (window.State && window.State.camera && window.State.camera.x) || 0; return { x: r.left + (x - camX) * (r.width / c.width), y: r.top + y * (r.height / c.height) }; })()",
+ "start": [
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click",
+   "selector": "#welcome-banner button"
+  },
+  {
+   "do": "wait",
+   "ms": 200
+  }
+ ],
+ "scenarios": [
+  {
+   "id": "avatar_wardrobe_customization",
+   "rule_index": 0,
+   "rule": "The player avatar ('Glitchen') is a 2D side-view cartoon character with customizable gender-neutral proportions, facial features, hair, clothing layers, masks, and rideable costume mounts.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 436,
+    "end": 456
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-wardrobe"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click_text",
+     "text": "Spiky Tuft"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Red Top Hat"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click",
+     "selector": "#modal-close"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.x > 680",
+     "desc": "Customized Glitchen avatar walks on the street wearing the selected hair and hat"
+    }
+   ],
+   "look_for": "2D side-view cartoon Glitchen avatar opening the Wardrobe modal, changing hair style to Spiky Tuft and equipping a Red Top Hat, then walking on the street."
+  },
+  {
+   "id": "movement_and_floaty_roof_jump",
+   "rule_index": 1,
+   "rule": "Avatar movement consists of horizontal walking left/right and a low-gravity, floaty jump arc that allows landing on elevated terrain ledges, tree branches, and multi-tiered house roofs.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 167,
+    "end": 182
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 350
+    },
+    {
+     "do": "key",
+     "key": "Space",
+     "ms": 350
+    },
+    {
+     "do": "wait",
+     "ms": 650
+    },
+    {
+     "do": "key",
+     "key": "Space",
+     "ms": 450
+    },
+    {
+     "do": "wait",
+     "ms": 750
+    },
+    {
+     "do": "key",
+     "key": "Space",
+     "ms": 450
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.y < 375",
+     "desc": "Player lands on elevated house balcony or roof tier"
+    }
+   ],
+   "look_for": "Avatar walking horizontally and performing floaty low-gravity jumps up the porch steps, second-story balcony, and crooked roof peak of the House of Whimsy."
+  },
+  {
+   "id": "avatar_distinct_animations",
+   "rule_index": 2,
+   "rule": "Avatars have distinct animations for idle breathing/blinking, walking, jumping, mining with a pickaxe, watering/tending plants, drinking/tasting, hugging, high-fiving, squeezing chickens, and synchronized dancing.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 504,
+    "end": 520
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "key",
+     "key": "ArrowLeft",
+     "ms": 1100
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "click_world",
+     "x": 335,
+     "y": 340
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Mine"
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "click_world",
+     "x": 200,
+     "y": 310
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Water"
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "key",
+     "key": "2",
+     "ms": 100
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.xp > 120",
+     "desc": "Player performed mining, watering, and dancing animations"
+    }
+   ],
+   "look_for": "Distinct animations for idle breathing/blinking, walking left, swinging a pickaxe in a thought bubble while mining Beryl, watering the Fruit Tree, and dancing."
+  },
+  {
+   "id": "shrink_and_embiggen_size_buffs",
+   "rule_index": 3,
+   "rule": "Temporary buffs/consumables can shrink avatars to miniature size or enlarge ('embiggen') them to giant size while retaining full movement.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 2615,
+    "end": 2630
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(11)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Sip (Toggle Mini Size)"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "key",
+     "key": "ArrowLeft",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.sizeScale < 0.8",
+     "desc": "Player shrunk to miniature size"
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(11)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Gulp (Toggle Giant Size)"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.sizeScale > 1.2",
+     "desc": "Player embiggened to giant size while retaining movement"
+    }
+   ],
+   "look_for": "Using the Pocket Shrinker in inventory to shrink the avatar to miniature size, walking left, then using Gulp to embiggen to giant size and walking right."
+  },
+  {
+   "id": "context_sensitive_verb_popup_menus",
+   "rule_index": 4,
+   "rule": "Clicking any interactive world object, NPC, other player, or inventory item opens a context-sensitive popup menu of verbs (e.g., 'Talk to', 'Mine', 'Pet', 'Squeeze', 'Drink', 'Taste', 'Give', 'Drop', 'Bestow', 'Play').",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 230,
+    "end": 248
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 615,
+     "y": 350
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "!document.getElementById('verb-popup').classList.contains('hidden')",
+     "desc": "Verb popup opened on Magic Rock"
+    },
+    {
+     "do": "click_world",
+     "x": 905,
+     "y": 345
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(4)"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('verb-popup').textContent.includes('Taste')",
+     "desc": "Verb popup shows Taste on Butterfly Lotion"
+    }
+   ],
+   "look_for": "Context-sensitive speech-bubble verb popup menu opening when clicking the Magic Rock, Butler Roy, and the Butterfly Lotion inventory slot."
+  },
+  {
+   "id": "number_key_hi_emote_and_tab_chat_cycle",
+   "rule_index": 5,
+   "rule": "Pressing number keys triggers social emotes (such as key '5' to wave 'hi', or 'bye' during the final shutdown hour), and pressing 'Tab' cycles between active chat channels.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1175,
+    "end": 1190
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "5",
+     "ms": 100
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "key",
+     "key": "Tab",
+     "ms": 100
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "key",
+     "key": "Tab",
+     "ms": 100
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('Hi Sign') && document.querySelectorAll('.chat-tab')[2].classList.contains('active')",
+     "desc": "Key 5 triggered Hi Sign emote and Tab cycled active chat tab"
+    }
+   ],
+   "look_for": "Pressing key '5' displays the overhead Hi-Sign ('Bats!') wave emote and logs it in chat; pressing 'Tab' cycles the active chat channel tab in the right sidebar."
+  },
+  {
+   "id": "keyboard_movement_independent_of_mouse",
+   "rule_index": 6,
+   "rule": "Horizontal movement and jumping are controlled via keyboard directional keys and jump key independently of the mouse cursor.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 365,
+    "end": 378
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "ArrowLeft",
+     "ms": 700
+    },
+    {
+     "do": "key",
+     "key": "Space",
+     "ms": 300
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 900
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.x > 640",
+     "desc": "Keyboard directional and jump keys move the player independently of mouse clicks"
+    }
+   ],
+   "look_for": "Player walking left, jumping with Space, and walking right purely via keyboard directional keys without clicking the canvas."
+  },
+  {
+   "id": "parallax_camera_tracking_and_edge_clamping",
+   "rule_index": 7,
+   "rule": "A 2D side-scrolling camera tracks the player horizontally with multi-layer parallax backgrounds and foreground silhouettes, clamping at the left and right edges of each street or interior room.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 100,
+    "end": 124
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "ArrowLeft",
+     "ms": 2400
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.camera.x === 0",
+     "desc": "Camera clamps at left edge (x=0)"
+    },
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 2000
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.camera.x > 50",
+     "desc": "Camera smoothly tracks player rightward with parallax layers"
+    }
+   ],
+   "look_for": "Smooth horizontal camera tracking with multi-layer parallax mist and forest silhouettes, clamping cleanly at x=0 on the left boundary of the street."
+  },
+  {
+   "id": "interconnected_regions_signposts_and_doors",
+   "rule_index": 8,
+   "rule": "The game world ('Ur') is divided into regions (e.g., Zhambu, Kalavana, Andra, Groddle, Uralia), each composed of interconnected 2D side-scrolling streets linked by signposts at street boundaries and doors to interior rooms.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 210,
+    "end": 225
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "ArrowLeft",
+     "ms": 900
+    },
+    {
+     "do": "click_world",
+     "x": 430,
+     "y": 335
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Go to Chego Chase (Andra)"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.area === 'chego_chase'",
+     "desc": "Transitioned via signpost to Chego Chase in Andra"
+    },
+    {
+     "do": "click_world",
+     "x": 255,
+     "y": 310
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Enter Bureaucratic Hall"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.area === 'andra_hall'",
+     "desc": "Entered interior Bureaucratic Hall room via pyramid door"
+    }
+   ],
+   "look_for": "Clicking the signpost on Home Street to travel to Chego Chase in Andra, then clicking the stepped pyramid door to enter the interior Andra Bureaucratic Hall."
+  },
+  {
+   "id": "loading_screen_recalculating_splines",
+   "rule_index": 9,
+   "rule": "Walking into a signpost path or clicking a building door triggers a loading screen ('Entering [Street] in [Region]', 'recalculating splines...') that transitions the player into the destination area.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 328,
+    "end": 345
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 430,
+     "y": 335
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Go to Bongul Beat (Andra)"
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.area === 'bongul_beat' && window.__events.some(e => e.type === 'area_change' && e.area === 'bongul_beat')",
+     "desc": "Loading screen transitioned player into Bongul Beat"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    }
+   ],
+   "look_for": "Dark teal transition screen reading 'Entering Bongul Beat in Andra... recalculating splines...' when traveling through a signpost."
+  },
+  {
+   "id": "home_street_and_magic_rock_theme_switch",
+   "rule_index": 10,
+   "rule": "Every player has a persistent, publicly visitable 'Home Street' featuring an exterior house, resource nodes, project slots, and a Magic Rock that allows changing the street's visual and musical theme (e.g., 'Lost Woods', 'Vam Road') for 190 energy.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1912,
+    "end": 1935
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 615,
+     "y": 350
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Switch Street Style (Lost Woods / Vam Road)"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('Vam Road') && window.State.energy < 430",
+     "desc": "Magic Rock transformed Home Street theme from Lost Woods to snowy Vam Road"
+    }
+   ],
+   "look_for": "Clicking the Magic Rock outside the House of Whimsy on Beau's Home Street and selecting 'Switch Street Style' to transform the dark misty Lost Woods into snowy Vam Road."
+  },
+  {
+   "id": "world_map_teleport_and_go_home",
+   "rule_index": 11,
+   "rule": "Players can teleport directly to streets via the World Map, return to their Home Street via the top-left menu ('Go home'), or accept summon requests from other players.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 628,
+    "end": 646
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-world-map"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click_text",
+     "text": "Goli Grabs"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.area === 'goli_grabs'",
+     "desc": "Teleported to Goli Grabs via World Map"
+    },
+    {
+     "do": "click",
+     "selector": "#btn-go-home"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.area === 'home_street'",
+     "desc": "Returned to Home Street via Go Home button"
+    }
+   ],
+   "look_for": "Opening the World Map modal, clicking Goli Grabs (Kalavana) to teleport into the cavern street, then clicking 'Go Home' on the top bar to return to Beau's Home Street."
+  },
+  {
+   "id": "non_combat_social_and_harvesting_world",
+   "rule_index": 12,
+   "rule": "There is no combat or enemies; all interactions with creatures and NPCs are social, economic, or harvesting-based.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 344,
+    "end": 365
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 525,
+     "y": 310
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Harvest Paper"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "click_world",
+     "x": 905,
+     "y": 345
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "High five Roy (+15 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.energy > 0 && window.State.xp > 120",
+     "desc": "All interactions are peaceful harvesting and social actions"
+    }
+   ],
+   "look_for": "Peacefully harvesting sheets of paper from the Paper Tree and high-fiving Butler Roy with no combat, weapons, or enemy hazards."
+  },
+  {
+   "id": "giants_shrine_favor_and_mask_visitation",
+   "rule_index": 13,
+   "rule": "The 11 Giants (including Cosma, Zille, Humbaba, Alph, Lem, Grendaline) are the gods of Ur; players earn Favor with them via quests and street shrines, and during special events their giant animated masks appear on-screen with messages.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 177,
+    "end": 195
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-world-map"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_text",
+     "text": "Chego Chase"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "click_world",
+     "x": 690,
+     "y": 325
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Donate 15 Currants (+15 Favor & Blessing)"
+    },
+    {
+     "do": "wait",
+     "ms": 1200
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.currants === 235 && window.State.xp > 120",
+     "desc": "Donated to Shrine of Grendaline, earning Favor and triggering Giant Mask banner"
+    }
+   ],
+   "look_for": "Clicking the Shrine to Grendaline in Chego Chase and donating 15 Currants to earn Giant Favor and display Grendaline's crowned Giant Mask and message banner."
+  },
+  {
+   "id": "butler_npc_visitor_log_and_gifts",
+   "rule_index": 14,
+   "rule": "A Butler NPC stands outside the player's house on their Home Street, automatically greeting/waving to visitors and offering a menu to check visitor logs ('Who visited?'), manage gifts/mail, and change poses.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1155,
+    "end": 1168
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 905,
+     "y": 345
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Who visited?"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "click_world",
+     "x": 905,
+     "y": 345
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Collect Daily Allowance (+25 Currants)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('Recent visitors') && window.State.currants === 275",
+     "desc": "Butler Roy reported visitor log and gave daily allowance"
+    }
+   ],
+   "look_for": "Clicking Butler Roy outside the house on Home Street to check 'Who visited?' and collect the daily currant allowance."
+  },
+  {
+   "id": "street_spirit_vendor_buy_sell_currants",
+   "rule_index": 15,
+   "rule": "Street Spirits act as themed item vendors on streets (e.g., Animal Goods Vendor, Kitchen Tools Vendor), opening a Buy/Sell interface priced in Currants.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 346,
+    "end": 356
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-world-map"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_text",
+     "text": "Bongul Beat"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "click_world",
+     "x": 740,
+     "y": 335
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Browse Goods (Buy / Sell)"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click",
+     "selector": ".buy-btn"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.currants < 250",
+     "desc": "Purchased item from Street Spirit vendor using Currants"
+    }
+   ],
+   "look_for": "Clicking the tiki-masked Street Spirit (Animal Goods) vendor in Bongul Beat to open the Buy/Sell modal and purchasing an item with Currants."
+  },
+  {
+   "id": "bureaucrat_waiting_area_and_qualification",
+   "rule_index": 16,
+   "rule": "Bureaucrat NPCs inside the Andra Bureaucratic Hall require players to stand still in a designated Waiting Area for a 10-second countdown timer before speaking to a Magister to buy qualifications (e.g., Card-Carrying Qualification for 50 currants).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 270,
+    "end": 295
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-world-map"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Andra Bureaucratic Hall"
+    },
+    {
+     "do": "wait",
+     "ms": 750
+    },
+    {
+     "do": "click_world",
+     "x": 695,
+     "y": 350
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Wait Patiently in Chair (+15 XP, Certified!)"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "click_world",
+     "x": 980,
+     "y": 340
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Buy Card-Carrying Qualification (50 Currants)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'pickup' && e.item === 'qualification') && window.State.currants === 200",
+     "desc": "Waited in orange chairs and bought Card-Carrying Qualification from Magister Piksnikson for 50 currants"
+    }
+   ],
+   "look_for": "Entering the Andra Bureaucratic Hall, waiting in the orange Designated Waiting Area chairs, then speaking to Magister Piksnikson to buy the Card-Carrying Qualification for 50 currants."
+  },
+  {
+   "id": "wild_animals_chicken_butterfly_piggy",
+   "rule_index": 17,
+   "rule": "Wild animals roam streets\u2014such as Chickens (which can be clicked to 'Squeeze' for +1 mood), Butterflies (massaged with lotion or milked for quests), and Piggies (petted or hogtied for quests).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 355,
+    "end": 365
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(4)"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Use on Butterfly"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "eval",
+     "js": "const c = document.getElementById('game-canvas'); const r = c.getBoundingClientRect(); const camX = window.State.camera.x; c.dispatchEvent(new MouseEvent('click', { clientX: r.left + (1100 - camX) * (r.width / c.width), clientY: r.top + 365 * (r.height / c.height), bubbles: true }));"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.mood > 88",
+     "desc": "Interacted with street butterfly for mood and XP"
+    }
+   ],
+   "look_for": "Using Butterfly Lotion to massage the roaming butterfly on Home Street for mood and XP."
+  },
+  {
+   "id": "cubimal_wind_up_plank_race",
+   "rule_index": 18,
+   "rule": "Cubimals are wind-up miniature creatures in the player's inventory that can be released on a street to race a random distance measured in 'planks' before stopping.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1400,
+    "end": 1425
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(8)"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Release & Race!"
+    },
+    {
+     "do": "wait",
+     "ms": 2800
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('Chick Cubimal')",
+     "desc": "Chick Cubimal raced along the street measured in planks"
+    }
+   ],
+   "look_for": "Clicking the Chick Cubimal in inventory and selecting 'Release & Race!' to watch the miniature cube creature race across the street with a live plank counter overhead."
+  },
+  {
+   "id": "resource_nodes_beryl_trees_tower",
+   "rule_index": 19,
+   "rule": "Resource nodes on streets include Beryl Rocks (mined with a pickaxe for -7 Energy, yielding +10 iMG and Chunks of Beryl, with bonus chunks when mined cooperatively), Wood/Fruit/Bubble Trees (watered, tended, or petted), Dirt Piles (dug with a shovel), and construction projects (Tower).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 504,
+    "end": 518
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 335,
+     "y": 340
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Mine"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'pickup' && e.item === 'beryl') && window.State.energy === 423",
+     "desc": "Mined Beryl Rock for -7 Energy and Chunks of Beryl"
+    },
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 2200
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_world",
+     "x": 1410,
+     "y": 320
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Harvest Planks"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'pickup' && e.item === 'plank')",
+     "desc": "Harvested Planks from Wood Tree"
+    }
+   ],
+   "look_for": "Mining the cyan Beryl Rock with a pickaxe for -7 Energy and +1 Chunk of Beryl, then walking right to harvest Planks from the Wood Tree."
+  },
+  {
+   "id": "bottom_16_slot_inventory_search_and_furniture_tab",
+   "rule_index": 20,
+   "rule": "The bottom HUD bar holds 16 main inventory slots (which can hold container bags for sub-slots), a 'Furniture' tab toggle, and a text search bar.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 612,
+    "end": 625
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "expect",
+     "js": "document.querySelectorAll('#inv-slots .inv-slot').length === 16",
+     "desc": "16 main inventory slots present"
+    },
+    {
+     "do": "type",
+     "selector": "#inv-search",
+     "text": "Pumpkin",
+     "enter": false
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click",
+     "selector": "#btn-furniture-toggle"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "document.querySelectorAll('#inv-slots .furn-slot').length > 0",
+     "desc": "Furniture tab toggled placeable furniture catalog"
+    },
+    {
+     "do": "click",
+     "selector": "#btn-furniture-toggle"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    }
+   ],
+   "look_for": "The 16-slot bottom inventory bar filtering items when typing 'Pumpkin' in the search box, then toggling to the Furniture Tab."
+  },
+  {
+   "id": "social_party_items_rainbow_sparkle_pumpkin_ale_musicblock",
+   "rule_index": 21,
+   "rule": "Social/party items trigger shared audio-visual effects: 'Random Kindness' arcs a rainbow over a target player (+18 to +40 mood), 'Sparkle Powder' fills the screen with stars (+10 mood), 'Pumpkin Ale' gives +29 mood and triggers a group Thriller dance, and 'Musicblocks' play music tracks for -2 Energy (+30 iMG, +2 mood).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1775,
+    "end": 1790
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(6)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Bestow Rainbow (+30 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(7)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Sprinkle Stars (+10 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(5)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Drink (+29 Mood & Dance!)"
+    },
+    {
+     "do": "wait",
+     "ms": 1000
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.anim === 'dance' && window.State.mood === 100",
+     "desc": "Rainbow, Sparkle Powder, and Pumpkin Ale Thriller dance triggered"
+    }
+   ],
+   "look_for": "Bestowing a Random Kindness rainbow arc over the street, sprinkling Sparkle Powder stars, and drinking Pumpkin Ale to trigger the Thriller dance."
+  },
+  {
+   "id": "consumables_butterfly_lotion_water_cooler_and_d12_die",
+   "rule_index": 22,
+   "rule": "Consumables and utility items have specific verb actions: 'Butterfly Lotion' can be tasted (+12 mood, consuming it), 'Water Cooler' dispenses a 'Cup of Water' (-2 energy) which can be drunk (+5 mood), and a '12-sided Die' can be rolled to broadcast random outcomes in chat.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 231,
+    "end": 255
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(4)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Taste (+12 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(10)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Roll Die"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('rolled a 12-sided die') && window.State.mood === 100",
+     "desc": "Tasted Butterfly Lotion and rolled the 12-sided die in chat"
+    }
+   ],
+   "look_for": "Tasting Butterfly Lotion (+12 Mood, with overhead quip 'Lotion is not for eating!') and rolling the 12-Sided Die to broadcast a random roll in chat."
+  },
+  {
+   "id": "currencies_img_xp_currants_and_giant_favor",
+   "rule_index": 23,
+   "rule": "The game tracks four main currencies/points: iMG/XP (earned from actions, quests, and visitors; used to level up), Currants (in-game money for vendors/auctions), Credits (premium/subscription currency for Wardrobe cosmetics), and Giant Favor (earned via quests/shrines).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 175,
+    "end": 195
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 905,
+     "y": 345
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Collect Daily Allowance (+25 Currants)"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "click",
+     "selector": "#btn-quests"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "window.State.xp > 120 && window.State.currants === 275 && document.getElementById('modal-body').textContent.includes('Favor')",
+     "desc": "Tracks iMG/XP, Currants, and Giant Favor"
+    }
+   ],
+   "look_for": "Earning iMG/XP and Currants from Butler Roy, and viewing Giant Favor totals in the Quests & Favor modal."
+  },
+  {
+   "id": "mood_and_energy_meters_spending_and_restoring",
+   "rule_index": 24,
+   "rule": "Two primary meters govern player activity: Mood (percentage/100 gauge at top-left that boosts iMG/XP multiplier and is raised by drinks, emotes, and social items) and Energy (numerical bar below portrait, e.g., 495 max at Lv19 or 100 max at Lv3, spent on mining/harvesting/street changes and restored by food/orbs).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 505,
+    "end": 520
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 335,
+     "y": 340
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Mine"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.energy === 423",
+     "desc": "Mining spent 7 Energy"
+    },
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(12)"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Eat (+12 Energy, +3 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.energy === 435 && window.State.mood >= 91",
+     "desc": "Eating Cherries restored +12 Energy and raised Mood"
+    }
+   ],
+   "look_for": "Top-left Mood circle and Energy bar decreasing when mining Beryl (-7 Energy) and increasing when eating Cherries (+12 Energy, +3 Mood)."
+  },
+  {
+   "id": "floating_stat_orbs_collection",
+   "rule_index": 25,
+   "rule": "Floating orbs on streets can be collected by jumping into them to gain +1 XP, +1 currants, +1 mood, or +1 energy.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 376,
+    "end": 386
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 120
+    },
+    {
+     "do": "key",
+     "key": "Space",
+     "ms": 400
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'pickup' && e.orb)",
+     "desc": "Jumped into floating street orb and collected stat bonus"
+    }
+   ],
+   "look_for": "Jumping up into the glowing floating XP orb above the House of Whimsy porch to collect it with a chime and particle burst."
+  },
+  {
+   "id": "real_time_skill_training_and_brain_capacity",
+   "rule_index": 26,
+   "rule": "There are 133 skills across 7 categories (Alchemy, Animals, Cooking, Gathering, Growing, Industrial, Intellectual) that train in real time (online or offline); learning more skills than one's Brain Capacity applies an escalating time penalty (up to 2764%) to training durations.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 851,
+    "end": 875
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-skills"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "click_text",
+     "text": "Learn ("
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('modal-body').textContent.includes('Brain Capacity') && document.getElementById('modal-body').textContent.includes('Training')",
+     "desc": "Skills modal shows Brain Capacity penalty and real-time training progress bar"
+    }
+   ],
+   "look_for": "Opening the Skills & Brain Capacity modal showing the 7 skill categories, Brain Capacity counter, penalty percentage, and real-time training progress bar."
+  },
+  {
+   "id": "quests_level_up_and_badges_progression",
+   "rule_index": 27,
+   "rule": "Players progress by leveling up via iMG/XP, completing multi-step Quests from the Magic Rock, earning Badges/Achievements (e.g., Bush Whacker, Social Butterfly), and contributing to server-wide Feats.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "B",
+    "start": 173,
+    "end": 198
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click_world",
+     "x": 200,
+     "y": 310
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click_text",
+     "text": "Water"
+    },
+    {
+     "do": "wait",
+     "ms": 800
+    },
+    {
+     "do": "expect",
+     "js": "window.__events.some(e => e.type === 'quest_complete') && document.getElementById('chat-log').textContent.includes('Bush Whacker')",
+     "desc": "Completed Magic Rock quest and earned Bush Whacker badge"
+    },
+    {
+     "do": "click",
+     "selector": "#btn-quests"
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    }
+   ],
+   "look_for": "Watering the Fruit Tree to earn the 'Bush Whacker' badge and complete the 'Whispers of the Magic Rock' quest, triggering Zille's Giant visitation banner."
+  },
+  {
+   "id": "sandbox_no_win_lose_and_beforeunload_joke",
+   "rule_index": 28,
+   "rule": "As a persistent social sandbox MMO, there is no win or lose state; attempting to refresh/leave displays a joke alert 'WAIT! You were just about to win the game!'.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1825,
+    "end": 1838
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "eval",
+     "js": "const ev = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(ev); window.__beforeUnloadMsg = ev.returnValue;"
+    },
+    {
+     "do": "wait",
+     "ms": 200
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.health > 0",
+     "desc": "Persistent sandbox remains active with beforeunload handler registered"
+    }
+   ],
+   "look_for": "Persistent social sandbox play with no game-over state and the 'WAIT! You were just about to win the game!' beforeunload listener active."
+  },
+  {
+   "id": "flash_hud_layout_portrait_topbar_inventory_sidebar",
+   "rule_index": 29,
+   "rule": "The Flash client HUD consists of a top-left avatar portrait (Mood, Energy, iMG, navigation menu), a top bar (Cultivate, Street name, World Map, audio sliders, fullscreen, settings), a bottom 16-slot inventory bar, and a right-hand sidebar (in-game calendar/clock, chat tabs, 'People here' list, and Local Chat/Activity log).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 280,
+    "end": 295
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-left-menu"
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "do": "expect",
+     "js": "!document.getElementById('left-drawer').classList.contains('hidden') && document.getElementById('people-list') && document.querySelectorAll('#inv-slots .inv-slot').length === 16",
+     "desc": "Top-left navigation drawer, top bar, 16-slot inventory, and right-hand People/Chat sidebar are visible"
+    }
+   ],
+   "look_for": "Full Glitch HUD frame: top-left Mood/Energy/iMG meters and collapsible navigation drawer, top bar buttons, bottom 16-slot inventory bar, and right-hand People Here & Local Chat sidebar."
+  },
+  {
+   "id": "character_management_modals_live_update",
+   "rule_index": 30,
+   "rule": "Character management features (Profile, Wardrobe, Vanity, Skills, Friends, Snaps, Auctions, Forums) open in integrated web browser tabs that update the live Flash game session when saved.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 300,
+    "end": 320
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#btn-wardrobe"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click_text",
+     "text": "Crown of Ur"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "click",
+     "selector": "#modal-close"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click",
+     "selector": "#btn-skills"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "do": "click",
+     "selector": "#modal-close"
+    },
+    {
+     "do": "wait",
+     "ms": 300
+    },
+    {
+     "do": "expect",
+     "js": "window.State && window.State.player.x === 680",
+     "desc": "Wardrobe and Skills panels update the live session immediately"
+    }
+   ],
+   "look_for": "Opening the Wardrobe & Vanity panel to equip the Crown of Ur, closing it to see the live avatar updated on the street, and opening the Skills panel."
+  },
+  {
+   "id": "multiplayer_realtime_chat_highfive_hug_follow",
+   "rule_index": 31,
+   "rule": "Players on the same street see each other in real time, can chat via overhead speech bubbles and the right-hand chat log, and can click each other to High five (+30 mood), Hug (+2 mood), Follow (forming automatic movement chains), Summon, Trade, or Give items.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1727,
+    "end": 1750
+   },
+   "players": 2,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "player": 1,
+     "do": "click",
+     "selector": "#welcome-banner button"
+    },
+    {
+     "player": 1,
+     "do": "key",
+     "key": "ArrowRight",
+     "ms": 450
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "player": 0,
+     "do": "type",
+     "selector": "#chat-input",
+     "text": "Hello friend in Ur!",
+     "enter": true
+    },
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "player": 0,
+     "do": "click",
+     "selector": "#people-list .clickable-person"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "player": 0,
+     "do": "click_text",
+     "text": "High five (+30 Mood)"
+    },
+    {
+     "do": "wait",
+     "ms": 700
+    },
+    {
+     "player": 0,
+     "do": "expect",
+     "js": "window.State.onlinePlayers >= 2 && window.__events.some(e => e.type === 'social' && e.action === 'highfive')",
+     "desc": "Two players see each other, chat, and High-five for +30 Mood"
+    }
+   ],
+   "look_for": "Two players on Beau's Home Street seeing each other in real time, chatting with overhead speech bubbles, and clicking each other in 'People here' to High-five (+30 Mood)."
+  },
+  {
+   "id": "matching_daily_hi_sign_bonus",
+   "rule_index": 32,
+   "rule": "Waving 'hi' (or 'bye') to another player who has the same daily 'hi sign' (e.g., 'Bats') awards a matching bonus (+5 mood, stacking to 2x +10 mood).",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 1177,
+    "end": 1188
+   },
+   "players": 2,
+   "steps": [
+    {
+     "do": "wait",
+     "ms": 500
+    },
+    {
+     "player": 1,
+     "do": "click",
+     "selector": "#welcome-banner button"
+    },
+    {
+     "do": "wait",
+     "ms": 400
+    },
+    {
+     "player": 0,
+     "do": "key",
+     "key": "5",
+     "ms": 100
+    },
+    {
+     "do": "wait",
+     "ms": 600
+    },
+    {
+     "player": 0,
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('+10 Mood') && window.State.mood >= 98",
+     "desc": "Waving Hi with matching 'Bats' daily Hi-Sign awarded +10 Mood matching bonus"
+    }
+   ],
+   "look_for": "Two players sharing the daily Hi-Sign ('Bats') on the same street; pressing key '5' waves 'Bats!' and awards the matching +10 Mood bonus."
+  },
+  {
+   "id": "street_music_and_musicblock_pumpkin_ale_override",
+   "rule_index": 33,
+   "rule": "Each street style and region has its own looping background music (e.g., eerie plucked strings in Lost Woods, upbeat quirky rhythm in Vam Road, acoustic guitar in Andra), which can be overridden by playing Musicblocks or drinking Pumpkin Ale.",
+   "testable": true,
+   "why_not": null,
+   "original": {
+    "video": "A",
+    "start": 3030,
+    "end": 3048
+   },
+   "players": 1,
+   "steps": [
+    {
+     "do": "click",
+     "selector": "#inv-slots .inv-slot:nth-child(9)"
+    },
+    {
+     "do": "wait",
+     "ms": 350
+    },
+    {
+     "do": "click_text",
+     "text": "Play (-2 Energy, +30 iMG)"
+    },
+    {
+     "do": "wait",
+     "ms": 900
+    },
+    {
+     "do": "expect",
+     "js": "document.getElementById('chat-log').textContent.includes('Musicblock DB-4') && window.State.xp >= 150",
+     "desc": "Playing Musicblock DB-4 overrides street music and grants +30 iMG and +2 Mood"
+    }
+   ],
+   "look_for": "Clicking Musicblock DB-4 in the inventory bar and selecting 'Play (-2 Energy, +30 iMG)' to override the street music with a chiming melody and particle notes."
+  }
+ ]
+}

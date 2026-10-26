@@ -1,0 +1,9 @@
+{
+ "path": "public/js/main.js",
+ "edits": [
+  {
+   "oldText": "    changeStreet(targetId) {\n      const st = this.streets[targetId];\n      if (!st) return;\n      this.area = targetId;\n      this.transitionTimer = 0.65;",
+   "newText": "    changeStreet(targetId) {\n      const st = this.streets[targetId];\n      if (!st) return;\n      this.area = targetId;\n      this.hoveredObj = null;\n      this.transitionTimer = 0.65;"
+  }
+ ]
+}

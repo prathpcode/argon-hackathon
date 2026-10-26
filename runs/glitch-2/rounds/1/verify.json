@@ -1,0 +1,695 @@
+{
+ "round": 1,
+ "matched": 13,
+ "total": 34,
+ "lost": [],
+ "secs": 286,
+ "rules": [
+  {
+   "id": "avatar_wardrobe_customization",
+   "rule_index": 0,
+   "rule": "The player avatar ('Glitchen') is a 2D side-view cartoon character with customizable gender-neutral proportions, facial features, hair, clothing layers, masks, and rideable costume mounts.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 436,
+    "end": 456
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=436",
+   "original_shows": "A rich 2D cartoon Glitchen avatar with detailed facial features, hair, clothing layers, full-head animal/creature masks (e.g. Imperial Caterpillar Mask, Glitchamaphone Sloth/Chicken Masks), hats, and rideable costume mounts (e.g. Piggycorn Ride, Hover-pig). The Wardrobe/Vanity screen shows a live preview of the character at the top with a grid of illustrated cosmetic thumbnails below.",
+   "rebuild_shows": "A very rudimentary geometric stick/block figure avatar with almost no cartoon proportions or facial detail. The Wardrobe modal is just a basic text-button list (Hair Style, Hair Color, Skin Tone, Shirt Color, Pants Color, Hat/Mask with basic options like Red Top Hat, Fox Mask, and no rideable costume mounts or preview).",
+   "difference": "The rebuild avatar is a primitive geometric shape rather than a 2D cartoon character with detailed features, and the wardrobe lacks rideable costume mounts (like Piggycorn/Hover-pig), visual item thumbnails, and an avatar preview in the customization UI.",
+   "fix": "Redesign the Glitchen avatar rendering to look like a proper 2D cartoon character with distinct head, facial features, hair, and layered clothing; add rideable costume mount options (like piggy/hover mounts) and full masks, and include a live character preview and visual item grid in the Wardrobe/Vanity UI.",
+   "video": "rounds/1/verify/avatar_wardrobe_customization_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "movement_and_floaty_roof_jump",
+   "rule_index": 1,
+   "rule": "Avatar movement consists of horizontal walking left/right and a low-gravity, floaty jump arc that allows landing on elevated terrain ledges, tree branches, and multi-tiered house roofs.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 167,
+    "end": 182
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=167",
+   "original_shows": "Avatar walks horizontally and performs floaty, low-gravity jumps across the terrain.",
+   "rebuild_shows": "Avatar walks horizontally and performs floaty, low-gravity jumps up onto the porch roof and second-story roof tier of the house.",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/movement_and_floaty_roof_jump_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "avatar_distinct_animations",
+   "rule_index": 2,
+   "rule": "Avatars have distinct animations for idle breathing/blinking, walking, jumping, mining with a pickaxe, watering/tending plants, drinking/tasting, hugging, high-fiving, squeezing chickens, and synchronized dancing.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 504,
+    "end": 520
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=504",
+   "original_shows": "When mining, the avatar stays upright and swings a pickaxe at the rock, while a thought bubble above their head also shows an animated pickaxe swinging.",
+   "rebuild_shows": "The avatar has idle breathing/blinking, walks left, mines Beryl Rock, waters the Fruit Tree, and dances. However, during mining, there is no thought bubble with a pickaxe, and the avatar's entire body rotates 90 degrees horizontally instead of swinging a pickaxe.",
+   "difference": "Missing the pickaxe thought bubble during mining, and the mining animation rotates the whole avatar sideways instead of animating a pickaxe swing.",
+   "fix": "Add the thought bubble with a swinging pickaxe above the avatar while mining, and fix the avatar's mining animation so they stay upright and swing a pickaxe rather than rotating their whole body sideways.",
+   "video": "rounds/1/verify/avatar_distinct_animations_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "shrink_and_embiggen_size_buffs",
+   "rule_index": 3,
+   "rule": "Temporary buffs/consumables can shrink avatars to miniature size or enlarge ('embiggen') them to giant size while retaining full movement.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 2615,
+    "end": 2630
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=2615",
+   "original_shows": "In the original clip, a player ('Artichoke') shrinks to miniature size while standing and moving normally alongside other normal-sized avatars.",
+   "rebuild_shows": "The player uses the Pocket Shrinker item from the inventory, selecting 'Sip (Toggle Mini Size)' to shrink to miniature size and walk left, then 'Gulp (Toggle Giant Size)' to enlarge to giant size and walk right.",
+   "difference": "None. Both shrinking and enlarging work as expected while retaining movement.",
+   "fix": "",
+   "video": "rounds/1/verify/shrink_and_embiggen_size_buffs_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "context_sensitive_verb_popup_menus",
+   "rule_index": 4,
+   "rule": "Clicking any interactive world object, NPC, other player, or inventory item opens a context-sensitive popup menu of verbs (e.g., 'Talk to', 'Mine', 'Pet', 'Squeeze', 'Drink', 'Taste', 'Give', 'Drop', 'Bestow', 'Play').",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 230,
+    "end": 248
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=230",
+   "original_shows": "Clicking an interactive world object (Water Cooler) or an inventory item (Butterfly Lotion) opens a white, rounded context-sensitive speech-bubble popup menu showing the item name, a brief description, and clickable verb buttons (e.g., 'Get coldst drink', or 'Drop', 'Taste', 'Use', 'Inspect').",
+   "rebuild_shows": "Clicking interactive objects (Roy Butler) and inventory items (Butterfly Lotion) opens a matching white rounded speech-bubble popup menu with the object/item title, description, and context-sensitive verb options (e.g., 'Who visited?', 'Collect Daily Allowance', 'High Five Roy', 'Request a Jig' on Roy; 'Taste (+12 Mood)', 'Use on Butterfly', 'Inspect', 'Drop' on Butterfly Lotion).",
+   "difference": "None; the context-sensitive verb popup menus match the layout, style, and behavior of the original.",
+   "fix": "",
+   "video": "rounds/1/verify/context_sensitive_verb_popup_menus_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "number_key_hi_emote_and_tab_chat_cycle",
+   "rule_index": 5,
+   "rule": "Pressing number keys triggers social emotes (such as key '5' to wave 'hi', or 'bye' during the final shutdown hour), and pressing 'Tab' cycles between active chat channels.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1175,
+    "end": 1190
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1175",
+   "original_shows": "Pressing key '5' triggers an overhead wave emote ('hi' or 'bye' with '+5 mood' floating text and hi-sign matching), and the right sidebar has chat channel tabs that can be cycled.",
+   "rebuild_shows": "Pressing key '5' displays the overhead 'Hi! (Bats!)' wave emote with 'bye' and '+5 Mood' floating text and logs 'Hi Sign: Waved \"Bats!\" (+5 Mood)' in chat. Pressing 'Tab' cycles the active chat tab in the right sidebar (switching to Global and Live Help).",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/number_key_hi_emote_and_tab_chat_cycle_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "keyboard_movement_independent_of_mouse",
+   "rule_index": 6,
+   "rule": "Horizontal movement and jumping are controlled via keyboard directional keys and jump key independently of the mouse cursor.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 365,
+    "end": 378
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=365",
+   "original_shows": "The player moves horizontally left and right and jumps up and down using keyboard controls while the mouse cursor remains stationary on the right side of the canvas.",
+   "rebuild_shows": "The player walks right, walks left, and jumps using keyboard controls without any mouse cursor interaction on the canvas.",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/keyboard_movement_independent_of_mouse_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "parallax_camera_tracking_and_edge_clamping",
+   "rule_index": 7,
+   "rule": "A 2D side-scrolling camera tracks the player horizontally with multi-layer parallax backgrounds and foreground silhouettes, clamping at the left and right edges of each street or interior room.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 100,
+    "end": 124
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=100",
+   "original_shows": "As the player walks left and right across the street, the 2D camera smoothly follows them horizontally, revealing multi-layer parallax forest silhouettes and mist in the background, and clamping when reaching the edges of the street.",
+   "rebuild_shows": "As Tester1 walks left and right, the camera smoothly tracks horizontally with multi-layer parallax forest backgrounds and clamps cleanly at the left edge of the street.",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/parallax_camera_tracking_and_edge_clamping_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "interconnected_regions_signposts_and_doors",
+   "rule_index": 8,
+   "rule": "The game world ('Ur') is divided into regions (e.g., Zhambu, Kalavana, Andra, Groddle, Uralia), each composed of interconnected 2D side-scrolling streets linked by signposts at street boundaries and doors to interior rooms.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 210,
+    "end": 225
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=210",
+   "original_shows": "On a 2D street in Andra (Chego Chase), the player clicks the door of the Ministry of Departments building, sees a loading screen ('Entering Andra Bureaucratic Hall... recalculating splines'), and transitions into the interior Bureaucratic Hall room.",
+   "rebuild_shows": "The player clicks a signpost on Home Street to transition to Chego Chase in Andra, then clicks the door on the Ministry of Departments pyramid building, sees the transition screen ('Entering Andra Bureaucratic Hall... recalculating splines'), and enters the interior room.",
+   "difference": "None in mechanic or structure; both demonstrate interconnected 2D streets linked by signposts and doors leading to interior rooms with spline-recalculating transition screens.",
+   "fix": "",
+   "video": "rounds/1/verify/interconnected_regions_signposts_and_doors_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "loading_screen_recalculating_splines",
+   "rule_index": 9,
+   "rule": "Walking into a signpost path or clicking a building door triggers a loading screen ('Entering [Street] in [Region]', 'recalculating splines...') that transitions the player into the destination area.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 328,
+    "end": 345
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=328",
+   "original_shows": "When entering a door or clicking a signpost, a full loading screen card appears over the viewport showing a preview image of the street, 'Entering [Street Name] in [Region]', a 'Home to:' bulleted list of features (vendors, shrines, creatures), and a white bottom bar with 'reticulating splines... [X]%' and a green progress bar.",
+   "rebuild_shows": "A very brief, plain semi-transparent dark teal overlay with a single line of text: 'Entering Bongul Beat in Andra... recalculating splines...'.",
+   "difference": "The rebuild lacks the structured loading screen layout (preview image, large title, 'Home to:' feature list, bottom progress bar with percentage) and says 'recalculating splines' instead of 'reticulating splines'.",
+   "fix": "Implement the full street loading screen card with the street preview image, 'Entering [Street] in [Region]' header, 'Home to:' feature list, and a bottom progress bar reading 'reticulating splines... [X]%'.",
+   "video": "rounds/1/verify/loading_screen_recalculating_splines_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "home_street_and_magic_rock_theme_switch",
+   "rule_index": 10,
+   "rule": "Every player has a persistent, publicly visitable 'Home Street' featuring an exterior house, resource nodes, project slots, and a Magic Rock that allows changing the street's visual and musical theme (e.g., 'Lost Woods', 'Vam Road') for 190 energy.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1912,
+    "end": 1935
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1912",
+   "original_shows": "Clicking the Magic Rock opens a radial/popup menu with 'House keys', 'Customize', 'Change style', 'Expand', 'Cultivate land'. Clicking 'Change style' opens a 'Change your street style' modal showing a 2x3 grid of thumbnail previews of available street styles ('Forgotten Growth', 'Floral Tangle', 'Vam Road', etc.). Selecting 'Vam Road' opens a wide banner preview modal with 'Cancel' and 'Change to this' buttons, followed by a confirmation dialog ('Are you sure you want to change your street style for 190?' with 'Nevermind' / 'Yes, Change it!'). Confirming deducts 190 energy (not iMG, wait - in the original at 32:00 it shows -190 near the iMG counter, and iMG drops from 26,036 to 25,846), shows a 'Changing street style - Sit tight, it'll be ready shortly!' loading screen with a progress bar ('preparing...', 'reticulating splines...'), and then reloads the street with the snowy Vam Road theme.",
+   "rebuild_shows": "Clicking the Magic Rock opens a simple text popover with 'Ask for Quest / Advice', 'Switch Street Style (Lost Woods | Vam Road) (-15 Energy)', and 'Polite Pat (+3 Mood)'. Clicking 'Switch Street Style' immediately toggles the background without any style selection modal, preview banner, confirmation dialog, or loading screen, and deducts 15 Energy instead of 190.",
+   "difference": "1. The Magic Rock context menu options don't match ('House keys', 'Customize', 'Change style', 'Expand', 'Cultivate land'). 2. Missing the 'Change your street style' grid modal with style thumbnails, the wide preview modal, the 190 cost confirmation dialog, and the 'Changing street style' loading screen. 3. The cost in the rebuild is 15 Energy instead of 190.",
+   "fix": "Update the Magic Rock menu to show 'House keys', 'Customize', 'Change style', 'Expand', 'Cultivate land'. Make 'Change style' open the 'Change your street style' grid modal with style thumbnails (including Lost Woods, Forgotten Growth, Floral Tangle, Vam Road), leading to the wide preview banner, the 190 cost confirmation dialog, and the 'Changing street style' loading transition before applying the new street theme.",
+   "video": "rounds/1/verify/home_street_and_magic_rock_theme_switch_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "world_map_teleport_and_go_home",
+   "rule_index": 11,
+   "rule": "Players can teleport directly to streets via the World Map, return to their Home Street via the top-left menu ('Go home'), or accept summon requests from other players.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 628,
+    "end": 646
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=628",
+   "original_shows": "Opening the World Map displays a visual 2D graphical continent map where clicking a region (like Zhambu) zooms into a detailed graphical map of interconnected street nodes. Clicking a street node opens a popover ('Swoin Way 4') with options 'Teleport here', 'Create Link for Chat', and 'Set as Destination'. Additionally, returning home is done via a dropdown menu in the top-left corner.",
+   "rebuild_shows": "Opening the World Map displays a plain text/card grid modal ('World Map of Ur \u2014 Select a Region or Street to Teleport') with green 'GO \u2014 Teleport Here' buttons. There is no visual continent map, no street node network, and no street popover options. Also, 'Go Home' is a standalone button on the top-right header bar rather than in the top-left menu.",
+   "difference": "The World Map in the rebuild is a simple list of text cards with teleport buttons instead of a graphical 2D continent map that drills down into a visual street node network with node popovers ('Teleport here', 'Create Link for Chat', 'Set as Destination'). Also, 'Go Home' is placed on the top-right bar instead of the top-left player menu.",
+   "fix": "Replace the card-grid World Map modal with a graphical 2D continent map that zooms into a visual street-node network for the selected region, showing a popover on node click with 'Teleport here', 'Create Link for Chat', and 'Set as Destination', and move 'Go home' into the top-left menu.",
+   "video": "rounds/1/verify/world_map_teleport_and_go_home_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "non_combat_social_and_harvesting_world",
+   "rule_index": 12,
+   "rule": "There is no combat or enemies; all interactions with creatures and NPCs are social, economic, or harvesting-based.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 344,
+    "end": 365
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=344",
+   "original_shows": "Peaceful non-combat gameplay where the player interacts with a vendor (Street Spirit) and squeezes a chicken for mood/grain without any combat or enemies.",
+   "rebuild_shows": "Peaceful non-combat gameplay where the player harvests paper from a Paper Tree and interacts socially with Butler Roy (high-fiving for +15 Mood) with no combat or enemy hazards.",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/non_combat_social_and_harvesting_world_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "giants_shrine_favor_and_mask_visitation",
+   "rule_index": 13,
+   "rule": "The 11 Giants (including Cosma, Zille, Humbaba, Alph, Lem, Grendaline) are the gods of Ur; players earn Favor with them via quests and street shrines, and during special events their giant animated masks appear on-screen with messages.",
+   "pass": false,
+   "verdict": "unclear",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 177,
+    "end": 195
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=177",
+   "original_shows": "In the original clip, the player is scrolling through their Quest Log, which shows various quests and their rewards, including favor with Giants like Grendaline, Humbaba, Spriggan, and Cosma. It does not show interacting with a shrine or a Giant Mask appearing.",
+   "rebuild_shows": "In the rebuild, the player teleports to Chego Chase, clicks on the Shrine to Grendaline, donates 15 currants, and a banner appears at the top showing Grendaline's crowned mask and the message 'Every root you water drinks deep of kindness. Grow tall!'.",
+   "difference": "The original clip only shows the Quest Log mentioning Giant favor rewards; it does not show street shrines or Giant masks appearing on-screen. The rebuild implements the shrine donation and Giant mask banner as described in the rule, but there is no corresponding footage in the original clip to compare its layout/UI against.",
+   "fix": "None needed for the rule logic, or provide an original clip that actually shows a shrine interaction / Giant mask event.",
+   "video": "rounds/1/verify/giants_shrine_favor_and_mask_visitation_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "butler_npc_visitor_log_and_gifts",
+   "rule_index": 14,
+   "rule": "A Butler NPC stands outside the player's house on their Home Street, automatically greeting/waving to visitors and offering a menu to check visitor logs ('Who visited?'), manage gifts/mail, and change poses.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1155,
+    "end": 1168
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1155",
+   "original_shows": "Clicking Roy (Beau) outside the house opens a verb menu with 'Muffle butterfly wisdom', 'Stop telling me things visitors say', 'Zzz H', 'Set pose', 'Dance', 'Gipe', 'Leave info', 'Customize', 'Mailbox', and 'Who visited?'. Selecting 'Who visited?' makes Roy speak in a speech bubble ('There were a lot of visitors. I'll IM you the list.' with a 'Thanks!' button) and sends a private IM tab with the list of visitors.",
+   "rebuild_shows": "Clicking Roy (Butler) opens a menu with 'Who visited?', 'Collect Daily Allowance (+25 Currants)', 'High Five Roy (+15 Mood)', and 'Request a Jig'. Selecting 'Who visited?' prints the visitor list directly into Local Chat instead of a speech bubble/IM, and the menu is missing Mailbox, Leave info, Set pose, Customize, etc.",
+   "difference": "The Butler menu options do not match the original (missing Mailbox, Leave info, Set pose, Dance/Gipe, etc.), and 'Who visited?' outputs to Local Chat instead of Roy speaking via a speech bubble with an acknowledge button / IM.",
+   "fix": "Update the Butler NPC menu to include the original options ('Who visited?', 'Mailbox', 'Leave info', 'Set pose', 'Dance', 'Customize', etc.) and have Roy respond to 'Who visited?' with a speech bubble dialog and/or private IM rather than dumping text directly into Local Chat.",
+   "video": "rounds/1/verify/butler_npc_visitor_log_and_gifts_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "street_spirit_vendor_buy_sell_currants",
+   "rule_index": 15,
+   "rule": "Street Spirits act as themed item vendors on streets (e.g., Animal Goods Vendor, Kitchen Tools Vendor), opening a Buy/Sell interface priced in Currants.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 346,
+    "end": 356
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=346",
+   "original_shows": "Clicking the Street Spirit (Animal Goods Vendor) shows a popover with 'Browse'. Clicking 'Browse' opens an 'Animal Goods Vendor' modal with 'Buy' and 'Sell' toggle buttons at the top, items displayed horizontally on a wooden shelf with icons above and prices (e.g., 18c, 25c, 400c, 175c, 400c, 200c, 500c) on tags below, and 'You have [icon] 1,461 currants' at the bottom right.",
+   "rebuild_shows": "Clicking the Street Spirit opens a modal with a vertical list of items (mostly unrelated general items like Pumpkin Ale, Random Kindness, Musicblock alongside Butterfly Lotion and Grains), each row having inline 'Buy (18c)' and 'Sell (+11c)' buttons instead of top Buy/Sell tabs and a shelf layout.",
+   "difference": "The vendor UI layout is a vertical list with inline Buy/Sell buttons per row instead of a horizontal shelf display with top-level Buy/Sell tabs, and the inventory includes general non-animal goods.",
+   "fix": "Redesign the Street Spirit vendor modal to use top-level 'Buy' and 'Sell' tabs and display the themed items (e.g., Butterfly Lotion, Grain, Milk/Egg/Animal goods) on a horizontal shelf with icons and price tags, showing the player's currant balance at the bottom right.",
+   "video": "rounds/1/verify/street_spirit_vendor_buy_sell_currants_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "bureaucrat_waiting_area_and_qualification",
+   "rule_index": 16,
+   "rule": "Bureaucrat NPCs inside the Andra Bureaucratic Hall require players to stand still in a designated Waiting Area for a 10-second countdown timer before speaking to a Magister to buy qualifications (e.g., Card-Carrying Qualification for 50 currants).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 270,
+    "end": 295
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=270",
+   "original_shows": "In the original, the player speaks to the bureaucrat (Director Wigglesbottom), who tells them to go wait in the waiting area to the left. When the player moves to the orange waiting area chairs, a 'Please Wait' progress bar timer appears at the top right of the screen, and if the player tries to move or do anything, a popup says 'You can't do anything while waiting. Just wait!'",
+   "rebuild_shows": "In the rebuild, the player clicks on the Designated Waiting Area chairs and immediately gets a chat message 'You waited patiently in the orange chair! Magister Piksnikson will see you now.' without any 10-second countdown timer or progress bar.",
+   "difference": "The 10-second waiting countdown timer/progress bar in the waiting area is missing; waiting completes instantaneously upon clicking the chair.",
+   "fix": "Implement an actual 10-second countdown timer with a 'Please Wait' progress bar UI when the player enters/uses the Designated Waiting Area, preventing actions until the timer completes.",
+   "video": "rounds/1/verify/bureaucrat_waiting_area_and_qualification_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "wild_animals_chicken_butterfly_piggy",
+   "rule_index": 17,
+   "rule": "Wild animals roam streets\u2014such as Chickens (which can be clicked to 'Squeeze' for +1 mood), Butterflies (massaged with lotion or milked for quests), and Piggies (petted or hogtied for quests).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 355,
+    "end": 365
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=355",
+   "original_shows": "Chickens and butterflies roam the street. Clicking a roaming animal directly opens a circular/radial verb menu on the animal (e.g. 'Squeeze' on the chicken), and the player walks over to perform the animated action on the animal, with floating '+1 mood' feedback.",
+   "rebuild_shows": "A chicken and butterfly sit on the street, but instead of clicking the butterfly directly for animal verbs, the test clicks Butterfly Lotion in the inventory and selects 'Use on Butterfly'. The player does not walk to the butterfly or animate; a floating text 'Massaged the butterfly's tiny shoulders' and '+6 Mood +4 iMG' appear instantly.",
+   "difference": "Animal interaction in the original is done by clicking the roaming animal on the street to open its radial verb menu, walking up to it, and playing an interaction animation (like squeezing the chicken). In the rebuild, it was triggered remotely from an inventory item menu without walking to the butterfly or animating, and chicken squeezing wasn't shown.",
+   "fix": "Ensure roaming street animals (chickens, butterflies, piggies) can be clicked directly on the canvas to open their radial verb menu (e.g. Squeeze on chickens for +1 mood, Massage/Milk on butterflies, Pet/Hogtie on piggies), and require the player character to walk up to the animal and play an interaction animation when performing the verb.",
+   "video": "rounds/1/verify/wild_animals_chicken_butterfly_piggy_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "cubimal_wind_up_plank_race",
+   "rule_index": 18,
+   "rule": "Cubimals are wind-up miniature creatures in the player's inventory that can be released on a street to race a random distance measured in 'planks' before stopping.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1400,
+    "end": 1425
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1400",
+   "original_shows": "Other players release Cubimals on the street, and the game announces in chat and bottom overlay that a player's Cubimal went a random distance in 'planks' before stopping (e.g., 'stormoflare's Dustbunny Cubimal Lvl 1 went 2.33 planks before stopping', 'Draxin's Firebog Street Spirit Cubimal went 1.89 planks before stopping').",
+   "rebuild_shows": "The player clicks the Chick Cubimal in their inventory, selects 'Release & Race!', and the miniature creature races along the street with a live plank counter overhead, stopping at 12.5 planks with a corresponding announcement in the local chat.",
+   "difference": "None. The Cubimal release and racing mechanic measured in planks matches the original rule.",
+   "fix": "",
+   "video": "rounds/1/verify/cubimal_wind_up_plank_race_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "resource_nodes_beryl_trees_tower",
+   "rule_index": 19,
+   "rule": "Resource nodes on streets include Beryl Rocks (mined with a pickaxe for -7 Energy, yielding +10 iMG and Chunks of Beryl, with bonus chunks when mined cooperatively), Wood/Fruit/Bubble Trees (watered, tended, or petted), Dirt Piles (dug with a shovel), and construction projects (Tower).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 504,
+    "end": 518
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=504",
+   "original_shows": "Clicking 'Mine' on a Beryl Rock makes the player walk to the rock, shows a progress bar 'mine' for several seconds while a pickaxe thought bubble appears over the player's head, then deducts -7 Energy, awards +10 iMG, and spawns Beryl chunk items that float into the inventory with a chat/status message.",
+   "rebuild_shows": "Clicking 'Mine (-7 E)' on the Beryl Rock shows a brief 'mine' text at the bottom left, and triggers a level up / quest complete toast, causing the player's Energy to refill to full instead of showing a -7 Energy deduction, and the mining action completes almost instantly from afar without walking to the rock or showing a pickaxe progress animation.",
+   "difference": "In the rebuild, mining the Beryl Rock happens remotely without walking to the rock, completes instantly without a multi-second mining progress bar and pickaxe thought bubble animation, and triggers a level-up energy refill that masks or skips the -7 Energy deduction and floating Beryl chunk/energy/iMG feedback.",
+   "fix": "Ensure mining a Beryl Rock walks the player to the rock, displays a mining progress bar ('mine') and pickaxe thought bubble over ~2-3 seconds, deducts 7 Energy (even if a badge/quest is awarded, or award XP after deducting energy without overwriting the -7 E floating text), and displays floating -7 Energy, +10 iMG, and +1 Chunk of Beryl feedback.",
+   "video": "rounds/1/verify/resource_nodes_beryl_trees_tower_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "bottom_16_slot_inventory_search_and_furniture_tab",
+   "rule_index": 20,
+   "rule": "The bottom HUD bar holds 16 main inventory slots (which can hold container bags for sub-slots), a 'Furniture' tab toggle, and a text search bar.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 612,
+    "end": 625
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=612",
+   "original_shows": "The bottom HUD bar has two rows of 16 slots: the top row holds the 16 items inside the currently selected bag (shown as white slot boxes), and the bottom row holds the 16 container bags themselves (each showing a bag icon and capacity like '16/16' underneath). Above the left side of the inventory bar are a magnifying glass search button (which opens a 'Search inventory for:' text input popup above it) and 'Inventory' / 'Furniture' tabs.",
+   "rebuild_shows": "The bottom HUD bar only shows a single row of 13 visible inventory slots (cut off or limited to 13 on the left, followed by a 'Furniture Tab' button and a search box on the right). There is no second row for the 16 container bags with capacity counts ('16/16'), and the search bar and Furniture tab are placed to the right of the slots instead of above the top-left of the inventory bar.",
+   "difference": "The rebuild is missing the 16-bag container row (with capacity labels like 16/16) below the main 16 item slots, only displays 13 item slots instead of 16, and places the Furniture tab and search input on the right side of the bar instead of as tabs/buttons on the top-left of the inventory bar.",
+   "fix": "Update the bottom inventory HUD to display two full rows of 16 slots: the active bag's 16 item slots on top and the 16 bag slots (with bag icons and 'X/16' capacity indicators) on the bottom. Move the magnifying glass search toggle and 'Inventory'/'Furniture' tabs to the top-left edge just above the inventory slots.",
+   "video": "rounds/1/verify/bottom_16_slot_inventory_search_and_furniture_tab_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "social_party_items_rainbow_sparkle_pumpkin_ale_musicblock",
+   "rule_index": 21,
+   "rule": "Social/party items trigger shared audio-visual effects: 'Random Kindness' arcs a rainbow over a target player (+18 to +40 mood), 'Sparkle Powder' fills the screen with stars (+10 mood), 'Pumpkin Ale' gives +29 mood and triggers a group Thriller dance, and 'Musicblocks' play music tracks for -2 Energy (+30 iMG, +2 mood).",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1775,
+    "end": 1790
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1775",
+   "original_shows": "Player clicks Pumpkin Ale in inventory, selects 'Drink', and receives '+29 Mood' along with a message about a Thriller spell.",
+   "rebuild_shows": "Player uses Random Kindness (rainbow arcs over player, +30 Mood), Sparkle Powder (stars appear across the street, +10 Mood), and drinks Pumpkin Ale (+29 Mood & triggers Thriller dance animation).",
+   "difference": "None \u2014 the rebuild implements all three social/party item visual effects and mood gains.",
+   "fix": "",
+   "video": "rounds/1/verify/social_party_items_rainbow_sparkle_pumpkin_ale_musicblock_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "consumables_butterfly_lotion_water_cooler_and_d12_die",
+   "rule_index": 22,
+   "rule": "Consumables and utility items have specific verb actions: 'Butterfly Lotion' can be tasted (+12 mood, consuming it), 'Water Cooler' dispenses a 'Cup of Water' (-2 energy) which can be drunk (+5 mood), and a '12-sided Die' can be rolled to broadcast random outcomes in chat.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 231,
+    "end": 255
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=231",
+   "original_shows": "Clicking Butterfly Lotion opens a verb menu popup above the inventory item showing 'Butterfly Lotion', subtitle 'Lotion is not for eating.' (or 'Drop it on the ground'), and verbs (Drop, Taste, Use, Inspect). Clicking 'Taste' consumes the item, shows a +12 green mood floater at the top-left mood icon, a dark notification popup box at the top-left ('You tasted a Butterfly Lotion. You tried to taste a little but you ended up tasting a lot, and now it's gone! Oddly mood enhancing though. You gain 12 mood.'), and logs that same full flavor text into the right-hand chat/activity panel.",
+   "rebuild_shows": "The test triggers tasting Butterfly Lotion and rolling the 12-sided die without showing the inventory verb menu interaction. Tasting Butterfly Lotion shows an overhead speech bubble ('Tastes floral... wait, lotion is not for eating!') and logs a generic message 'You used Taste (+12 Mood) on Butterfly Lotion.' in chat, without the top-left notification popup or the original flavor text. Rolling the 12-sided die logs 'Tester1 rolled a 12-sided die and got a 3!' in chat and shows an overhead bubble 'Rolled a 3!'.",
+   "difference": "1. Inventory verb menu popup with item title, action description subtitle ('Lotion is not for eating.'), and verb list is not shown when using the item. 2. Tasting Butterfly Lotion lacks the top-left dark notification toast and uses generic chat text ('You used Taste (+12 Mood) on Butterfly Lotion.') instead of the original flavor text ('You tasted a Butterfly Lotion. You tried to taste a little but you ended up tasting a lot, and now it's gone! Oddly mood enhancing though. You gain 12 mood.'). 3. Water Cooler interaction is not exercised in the test.",
+   "fix": "Display the inventory verb menu popup with dynamic hover subtitles (e.g. 'Lotion is not for eating.' when hovering Taste), show the top-left notification toast and full flavor text in the activity log when tasting Butterfly Lotion, and include the Water Cooler dispensing/drinking interaction.",
+   "video": "rounds/1/verify/consumables_butterfly_lotion_water_cooler_and_d12_die_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "currencies_img_xp_currants_and_giant_favor",
+   "rule_index": 23,
+   "rule": "The game tracks four main currencies/points: iMG/XP (earned from actions, quests, and visitors; used to level up), Currants (in-game money for vendors/auctions), Credits (premium/subscription currency for Wardrobe cosmetics), and Giant Favor (earned via quests/shrines).",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 175,
+    "end": 195
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=175",
+   "original_shows": "The original UI shows Level/iMG/XP at the top left, Currants at the bottom left (1,447 currants), and quest rewards in the Quest Log granting Currants, iMG, Energy, and Favor with various Giants (e.g., Humbaba, Spriggan, Grendaline, Cosma).",
+   "rebuild_shows": "The rebuild UI shows Level/iMG/XP in the top bar, Currants at the bottom left (updating from 250 to 275 after interacting with Roy the Butler, who also grants +10 iMG), and the Quests, Giant Favor & Badges modal displaying quest rewards (Currants, iMG, Giant Favor) alongside a summary of Favor with the 11 Giants of Ur.",
+   "difference": "",
+   "fix": "",
+   "video": "rounds/1/verify/currencies_img_xp_currants_and_giant_favor_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "mood_and_energy_meters_spending_and_restoring",
+   "rule_index": 24,
+   "rule": "Two primary meters govern player activity: Mood (percentage/100 gauge at top-left that boosts iMG/XP multiplier and is raised by drinks, emotes, and social items) and Energy (numerical bar below portrait, e.g., 495 max at Lv19 or 100 max at Lv3, spent on mining/harvesting/street changes and restored by food/orbs).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 505,
+    "end": 520
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=505",
+   "original_shows": "In the top-left corner, there is a circular portrait surrounded by a green Mood ring/gauge (showing 95 out of 100 in a sub-circle) and a green curved Energy bar directly below the portrait (showing 410/495 Energy, dropping to 403 when mining Beryl for -7 Energy).",
+   "rebuild_shows": "In the top-left header bar, Mood is shown as a small green circle (88 -> 100 -> 100) and Energy is a horizontal bar (432/495 -> 507/512 after leveling up during mining -> 512/512 after eating cherries). There is no avatar portrait with a surrounding Mood ring and curved Energy bar beneath it. Also, leveling up refilled/increased energy during the mining step, obscuring the -7 Energy deduction and capping mood/energy so eating cherries only raised Energy by 5 (507 to 512) and Mood by 0 (already 100).",
+   "difference": "1. The top-left HUD layout differs: original has an avatar portrait inside a circular Mood gauge with a curved Energy bar underneath inside the viewport, whereas the rebuild places a plain circle and horizontal bar in a top header bar without a portrait. 2. Leveling up on the mined rock refilled Mood to 100 and boosted current Energy (+82), breaking the expected -7 Energy mining deduction and capping the +12 Energy / +3 Mood restoration from eating cherries.",
+   "fix": "1. Style the top-left Mood/Energy HUD to match the original (avatar portrait framed by a circular Mood gauge with a curved Energy bar underneath). 2. Ensure mining deducts 7 Energy without an unexpected level-up full heal/boost during this test scenario (or don't overfill energy/mood on level up) so the -7 Energy cost and +12 Energy / +3 Mood cherry restoration are accurately reflected in the meters.",
+   "video": "rounds/1/verify/mood_and_energy_meters_spending_and_restoring_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "floating_stat_orbs_collection",
+   "rule_index": 25,
+   "rule": "Floating orbs on streets can be collected by jumping into them to gain +1 XP, +1 currants, +1 mood, or +1 energy.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 376,
+    "end": 386
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=376",
+   "original_shows": "Floating orbs on the street that the player jumps into to collect, granting +1 mood, +1 currants, +1 xp, or +1 energy with a floating text popup.",
+   "rebuild_shows": "Floating orbs on the street above the porch; the player jumps into a green orb and collects it, showing '+1 Mood' floating text and particle effects.",
+   "difference": "None",
+   "fix": "",
+   "video": "rounds/1/verify/floating_stat_orbs_collection_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "real_time_skill_training_and_brain_capacity",
+   "rule_index": 26,
+   "rule": "There are 133 skills across 7 categories (Alchemy, Animals, Cooking, Gathering, Growing, Industrial, Intellectual) that train in real time (online or offline); learning more skills than one's Brain Capacity applies an escalating time penalty (up to 2764%) to training durations.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 851,
+    "end": 875
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=851",
+   "original_shows": "A full-page Skills layout featuring a left sidebar with 'All Learnable' and the 7 skill categories (Alchemy, Animals, Cooking, Gathering, Growing, Industrial, Intellectual), a 3-column grid of skill cards in the selected category, a top-right Brain Capacity meter showing '101 / 38 Skills' and '2764% time penalty' with a brain icon, a bottom 'Legend' and a large 133-square visual skill map grouped by the 7 categories (green for Learned, blue for Learnable, grey for Not learnable yet, yellow for Learning, striped for Required). Clicking a skill opens a detailed modal showing the skill icon, title, duration (e.g., '4 days 3 hr 6 min 12 sec'), description, Requirements (Level, Skills, Upgrades), Giant affiliation, and Status.",
+   "rebuild_shows": "A simple flat vertical list inside a generic popup modal ('Skills & Brain Capacity (133-Skill Web)') showing only 8 hardcoded skills in a single list with 'Learn (20s)' buttons and a plain text header 'Skills Learned: 1 / 5 Brain Capacity | Training Time Penalty: +0% (up to 2764% when over capacity)'. There is no category sidebar/filtering, no 3-column skill card grid, no 133-square visual skill map/legend, and no detailed skill popup with requirements and Giant affiliation.",
+   "difference": "The rebuild replaces the entire multi-part Skills interface (category navigation sidebar, 3-column skill card grid, 133-square visual skill map with legend, and detailed skill modal with requirements and Giant affiliation) with a plain flat list of 8 skills in a small modal.",
+   "fix": "Build the full Skills UI matching the original: 1) A header with the Brain Capacity meter and penalty text; 2) A left sidebar to filter by 'All Learnable' and the 7 categories (Alchemy, Animals, Cooking, Gathering, Growing, Industrial, Intellectual) alongside a 3-column grid of skill cards for the selected category; 3) The bottom 133-square visual skill grid organized into the 7 category clusters with the 5-state color legend (Learned, Learnable, Not learnable yet, Learning, Required); 4) A skill detail modal when clicking a skill that displays the icon, exact training duration, lore description, Requirements list, Giant affiliation (Primary/Secondary), and Status/Learn button.",
+   "video": "rounds/1/verify/real_time_skill_training_and_brain_capacity_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "quests_level_up_and_badges_progression",
+   "rule_index": 27,
+   "rule": "Players progress by leveling up via iMG/XP, completing multi-step Quests from the Magic Rock, earning Badges/Achievements (e.g., Bush Whacker, Social Butterfly), and contributing to server-wide Feats.",
+   "pass": false,
+   "verdict": "unclear",
+   "votes": null,
+   "original": {
+    "video": "B",
+    "start": 173,
+    "end": 198
+   },
+   "original_url": "https://www.youtube.com/watch?v=ecoYEgVAWmE&t=173",
+   "original_shows": "A scrollable Quest Log window showing active quests with titles, descriptions, required items/actions with progress counters (e.g., 4/5 Water trees, 0/3 Hogtie Piggies), and rewards (currants, xp, energy, favor with Giants).",
+   "rebuild_shows": "A 'Quests, Giant Favor & Badges' modal showing active quests (including 'Whispers of the Magic Rock' at 1/2 progress), Giant Favor counters, and Badges & Achievements (where 'Bush Whacker' is already unlocked). The player does not water the tree during the clip due to a test timeout.",
+   "difference": "The test failed to click the tree/complete the quest ('step 2 click_text: Locator.click: Timeout 3000ms exceeded'), so the quest completion and Giant visitation banner were never triggered in the recording. Additionally, the rebuild's quest log uses simple progress bars instead of the original's item icon + counter layout.",
+   "fix": "Fix the test script selector/action so it properly clicks and waters the Fruit Tree to complete the quest, and ensure 'Bush Whacker' isn't pre-unlocked if the test expects watering the tree to unlock it.",
+   "video": "rounds/1/verify/quests_level_up_and_badges_progression_p0.mp4",
+   "step_errors": [
+    "step 2 click_text: Locator.click: Timeout 3000ms exceeded."
+   ]
+  },
+  {
+   "id": "sandbox_no_win_lose_and_beforeunload_joke",
+   "rule_index": 28,
+   "rule": "As a persistent social sandbox MMO, there is no win or lose state; attempting to refresh/leave displays a joke alert 'WAIT! You were just about to win the game!'.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1825,
+    "end": 1838
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1825",
+   "original_shows": "When refreshing or leaving the page, the game displays an in-page dark overlay across the game viewport with the white text 'WAIT! You were just about to win the game!' while the page unloads/reloads.",
+   "rebuild_shows": "The test clip only shows normal idle gameplay and does not trigger a page refresh or show the overlay.",
+   "difference": "The in-page overlay with 'WAIT! You were just about to win the game!' is not visibly triggered or demonstrated in the rebuild clip (it may only register a browser beforeunload handler rather than rendering the visual in-game overlay on unload/refresh, or the test failed to trigger it).",
+   "fix": "Ensure that when `beforeunload` or an in-game reload occurs, a dark semi-transparent overlay is rendered over the game canvas displaying the centered white text 'WAIT! You were just about to win the game!', and update the test to trigger a reload/unload event so the overlay is visible.",
+   "video": "rounds/1/verify/sandbox_no_win_lose_and_beforeunload_joke_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "flash_hud_layout_portrait_topbar_inventory_sidebar",
+   "rule_index": 29,
+   "rule": "The Flash client HUD consists of a top-left avatar portrait (Mood, Energy, iMG, navigation menu), a top bar (Cultivate, Street name, World Map, audio sliders, fullscreen, settings), a bottom 16-slot inventory bar, and a right-hand sidebar (in-game calendar/clock, chat tabs, 'People here' list, and Local Chat/Activity log).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 280,
+    "end": 295
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=280",
+   "original_shows": "Top-left avatar portrait with curved Mood (blue) and Energy (green) meters, iMG counter, and a collapsible drawer below it (with Level, iMG, Mood, Energy, Currants, Profile, Skills, Vanity, Quests, Groups, Jobs, Keys, Encyclopedia, Store, Auctions, Snapshots, Preferences, Help, Exit the World). Top bar has iMG, Cultivate button, Street name ('Beau's Home Street'), World Map icon, audio sliders, fullscreen, and settings. Bottom bar has 'Inventory | Furniture' tabs and a 16-slot inventory grid (some slots containing bags with 16/16 capacity indicators). Right sidebar has in-game clock/calendar ('12:39 pm / 5th of Prim'), 'Local Chat / Activity' with 'People here' dropdown, chat log, and chat input.",
+   "rebuild_shows": "A generic modern web header bar across the top ('Ur's Whimsy', Mood circle, Energy horizontal bar, iMG bar, Level 3, Skills/Quests/Wardrobe/Cultivate/World Map/Go Home buttons), a 12-slot bottom inventory bar with Currants on the left, a simplified collapsible left drawer with 4 button boxes, and a right sidebar.",
+   "difference": "The HUD layout and components do not match the original Glitch Flash client HUD: the top-left avatar portrait with curved Mood/Energy gauges is replaced by a flat web header; the bottom inventory has 12 slots instead of 16 slots and lacks the Inventory/Furniture tabs above the first two slots; the left navigation drawer has 4 generic buttons instead of the detailed Glitch menu list; the top bar has extra buttons (Skills, Quests, Wardrobe, Go Home) and lacks the audio/fullscreen/settings controls.",
+   "fix": "Rebuild the HUD to match the authentic Glitch client layout: restore the top-left circular avatar portrait with curved Mood and Energy gauges and the authentic vertical menu list in the collapsible drawer; change the bottom inventory bar to 16 slots with 'Inventory' and 'Furniture' tabs above it; and match the top bar (iMG, Cultivate, Street badge, World Map, audio/screen icons) and right sidebar header layout.",
+   "video": "rounds/1/verify/flash_hud_layout_portrait_topbar_inventory_sidebar_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "character_management_modals_live_update",
+   "rule_index": 30,
+   "rule": "Character management features (Profile, Wardrobe, Vanity, Skills, Friends, Snaps, Auctions, Forums) open in integrated web browser tabs that update the live Flash game session when saved.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 300,
+    "end": 320
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=300",
+   "original_shows": "Clicking 'Profile' (or Skills/Vanity/Wardrobe/etc. from the left-hand expandable player menu) opens a full-screen web-style interface with top navigation tabs (Home, Profile, Wardrobe, Vanity, Skills, Friends, My Snaps; Enter World, Auctions, Groups, Forums, Snaps, Encyclopedia, Help) showing character bio, stats, achievements, snaps, news feed, and friends list.",
+   "rebuild_shows": "Clicking 'Wardrobe' in the top bar opens a simple modal dialog overlay ('Wardrobe & Vanity \u2014 Customize Your Glitchen') inside the game screen with basic color swatches and text buttons. Profile, Friends, Snaps, Auctions, Forums, and the full web-page layout are completely missing, and the test never even opens the Skills panel.",
+   "difference": "Instead of an integrated web-page view/tab with rich profile, social feed, snaps, achievements, and navigation tabs (Profile, Wardrobe, Vanity, Skills, Friends, My Snaps, Auctions, Forums, Encyclopedia), the rebuild uses a barebones in-game modal popup for Wardrobe and lacks the left-hand player menu dropdown and full web-page views.",
+   "fix": "Implement the expandable left-hand player menu (under the avatar portrait) with links to Profile, Skills, Vanity, Wardrobe, Groups, Friends, Keys, Encyclopedia, Snaps, Auctions, Forums, and render these views as full-page web-style interfaces with the complete top navigation bar and sections (bio, achievements, snaps, news feed, friends grid, full visual wardrobe/vanity/skills pages) that sync with the live game session.",
+   "video": "rounds/1/verify/character_management_modals_live_update_p0.mp4",
+   "step_errors": []
+  },
+  {
+   "id": "multiplayer_realtime_chat_highfive_hug_follow",
+   "rule_index": 31,
+   "rule": "Players on the same street see each other in real time, can chat via overhead speech bubbles and the right-hand chat log, and can click each other to High five (+30 mood), Hug (+2 mood), Follow (forming automatic movement chains), Summon, Trade, or Give items.",
+   "pass": true,
+   "verdict": "match",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1727,
+    "end": 1750
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1727",
+   "original_shows": "Multiple players on Beau's Home Street seeing each other move and jump in real time, chatting via overhead speech bubbles and the right-hand Local Chat log.",
+   "rebuild_shows": "Two players (Tester1 and Tester2) on Beau's Home Street seeing each other in real time, chatting via overhead speech bubbles and the right-hand Local Chat log, and interacting to High-five for +30 Mood.",
+   "difference": "None for this rule; multiplayer presence, real-time sync, overhead speech bubbles, chat log, and social interaction (High-five +30 Mood) all work as expected.",
+   "fix": "",
+   "video": "rounds/1/verify/multiplayer_realtime_chat_highfive_hug_follow_p0.mp4",
+   "step_errors": [
+    "step 1 click: Page.click: Timeout 3000ms exceeded."
+   ]
+  },
+  {
+   "id": "matching_daily_hi_sign_bonus",
+   "rule_index": 32,
+   "rule": "Waving 'hi' (or 'bye') to another player who has the same daily 'hi sign' (e.g., 'Bats') awards a matching bonus (+5 mood, stacking to 2x +10 mood).",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 1177,
+    "end": 1188
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=1177",
+   "original_shows": "When waving to another player with the same daily Hi Sign ('Bats'):\n1. Floating text 'Hi' (or 'Bye') appears above the player.\n2. A 'Bats' sign icon pops up above the player.\n3. Floating text '+5 mood' appears first, followed by '2x' and '+10 mood!' with a speech bubble 'Neato, we match today!'.\n4. A centered message at the bottom of the game canvas says: 'You and [Player] have the same hi sign \"Bats\". Bonus time!'.",
+   "rebuild_shows": "When pressing '5' to wave:\n1. A speech bubble 'Hi! (Bats!)' appears above Tester1, and a pink 'Bats!' box appears on Tester2's screen.\n2. Floating text '+10 Mood' appears directly without the initial '+5 mood', '2x' indicator, or 'Neato, we match today!' bubble.\n3. There is no bottom-center canvas message ('You and [Player] have the same hi sign \"Bats\". Bonus time!'), nor a graphical 'Bats' icon popup.",
+   "difference": "The rebuild lacks the visual sequence of the original Hi Sign match: it shows 'Hi! (Bats!)' in a speech bubble instead of floating 'Hi'/'Bye' + graphical sign icon, skips the '+5 mood' -> '2x' + '+10 mood!' + 'Neato, we match today!' sequence, and omits the bottom-center canvas notification 'You and [Player] have the same hi sign \"Bats\". Bonus time!'.",
+   "fix": "Update the Hi Sign wave mechanic so waving displays floating 'Hi'/'Bye' text and the Hi Sign icon, triggers the '+5 mood' then '2x' / '+10 mood!' floating text with the 'Neato, we match today!' speech bubble, and displays the bottom-center notification 'You and [Player] have the same hi sign \"Bats\". Bonus time!'.",
+   "video": "rounds/1/verify/matching_daily_hi_sign_bonus_p0.mp4",
+   "step_errors": [
+    "step 1 click: Page.click: Timeout 3000ms exceeded."
+   ]
+  },
+  {
+   "id": "street_music_and_musicblock_pumpkin_ale_override",
+   "rule_index": 33,
+   "rule": "Each street style and region has its own looping background music (e.g., eerie plucked strings in Lost Woods, upbeat quirky rhythm in Vam Road, acoustic guitar in Andra), which can be overridden by playing Musicblocks or drinking Pumpkin Ale.",
+   "pass": false,
+   "verdict": "mismatch",
+   "votes": null,
+   "original": {
+    "video": "A",
+    "start": 3030,
+    "end": 3048
+   },
+   "original_url": "https://www.youtube.com/watch?v=VfzE_fIxEVg&t=3030",
+   "original_shows": "Clicking a Musicblock in the inventory opens a verb menu with 'Give', 'Drop', 'Play for', and 'Play'. Selecting 'Play' shows a toast 'You played a Musicblock GNG. Ah, first dose of music for the day! +30 iMG +2 Mood -2 Energy', plays the musicblock track, and displays a floating musicblock icon with animated sound waves above the player's head.",
+   "rebuild_shows": "Clicking Musicblock DB-4 opens a menu with only 'Play (-2 Energy, +30 iMG)' and 'Inspect' (missing 'Play for', 'Give', 'Drop'), displays a text bubble '\u266a Playing Musicblock DB-4 \u266a' above the character instead of the floating musicblock icon with sound waves, and logs to the right-side chat instead of a bottom-left toast.",
+   "difference": "The Musicblock verb menu is missing 'Play for' (which lets you select another player on the street), 'Give', and 'Drop'. Additionally, playing a Musicblock in the original displays a floating icon of the Musicblock with animated sound waves above the character and a bottom-left toast notification, whereas the rebuild shows a text label bubble and logs to the right panel.",
+   "fix": "Add 'Play for' (with target player selector), 'Give', and 'Drop' to the Musicblock item menu, show a floating Musicblock icon with animated sound waves above the character while playing, and display the feedback toast at the bottom-left of the viewport.",
+   "video": "rounds/1/verify/street_music_and_musicblock_pumpkin_ale_override_p0.mp4",
+   "step_errors": []
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "path": "public/js/main.js",
+ "edits": [
+  {
+   "oldText": "    } else if (e.key === \"k\" || e.key === \"K\") {\n      ui.openSkillsModal();\n    } else if (e.key === \"Escape\") {\n      ui.closeVerbMenu();\n      ui.closeModal();\n    }",
+   "newText": "    } else if (e.key === \"k\" || e.key === \"K\") {\n      ui.openSkillsModal();\n    } else if (e.key === \"e\" || e.key === \"E\" || e.key === \"Enter\") {\n      if (game.activePopup && game.activePopup.verbs && game.activePopup.verbs.length > 0) {\n        const v = game.activePopup.verbs[0];\n        const fn = game.activePopup.onSelect;\n        ui.closeVerbMenu();\n        fn(v);\n      }\n    } else if (e.key === \"Escape\") {\n      ui.closeVerbMenu();\n      ui.closeModal();\n    }"
+  },
+  {
+   "oldText": "    // Clamp street horizontal bounds\n    p.x = Math.max(36, Math.min(st.width - 36, p.x));",
+   "newText": "    // Clamp street horizontal bounds & check boundary signpost transitions (Rule 10)\n    if (p.x <= 42 && moveInput < 0 && game.transitionTimer <= 0) {\n      const leftExit = st.nodes.find((n) => (n.type === \"signpost\" || n.type === \"door\") && n.x < 300 && n.verbs?.[0]?.target);\n      if (leftExit) {\n        game.changeStreet(leftExit.verbs[0].target);\n        return;\n      }\n    } else if (p.x >= st.width - 42 && moveInput > 0 && game.transitionTimer <= 0) {\n      const rightExit = st.nodes.find((n) => (n.type === \"signpost\" || n.type === \"door\") && n.x > st.width - 350 && n.verbs?.[0]?.target);\n      if (rightExit) {\n        game.changeStreet(rightExit.verbs[0].target);\n        return;\n      }\n    }\n    p.x = Math.max(36, Math.min(st.width - 36, p.x));"
+  }
+ ]
+}
