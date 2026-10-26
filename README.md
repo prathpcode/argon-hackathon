@@ -24,3 +24,9 @@ Each revival is a folder in `runs/<id>/`. `events.jsonl` there is the log the UI
 Each round's playtesters are now the fun tester, the footage check (fidelity, rule by rule against the original) and the Managed Agent squad (multiplayer). The local multiplayer tester only stands in when the squad can't run on the machine.
 
 `pipeline/revive.py runs/<id>` runs all of it and resumes where it stopped. `REVIVE_ROUNDS` sets the number of playtest rounds (default 3).
+
+## Team
+
+- Prathyek Poojary
+- Gautam Anand
+- Suhurrith Adhikari
