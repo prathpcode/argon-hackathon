@@ -15,8 +15,11 @@ const STAGES: StageId[] = ["find", "watch", "build", "playtest"];
 const ACTS_KEPT = 80;
 
 /** Runs from before the rename say "faithful"; read them as "fidelity". */
-const fidelity = (_k: string, v: unknown) => {
+const fidelity = (k: string, v: unknown) => {
   if (v === "faithful") return "fidelity";
+  if (k === "name" && v === "Faithfulness tester") return "Fidelity tester";
+  // Older report steps led with scores ("Fun 7 · Faithful 7 · 7 issues"); the app no longer shows them.
+  if (k === "detail" && typeof v === "string") return v.replace(/^Fun [\d.]+ · (Faithful|Fidelity) [\d.]+ · /, "");
   if (v && typeof v === "object" && !Array.isArray(v) && "faithful" in v) {
     const { faithful, ...rest } = v as Record<string, unknown>;
     return { fidelity: faithful, ...rest };

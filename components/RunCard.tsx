@@ -17,11 +17,6 @@ export function RunCard({ run }: { run: RunSummary }) {
           {run.status === "running" && <i className="pulse" aria-hidden />}
           {label}
         </span>
-        {run.best && (
-          <span className="score-badge">
-            Fun {run.best.fun} · Fidelity {run.best.fidelity}
-          </span>
-        )}
       </div>
       <div className="card-title">{run.revival.name}</div>
       <div className="card-sub">{[years(run.revival.released, run.revival.lost), run.revival.platform].filter(Boolean).join(" · ")}</div>

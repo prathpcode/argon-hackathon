@@ -216,7 +216,6 @@ h1, h2, h3, p { margin: 0; }
 .tag-badge.done, .tag-badge.stopped { background: var(--green); color: var(--black); }
 .tag-badge.error { background: var(--red); color: var(--black); }
 .tag-badge.queued { background: var(--blue); color: var(--white); }
-.score-badge { position: absolute; right: 0; bottom: 0; display: inline-flex; align-items: center; height: 24px; padding: 0 1ch; font-family: var(--tt); font-size: 13px; background: var(--black); color: var(--yellow); }
 .run-card { position: relative; min-width: 0; }
 .run-card .del { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 28px; height: 28px; background: var(--black); color: var(--dim); opacity: 0;
   transition: opacity 120ms linear, transform 0.35s var(--ease), background 90ms linear, color 90ms linear; }
@@ -443,25 +442,7 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .report > p { margin-top: 12px; font-size: 13.5px; line-height: 1.55; color: #d6d6d6; }
 .keep { margin: 10px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--green); }
 .keep li::before { content: "+ "; }
-.report-scores { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.score { --c: var(--yellow); display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 2px 1.2ch; }
-.score.fidelity { --c: var(--cyan); }
-.score span { font-family: var(--tt); font-size: 13px; color: var(--dim); }
-.score b { justify-self: end; font-family: var(--tt); font-weight: 400; font-size: 26px; line-height: 1; color: var(--c); }
-.blocks { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; height: 10px; }
-.blocks i { background: #181818; }
-.blocks i.on { background: var(--c); animation: block-on 0.3s steps(2) both; }
-@keyframes block-on { from { background: #181818; } }
 
-.trend { display: flex; align-items: flex-end; gap: 10px; height: 72px; margin-top: 16px; }
-.trend-col { flex: 1; max-width: 44px; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.trend-bars { flex: 1; width: 100%; display: flex; align-items: flex-end; gap: 3px; }
-.trend-bars i { flex: 1; min-height: 3px; transform-origin: bottom; animation: grow 0.7s steps(8) both; }
-@keyframes grow { from { transform: scaleY(0); } }
-.trend-bars .f { background: var(--yellow); }
-.trend-bars .a { background: var(--cyan); }
-.trend-col span { font-family: var(--tt); font-size: 12px; color: var(--dim); }
-.trend-col.best span { color: var(--black); background: var(--green); padding: 0 0.6ch; }
 
 .roster-group + .roster-group { margin-top: 10px; }
 .roster h3 { margin: 0 0 4px; font-family: var(--tt); font-weight: 400; font-size: 12.5px; color: var(--dim); }
@@ -480,14 +461,9 @@ button.follow:hover { background: var(--cyan); color: var(--black); outline-colo
 .mate.running small { color: #d6d6d6; }
 .mate-shot { width: 56px; aspect-ratio: 16 / 9; object-fit: cover; flex: none; background: #050505; }
 .mate-dot { width: 8px; height: 8px; flex: none; background: var(--c); }
+.managed { margin-left: 0.6ch; padding: 0 0.6ch; font-family: var(--tt); font-style: normal; font-size: 11px; vertical-align: 1px; background: var(--cyan); color: var(--black); }
+.squad-findings { padding: 8px 1.6ch 12px; border-top: 2px solid #111; }
 
-.review .report-scores { margin-bottom: 12px; }
-.review-parity { width: 100%; display: flex; align-items: center; gap: 1ch; padding: 8px; margin-bottom: 8px; border: 0; background: #0b0b2a; color: #d6d6d6; font-size: 13px; text-align: left; transition: background-color 90ms linear; }
-.review-parity:hover { background: #12123a; color: var(--white); }
-.review-parity svg { width: 15px; height: 15px; color: var(--cyan); }
-.review-parity span { flex: 1; }
-.review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
-.review-list p { margin: 2px 0 8px calc(28px + 1.2ch + 6px); font-size: 12.5px; line-height: 1.5; color: var(--dim); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .issues ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .issues summary { display: flex; align-items: baseline; gap: 1ch; padding: 6px 0; cursor: pointer; list-style: none; font-size: 13px; color: #d6d6d6; transition: color 90ms linear; }
 .issues summary::-webkit-details-marker { display: none; }

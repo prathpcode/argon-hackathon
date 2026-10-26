@@ -203,7 +203,7 @@ async function playtester(run: Run, round: number, t: (typeof TESTERS)[number], 
     }),
     execute: async (_id, p: any) => {
       report = { tester: t.key, fun: p.fun, fidelity: p.fidelity, summary: p.summary, best: p.best ?? [], issues: (p.issues ?? []).map((i: Issue) => ({ ...i, by: t.key })) };
-      return { content: [{ type: "text" as const, text: "Report received. You're done." }], details: { summary: `Fun ${p.fun} · Fidelity ${p.fidelity} · ${p.issues?.length ?? 0} issues` } };
+      return { content: [{ type: "text" as const, text: "Report received. You're done." }], details: { summary: `${p.issues?.length ?? 0} issues` } };
     },
   };
   try {
@@ -272,7 +272,7 @@ async function playtest(run: Run) {
       pickBest(run);
     }
     const report = run.readJson("rounds", String(r), "report.json");
-    summary = `Fun ${report.fun} · Fidelity ${report.fidelity}`;
+    summary = `${r} round${r > 1 ? "s" : ""}`;
     if (r < ROUNDS && !run.exists("rounds", String(r), "fixed")) {
       fs.copyFileSync(path.join(rdir, "PLAYTEST.md"), path.join(game, "PLAYTEST.md"));
       const id = `fixer:${r}`;

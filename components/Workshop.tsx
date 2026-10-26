@@ -2,13 +2,13 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
-  AlertTriangle, Braces, Brain, Check, ChevronLeft, ChevronRight, ClipboardList, Eye, FilePen, FilePlus, FileText, Film, FolderSearch, Gamepad2, Globe, Hammer,
-  Keyboard, ListPlus, MessageSquare, Search, Video, Pause, Play, RotateCw, Scale, ShieldCheck, Sparkles, Users, Wrench, X, type LucideIcon,
+  AlertTriangle, Braces, Brain, Check, ChevronLeft, ChevronRight, ClipboardList, Compass, Eye, FilePen, FilePlus, FileText, Film, FolderSearch, Gamepad2, Globe, Hammer,
+  Keyboard, ListPlus, MessageSquare, MessagesSquare, Search, Video, Pause, Play, RotateCw, Scale, ShieldCheck, Sparkles, Users, Wrench, X, Zap, type LucideIcon,
 } from "lucide-react";
 import { clock, compact, duration } from "@/lib/format";
 import { youtubeId } from "@/lib/links";
 import { YtClip } from "./YtClip";
-import type { Act, Agent, RunState, StageState, Verify, VerifyRule } from "@/lib/run-types";
+import type { Act, Agent, RunState, SquadAgent, StageState, Verify, VerifyRule } from "@/lib/run-types";
 
 const TOOL_ICON: Record<string, LucideIcon> = {
   read: FileText, write: FilePlus, edit: FilePen, ls: FolderSearch, find: FolderSearch, grep: FolderSearch,
@@ -32,6 +32,16 @@ const FOCUS_ICON = { fun: Sparkles, fidelity: Scale, together: Users } as const;
 function agentIcon(a: Agent): LucideIcon {
   if (a.role === "tester") return FOCUS_ICON[a.focus ?? "fun"] ?? Gamepad2;
   return { researcher: Globe, watcher: Eye, builder: Hammer, fixer: Wrench, verifier: Film, squad: Gamepad2 }[a.role] ?? Hammer;
+}
+
+/** Managed Agents are picked by "squad:<round>:<name>"; they aren't in the event log's agents. */
+const SQUAD_ICON: Record<string, LucideIcon> = { Explorer: Compass, Griefer: Zap, Socialite: MessagesSquare };
+const squadKey = (round: number, name: string) => `squad:${round}:${name}`;
+function squadOf(run: RunState, key: string | null): { round: number; name: string; agent: SquadAgent } | null {
+  const m = key?.match(/^squad:(\d+):(.+)$/);
+  if (!m) return null;
+  const agent = run.rounds.find((r) => r.round === Number(m[1]))?.squad?.agents[m[2]];
+  return agent ? { round: Number(m[1]), name: m[2], agent } : null;
 }
 
 const file = (run: RunState, p: string) => `/api/revivals/${run.id}/file?p=${encodeURIComponent(p)}`;
@@ -88,11 +98,12 @@ export function Workshop({ initial }: { initial: RunState }) {
   // A phase tab shows that phase's agents: the pinned one, else whoever there worked last.
   const inTab = tab ? run.agents.filter((a) => phaseOf(a) === tab) : [];
   const tabLead = [...inTab].sort((a, b) => (a.status === "running" ? 1 : 0) - (b.status === "running" ? 1 : 0) || a.updatedAt - b.updatedAt).at(-1) ?? null;
+  const squadPicked = squadOf(run, pinned);
   const focus = (pinned && run.agents.find((a) => a.id === pinned)) || (tab ? tabLead : followed);
   const pick = (id: string) => {
     const a = run.agents.find((x) => x.id === id);
     setPinned(id);
-    setTab(a ? phaseOf(a) : null);
+    setTab(a ? phaseOf(a) : squadOf(run, id) ? "playtest" : null);
   };
   const followLive = () => {
     setPinned(null);
@@ -201,12 +212,12 @@ export function Workshop({ initial }: { initial: RunState }) {
               })}
             </div>
           )}
-          {focus ? <Desk key={focus.id} run={run} agent={focus} now={clockAt} following={!pinned && !tab} onFollow={followLive} /> : <p className="empty-note">The agents start in a moment.</p>}
+          {squadPicked ? <SquadDesk key={pinned} run={run} name={squadPicked.name} agent={squadPicked.agent} onFollow={followLive} />
+            : focus ? <Desk key={focus.id} run={run} agent={focus} now={clockAt} following={!pinned && !tab} onFollow={followLive} /> : <p className="empty-note">The agents start in a moment.</p>}
           </>}
         </div>
         <aside className="ws-side">
-          <Roster run={run} focus={focus?.id ?? null} now={clockAt} onPick={pick} />
-          <AgentReview run={run} onPick={pick} onParity={check ? () => { setPinned(null); setTab("parity"); } : undefined} />
+          <Roster run={run} focus={squadPicked ? pinned : focus?.id ?? null} now={clockAt} onPick={pick} />
           <FootageList run={run} />
         </aside>
       </div>
@@ -329,6 +340,43 @@ function Desk({ run, agent: a, now, following, onFollow }: { run: RunState; agen
           ))}
         </div>
       ) : null}
+    </section>
+  );
+}
+
+/** What one Managed Agent did in its match: who it played as, what it saw, and what it found. */
+function SquadDesk({ run, name, agent: a, onFollow }: { run: RunState; name: string; agent: SquadAgent; onFollow: () => void }) {
+  const Icon = SQUAD_ICON[name] ?? Gamepad2;
+  const shot = a.shots?.at(-1);
+  return (
+    <section className="desk done">
+      <div className="desk-head">
+        <span className="desk-icon"><Icon aria-hidden /></span>
+        <div className="desk-who">
+          <b>{name} <em className="managed">Managed</em></b>
+          {a.persona && <span>{a.persona}</span>}
+        </div>
+        <div className="desk-state">
+          <Check aria-hidden /> {a.secs ? duration(a.secs) : "Done"}
+          <button className="follow" onClick={onFollow}>Follow live</button>
+        </div>
+      </div>
+      {shot && <div className="desk-screen"><Screen src={file(run, shot)} alt={`What ${name} saw`} /></div>}
+      {a.summary && <div className="report"><p>{a.summary}</p></div>}
+      {a.findings.length > 0 && (
+        <div className="issues squad-findings">
+          <ul>
+            {a.findings.map((f, i) => (
+              <li key={i}>
+                <details>
+                  <summary><i className={`sev ${f.severity}`} aria-hidden /><span>{f.finding}</span>{f.t !== undefined && <em>{clock(f.t)}</em>}</summary>
+                  {f.repro && <p>{f.repro}</p>}
+                </details>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
@@ -460,25 +508,11 @@ function CodeView({ run, act, live, onLive }: { run: RunState; act: Act; live: b
   );
 }
 
-function ReportCard({ report: r }: { report: { fun: number; fidelity: number; summary: string; best: string[] } }) {
+function ReportCard({ report: r }: { report: { summary: string; best: string[] } }) {
   return (
     <div className="report">
-      <div className="report-scores">
-        <Score label="Fun" value={r.fun} />
-        <Score label="Fidelity" value={r.fidelity} />
-      </div>
       <p>{r.summary}</p>
       {r.best.length > 0 && <ul className="keep">{r.best.slice(0, 4).map((b) => <li key={b}>{b}</li>)}</ul>}
-    </div>
-  );
-}
-
-function Score({ label, value }: { label: string; value?: number }) {
-  return (
-    <div className={`score ${label.toLowerCase()}`}>
-      <span>{label}</span>
-      <b>{value ?? "–"}</b>
-      <div className="blocks" aria-hidden>{Array.from({ length: 10 }, (_, i) => <i key={i} className={value !== undefined && i < Math.round(value) ? "on" : ""} style={{ animationDelay: `${i * 40}ms` }} />)}</div>
     </div>
   );
 }
@@ -507,14 +541,19 @@ function FootageWall({ run, active, agent }: { run: RunState; active: boolean; a
 
 function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | null; now: number; onPick: (id: string) => void }) {
   const groups = useMemo(() => {
-    const out: { name: string; agents: Agent[] }[] = [];
-    const add = (name: string, agents: Agent[]) => agents.length && out.push({ name, agents });
+    const out: { name: string; agents: Agent[]; round?: number; squad?: [string, SquadAgent][] }[] = [];
+    const add = (name: string, agents: Agent[], round?: number, squad: [string, SquadAgent][] = []) => (agents.length || squad.length) && out.push({ name, agents, round, squad });
     add("Collect", run.agents.filter((a) => a.stage === "find" || a.stage === "watch"));
     add("Remake", run.agents.filter((a) => a.stage === "build"));
     const rounds = [...new Set(run.agents.filter((a) => a.stage === "playtest").map((a) => a.round ?? 0))].sort((a, b) => a - b);
-    for (const r of rounds) add(rounds.length > 1 ? `Agent review ${r}` : "Agent review", run.agents.filter((a) => a.stage === "playtest" && a.round === r).sort((a, b) => (a.role === "fixer" ? 1 : 0) - (b.role === "fixer" ? 1 : 0)));
+    for (const r of rounds) {
+      // The round's Managed Agents stand in for its local playtesters.
+      const squad = Object.entries(run.rounds.find((x) => x.round === r)?.squad?.agents ?? {});
+      const agents = run.agents.filter((a) => a.stage === "playtest" && a.round === r && !(squad.length && a.role === "tester"));
+      add(rounds.length > 1 ? `Agent review ${r}` : "Agent review", agents.sort((a, b) => (a.role === "fixer" ? 1 : 0) - (b.role === "fixer" ? 1 : 0)), r, squad);
+    }
     return out;
-  }, [run.agents]);
+  }, [run.agents, run.rounds]);
   if (!groups.length) return null;
   return (
     <section className="panel roster">
@@ -522,17 +561,28 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
       {groups.map((g) => (
         <div key={g.name} className="roster-group">
           <h3>{g.name}</h3>
+          {g.squad?.map(([name, s]) => {
+            const Icon = SQUAD_ICON[name] ?? Gamepad2;
+            const key = squadKey(g.round!, name);
+            return (
+              <button key={key} className="mate done" aria-pressed={focus === key} onClick={() => onPick(key)}>
+                <span className="mate-icon"><Icon aria-hidden /></span>
+                <span className="mate-text">
+                  <b>{name} <em className="managed">Managed</em></b>
+                  <small>{s.secs ? duration(s.secs) : `${s.findings.length} found`}</small>
+                </span>
+                {s.shots?.length ? <img className="mate-shot" src={file(run, s.shots.at(-1)!)} alt="" /> : <span className="mate-dot" />}
+              </button>
+            );
+          })}
           {g.agents.map((a) => {
             const Icon = agentIcon(a);
-            const tr = a.role === "tester" ? run.rounds.find((r) => r.round === a.round) : undefined;
-            // A tester without its own report shows its round's scores.
-            const rep = tr?.reports.find((r) => r.tester === a.focus) ?? (tr?.fun !== undefined ? tr : null);
             return (
               <button key={a.id} className={`mate ${a.status}`} aria-pressed={focus === a.id} onClick={() => onPick(a.id)}>
                 <span className="mate-icon"><Icon aria-hidden /></span>
                 <span className="mate-text">
                   <b>{a.name}</b>
-                  <small>{a.status === "running" ? doing(a) : a.status === "error" ? "Stopped" : rep ? `Fun ${rep.fun} · Fidelity ${rep.fidelity}` : duration(a.secs ?? now - a.startedAt)}</small>
+                  <small>{a.status === "running" ? doing(a) : a.status === "error" ? "Stopped" : duration(a.secs ?? now - a.startedAt)}</small>
                 </span>
                 {a.shot ? <img className="mate-shot" src={file(run, a.shot)} alt="" /> : <span className="mate-dot" />}
               </button>
@@ -540,78 +590,6 @@ function Roster({ run, focus, now, onPick }: { run: RunState; focus: string | nu
           })}
         </div>
       ))}
-    </section>
-  );
-}
-
-/** How the agents reviewed the latest round: the overall scores, then each reviewer's own scores and verdict. */
-function AgentReview({ run, onPick, onParity }: { run: RunState; onPick: (id: string) => void; onParity?: () => void }) {
-  const scored = run.rounds.filter((r) => r.fun !== undefined);
-  const latest = scored.at(-1);
-  const round = latest ?? run.rounds.at(-1);
-  const check = parityCheck(run);
-  const reviewers = run.agents.filter((a) => a.role === "tester" && a.round === round?.round);
-  const squad = Object.entries(round?.squad?.agents ?? {});
-  if (!latest && !check && !reviewers.length && !squad.length) return null;
-  return (
-    <section className="panel review">
-      <h2>Agent review</h2>
-      {latest && (
-        <div className="report-scores">
-          <Score label="Fun" value={latest.fun} />
-          <Score label="Fidelity" value={latest.fidelity} />
-        </div>
-      )}
-      {scored.length > 1 && (
-        <div className="trend">
-          {scored.map((r) => (
-            <div key={r.round} className={`trend-col ${run.best?.round === r.round ? "best" : ""}`} title={`Round ${r.round}: fun ${r.fun}, fidelity ${r.fidelity}`}>
-              <div className="trend-bars">
-                <i className="f" style={{ height: `${(r.fun ?? 0) * 10}%` }} />
-                <i className="a" style={{ height: `${(r.fidelity ?? 0) * 10}%` }} />
-              </div>
-              <span>{r.round}</span>
-            </div>
-          ))}
-        </div>
-      )}
-      {check && (
-        <button className="review-parity" onClick={onParity}>
-          <Scale aria-hidden /> <span>Original beside revival</span>
-        </button>
-      )}
-      {(reviewers.length > 0 || squad.length > 0) && (
-        <ul className="review-list">
-          {reviewers.map((a) => {
-            const Icon = agentIcon(a);
-            const rep = round?.reports.find((r) => r.tester === a.focus);
-            const scores = rep ?? (round?.fun !== undefined ? round : null);
-            return (
-              <li key={a.id}>
-                <button className={`mate ${a.status}`} onClick={() => onPick(a.id)}>
-                  <span className="mate-icon"><Icon aria-hidden /></span>
-                  <span className="mate-text">
-                    <b>{a.name}</b>
-                    <small>{a.status === "running" ? "Playing" : scores ? `Fun ${scores.fun} · Fidelity ${scores.fidelity}` : "No score"}</small>
-                  </span>
-                </button>
-                {rep?.summary && <p>{rep.summary}</p>}
-              </li>
-            );
-          })}
-          {squad.map(([name, a]) => (
-            <li key={name}>
-              <div className="mate done">
-                <span className="mate-icon"><Gamepad2 aria-hidden /></span>
-                <span className="mate-text">
-                  <b>{name}</b>
-                  <small>{a.findings.length} found</small>
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      )}
     </section>
   );
 }
