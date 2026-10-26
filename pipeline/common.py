@@ -15,7 +15,6 @@ from pathlib import Path
 from google import genai
 
 ROOT = Path(__file__).resolve().parent.parent
-MODEL = os.environ.get("REVIVE_MODEL", "gemini-4-argon")
 
 
 def load_env():
@@ -25,6 +24,11 @@ def load_env():
             k, _, v = line.strip().partition("=")
             if k and not k.startswith("#") and k not in os.environ:
                 os.environ[k] = v.strip().strip('"')
+
+
+# The same setting the pi agents read, so every stage of a revival runs on one model.
+load_env()
+MODEL = os.environ.get("GEMINI_MODEL", "gemini-4-argon")
 
 
 _client = None

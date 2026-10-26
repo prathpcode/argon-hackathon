@@ -149,7 +149,7 @@ export async function runAgent(run: Run, spec: AgentSpec, label: (tool: string, 
   let lastText = "";
   try {
     const rt = await modelRuntime();
-    const modelId = process.env.GEMINI_MODEL || "gemini-flash-latest";
+    const modelId = process.env.GEMINI_MODEL || "gemini-4-argon";
     const model = rt.getModel("google", modelId);
     if (!model) throw new Error(`Model google/${modelId} is not available. Check GEMINI_MODEL in .env.`);
     const loader = new DefaultResourceLoader({

@@ -2,13 +2,15 @@
 
 Revive games that can no longer be played. Agents find surviving gameplay footage, watch all of it, and rebuild the game as a multiplayer browser game, then playtest it until it is fun and high in fidelity.
 
+Needs Node 22, [pnpm](https://pnpm.io) and [uv](https://docs.astral.sh/uv/) (`uv` builds the Python environment). The Managed Agent squad also needs `cloudflared`.
+
 ```bash
 pnpm install
-pnpm setup         # Python venv for the footage stages, plus Playwright's Chromium
+pnpm run setup     # Python venv for the footage stages, plus Playwright's Chromium
 pnpm dev           # http://localhost:3000
 ```
 
-`.env` needs `GEMINI_API_KEY` and `GEMINI_MODEL`.
+`.env` needs `GEMINI_API_KEY`. `GEMINI_MODEL` picks the model every stage runs on (default `gemini-4-argon`).
 
 ## How a revival runs
 
@@ -24,6 +26,17 @@ Each revival is a folder in `runs/<id>/`. `events.jsonl` there is the log the UI
 Each round's playtesters are now the fun tester, the footage check (fidelity, rule by rule against the original) and the Managed Agent squad (multiplayer). The local multiplayer tester only stands in when the squad can't run on the machine.
 
 `pipeline/revive.py runs/<id>` runs all of it and resumes where it stopped. `REVIVE_ROUNDS` sets the number of playtest rounds (default 3).
+
+## Earlier prototypes
+
+The pipeline above grew out of a few standalone experiments built earlier in the day. They are kept as they were and nothing in `pipeline/` or the app uses them.
+
+- `spore2d-example/`: the first rebuild. Find footage of Spore 2D, watch it, and rebuild the game in one pass.
+- `research/`: the first search for lost games with long surviving footage, and for the videos of one game.
+- `glitch-example/`: Glitch rebuilt as the multiplayer game *Giants' Reverie* from 69 minutes of footage.
+- `loop/`: the first improvement loop on Giants' Reverie: footage rules become scenarios, each round is played, recorded, compared with the original and fixed. Its rounds are in `loop/runs/`.
+- `squad/`: the first Managed Agent squad run; `pipeline/squad/` is the version the pipeline uses.
+- `pipeline/legacy/`: the one-pass rebuild and the improvement loop as they were before the pi agents replaced them.
 
 ## Team
 
