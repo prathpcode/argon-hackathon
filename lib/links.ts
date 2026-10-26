@@ -12,7 +12,7 @@ export const youtubeUrl = (id: string) => `https://www.youtube.com/watch?v=${id}
 /** A still YouTube serves for every video: the cover (hqdefault) or one of its auto-captured frames (hq1–hq3). */
 export const youtubeStill = (id: string, which: "hqdefault" | "maxresdefault" | "hq1" | "hq2" | "hq3" = "hqdefault") => `https://i.ytimg.com/vi/${id}/${which}.jpg`;
 
-/** The same still through Argon's own origin, cached on disk. */
+/** The same still through Revive's own origin, cached on disk. */
 export const ytThumb = (id: string, which: "hqdefault" | "maxresdefault" | "hq1" | "hq2" | "hq3" = "hqdefault") => `/api/yt/${id}?f=${which}`;
 
 export function years(released?: number | null, lost?: number | null) {

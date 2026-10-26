@@ -1,6 +1,6 @@
 {
   "generated": "2026-10-25",
-  "scoring": "2*argon_fit + footage(h3/m2/l1) + 1 if footage links + (6-difficulty) + confidence(h2/m1/l0) + status(lost2/mostly1/uncertain0); revived = null",
+  "scoring": "2*revive_fit + footage(h3/m2/l1) + 1 if footage links + (6-difficulty) + confidence(h2/m1/l0) + status(lost2/mostly1/uncertain0); revived = null",
   "count": 166,
   "games": [
     {
@@ -24,8 +24,8 @@
         "https://www.youtube.com/watch?v=jyzAgM2b4vI"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
-      "why_interesting": "Tiny arcade ruleset plus massive-multiplayer battle royale: the ideal first Argon multiplayer rebuild.",
+      "revive_fit": 5,
+      "why_interesting": "Tiny arcade ruleset plus massive-multiplayer battle royale: the ideal first Revive multiplayer rebuild.",
       "sources": [
         "https://www.videogameschronicle.com/news/pac-man-99-has-now-been-shut-down-and-delisted-from-nintendo-switch-online/",
         "https://delistedgames.com/pac-man-99/",
@@ -54,8 +54,8 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
-      "why_interesting": "A simple real-time versus game with lots of footage, a strong match for Argon's simple multiplayer.",
+      "revive_fit": 5,
+      "why_interesting": "A simple real-time versus game with lots of footage, a strong match for Revive's simple multiplayer.",
       "sources": [
         "https://tetris.wiki/Tetris_Battle_(Facebook)",
         "https://gamingph.com/2019/04/tetris-battle-is-closing-down-on-may-31/"
@@ -81,7 +81,7 @@
         "https://www.youtube.com/watch?v=D1iepiycmRg"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A massively multiplayer trivia show with avatars ('the Mob' versus 'the One') is basically a web game waiting to happen.",
       "sources": [
         "https://lostmediawiki.com/1_VS._100_Live_(partially_lost_inaccessible_Xbox_Live_game;_2009)",
@@ -110,7 +110,7 @@
         "https://www.youtube.com/watch?v=TVbIROyxxAw"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "Small-scale, stylized 8-player arena shooter with a signature curved-shot mechanic; a near-perfect browser multiplayer rebuild target.",
       "sources": [
         "https://www.gamesradar.com/when-stadia-dies-its-taking-its-platform-exclusive-game-outcasters-with-it/",
@@ -139,7 +139,7 @@
         "https://www.youtube.com/watch?v=h5JyZzUtg3c"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "Grid-based 64-player Bomberman is simple to rebuild and showcases browser multiplayer.",
       "sources": [
         "https://www.pcgamer.com/super-bomberman-r-online-is-shutting-down-after-just-18-months/",
@@ -166,7 +166,7 @@
         "https://www.youtube.com/watch?v=As6ZrgRYFdc"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A PvZ spinoff with no surviving way to play, and lane tower defense is ideal for a quick Three.js rebuild.",
       "sources": [
         "https://plantsvszombies.fandom.com/wiki/Plants_vs._Zombies_Adventures",
@@ -190,8 +190,8 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
-      "why_interesting": "A tiny, well-defined arcade loop with a social score race, which makes it an easy first Argon test.",
+      "revive_fit": 5,
+      "why_interesting": "A tiny, well-defined arcade loop with a social score race, which makes it an easy first Revive test.",
       "sources": [
         "https://www.ea.com/notices/zuma-blitz",
         "https://tcrf.net/Zuma_Blitz",
@@ -222,7 +222,7 @@
         "https://www.youtube.com/watch?v=NbGj8MSnCPc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "Final Fantasy Record Keeper's nostalgic 16-bit ATB combat and clean 2D UI make it an ideal candidate for a one-day browser reconstruction from video footage. Rebuilding a slice of its iconic boss raids with co-op multiplayer brings a beloved lost global mobile title back to life.",
       "sources": [
         "https://en.wikipedia.org/wiki/Final_Fantasy_Record_Keeper",
@@ -255,7 +255,7 @@
         "https://www.youtube.com/watch?v=UX0Xig3vvRQ"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "LEGO Minifigures Online was a server-dependent isometric action RPG shut down in 2016, making it completely unplayable today. Rebuilding a cooperative dungeon slice from abundant walkthrough footage showcases how AI can resurrect lost multiplayer worlds and character-swapping mechanics directly in the browser.",
       "sources": [
         "https://en.wikipedia.org/wiki/Lego_Minifigures_Online",
@@ -283,7 +283,7 @@
         "https://www.facebook.com/disneyquestwdw/videos/pirates-of-the-caribbean-battle-for-buccaneer-gold-disney-quest-06-18-2016/740298289443394/"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A 4-player co-op pirate ship game, with one helmsman and three cannon gunners, is an almost perfect fit for simple browser multiplayer.",
       "sources": [
         "https://lostmediawiki.com/Pirates_of_the_Caribbean:_Battle_for_Buccaneer_Gold_(lost_DisneyQuest_arcade_game;_2000-2017)",
@@ -312,7 +312,7 @@
         "https://www.youtube.com/watch?v=eHz3S7Cxitw"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A pilot-plus-gunners alien rescue game with full recorded playthroughs, making it a clean target for footage-driven reconstruction.",
       "sources": [
         "https://en.wikipedia.org/wiki/DisneyQuest",
@@ -339,7 +339,7 @@
         "https://www.youtube.com/watch?v=dX3c9bZAJmc"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "This is the iconic first-generation VR deathmatch, with flat polygons, a pterodactyl and two players, which makes it trivially sized for a Three.js multiplayer rebuild.",
       "sources": [
         "https://devilmaster.altervista.org/vnightmare.html",
@@ -369,7 +369,7 @@
         "https://www.youtube.com/watch?v=JhIDw6p5z50"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A colorful 'Smash Bros with rockets' knockback shooter that suits a stylized Three.js multiplayer rebuild.",
       "sources": [
         "https://www.ea.com/games/rocket-arena/news/sunset-announcement",
@@ -398,7 +398,7 @@
         "https://www.youtube.com/watch?v=pNZYT-qabIw"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A short-round lane PvP battler with Funko-style characters, which is easy to rebuild and naturally multiplayer.",
       "sources": [
         "https://www.gamespot.com/articles/gears-of-war-spin-off-gears-pop-is-shutting-down/1100-6483969/",
@@ -425,7 +425,7 @@
         "https://www.youtube.com/watch?v=iFkx--TPUks"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A Nintendo puzzle game with Dr. Mario rules adapted for touch, a tiny rebuild with clear versus-mode potential.",
       "sources": [
         "https://gbatemp.net/threads/any-plans-to-revive-dr-mario-world.660051/",
@@ -457,7 +457,7 @@
         "https://www.youtube.com/watch?v=bnWF9rvkivY"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "Rebuild a nostalgic slice of the lost 2D social MMO ourWorld, allowing players to customize avatars, hang out on the Boardwalk, and earn 'Flow' together in real time. With no surviving fan servers, reviving its iconic Flash-era social spaces and mini-games from gameplay footage is an immediate crowd-pleaser.",
       "sources": [
         "https://en.wikipedia.org/wiki/OurWorld",
@@ -490,7 +490,7 @@
         "https://www.youtube.com/watch?v=A8N5N7KJEmo"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Armies of Gielinor is a beloved 2D turn-based strategy spin-off of RuneScape that was lost when Jagex shut down the FunOrb Java portal. Its clear grid-based tactics and distinct unit rosters make it ideal for extracting game rules from video footage and pitting AI agents against each other in multiplayer matches.",
       "sources": [
         "https://funorb.fandom.com/wiki/Armies_of_Gielinor",
@@ -523,7 +523,7 @@
         "https://www.youtube.com/watch?v=At9KoEzXtAc"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Rockman Xover combines simple 2D auto-runner mechanics with automated RPG boss battles, making its core gameplay loop highly achievable to recreate in a browser from video footage. Rebuilding this infamous lost Mega Man mobile title showcases how server-bound social games can be rescued as standalone playable experiences.",
       "sources": [
         "https://megaman.fandom.com/wiki/Rockman_Xover",
@@ -554,7 +554,7 @@
         "https://www.youtube.com/watch?v=t0_btopoNQQ"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A grid-based, turn-based Clash spin-off with simple rules, a good match for a small Three.js rebuild.",
       "sources": [
         "https://supercell.com/en/news/clash-quest-ending-development/7675/",
@@ -579,7 +579,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A cultural phenomenon whose countdown-elimination format is very simple and naturally multiplayer, but the footage is mostly host video rather than mechanics.",
       "sources": [
         "https://en.wikipedia.org/wiki/HQ_(video_game)",
@@ -606,7 +606,7 @@
         "https://www.youtube.com/watch?v=znm2jjyi_u8"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A 3D endless runner, which is a tiny, very rebuildable mechanic, with lots of footage.",
       "sources": [
         "https://comicbook.com/gaming/news/spider-man-unlimited-ios-android-shutting-down/",
@@ -631,7 +631,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A compact island-arena PvP mode with classes and card loadouts, which is ideal for a small multiplayer Three.js rebuild.",
       "sources": [
         "https://hypixel.net/threads/hypixel-history-7-the-history-of-the-fallen-games-adventure-lobby-creative-server-and-skyclash.2837349/",
@@ -663,7 +663,7 @@
         "https://www.youtube.com/watch?v=-EIhVrwt4p4"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A huge 2011 hit with no revival at all, and its isometric house and neighbor loop is easy to rebuild.",
       "sources": [
         "https://sims.fandom.com/wiki/The_Sims_Social",
@@ -697,7 +697,7 @@
         "https://www.youtube.com/watch?v=XH6zOWnl0Fw"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Ravenwood Fair is an iconic, John Romero-designed Facebook game that vanished when its servers shut down in 2013. Its charming 2.5D isometric fairground-building and monster-whacking gameplay loop is simple enough to faithfully reconstruct in a browser from surviving gameplay videos.",
       "sources": [
         "https://en.wikipedia.org/wiki/Ravenwood_Fair",
@@ -722,7 +722,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Claw-machine physics minigames with Nintendo-style polish are small, self-contained and well documented on video.",
       "sources": [
         "https://en.wikipedia.org/wiki/Nintendo_Badge_Arcade",
@@ -747,7 +747,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "David Jaffe's hand-drawn notebook arena shooter has a distinctive, low-poly-friendly art style and small 4-player maps.",
       "sources": [
         "https://en.wikipedia.org/wiki/Drawn_to_Death"
@@ -774,7 +774,7 @@
         "https://www.youtube.com/watch?v=uo6HE7iPyxs"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A Roblox-like cloud creation platform with chunky low-poly minigames that fits Three.js well.",
       "sources": [
         "https://9to5google.com/2023/02/02/crayta-shutting-down/",
@@ -803,7 +803,7 @@
         "https://www.youtube.com/watch?v=redpL4VAKN0"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Its 'Duality' mechanic, controlling two bodies at once, is unique and lost.",
       "sources": [
         "https://store.steampowered.com/news/app/2641470/view/529843687122797748",
@@ -832,7 +832,7 @@
         "https://www.youtube.com/watch?v=Wt3dF4t2cIc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A Supercell attack-and-defend game with short top-down rounds, which fits a browser PvP rebuild well.",
       "sources": [
         "https://supercell.com/en/news/rush-wars-closing/7225/",
@@ -861,7 +861,7 @@
         "https://www.youtube.com/watch?v=CgSdwOC6tDk"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A clean 3D auto-battler on a small board, with short 1v1 and 8-player rounds that suit simple browser multiplayer.",
       "sources": [
         "https://gameworldobserver.com/2024/03/15/clash-mini-shutdown-supercell-no-new-games-in-five-years",
@@ -890,7 +890,7 @@
         "https://www.youtube.com/watch?v=froeLizxDrc"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Its flick-to-bounce, pool-like combat is a very small mechanic that would work well as a fast browser PvP game.",
       "sources": [
         "https://www.pocketgamer.biz/smash-land-discontinued/",
@@ -919,7 +919,7 @@
         "https://www.youtube.com/watch?v=rSahy8MI76Y"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A paid game that was remotely killed, and an easy arcade rebuild. Tetris trademark issues mean a rebuild should be generic.",
       "sources": [
         "https://www.siliconera.com/ea-tetris-games-will-stop-working-on-april-21-2020/",
@@ -944,7 +944,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Once one of the world's biggest trivia apps, with a simple 1v1 duel loop that is easy to rebuild with multiplayer.",
       "sources": [
         "https://en.wikipedia.org/wiki/QuizUp",
@@ -969,7 +969,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A kart racer with one of the biggest mobile IPs, a great fit for a Three.js multiplayer racing rebuild.",
       "sources": [
         "https://angrybirds.fandom.com/f/p/4400000000000044703",
@@ -994,7 +994,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A simple one-thumb 3D brawler that a small rebuild could capture.",
       "sources": [
         "https://www.pokemon.com/us/pokemon-news/pokemon-rumble-rush-service-ending",
@@ -1022,7 +1022,7 @@
         "https://www.youtube.com/watch?v=R0wf5qJVtvQ"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A beloved 2020 official Roblox event hub, removed very recently, with heavy YouTuber coverage. Caveat: it is a tie-in to Ernest Cline's Ready Player Two, which raises an IP issue.",
       "sources": [
         "https://roonby.com/2025/10/29/ready-player-two-hub-hacked-and-deleted-what-happened-to-the-classic-roblox-event/",
@@ -1052,7 +1052,7 @@
         "https://www.youtube.com/watch?v=RYn4xLf-BVc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A large Latin American kids' MMO with no revival at all, and its look is simple enough to rebuild.",
       "sources": [
         "https://lostmediawiki.com/Mundo_Toonix_(lost_Cartoon_Network_massively_multiplayer_online_game;_2012)",
@@ -1077,8 +1077,8 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 5,
-      "why_interesting": "A 3D browser team-arena game whose session-based multiplayer fits Argon's simple multiplayer very well.",
+      "revive_fit": 5,
+      "why_interesting": "A 3D browser team-arena game whose session-based multiplayer fits Revive's simple multiplayer very well.",
       "sources": [
         "https://www.gamedeveloper.com/business/jagex-shutters-short-lived-i-transformers-i-moba",
         "https://tfwiki.net/wiki/Transformers_Universe_(Jagex)",
@@ -1104,7 +1104,7 @@
         "https://www.youtube.com/watch?v=E1RlLmQ-HzQ"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "EA sued Zynga claiming The Ville copied The Sims Social, so the two make a natural pair.",
       "sources": [
         "https://en.wikipedia.org/wiki/The_Ville_(video_game)",
@@ -1135,7 +1135,7 @@
         "https://www.youtube.com/watch?v=uLrGJE9yv9Q"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A short-lived Maxis city builder that no one has preserved.",
       "sources": [
         "https://simcity.fandom.com/wiki/SimCity_Social",
@@ -1170,7 +1170,7 @@
         "https://www.youtube.com/watch?v=DmCEk9X1hlM"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A non-violent pet MMO that was studied academically after it closed (Consalvo & Begy, 2015).",
       "sources": [
         "https://en.wikipedia.org/wiki/Faunasphere",
@@ -1203,7 +1203,7 @@
         "https://www.youtube.com/watch?v=vc-_RDM_Fxg"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An arcade CoD-style shooter with small maps, a good fit for a stylized browser rebuild.",
       "sources": [
         "https://news.ubisoft.com/en-us/article/2wPUTEuXKpVoCvINTcxvGR/xdefiant-a-message-to-our-community",
@@ -1235,7 +1235,7 @@
         "https://www.youtube.com/watch?v=srgXW_uZtYM"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Cliff Bleszinski's neon game-show battle royale had a distinct look and a famously short life.",
       "sources": [
         "https://www.pcworld.com/article/401943/cliff-bleszinski-boss-key-productions-closing.html",
@@ -1264,7 +1264,7 @@
         "https://www.youtube.com/watch?v=0_mDBu7r904"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An EA MOBA with role-flexible design, a top-down 3D game well suited to Three.js.",
       "sources": [
         "https://www.pcgamer.com/eas-dawngate-moba-canceled-after-six-months-of-open-beta/",
@@ -1293,8 +1293,8 @@
         "https://www.youtube.com/watch?v=b8cYYQbByYs"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
-      "why_interesting": "A toylike top-down team shooter that suits Argon's multiplayer focus, with plenty of alpha and launch footage.",
+      "revive_fit": 4,
+      "why_interesting": "A toylike top-down team shooter that suits Revive's multiplayer focus, with plenty of alpha and launch footage.",
       "sources": [
         "https://www.pocketgamer.com/boom-beach-frontlines/end-of-service-notice/",
         "https://x.com/BoomBeachFL/status/1615005415569510401",
@@ -1320,7 +1320,7 @@
         "https://www.youtube.com/watch?v=qkle6F_k2R0"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A short 3v3 hero-arena brawler that maps directly onto simple browser multiplayer.",
       "sources": [
         "https://www.gamedeveloper.com/business/kabam-to-shut-down-i-marvel-realm-of-champions-i-after-just-one-year",
@@ -1347,7 +1347,7 @@
         "https://www.youtube.com/watch?v=vA-E4wPgrJs"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A small original-IP tycoon that is easy to rebuild, though its lost status is shaky.",
       "sources": [
         "https://roblox.fandom.com/wiki/Fissy_Games/TreeLands",
@@ -1372,7 +1372,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A classic-era Hypixel mode with a simple ruleset (gather behind walls, walls drop, fight) that is quick to rebuild.",
       "sources": [
         "https://hypixel.net/threads/the-removal-of-crazy-walls-from-hypixel.2990753/",
@@ -1405,7 +1405,7 @@
         "https://www.youtube.com/watch?v=yw07xaGyKtg"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A Neopets spinoff world with a loyal fanbase, and fans are still asking for old cache files.",
       "sources": [
         "https://lostmediawiki.com/PetPet_Park_(lost_online_MMO_game_based_on_Neopets;_2008-2014)",
@@ -1440,7 +1440,7 @@
         "https://www.youtube.com/watch?v=JGp5r5umOsI"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Sonic Jump Fever is an arcade-style 2D vertical platformer that was lost when its stage-rotation and leaderboard servers shut down. Its tight, single-screen gameplay loop and vibrant visual cues make it ideal for an AI to reconstruct directly from gameplay footage into a snappy browser game.",
       "sources": [
         "https://en.wikipedia.org/wiki/Sonic_Jump_Fever",
@@ -1472,7 +1472,7 @@
         "https://www.youtube.com/watch?v=g_J8_zXwGHQ"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "City of Steam: Arkadia was an ambitious steampunk 3D browser MMORPG lost to the deprecation of the Unity Web Player and server shutdowns. Rebuilding a playable slice of its instanced co-op dungeon crawler combat from hours of preserved walkthrough footage would resurrect a visually unique piece of browser gaming history.",
       "sources": [
         "https://steampunk.fandom.com/wiki/City_of_Steam",
@@ -1501,7 +1501,7 @@
         "https://www.youtube.com/watch?v=KuSwBxszAc4"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "This was Disney's pioneering 1990s VR attraction, a flight through Agrabah and the Cave of Wonders, and it maps well to a Three.js flying game.",
       "sources": [
         "https://undumped.miraheze.org/wiki/Aladdin_Magic_Carpet_Ride",
@@ -1529,7 +1529,7 @@
         "https://archive.org/details/ride-the-comix-avatar-view-58579051"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A 6-player co-op sword fight inside a comic book, which suits simple multiplayer melee.",
       "sources": [
         "https://www.mobygames.com/game/74703/ride-the-comix/",
@@ -1558,7 +1558,7 @@
         "https://www.youtube.com/watch?v=4TKGSi6h1gc"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A PlatinumGames action game that is entirely gone, with many full longplays to learn from.",
       "sources": [
         "https://www.shacknews.com/article/132261/bablyons-fall-shut-down",
@@ -1591,7 +1591,7 @@
         "https://www.youtube.com/watch?v=0M6ODSOzdaU"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A modern PixelJunk game built around cloud-only State Share, now existing only as video.",
       "sources": [
         "https://www.q-games.com/en/google-stadia-closure-and-the-future-of-pixeljunk-raiders/",
@@ -1618,7 +1618,7 @@
         "https://www.youtube.com/watch?v=CVMJwpuRbRA"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A licensed DC superhero MOBA, a recognizable IP in a format that suits Three.js.",
       "sources": [
         "https://github.com/EricHardiman/infinite-crisis-server",
@@ -1650,7 +1650,7 @@
         "https://www.youtube.com/watch?v=eoayKeousJc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "One of the biggest Facebook games ever, with plenty of retrospective videos.",
       "sources": [
         "https://en.wikipedia.org/wiki/CityVille",
@@ -1685,7 +1685,7 @@
         "https://www.youtube.com/watch?v=Y92PTVzcFvU"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A real 3D LEGO MMO with no official way to play, and a LEGO art style that suits low-poly Three.js.",
       "sources": [
         "https://en.wikipedia.org/wiki/Lego_Legends_of_Chima_Online",
@@ -1711,7 +1711,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An odd competitive 'you are the pinball' arena game that would be easy to rebuild as a small multiplayer game.",
       "sources": [
         "https://en.wikipedia.org/wiki/DisneyQuest"
@@ -1734,7 +1734,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A 6-to-28-player shared-screen rail shooter is ideal for a browser party game.",
       "sources": [
         "https://en.wikipedia.org/wiki/Galaxian3:_Project_Dragoon",
@@ -1762,7 +1762,7 @@
         "https://www.youtube.com/watch?v=VPGrGjB78o0"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Its disappearing-sector map and Twitch-vote mechanics are unique, and footage is abundant because it was built around streaming.",
       "sources": [
         "https://en.wikipedia.org/wiki/Hyper_Scape",
@@ -1792,7 +1792,7 @@
         "https://www.youtube.com/watch?v=5R2aZEv72D8"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Arguably the shortest-lived online game ever, so footage is scarce and preservation is urgent.",
       "sources": [
         "https://stevivor.com/news/the-culling-2-shut-down-after-just-8-days/",
@@ -1821,7 +1821,7 @@
         "https://www.youtube.com/watch?v=Mvxcyxp7dkU"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Amazon's first big game, a hero shooter with PvE monsters and the 'Heart of the Hives' mode.",
       "sources": [
         "https://www.gamespot.com/articles/amazons-crucible-is-shutting-down-for-good/1100-6483150/",
@@ -1850,7 +1850,7 @@
         "https://www.youtube.com/watch?v=cDW5_g-Wha8"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A large-scale melee brawler with transformations, a short-lived For Honor alternative.",
       "sources": [
         "https://www.pcgamer.com/just-four-months-after-launching-into-early-access-nexons-full-contact-sword-action-game-warhaven-is-shutting-down/",
@@ -1877,7 +1877,7 @@
         "https://www.youtube.com/watch?v=gOOqefit6_M"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A post-apocalyptic car-combat MMO; vehicle combat in open arenas is quite rebuildable.",
       "sources": [
         "https://forum.ragezone.com/f857/release-auto-assault-private-server-1060337/",
@@ -1904,7 +1904,7 @@
         "https://www.youtube.com/watch?v=ZYsrIVeoYsc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Turn-based island combat on a grid map is a compact, rebuildable loop.",
       "sources": [
         "https://en.wikipedia.org/wiki/Empires_&_Allies",
@@ -1930,7 +1930,7 @@
         "https://www.youtube.com/watch?v=WRBGogKOZ5c"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A Star Wars MMO built from many small minigames, which suits piece-by-piece rebuilding.",
       "sources": [
         "https://cwaemu.com/About",
@@ -1962,7 +1962,7 @@
         "https://www.youtube.com/watch?v=WDIVLvwQTRY"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A 1.5M-player kids' world, and its assets are held by a company that never reused them.",
       "sources": [
         "https://delistedgames.com/dizzywood/",
@@ -1994,7 +1994,7 @@
         "https://www.youtube.com/watch?v=LjcF-2PwWI4"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A major licensed AR game. Its spell-tracing encounters could be rebuilt, but the real-world map play doesn't carry over to a browser.",
       "sources": [
         "https://portkeygamessupport.wbgames.com/hc/en-us/articles/9133685065235-Harry-Potter-Wizards-Unite-Has-Shut-Down",
@@ -2018,7 +2018,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Polished 3D real-time combat with redesigned Disney heroes. The gacha structure is heavy, but the combat core could be rebuilt.",
       "sources": [
         "https://disneymirrorverse.com/news/disney-mirroverse-to-be-sunset/",
@@ -2043,7 +2043,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A rare co-op village builder, and a Supercell game that died twice.",
       "sources": [
         "https://supercell.com/en/news/everdale-ending-development/7686/",
@@ -2068,7 +2068,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A tiny match-3 game, easy to rebuild, though genre clones are common.",
       "sources": [
         "https://supercell.com/en/news/hay-day-pop-closing-game/7482/",
@@ -2092,7 +2092,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A polished, well-known Roblox MMORPG whose original source code is public, so footage plus code could make for an unusually faithful rebuild.",
       "sources": [
         "https://github.com/berezaa/vesteria",
@@ -2124,7 +2124,7 @@
         "https://www.youtube.com/watch?v=p23Suth1UXI"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A large mainstream kids' world, and footage of it is the main surviving record.",
       "sources": [
         "https://en.wikipedia.org/wiki/BarbieGirls.com",
@@ -2152,7 +2152,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A high-profile Star Wars VR mission with many walk-through videos, though its physical props and haptics are hard to translate.",
       "sources": [
         "https://starwars.fandom.com/wiki/Star_Wars:_Secrets_of_the_Empire",
@@ -2177,7 +2177,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A 4-player VR Mario Kart with item-grabbing hands, and kart racing is a natural fit for browser multiplayer.",
       "sources": [
         "https://en.wikipedia.org/wiki/Mario_Kart_Arcade_GP_VR"
@@ -2202,7 +2202,7 @@
         "https://www.youtube.com/watch?v=4F1MPYzTR7k"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A free-to-play tactical cover shooter whose revival never got past login.",
       "sources": [
         "https://en.wikipedia.org/wiki/Tom_Clancy's_Ghost_Recon_Phantoms",
@@ -2230,7 +2230,7 @@
         "https://www.youtube.com/watch?v=uypEBAzNgt8"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "An asymmetric heroes-versus-villain design in a beloved world, preserved mostly as beta footage.",
       "sources": [
         "https://www.thegamer.com/fable-legends-playable-again-2026/",
@@ -2254,7 +2254,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A cult-favorite Marvel campus sim. A fan remake has started but is nowhere near complete.",
       "sources": [
         "https://benpo8o8.itch.io/avengers-academy-re-assembled",
@@ -2279,8 +2279,8 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
-      "why_interesting": "A huge Final Fantasy crossover whose story now survives only as video, which fits Argon's from-footage premise.",
+      "revive_fit": 2,
+      "why_interesting": "A huge Final Fantasy crossover whose story now survives only as video, which fits Revive's from-footage premise.",
       "sources": [
         "https://toucharcade.com/2023/11/29/dissidia-final-fantasy-opera-omnia-server-shut-down-date-february-2024-iphone-android-free/",
         "https://en.wikipedia.org/wiki/Dissidia_Final_Fantasy_Opera_Omnia",
@@ -2304,7 +2304,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Its many small minigames and spaces survive mainly as footage, though it is UGC-adjacent and likely revived.",
       "sources": [
         "https://en.wikipedia.org/wiki/PlayStation_Home",
@@ -2328,7 +2328,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A rare attempt to turn Catan into a location-based MMO, though the footage is thin and the board game already exists.",
       "sources": [
         "https://en.wikipedia.org/wiki/Catan:_World_Explorers",
@@ -2353,7 +2353,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "An AR licensed game whose ghost-capture minigame could be rebuilt, though footage is likely limited.",
       "sources": [
         "https://www.gbworldhub.com/ghostbusters-world-shutting-down/",
@@ -2377,7 +2377,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A small multiplayer space shooter that lived only inside a dead social platform. It is not strictly user-made, since a third-party studio built it.",
       "sources": [
         "https://en.wikipedia.org/wiki/PlayStation_Home",
@@ -2402,7 +2402,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A tie-in world with known fan remake demand, and its unclear status makes it a borderline case.",
       "sources": [
         "https://buildabear.fandom.com/wiki/Build-a-Bear_Ville",
@@ -2427,7 +2427,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "It is truly lost, but there is almost no footage, so it is a poor footage-based candidate.",
       "sources": [
         "https://lostmediawiki.com/The_Club_(lost_Nickelodeon_MMO;_2010-2014)"
@@ -2450,8 +2450,8 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 1,
-      "why_interesting": "A pure service game in which everything lived on the server, but it fits Argon poorly.",
+      "revive_fit": 1,
+      "why_interesting": "A pure service game in which everything lived on the server, but it fits Revive poorly.",
       "sources": [
         "https://en.wikipedia.org/wiki/Wii_Karaoke_U"
       ],
@@ -2477,7 +2477,7 @@
         "https://www.youtube.com/watch?v=psjpq8wmO3Q"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "Richard Garriott's real-time-combat sci-fi MMO, a famous lost game.",
       "sources": [
         "https://massivelyop.com/2026/10/11/tabula-rasa-rogue-server-project-infinite-rasa-confirms-that-it-has-a-functioning-development-server/",
@@ -2501,7 +2501,7 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Home's first MMO-style game, with only two of its four planned parts released.",
       "sources": [
         "https://en.wikipedia.org/wiki/PlayStation_Home",
@@ -2525,8 +2525,8 @@
       "footage_volume": "low",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
-      "why_interesting": "A small team shooter that fits Argon's simple multiplayer, but footage is likely thin.",
+      "revive_fit": 3,
+      "why_interesting": "A small team shooter that fits Revive's simple multiplayer, but footage is likely thin.",
       "sources": [
         "https://en.wikipedia.org/wiki/PlayStation_Home",
         "http://blog.us.playstation.com/2012/06/20/play-no-mans-land-starting-today-on-playstation-home/"
@@ -2554,7 +2554,7 @@
         "https://www.youtube.com/watch?v=Mzpv7BbUxew"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "Its 256-player battles were a technical landmark, with plenty of footage surviving.",
       "sources": [
         "https://en.wikipedia.org/wiki/MAG_(video_game)",
@@ -2583,7 +2583,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A jetpack-driven open-world shooter MMO; the emulator lets you walk around but the game itself is gone.",
       "sources": [
         "https://github.com/themeldingwars/SINner",
@@ -2611,7 +2611,7 @@
         "https://www.youtube.com/playlist?list=PLTOsrxnMgGRUDypawMSMymUlMhSBAvwdm"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A fast 2v2 dual-pistol arena shooter that was hugely recorded in Japan.",
       "sources": [
         "https://www.animenewsnetwork.com/news/2020-12-25/gunslinger-stratos-3-theatrhythm-final-fantasy-arcade-games-end-service-on-april-1/.167844",
@@ -2639,7 +2639,7 @@
         "https://www.youtube.com/watch?v=ZdwG6eYanAY"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A strong concept, but already revived, so it is a filter-out reference.",
       "sources": [
         "https://github.com/kinnay/SMB35",
@@ -2667,7 +2667,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 1,
+      "revive_fit": 1,
       "why_interesting": "A huge archive of footage exists for a recently lost AAA game, but its scale far exceeds a browser rebuild.",
       "sources": [
         "https://www.dexerto.com/gaming/anthem-now-unplayable-servers-offline-after-seven-years-3303224/",
@@ -2696,7 +2696,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "One of the shortest-lived AAA games ever, but a fan revival exists, so filter it out.",
       "sources": [
         "https://kotaku.com/concord-servers-delisted-shutdown-revive-fan-modders-2000644390",
@@ -2728,7 +2728,7 @@
         "https://www.youtube.com/watch?v=whHnWBa9lXA"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Its wrestling-brawler battle royale suits a stylized rebuild, but it is revived on PC.",
       "sources": [
         "https://rvclient.com/",
@@ -2759,7 +2759,7 @@
         "https://www.youtube.com/watch?v=vzcjRwVPIM4"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Officially revived by its own developers, so it should be filtered out.",
       "sources": [
         "https://sbcommunity.itch.io/spellbreak-community-version",
@@ -2787,7 +2787,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Its low-gravity arena movement is distinctive, but a PC revival exists.",
       "sources": [
         "https://gameinformer.com/2024/04/15/lawbreakers-is-making-an-unofficial-comeback-thanks-to-fans",
@@ -2816,7 +2816,7 @@
         "https://www.youtube.com/watch?v=siI0sJVvH2w"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "It is a showcase case for games lost to server dependence, but partially revived.",
       "sources": [
         "https://gamerant.com/battleborn-servers-shut-down-2021/",
@@ -2844,7 +2844,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Its zero-g frisbee sport is a beloved VR esport and maps well to simple multiplayer, but it is revived on PC.",
       "sources": [
         "https://www.uploadvr.com/echo-vr-mod-online-servers/",
@@ -2873,7 +2873,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A useful filter-out reference: a 'lost' arcade game that became emulatable in 2025.",
       "sources": [
         "https://www.timeextension.com/news/2025/12/lost-space-harrier-sequel-planet-harriers-runs-great-in-this-updated-dreamcast-emulator",
@@ -2897,7 +2897,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Its persistent faction war between squads of custom mechs was the lost part, but it is now partly revived.",
       "sources": [
         "https://en.wikipedia.org/wiki/Chromehounds",
@@ -2924,7 +2924,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "Fully emulated; exclude.",
       "sources": [
         "https://github.com/Crypto137/MHServerEmu",
@@ -2948,7 +2948,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Old build revived; post-2020 content is lost.",
       "sources": [
         "https://github.com/mixutin/dauntless-revived"
@@ -2971,7 +2971,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Revived on PC.",
       "sources": [
         "https://gbatemp.net/threads/gundam-evolution-private-server-project-gets-public-alpha-release-following-official-end-of-service.653455/"
@@ -2996,7 +2996,7 @@
         "https://www.youtube.com/watch?v=6EmdMqvDhug"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Revived by fans.",
       "sources": [
         "https://github.com/AeonLucid/Prospect",
@@ -3022,7 +3022,7 @@
         "https://www.youtube.com/watch?v=B9yHn6_jHmM"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Revived, though only community-verified.",
       "sources": [
         "https://steamcommunity.com/app/200110/discussions/0/3470612993475958553/"
@@ -3052,7 +3052,7 @@
         "https://www.youtube.com/watch?v=40aQ3MSEUhE"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Revived; exclude.",
       "sources": [
         "https://risinghub.net/",
@@ -3079,7 +3079,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "Partially emulated.",
       "sources": [
         "https://github.com/NexusForever/NexusForever",
@@ -3105,7 +3105,7 @@
         "https://www.youtube.com/watch?v=yqn3MwV3m0o"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Partially revived.",
       "sources": [
         "https://en.wikipedia.org/wiki/Loadout",
@@ -3129,7 +3129,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An iconic shutdown, but OpenCPI already makes it playable offline.",
       "sources": [
         "https://wednesday2024.itch.io/opencpi",
@@ -3156,7 +3156,7 @@
         "https://www.youtube.com/watch?v=NGxov5pB2Xo"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A tight top-down roguelite, but it's playable again through a fan server.",
       "sources": [
         "https://toucharcade.com/2024/05/07/mighty-doom-shut-down-servers-date-xbox-layoffs-alpha-dog-games-iphone-android-iap-refund-bethesda/",
@@ -3184,8 +3184,8 @@
         "https://www.youtube.com/watch?v=zE1m4XNOqCc"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
-      "why_interesting": "A huge battle royale. The revival is shaky, but it's too big for Argon anyway.",
+      "revive_fit": 2,
+      "why_interesting": "A huge battle royale. The revival is shaky, but it's too big for Revive anyway.",
       "sources": [
         "https://dedicatedgameservers.net/articles/apex-legends-mobile-private-server-revival-risk-2026/",
         "https://x.com/winggiyt/status/2078774303714357410"
@@ -3208,7 +3208,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A major AR shutdown, but fan server code already exists.",
       "sources": [
         "https://github.com/Project-Earth-Team",
@@ -3232,7 +3232,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A notable NieR story game, but it's partly playable again.",
       "sources": [
         "https://lunar-tear.com/",
@@ -3260,7 +3260,7 @@
         "https://www.youtube.com/watch?v=OUW4cCJ2dJY"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A huge 13-year game, already revived by fans.",
       "sources": [
         "https://teamtsto.org/",
@@ -3288,8 +3288,8 @@
         "https://www.youtube.com/watch?v=HMwm16lJZvo"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
-      "why_interesting": "A board-strategy game that would suit Argon well, but it's already revived.",
+      "revive_fit": 4,
+      "why_interesting": "A board-strategy game that would suit Revive well, but it's already revived.",
       "sources": [
         "https://kaeru.world/projects/duel",
         "https://x.com/KaeruTeam/status/1436235038983602182?lang=en",
@@ -3315,7 +3315,7 @@
         "https://www.youtube.com/watch?v=UPpVXG5tW6Q"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "Nintendo's first mobile app, already revived.",
       "sources": [
         "https://kaeru.world/projects/kaerutomo",
@@ -3342,7 +3342,7 @@
         "https://www.youtube.com/playlist?list=PLRFsjcRzg0fVzUrSYcngbwyFMATr_hlBU&cbrd=1"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A Clash-style Star Wars base builder with a partial fan server.",
       "sources": [
         "https://github.com/mcneb10/swcnoops",
@@ -3369,7 +3369,7 @@
         "https://www.youtube.com/watch?v=fWVcZRk94B8"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A licensed builder with a fan server, so it's low priority.",
       "sources": [
         "https://github.com/barncastle/FWOT-Server",
@@ -3398,7 +3398,7 @@
         "https://www.youtube.com/watch?v=Oo1uDL-z9yA"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Hugely popular social-deduction challenge game that suits simple multiplayer. IP issue: it copied CBS Survivor branding, which is why it was DMCA'd.",
       "sources": [
         "https://roblox.fandom.com/wiki/Peak_Precision_Studios/Survivor",
@@ -3426,7 +3426,7 @@
         "https://www.youtube.com/watch?v=jQ2hVAH-Q4w"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "One of the most famous Roblox takedowns. Major IP issue: it is entirely Pokémon IP, so it is unsuitable for rebuilding as-is.",
       "sources": [
         "https://project-pokemon.fandom.com/wiki/Project_Pokemon_Wiki",
@@ -3455,7 +3455,7 @@
         "https://www.youtube.com/watch?v=1uvH4VmfCxY"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "The single best-known lost Roblox game. Major IP issue (Pokémon), and it already has revivals, so include it for reference only.",
       "sources": [
         "https://roriaunbound.com/",
@@ -3484,8 +3484,8 @@
         "https://www.youtube.com/watch?v=1uQ9YD7f3Bs"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 5,
-      "why_interesting": "An original-IP survival sandbox that fits Argon very well, though playable copies mean it is not truly lost.",
+      "revive_fit": 5,
+      "why_interesting": "An original-IP survival sandbox that fits Revive very well, though playable copies mean it is not truly lost.",
       "sources": [
         "https://booga-booga-roblox.fandom.com/wiki/Soybeen",
         "https://en.namu.wiki/w/Booga%20Booga",
@@ -3509,7 +3509,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An original-IP Roblox RPG whose original version is unplayable, and the root of a major franchise.",
       "sources": [
         "https://www.roblox.com/games/300883396/Arcane-Adventures",
@@ -3535,7 +3535,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A team-objective mode that maps well onto simple multiplayer. The theme and name may need reworking for cultural sensitivity.",
       "sources": [
         "https://www.change.org/p/hive-minecraft-server-taking-cowboys-indians-back",
@@ -3560,8 +3560,8 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
-      "why_interesting": "A tiny, highly visual falling-course minigame and about the easiest possible rebuild for Argon.",
+      "revive_fit": 5,
+      "why_interesting": "A tiny, highly visual falling-course minigame and about the easiest possible rebuild for Revive.",
       "sources": [
         "https://eric.gg/work/the-hive/",
         "https://www.minecraftforum.net/forums/servers-java-edition/pc-servers/3204897-kig-trouble-in-mineville-cowboys-and-indians-block",
@@ -3585,7 +3585,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "A hugely YouTubed Hive mode whose social-deduction loop is cheap to build and very fun with simple multiplayer.",
       "sources": [
         "https://eric.gg/work/the-hive/",
@@ -3610,7 +3610,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "An iconic Mineplex mode that has been revived, so it is included only so it can be filtered out.",
       "sources": [
         "https://en.wikipedia.org/wiki/Mineplex",
@@ -3635,7 +3635,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Revived, so it is included only for filtering.",
       "sources": [
         "https://en.wikipedia.org/wiki/Mineplex",
@@ -3666,7 +3666,7 @@
         "https://www.youtube.com/watch?v=0qr0ZIttCRk"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "The defining Facebook game, but fan revivals exist.",
       "sources": [
         "https://delistedgames.com/after-11-years-the-original-farmville-shuts-down-on-december-31st/",
@@ -3694,7 +3694,7 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 4,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Flying 3D fairy hub worlds, with active fan remakes to compare against.",
       "sources": [
         "https://disneyfairies.fandom.com/wiki/Pixie_Hollow_(online_game)",
@@ -3718,8 +3718,8 @@
       "footage_volume": "medium",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 5,
-      "why_interesting": "A small turn-based multiplayer artillery game, an ideal fit for Argon if the revivals turn out to be dead.",
+      "revive_fit": 5,
+      "why_interesting": "A small turn-based multiplayer artillery game, an ideal fit for Revive if the revivals turn out to be dead.",
       "sources": [
         "https://en.wikipedia.org/wiki/Wild_Ones_(video_game)",
         "https://wildones.fandom.com/wiki/Wild_Ones_Remake",
@@ -3750,7 +3750,7 @@
         "https://www.youtube.com/watch?v=bXtxYVGxsX0"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A good 3D Unity kids' MMO, but a working private server now exists.",
       "sources": [
         "https://en.wikipedia.org/wiki/Monkey_Quest",
@@ -3779,7 +3779,7 @@
         "https://www.youtube.com/watch?v=x1347oC5a18"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A driving-based kids' world, but Sunrise Games has revived it.",
       "sources": [
         "https://en.wikipedia.org/wiki/The_World_of_Cars_Online",
@@ -3807,7 +3807,7 @@
         "https://www.youtube.com/watch?v=d2kZ1HQnaQ8"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Popular Unity web MMO, but fan servers exist.",
       "sources": [
         "https://en.wikipedia.org/wiki/Marvel_Super_Hero_Squad_Online",
@@ -3835,7 +3835,7 @@
         "https://www.youtube.com/watch?v=FHYFmPFE_3Y"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A big 3D space MMO that has already been revived by fans.",
       "sources": [
         "https://github.com/victti/BSGO-Private-Server",
@@ -3866,7 +3866,7 @@
         "https://www.youtube.com/watch?v=EQuY4Qkqh9E"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "An iconic Unity web MMO, already well revived by fans.",
       "sources": [
         "https://fusionfall.org/play-fusionfall/",
@@ -3901,7 +3901,7 @@
         "https://www.youtube.com/watch?v=mrqhoesLKI0"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "A big minigame-filled MMO, but an emulator exists.",
       "sources": [
         "https://github.com/Open-Source-Free-Realms/Sanctuary",
@@ -3929,7 +3929,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 2,
+      "revive_fit": 2,
       "why_interesting": "The archetypal kids' MMO, but thoroughly revived.",
       "sources": [
         "https://cpjourney.net/news/2025/03/servers-back-up-expect-degraded-performance-1467",
@@ -3953,7 +3953,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "The best-known dead .io game, but survev.io already recreates it.",
       "sources": [
         "https://survivio.fandom.com/wiki/Community_replacements_for_surviv.io",
@@ -3979,7 +3979,7 @@
         "https://www.youtube.com/watch?v=3HO-Ntrxaq4"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "A simple multiplayer Flash shooter, but private servers keep it alive.",
       "sources": [
         "https://delistedgames.com/stick-arena-titles-shut-down-november-30th/",
@@ -4011,8 +4011,8 @@
         "https://www.youtube.com/watch?v=v-E3M4i_2bQ"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
-      "why_interesting": "A precedent for Argon, since fans already rebuilt this game from footage alone.",
+      "revive_fit": 3,
+      "why_interesting": "A precedent for Revive, since fans already rebuilt this game from footage alone.",
       "sources": [
         "https://lostmediawiki.com/Nicktropolis_(partially_found_Nickelodeon_massively_multiplayer_online_role-playing_game;_2007-2010)",
         "https://timewarp-molly.itch.io/nicktropolis-timewarp",
@@ -4037,7 +4037,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A hugely popular Facebook RPG, but already rebuilt by fans.",
       "sources": [
         "https://kotaku.com/disney-shutting-down-both-avengers-alliance-games-this-1786054086",
@@ -4069,7 +4069,7 @@
         "https://www.youtube.com/watch?v=5icMz45rBM0"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A beloved Playfish game, but now playable again.",
       "sources": [
         "https://restaurantcity.fandom.com/wiki/Restaurant_City",
@@ -4105,7 +4105,7 @@
         "https://www.youtube.com/watch?v=vcHnx53Al3Q"
       ],
       "rebuild_difficulty": 2,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "A popular Playfish game, but there is a working emulator.",
       "sources": [
         "https://en.wikipedia.org/wiki/Pet_Society",
@@ -4136,7 +4136,7 @@
         "https://www.youtube.com/watch?v=5yDUo41IQls"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Its public-domain assets make it legally clean, though fan revivals already exist.",
       "sources": [
         "https://en.wikipedia.org/wiki/Glitch_(video_game)",
@@ -4167,7 +4167,7 @@
         "https://www.youtube.com/watch?v=8_Z0y0SwnAY"
       ],
       "rebuild_difficulty": 4,
-      "argon_fit": 3,
+      "revive_fit": 3,
       "why_interesting": "Arena bending combat fits session multiplayer, but fan servers exist.",
       "sources": [
         "https://lostmediawiki.com/Avatar:_Legends_of_the_Arena_(partially_lost_inaccessible_online_game;_2008)",
@@ -4191,7 +4191,7 @@
       "footage_volume": "high",
       "footage_examples": [],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "The definitive Unity Web Player FPS, but a fan emulator exists.",
       "sources": [
         "https://en.wikipedia.org/wiki/Cmune",
@@ -4223,7 +4223,7 @@
         "https://www.youtube.com/watch?v=rWiWMN1qNN4"
       ],
       "rebuild_difficulty": 1,
-      "argon_fit": 5,
+      "revive_fit": 5,
       "why_interesting": "Arcanists is a beloved lost Java browser game whose 2D turn-based artillery combat and destructible terrain translate cleanly to an HTML5 canvas. With hours of raw gameplay footage available, a model can readily extract the spell projectile physics, UI, and arena layouts to build a playable multiplayer slice.",
       "sources": [
         "https://en.wikipedia.org/wiki/FunOrb",
@@ -4257,7 +4257,7 @@
         "https://www.youtube.com/watch?v=NbjS4IokEKs"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Rebuilding a classic room-based 2D side-scrolling brawler from extensive longplay footage showcases the AI's ability to extract tight combat mechanics, platforming layouts, and distinct character classes. Multi-agent parties can immediately jump into the reconstructed stages for real-time 4-player co-op dungeon runs or competitive PvP arena brawls.",
       "sources": [
         "https://en.wikipedia.org/wiki/Grand_Chase",
@@ -4291,7 +4291,7 @@
         "https://www.youtube.com/watch?v=2T1jHES6Fjw"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Dragonica's fast-paced 2.5D side-scrolling brawler combat and air combos translate naturally into a vibrant browser-based action slice. Rebuilding an instanced co-op dungeon and boss fight from gameplay footage showcases both tight arcade physics and real-time multi-agent teamwork.",
       "sources": [
         "https://en.wikipedia.org/wiki/Dragon_Saga",
@@ -4323,7 +4323,7 @@
         "https://www.youtube.com/watch?v=t9p4ozh6VHc"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "WonderKing Online's colorful 2D side-scrolling action and clear UI in the gameplay footage make it ideal for extracting sprites, platforming physics, and combat mechanics. Rebuilding a multiplayer slice of this MapleStory-style world lets AI agents party up and battle monsters together in real time.",
       "sources": [
         "https://en.wikipedia.org/wiki/WonderKing_Online",
@@ -4355,7 +4355,7 @@
         "https://www.youtube.com/watch?v=ea82SZx7hC0"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Fantage was a beloved 2D Flash virtual world where players socialized, competed in fashion shows, and played minigames together. With hours of raw tour and minigame footage available, we can rebuild a playable multiplayer slice of the town square and its iconic fashion competitions directly from video.",
       "sources": [
         "https://en.wikipedia.org/wiki/Fantage",
@@ -4388,7 +4388,7 @@
         "https://www.youtube.com/watch?v=EGysyLXzkjg"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Rebuilding a slice of this cult-classic isometric MMORPG lets us showcase real-time multiplayer gathering, crafting, and charming 2.5D combat reconstructed purely from gameplay videos. Its recognizable aesthetic and cozy mechanics make for an immediately engaging, nostalgic browser demo.",
       "sources": [
         "https://en.wikipedia.org/wiki/Hello_Kitty_Online",
@@ -4421,7 +4421,7 @@
         "https://www.youtube.com/watch?v=qtOa2rnRzBY"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Panfu is a nostalgic Club Penguin-style 2D virtual world with abundant quest and location walkthroughs on YouTube. Rebuilding a multi-room slice where AI agents and players can explore, chat, and complete quests together makes for an immediately recognizable and lively demo.",
       "sources": [
         "https://en.wikipedia.org/wiki/Panfu",
@@ -4455,7 +4455,7 @@
         "https://www.youtube.com/watch?v=ux7kQmBj-KM"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Lord of Ultima was a pure HTML5/JavaScript 2D browser strategy game whose grid-based city building and adjacency bonus mechanics are clearly visible in gameplay footage. A model can readily extract its UI-heavy resource management and tactical map systems to recreate a playable slice of a lost EA strategy title in a single day.",
       "sources": [
         "https://en.wikipedia.org/wiki/Lord_of_Ultima",
@@ -4487,7 +4487,7 @@
         "https://www.youtube.com/watch?v=dZBqrDYGdp8"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Dofus Arena's deterministic, grid-based isometric combat makes it an ideal showcase for extracting game rules and UI layouts directly from video footage. A playable 1v1 browser slice with a couple of arenas and fighter classes will immediately capture the tactical depth of this lost Ankama classic.",
       "sources": [
         "https://fr.wikipedia.org/wiki/Arena_(jeu_vid%C3%A9o,_2010)",
@@ -4519,7 +4519,7 @@
         "https://www.youtube.com/watch?v=bZAQJpe1rsA"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Final Fantasy Brave Exvius pairs gorgeous 2D pixel art with classic turn-based RPG mechanics that are now locked behind defunct gacha servers. Rebuilding a slice of its tactical boss battles and town exploration from gameplay footage makes for an instantly recognizable and nostalgic browser demo.",
       "sources": [
         "https://en.wikipedia.org/wiki/Final_Fantasy_Brave_Exvius",
@@ -4552,7 +4552,7 @@
         "https://www.youtube.com/watch?v=yKAM_XgD5x4"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Sonic Runners is a high-profile lost mobile game from Sonic Team whose fast-paced side-scrolling gameplay and boss encounters are thoroughly documented in HD footage. Rebuilding a playable slice of its iconic endless-runner loop with character switching and power-ups makes for an instantly recognizable and exciting browser demo.",
       "sources": [
         "https://en.wikipedia.org/wiki/Sonic_Runners",
@@ -4586,7 +4586,7 @@
         "https://www.youtube.com/watch?v=Lp_OZ-yTRis"
       ],
       "rebuild_difficulty": 3,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Millsberry is a beloved piece of 2000s cereal-advergame nostalgia whose original Flash world and minigames were completely lost when the servers shut down. Rebuilding a playable slice of the town and its iconic arcade games from childhood gameplay recordings is a fantastic showcase of resurrecting lost web history.",
       "sources": [
         "https://millsberry.fandom.com/wiki/Millsberry_Wiki",
@@ -4619,7 +4619,7 @@
         "https://www.youtube.com/watch?v=ktNYcAUk0gA"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Age of Empires Online blended classic real-time strategy base-building with persistent MMO progression before Microsoft shut down its servers in 2014. Using surviving gameplay footage, we can reconstruct a slice of its vibrant, stylized RTS skirmishes and unit-gearing mechanics directly in the browser.",
       "sources": [
         "https://en.wikipedia.org/wiki/Age_of_Empires_Online",
@@ -4654,7 +4654,7 @@
         "https://www.youtube.com/watch?v=R3PEAFOfrDI"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Lego Universe is a legendary lost MMO with a fiercely dedicated fanbase and instantly recognizable minifigure aesthetics. Rebuilding a single slice—like battling Stromlings in Avant Gardens alongside other players—makes for an immediately nostalgic and visually striking multiplayer demo.",
       "sources": [
         "https://en.wikipedia.org/wiki/Lego_Universe",
@@ -4688,7 +4688,7 @@
         "https://www.youtube.com/watch?v=cccJSln13Vk"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Darkspore is an infamous casualty of always-online DRM, making its revival a compelling preservation story. Rebuilding a playable slice of its squad-swapping isometric co-op combat from gameplay footage demonstrates how AI can rescue lost mechanics even when original server logic is gone.",
       "sources": [
         "https://en.wikipedia.org/wiki/Darkspore",
@@ -4721,7 +4721,7 @@
         "https://www.youtube.com/watch?v=N0NoJJ1vkiY"
       ],
       "rebuild_difficulty": 5,
-      "argon_fit": 4,
+      "revive_fit": 4,
       "why_interesting": "Rebuilding a slice of Spirit Tales from footage demonstrates how AI can resurrect the charm of a shut-down chibi 3D MMORPG, complete with beast transformations and co-op boss fights. Even a single instanced dungeon recreated in the browser captures the nostalgic multiplayer magic of an era of lost anime online games.",
       "sources": [
         "https://en.wikipedia.org/wiki/Koramgame",

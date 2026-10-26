@@ -1,6 +1,6 @@
 """One-time: build the Managed Agent playtester sandbox (Chromium + harness), test it, fork it into an agent.
 
-usage: setup.py [test game dir]   (any Argon kit game; default: runs/blockor-io-2/game)
+usage: setup.py [test game dir]   (any Revive kit game; default: runs/blockor-io-2/game)
 Writes pipeline/squad/agent.json with the agent id.
 """
 import json

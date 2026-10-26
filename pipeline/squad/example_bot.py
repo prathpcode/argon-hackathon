@@ -1,4 +1,4 @@
-"""Example bot for any Argon kit game: look at window.State, move around, try the main keys.
+"""Example bot for any Revive kit game: look at window.State, move around, try the main keys.
 Agents replace the loop body with their persona."""
 import random
 

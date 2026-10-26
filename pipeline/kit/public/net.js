@@ -1,4 +1,4 @@
-// Argon multiplayer client. Load with <script src="net.js"></script>, then:
+// Revive multiplayer client. Load with <script src="net.js"></script>, then:
 //   const net = Net.connect({ name, onJoin, onLeave, onState, onMsg, onSet, onHost, onWelcome });
 //   net.state({x, y, anim})   // call every frame; sent at most 15 times a second
 //   net.send("chat", {text})  // others receive {t:"chat", text, from}

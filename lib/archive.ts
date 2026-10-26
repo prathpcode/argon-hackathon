@@ -20,7 +20,7 @@ export type LostGame = {
   footage_volume: string;
   footage_examples: string[];
   rebuild_difficulty: number;
-  argon_fit: number;
+  revive_fit: number;
   why_interesting: string;
   sources: string[];
   confidence: string;

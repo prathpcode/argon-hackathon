@@ -1,4 +1,4 @@
-// Argon game server: zero dependencies (Node 22 built-ins only).
+// Revive game server: zero dependencies (Node 22 built-ins only).
 // Serves public/ and relays multiplayer messages over a WebSocket at /ws.
 // Rooms come from ?room= (default "main"). The earliest player in a room is its host.
 //

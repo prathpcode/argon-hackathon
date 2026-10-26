@@ -19,7 +19,7 @@ import { closeBrowser, Playtest } from "./browser";
 import { footageTool } from "./footage";
 import { builderPrompt, builderSystem, fixerPrompt, specMarkdown, TESTERS, testerPrompt, testerSystem } from "./prompts";
 
-const ROUNDS = Number(process.env.ARGON_ROUNDS || 3);
+const ROUNDS = Number(process.env.REVIVE_ROUNDS || 3);
 const KIT = path.join(import.meta.dirname, "..", "kit");
 const DOCS = new Set(["SPEC.md", "KIT.md", "PLAYTEST.md"]);
 
@@ -45,9 +45,9 @@ async function verifyRound(run: Run, round: number, game: string): Promise<Verif
 }
 
 /** Managed Agents can play when the agent is set up for this API key (pipeline/squad/setup.py) and cloudflared
- *  is installed. ARGON_SQUAD=0 turns them off. */
+ *  is installed. REVIVE_SQUAD=0 turns them off. */
 function squadReady(): boolean {
-  if (process.env.ARGON_SQUAD === "0" || !fs.existsSync(path.join(ROOT, "pipeline", "squad", "agent.json"))) return false;
+  if (process.env.REVIVE_SQUAD === "0" || !fs.existsSync(path.join(ROOT, "pipeline", "squad", "agent.json"))) return false;
   try {
     return spawnSync("cloudflared", ["--version"], { stdio: "ignore" }).status === 0;
   } catch {

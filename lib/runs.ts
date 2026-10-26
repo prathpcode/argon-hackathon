@@ -227,8 +227,8 @@ export function stopRun(id: string) {
 
 // ---------------------------------------------------------------- playing a revival
 
-const g = globalThis as unknown as { __argonGames?: Map<string, { port: number; proc: ChildProcess }> };
-const games = (g.__argonGames ??= new Map());
+const g = globalThis as unknown as { __reviveGames?: Map<string, { port: number; proc: ChildProcess }> };
+const games = (g.__reviveGames ??= new Map());
 
 const freePort = () =>
   new Promise<number>((resolve, reject) => {

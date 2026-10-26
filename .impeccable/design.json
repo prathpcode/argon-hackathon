@@ -1,12 +1,12 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-10-25T06:32:17.717428+00:00",
-  "title": "Design System: Argon",
+  "title": "Design System: Revive",
   "extensions": {
     "colorMeta": {
-      "argon-violet": {
+      "revive-violet": {
         "role": "primary",
-        "displayName": "Argon Violet",
+        "displayName": "Revive Violet",
         "tonalRamp": [
           "oklch(15% 0.2 293)",
           "oklch(26% 0.2 293)",
@@ -18,9 +18,9 @@
           "oklch(95% 0.2 293)"
         ]
       },
-      "argon-violet-deep": {
+      "revive-violet-deep": {
         "role": "primary",
-        "displayName": "Argon Violet Deep",
+        "displayName": "Revive Violet Deep",
         "tonalRamp": [
           "oklch(15% 0.2 293)",
           "oklch(26% 0.2 293)",
@@ -513,10 +513,10 @@
   ],
   "narrative": {
     "northStar": "The Lit Arcade Shelf",
-    "overview": "Argon is a bright, white game shelf: a fixed top bar and left rail frame a main column where big thumbnails carry all the color and the chrome stays quiet. The one accent, argon violet, glows only where something can be started (Build, Play, the prompt focus ring, the active nav icon), like the discharge tube it is named for. Everything else is white surface, hairline dividers, and near-black ink set in heavy, rounded Nunito.\n\nDensity is generous and toy-friendly rather than dense: 19px navigation, 56px nav rows, 46-64px buttons, 22px gutters. Corners are soft at every scale and pills are reserved for the things you type into or press to start. Depth is almost absent at rest; motion carries the polish instead. The shell holds still while page content trades places, content rises into place once on first load, cards lift on hover, a game's thumbnail morphs from card to hero to the play screen, and live things breathe with a soft pulse ring.\n\nThe surfaces stay uncluttered: every element on the home page is either the Build bar or a game. The play page inverts the world to a near-black void with dark glass controls, so the game owns the screen.",
+    "overview": "Revive is a bright, white game shelf: a fixed top bar and left rail frame a main column where big thumbnails carry all the color and the chrome stays quiet. The one accent, revive violet, glows only where something can be started (Build, Play, the prompt focus ring, the active nav icon), like the discharge tube it is named for. Everything else is white surface, hairline dividers, and near-black ink set in heavy, rounded Nunito.\n\nDensity is generous and toy-friendly rather than dense: 19px navigation, 56px nav rows, 46-64px buttons, 22px gutters. Corners are soft at every scale and pills are reserved for the things you type into or press to start. Depth is almost absent at rest; motion carries the polish instead. The shell holds still while page content trades places, content rises into place once on first load, cards lift on hover, a game's thumbnail morphs from card to hero to the play screen, and live things breathe with a soft pulse ring.\n\nThe surfaces stay uncluttered: every element on the home page is either the Build bar or a game. The play page inverts the world to a near-black void with dark glass controls, so the game owns the screen.",
     "keyCharacteristics": [
       "Pure white ground and surfaces, separated by 1px hairlines, never by tint or shadow.",
-      "One accent (argon violet) reserved for start actions, focus, and \"in progress\" states.",
+      "One accent (revive violet) reserved for start actions, focus, and \"in progress\" states.",
       "Nunito at 600 for body and 800/900 for anything named; tabular numerals on every stat.",
       "Thumbnails are the color: big 261:147 frames with 10px corners.",
       "Motion on every surface, a still shell during navigation, one easing curve, all of it switched off under reduced motion."
@@ -550,7 +550,7 @@
     ],
     "dos": [
       "**Do** keep ground and surfaces pure white (#ffffff) and divide regions with 1px hairlines.",
-      "**Do** reserve argon violet for Build, Play, focus, the current nav icon and in-progress states.",
+      "**Do** reserve revive violet for Build, Play, focus, the current nav icon and in-progress states.",
       "**Do** set body at 600 and anything named at 800-900 in Nunito, with tabular numerals on every count.",
       "**Do** give every interactive element a hover, a press (scale 0.95-0.98) and an entrance, all on the single ease-out curve.",
       "**Do** honor reduced motion by removing entrances and view transitions, not just shortening them.",

@@ -1,4 +1,4 @@
-# The Argon game kit
+# The Revive game kit
 
 Your workspace is a small web game project:
 

@@ -1,4 +1,4 @@
-"""Play harness that lives in the Managed Agent playtesters' sandbox. Works with any game built on the Argon
+"""Play harness that lives in the Managed Agent playtesters' sandbox. Works with any game built on the Revive
 kit (window.State, window.__events, ?name= ?room= ?seed=).
 
 An agent writes bot.py with `async def run(api)` and runs:

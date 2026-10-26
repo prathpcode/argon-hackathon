@@ -1,9 +1,9 @@
 ---
-name: Argon
+name: Revive
 description: A browser game platform where one prompt becomes a playable 3D multiplayer game.
 colors:
-  argon-violet: "#7c3aed"
-  argon-violet-deep: "#6a2bd9"
+  revive-violet: "#7c3aed"
+  revive-violet-deep: "#6a2bd9"
   violet-mist: "#f1eafe"
   violet-edge: "#d9c8fb"
   gem-light: "#a78bfa"
@@ -85,15 +85,15 @@ spacing:
   sidebar: "276px"
 components:
   button-primary:
-    backgroundColor: "{colors.argon-violet}"
+    backgroundColor: "{colors.revive-violet}"
     textColor: "{colors.surface-white}"
     rounded: "{rounded.pill}"
     padding: "0 22px"
     height: "46px"
   button-primary-hover:
-    backgroundColor: "{colors.argon-violet-deep}"
+    backgroundColor: "{colors.revive-violet-deep}"
   button-play:
-    backgroundColor: "{colors.argon-violet}"
+    backgroundColor: "{colors.revive-violet}"
     textColor: "{colors.surface-white}"
     rounded: "{rounded.panel}"
     height: "64px"
@@ -126,7 +126,7 @@ components:
     height: "34px"
   chip-hover:
     backgroundColor: "{colors.violet-mist}"
-    textColor: "{colors.argon-violet-deep}"
+    textColor: "{colors.revive-violet-deep}"
   prompt-box:
     backgroundColor: "{colors.surface-white}"
     rounded: "{rounded.pill}"
@@ -150,19 +150,19 @@ components:
     rounded: "{rounded.card}"
   status-chip-building:
     backgroundColor: "{colors.violet-mist}"
-    textColor: "{colors.argon-violet-deep}"
+    textColor: "{colors.revive-violet-deep}"
     rounded: "{rounded.badge}"
     padding: "0 10px"
     height: "28px"
 ---
 
-# Design System: Argon
+# Design System: Revive
 
 ## Overview
 
 **Creative North Star: "The Lit Arcade Shelf"**
 
-Argon is a bright, white game shelf: a fixed top bar and left rail frame a main column where big thumbnails carry all the color and the chrome stays quiet. The one accent, argon violet, glows only where something can be started (Build, Play, the prompt focus ring, the active nav icon), like the discharge tube it is named for. Everything else is white surface, hairline dividers, and near-black ink set in heavy, rounded Nunito.
+Revive is a bright, white game shelf: a fixed top bar and left rail frame a main column where big thumbnails carry all the color and the chrome stays quiet. The one accent, revive violet, glows only where something can be started (Build, Play, the prompt focus ring, the active nav icon), like the discharge tube it is named for. Everything else is white surface, hairline dividers, and near-black ink set in heavy, rounded Nunito.
 
 Density is generous and toy-friendly rather than dense: 19px navigation, 56px nav rows, 46-64px buttons, 22px gutters. Corners are soft at every scale and pills are reserved for the things you type into or press to start. Depth is almost absent at rest; motion carries the polish instead. The shell holds still while page content trades places, content rises into place once on first load, cards lift on hover, a game's thumbnail morphs from card to hero to the play screen, and live things breathe with a soft pulse ring.
 
@@ -170,7 +170,7 @@ The surfaces stay uncluttered: every element on the home page is either the Buil
 
 **Key Characteristics:**
 - Pure white ground and surfaces, separated by 1px hairlines, never by tint or shadow.
-- One accent (argon violet) reserved for start actions, focus, and "in progress" states.
+- One accent (revive violet) reserved for start actions, focus, and "in progress" states.
 - Nunito at 600 for body and 800/900 for anything named; tabular numerals on every stat.
 - Thumbnails are the color: big 261:147 frames with 10px corners.
 - Motion on every surface, a still shell during navigation, one easing curve, all of it switched off under reduced motion.
@@ -180,8 +180,8 @@ The surfaces stay uncluttered: every element on the home page is either the Buil
 A white, near-monochrome shell with a single glowing violet and two signal colors.
 
 ### Primary
-- **Argon Violet** (argon-violet): Build and Play buttons, focus outlines, the focused prompt border, the active nav icon, the vote bar fill, the pressed in-game glass toggle, the "building" tag. The only saturated hue in the chrome.
-- **Argon Violet Deep** (argon-violet-deep): Primary hover, and violet text on light fills (creator name, "New" stat, chip hover, building status, selection text).
+- **Revive Violet** (revive-violet): Build and Play buttons, focus outlines, the focused prompt border, the active nav icon, the vote bar fill, the pressed in-game glass toggle, the "building" tag. The only saturated hue in the chrome.
+- **Revive Violet Deep** (revive-violet-deep): Primary hover, and violet text on light fills (creator name, "New" stat, chip hover, building status, selection text).
 - **Violet Mist** (violet-mist): The soft fill behind violet states: 4px focus halo around the prompt and composer, pressed vote, chip hover, user chat bubbles, text selection.
 - **Violet Edge** (violet-edge): Border for violet-tinted pressed and hover states.
 - **Gem Light / Gem Pale** (gem-light, gem-pale): Facets of the logo mark and the play-page loader bar. Brand mark only.
@@ -257,8 +257,8 @@ Soft rounded rectangles at every scale, chosen by size: 8px for badges, soft pil
 ### Buttons
 Rounded, heavy-lettered, and they all press.
 - **Shape:** Pill for Build (999px), 14px for the full-width Play button, 10px for ghost and black pills.
-- **Primary:** Argon violet, white 900-weight 18px text, 46px tall, 22px side padding; the Play button is 64px tall at 22px text.
-- **Hover / Focus:** Hover deepens to argon-violet-deep and adds the violet glow; trailing arrows slide 4px right. Press scales to 0.97. Disabled fades to a pale violet with no motion.
+- **Primary:** Revive violet, white 900-weight 18px text, 46px tall, 22px side padding; the Play button is 64px tall at 22px text.
+- **Hover / Focus:** Hover deepens to revive-violet-deep and adds the violet glow; trailing arrows slide 4px right. Press scales to 0.97. Disabled fades to a pale violet with no motion.
 - **Ghost:** White with a 1.5px strong hairline, 800-weight ink, hover-fill on hover, press to 0.96.
 - **Black pill:** Solid near-black, 900 weight, its icon tilts -14deg on hover.
 - **Soft pill:** Muted fill, 8px corners, its icon spins 18deg and grows on hover.
@@ -277,7 +277,7 @@ Rounded, heavy-lettered, and they all press.
 
 ### Inputs / Fields
 - **Style:** White, 1.5px strong hairline; pill for search and prompt, 12px for form fields. Placeholders in ink-quiet, violet caret.
-- **Focus:** Border turns argon violet; the prompt box and composer add the 4px violet-mist halo.
+- **Focus:** Border turns revive violet; the prompt box and composer add the 4px violet-mist halo.
 - **Error / Disabled:** Error text in danger red slides open below the prompt; a disabled prompt fades to 60%.
 
 ### Navigation
@@ -309,7 +309,7 @@ Full-bleed game on play-void. While the game loads, its thumbnail fills the scre
 
 ### Do:
 - **Do** keep ground and surfaces pure white (#ffffff) and divide regions with 1px hairlines.
-- **Do** reserve argon violet for Build, Play, focus, the current nav icon and in-progress states.
+- **Do** reserve revive violet for Build, Play, focus, the current nav icon and in-progress states.
 - **Do** set body at 600 and anything named at 800-900 in Nunito, with tabular numerals on every count.
 - **Do** give every interactive element a hover, a press (scale 0.95-0.98) and an entrance, all on the single ease-out curve.
 - **Do** honor reduced motion by removing entrances and view transitions, not just shortening them.

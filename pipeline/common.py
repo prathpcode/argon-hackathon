@@ -15,7 +15,7 @@ from pathlib import Path
 from google import genai
 
 ROOT = Path(__file__).resolve().parent.parent
-MODEL = os.environ.get("ARGON_MODEL", "gemini-4-argon")
+MODEL = os.environ.get("REVIVE_MODEL", "gemini-4-argon")
 
 
 def load_env():

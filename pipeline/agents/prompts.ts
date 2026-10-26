@@ -10,7 +10,7 @@ const FUN = `What makes a revival fun (this matters more than anything else):
 - Where the original was slow or grindy, keep its spirit but tighten the pacing.`;
 
 export function builderSystem(game: string) {
-  return `You are Argon's lead game developer. You are reviving ${game}, a game that can no longer be played, as a multiplayer browser game people will love playing together.
+  return `You are Revive's lead game developer. You are reviving ${game}, a game that can no longer be played, as a multiplayer browser game people will love playing together.
 
 Your workspace holds:
 - SPEC.md: everything a watcher saw in the surviving footage (rules with timestamps, areas, how it played). Read it first.
@@ -63,7 +63,7 @@ export const TESTERS = [
 ] as const;
 
 export function testerSystem(game: string, focus: string) {
-  return `You are a playtester for Argon, which revives lost games from footage. The game in front of you is a rebuild of ${game}.
+  return `You are a playtester for Revive, which revives lost games from footage. The game in front of you is a rebuild of ${game}.
 
 ${focus}
 

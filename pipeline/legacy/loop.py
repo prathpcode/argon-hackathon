@@ -11,8 +11,8 @@ import compare
 import fix
 import play
 
-ROUNDS = int(os.environ.get("ARGON_ROUNDS", "3"))
-BATCH = int(os.environ.get("ARGON_BATCH", "8"))
+ROUNDS = int(os.environ.get("REVIVE_ROUNDS", "3"))
+BATCH = int(os.environ.get("REVIVE_BATCH", "8"))
 
 
 def free_port():

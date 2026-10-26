@@ -16,11 +16,11 @@ Teens and adults (13+): hobbyists and casual creators who want to make games wit
 
 ## Product Purpose
 
-Argon is a Roblox-style game platform that runs in the browser. A user describes a game in one prompt and gets a playable 3D multiplayer game, which they can publish for others to discover and play. Success means a working, shareable game from a single prompt, and a library of community games worth coming back to play.
+Revive is a Roblox-style game platform that runs in the browser. A user describes a game in one prompt and gets a playable 3D multiplayer game, which they can publish for others to discover and play. Success means a working, shareable game from a single prompt, and a library of community games worth coming back to play.
 
 ## Positioning
 
-Web-based, with games made in one prompt. There's no download, no engine and no scripting step between an idea and a playable multiplayer game. Roblox needs a client install and Studio; Argon goes from a prompt to play in a browser tab.
+Web-based, with games made in one prompt. There's no download, no engine and no scripting step between an idea and a playable multiplayer game. Roblox needs a client install and Studio; Revive goes from a prompt to play in a browser tab.
 
 ## Operating Context
 
@@ -42,11 +42,11 @@ Confirmed:
 Open decisions (do not invent):
 - Real accounts and identity, social features, moderation approach, monetization.
 - Deploy target.
-- Product name styling or final branding beyond the working name "Argon".
+- Product name styling or final branding beyond the working name "Revive".
 
 ## Brand Commitments
 
-- Name: Argon (working name).
+- Name: Revive (working name).
 - The UI is simple and clean, never cluttered, the home page especially. Every element must earn its place.
 - Polish is the brand: authored motion and small details (hover, press, entrance, loading and transition states) on every surface, respecting reduced motion.
 - Layout follows the user-supplied Roblox-style reference (Boxity.io home).

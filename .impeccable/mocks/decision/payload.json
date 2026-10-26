@@ -26,7 +26,7 @@
       "label": "Contact Sheet",
       "kicker": "IMPECCABLE’S PICK",
       "lineage": "film contact sheets and the editor’s light table",
-      "thesis": "Footage is the source: every game is a strip of frames, and Argon’s memory is grease-pencil notes on the contact sheet.",
+      "thesis": "Footage is the source: every game is a strip of frames, and Revive’s memory is grease-pencil notes on the contact sheet.",
       "palette": ["#121110", "#f4efe6", "#e8e2d4", "#f05a28", "#2b2a27"],
       "materials": ["film strip with sprocket edges", "light-table glow", "grease pencil marks"],
       "viewport": "App shell with a dark rail; the archive as rows of film strips, three frames per game, name and years on the strip’s edge print; the open game shows its frames on a lit table with circled timestamps.",
